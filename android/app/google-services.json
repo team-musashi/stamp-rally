@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "801823217631",
+    "project_id": "flutteruniv-stamp-rally-prod",
+    "storage_bucket": "flutteruniv-stamp-rally-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801823217631:android:7c65837b1753003e94166a",
+        "android_client_info": {
+          "package_name": "jp.keishimizu26629.stamp_rally"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801823217631-133lpoqk2v8n83dmfebnc9o7cbgebot2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABW3YAFe6Qej81_cUDw9BcXNFmfiWfkJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801823217631-133lpoqk2v8n83dmfebnc9o7cbgebot2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
