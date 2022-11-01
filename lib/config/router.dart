@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/repository/auth/auth_repository.dart';
-import '../../presentation/page/error/error_page.dart';
-import '../../presentation/page/home/home_page.dart';
-import '../../presentation/page/welcome/welcome_page.dart';
-import '../logger.dart';
+import '../domain/repository/auth/auth_repository.dart';
+import '../presentation/page/error/error_page.dart';
+import '../presentation/page/home/home_page.dart';
+import '../presentation/page/welcome/welcome_page.dart';
+import '../util/logger.dart';
 
 part 'router.g.dart';
 
@@ -19,6 +19,7 @@ final routerProvider = Provider<GoRouter>(
     // エラー画面
     errorPageBuilder: (context, state) =>
         ErrorRoute(state.error).buildPage(context),
+
     // リダイレクト
     redirect: (context, state) {
       final authUser = ref.watch(authRepositoryProvider).getAuthUser();

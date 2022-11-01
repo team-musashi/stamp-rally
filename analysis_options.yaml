@@ -18,5 +18,6 @@ analyzer:
     - '**/localization/*.dart'
     - '**/generated_plugin_registrant.dart'
     - '**/assets/*.gen.dart'
+    - '**/firebase_options_*.dart'
   errors:
     invalid_annotation_target: ignore
