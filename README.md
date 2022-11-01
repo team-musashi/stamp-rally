@@ -2,42 +2,47 @@
 
 TODO: ここにサブタイトルを書く
 
-## ビルド方法
+## 開発環境セットアップしよう
 
-IDE は VSCode の利用を前提としています。
+開発マシンの OS は Mac、IDE は VSCode の利用を前提としています。
 
-### セットアップする
+### `fvm` をインストールして Flutter SDK のインストールをする
 
-次のコマンドでセットアップができます。
-Flutter SDK のバージョン管理は `fvm` を利用しており、次のコマンドで `fvm` のインストールと Flutter SDK のインストールを行います。
+次の記事を参考にして、`fvm` をインストールして、`fvm` コマンドが使える状態にしましょう。
+
+[FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/riscait/articles/flutter-version-management)
+
+次のコマンドを実行して本プロジェクト指定の Flutter SDK をインスト−ルをしましょう。
 
 ```
-make setup
+fvm install
 ```
 
-やってることは次の通りです。
+### Git コミット簡単ツールのインストール
 
-- `fvm` のインストール
-- Flutter SDK のインストール
-- [git-cz](https://github.com/streamich/git-cz) のインストール
+次の記事を参考にして、Git コミット時に Prefix や絵文字を簡単に追加できるツールである [commitizen](https://github.com/commitizen/cz-cli) と [git-cz](https://github.com/streamich/git-cz) をインスト−ルしましょう。
 
-次のサイトを参考にしてください。
-- [Flutterのバージョン管理ツールfvmを試してみる](https://qiita.com/Slowhand0309/items/0767abee120fcb3ba0b4)
-- [FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/riscait/articles/flutter-version-management)
-- [gitのコミットメッセージ入力ツールはcommitizenよりもgit-czがオススメ](https://zenn.dev/ttskch/articles/a998c125756ab6)
+[Commitizenを使ってgitのコミットメッセージをしっかり書こう](https://dev.classmethod.jp/articles/commitizen/)
 
-### 実行する
+適当なファイルを修正・ステージングにあげて `git cz` というコマンドを打って次のような表示が出れば OK です。
 
-実行したい Configuration にして実行してください。
+<img width="500" src="https://user-images.githubusercontent.com/13707135/199337450-251361bb-51b1-4a26-8362-b3da4e1b305a.png">
+
+
+## アプリを実行しよう
+
+開発環境のセットアップが終わったら、VSCode 右下から実行するデバイスを選択し、実行したい Configuration を選択して実行してみましょう。
 
 Configuration 名|プラットフォーム|接続先の Firebase
 --|--|--
 app-dev|iOS / Android|[flutteruniv-stamp-rally-dev](https://console.firebase.google.com/u/1/project/flutteruniv-stamp-rally-dev/overview)
 app-prod|iOS / Android|[flutteruniv-stamp-rally-prod](https://console.firebase.google.com/u/1/project/flutteruniv-stamp-rally-prod/overview)
 
+## 実装時の Tips
+
 ### コードの自動生成
 
-- `router` や `freezed` を使った `dart` ファイルを変更した場合は次のコマンドを実行してください。
+`go_router_builder` や `freezed` を使った自動生成ファイルを変更した場合は次のコマンドを実行してください。
 
 ```bash
 make build-runner
@@ -116,8 +121,7 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 
 ### ファイル分割の方針
 
-基本的に **関心事** 毎にファイルを分割しています。1つのファイルに複数のクラスがあっても問題はない。ファイル名は **関心事.dart** とします。ファイル名 = クラス名とはしません。
-
+基本的に **関心事** 毎にファイルを分割しています。1つのファイルに複数のクラスがあっても問題ありません。ファイル名は「ファイル名 = クラス名」とはせず **関心事.dart** とします。
 
 ## ブランチモデル
 
