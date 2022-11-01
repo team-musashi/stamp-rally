@@ -1,6 +1,6 @@
 # スタラリ
 
-ここにサブタイトルを書く
+TODO: ここにサブタイトルを書く
 
 ## ビルド方法
 
@@ -8,19 +8,27 @@ IDE は VSCode の利用を前提としています。
 
 ### セットアップする
 
+次のコマンドでセットアップができます。
 Flutter SDK のバージョン管理は `fvm` を利用しており、次のコマンドで `fvm` のインストールと Flutter SDK のインストールを行います。
 
 ```
 make setup
 ```
 
-- 参考サイト
-  - [Flutterのバージョン管理ツールfvmを試してみる](https://qiita.com/Slowhand0309/items/0767abee120fcb3ba0b4)
-  - [FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/riscait/articles/flutter-version-management)
+やってることは次の通りです。
 
-### ビルドする
+- `fvm` のインストール
+- Flutter SDK のインストール
+- [git-cz](https://github.com/streamich/git-cz) のインストール
 
-ビルドしたい Configuration にしてビルドしてください。
+次のサイトを参考にしてください。
+- [Flutterのバージョン管理ツールfvmを試してみる](https://qiita.com/Slowhand0309/items/0767abee120fcb3ba0b4)
+- [FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/riscait/articles/flutter-version-management)
+- [gitのコミットメッセージ入力ツールはcommitizenよりもgit-czがオススメ](https://zenn.dev/ttskch/articles/a998c125756ab6)
+
+### 実行する
+
+実行したい Configuration にして実行してください。
 
 Configuration 名|プラットフォーム|接続先の Firebase
 --|--|--
@@ -83,26 +91,26 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 ```  
 ├── config                                   設定値、環境変数など
 ├── application                              アプリケーション層
-│   └── <aggregate>
+│   └── <集約>
 │       ├── <state>                          状態
 │       └── <feature>_service.dart           サービスクラス
 ├── domain                                   ドメイン層
 │   ├── exceptions.dart                      例外クラス
 │   └── repository
-│       └── <feature>
-│           ├── <feature>_repository.dart    リポジトリのインターフェースクラス
-│           └── entity                       機能単位のエンティティ
+│       └── <集約>
+│           ├── <集約>_repository.dart        リポジトリのインターフェースクラス
+│           └── entity                       集約単位のエンティティ
 ├── infrastructure                           インフラストラクチャ層
 │   └── <data_source>
-│       └── <feature>
-│           └── <feature>_repository.dart    リポジトリの実装
+│       └── <集約>
+│           └── <集約>_repository.dart       リポジトリの実装
 ├── presentation
 │   ├── app.dart                             アプリケーション
 │   ├── component                            プレゼンテーション層で共通の Widget
 │   └── page
-│       └── <feature>
+│       └── <関心事>
 │           ├── component                    画面単位の Widget
-│           └── <feature>_<curd>_page.dart   画面Widget
+│           └── <関心事>_<CURD>page.dart      画面Widget
 └── util                                     どの層からもアクセス可能なクラス、拡張機能、ロガー、言語ファイルなど
 ```
 

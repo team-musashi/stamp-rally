@@ -5,6 +5,8 @@ FLUTTER := $(FVM) flutter
 setup:
 	dart pub global activate fvm
 	fvm install
+	npm i -g git-cz
+	npm i -g commitizen
 
 .PHONY: get-dependencies
 get-dependencies:
