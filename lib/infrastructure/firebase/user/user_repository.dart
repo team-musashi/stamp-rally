@@ -1,23 +1,44 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
+import '../../../domain/entity/app_platform.dart';
 import '../../../domain/exceptions.dart';
-import '../../../domain/repository/auth/auth_repository.dart';
-import '../../../domain/repository/auth/entity/auth_provider.dart';
-import '../../../domain/repository/auth/entity/auth_user.dart';
+import '../../../domain/repository/user/entity/auth_provider.dart';
+import '../../../domain/repository/user/entity/auth_user.dart';
+import '../../../domain/repository/user/entity/user.dart';
+import '../../../domain/repository/user/user_repository.dart';
 import '../../../util/logger.dart';
+import 'documents/user_document.dart';
 
-/// Firebase認証リポジトリ
-class FirebaseAuthRepository implements AuthRepository {
-  FirebaseAuthRepository({
+/// Firebaseユーザーリポジトリ
+class FirebaseUserRepository implements UserRepository {
+  FirebaseUserRepository({
     required this.auth,
     this.firebaseUser,
-  });
+    this.docRef,
+  }) {
+    docRef?.snapshots().listen((doc) {
+      if (changesController.isClosed) {
+        return;
+      }
+      changesController.add(doc.toUser());
+    });
+  }
 
-  final FirebaseAuth auth;
-  final User? firebaseUser;
+  final firebase_auth.FirebaseAuth auth;
+  final firebase_auth.User? firebaseUser;
+  final DocumentReference<Map<String, dynamic>>? docRef;
+  final changesController = StreamController<User?>.broadcast();
+
+  @override
+  Stream<User?> changes() => changesController.stream;
+
+  void dispose() {
+    changesController.close();
+  }
 
   @override
   AuthUser? getAuthUser() {
@@ -42,25 +63,36 @@ class FirebaseAuthRepository implements AuthRepository {
     assert(firebaseUser != null);
     try {
       await firebaseUser!.delete();
-    } on FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException catch (e) {
       throw e.toAuthException();
     }
   }
 
   @override
-  String toString() {
-    final user = firebaseUser;
-    if (user == null) {
-      return 'FirebaseUser(null)';
-    }
-    return 'FirebaseUser('
-        'uid: ${user.uid}, '
-        'isAnonymous: ${user.isAnonymous}'
-        ')';
+  Future<User?> get() async {
+    final doc = await docRef?.get();
+    return doc?.toUser();
   }
 }
 
-extension FirebaseUserEx on User {
+extension _DocDocumentSnapshotHelper on DocumentSnapshot<Map<String, dynamic>> {
+  User? toUser() {
+    final json = data();
+    if (json == null) {
+      return null;
+    }
+    final userDoc = UserDocument.fromJson(json);
+    return User(
+      uid: id,
+      provider: AuthProvider.nameOf(userDoc.provider),
+      createdPlatform: AppPlatform.nameOf(userDoc.createdPlatform),
+      createdAt: userDoc.createdAt,
+      updatedAt: userDoc.updatedAt,
+    );
+  }
+}
+
+extension FirebaseUserEx on firebase_auth.User {
   /// FirebaseUser => AuthUser
   AuthUser toAuthUser() => AuthUser(
         uid: uid,
@@ -79,7 +111,7 @@ extension _AuthProviderEx on String {
   }
 }
 
-extension _FirebaseAuthExceptionEx on FirebaseAuthException {
+extension _FirebaseAuthExceptionEx on firebase_auth.FirebaseAuthException {
   /// FirebaseAuthException => AuthException
   AuthException toAuthException() {
     switch (code) {

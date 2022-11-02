@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/repository/auth/auth_repository.dart';
+import '../../domain/repository/user/user_repository.dart';
 import 'state/delete_user_result.dart';
 import 'state/login_anonymously_result.dart';
 
@@ -20,9 +20,9 @@ class UserService {
     final notifier = ref.read(loginAnonymouslyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
-      final authUser = ref.read(authRepositoryProvider).getAuthUser();
+      final authUser = ref.read(userRepositoryProvider).getAuthUser();
       if (authUser == null) {
-        await ref.read(authRepositoryProvider).loginAnonymously();
+        await ref.read(userRepositoryProvider).loginAnonymously();
       }
     });
   }
@@ -32,7 +32,7 @@ class UserService {
     final notifier = ref.read(deleteUserResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
-      await ref.read(authRepositoryProvider).delete();
+      await ref.read(userRepositoryProvider).delete();
     });
   }
 }

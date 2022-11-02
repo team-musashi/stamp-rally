@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../entity/app_platform.dart';
-import '../../auth/entity/auth_provider.dart';
+import 'auth_provider.dart';
 
 part 'user.freezed.dart';
 

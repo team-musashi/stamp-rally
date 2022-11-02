@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../domain/repository/auth/auth_repository.dart';
+import '../domain/repository/user/user_repository.dart';
 import '../presentation/page/error/error_page.dart';
 import '../presentation/page/home/home_page.dart';
 import '../presentation/page/welcome/welcome_page.dart';
@@ -22,7 +22,7 @@ final routerProvider = Provider<GoRouter>(
 
     // リダイレクト
     redirect: (context, state) {
-      final authUser = ref.watch(authRepositoryProvider).getAuthUser();
+      final authUser = ref.watch(userRepositoryProvider).getAuthUser();
       if (authUser != null) {
         // ログイン済み
         return null;
