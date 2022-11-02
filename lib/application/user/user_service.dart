@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/entity/app_platform.dart';
+import '../../domain/repository/user/entity/user_input_data.dart';
 import '../../domain/repository/user/user_repository.dart';
 import 'state/create_user_result.dart';
 import 'state/delete_user_result.dart';
@@ -23,22 +25,24 @@ class UserService {
       return;
     }
 
-    // ローディング中にする
-    ref.read(createUserResultProvider.notifier).state =
-        const AsyncValue.loading();
+    final notifier = ref.read(createUserResultProvider.notifier);
+    notifier.state = const AsyncValue.loading();
+    notifier.state = await AsyncValue.guard(() async {
+      // 匿名ユーザーでログインする
+      final userRepository = ref.read(userRepositoryProvider);
+      await userRepository.loginAnonymously();
 
-    // 匿名ユーザーでログインする
-    await ref.read(userRepositoryProvider).loginAnonymously();
+      // Functions がユーザードキュメントを追加するのを待つ
+      final user = await ref.read(userProvider.future);
+      assert(user != null);
 
-    // Functions がユーザードキュメントを追加するのを待つ
-    ref.listen(userProvider, (previous, next) {
-      next.whenData((user) {
-        if (user != null) {
-          // ユーザードキュメントが追加されたら処理を完了する
-          ref.read(createUserResultProvider.notifier).state =
-              AsyncValue.data(user);
-        }
-      });
+      // ユーザードキュメントが追加されたらユーザーを更新する
+      await userRepository.updateUser(
+        UserInputData(
+          createdPlatform: AppPlatform.currentPlatform,
+        ),
+      );
+      return user;
     });
   }
 

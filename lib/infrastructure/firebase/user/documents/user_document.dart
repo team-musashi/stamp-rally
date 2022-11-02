@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../converters.dart';

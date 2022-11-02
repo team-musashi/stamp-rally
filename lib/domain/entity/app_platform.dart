@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
+
 /// アプリのプラットフォーム
 enum AppPlatform {
   android,
@@ -7,9 +9,9 @@ enum AppPlatform {
   ;
 
   /// 文字列から AppPlatform を返す
-  /// 見つからない場合は IterableElementError.noElement() を投げる
-  static AppPlatform nameOf(String name) =>
-      AppPlatform.values.firstWhere((platform) => platform.name == name);
+  /// 見つからない場合は null を返す
+  static AppPlatform? nameOf(String? name) =>
+      AppPlatform.values.firstWhereOrNull((platform) => platform.name == name);
 
   /// 現在のプラットフォームを返す
   static AppPlatform get currentPlatform {

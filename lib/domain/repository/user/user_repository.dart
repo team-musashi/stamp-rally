@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'entity/user.dart';
+import 'entity/user_input_data.dart';
 
 /// ログイン中かどうかを返すプロバイダー
 final loggedInProvider = StreamProvider(
@@ -35,4 +36,7 @@ abstract class UserRepository {
 
   /// ユーザーを返す
   Stream<User?> userChanges();
+
+  /// ユーザーを更新する
+  Future<void> updateUser(UserInputData inputData);
 }

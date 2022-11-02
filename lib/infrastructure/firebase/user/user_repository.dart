@@ -7,6 +7,7 @@ import '../../../domain/entity/app_platform.dart';
 import '../../../domain/exceptions.dart';
 import '../../../domain/repository/user/entity/auth_provider.dart';
 import '../../../domain/repository/user/entity/user.dart';
+import '../../../domain/repository/user/entity/user_input_data.dart';
 import '../../../domain/repository/user/user_repository.dart';
 import '../../../util/logger.dart';
 import 'documents/user_document.dart';
@@ -26,21 +27,19 @@ class FirebaseUserRepository implements UserRepository {
       );
       _firebaseUser = firebaseUser;
       if (firebaseUser == null) {
-        _docRef = null;
-        _cacheUser = null;
         userChangesController.add(null);
+        _cacheUser = null;
         logger.i('$_logPrefix Notified changes user: null');
         return;
       }
 
       // ユーザードキュメントを監視する
-      _docRef = firestore.collection('user').doc(firebaseUser.uid);
-      _docRef?.snapshots().listen((doc) {
+      docRef?.snapshots().listen((snapshot) {
         if (userChangesController.isClosed) {
           return;
         }
 
-        final user = doc.toUser();
+        final user = snapshot.data();
         if (user == _cacheUser) {
           // ユーザーに変更が無ければ通知しない
           return;
@@ -57,9 +56,49 @@ class FirebaseUserRepository implements UserRepository {
   final FirebaseFirestore firestore;
   final userChangesController = StreamController<User?>.broadcast();
   firebase_auth.User? _firebaseUser;
-  DocumentReference<Map<String, dynamic>>? _docRef;
   User? _cacheUser;
   bool _loggedIn = false;
+
+  DocumentReference<User?>? get docRef {
+    final uid = _firebaseUser?.uid;
+    if (uid == null) {
+      return null;
+    }
+
+    return firestore.collection('user').withConverter<User?>(
+      fromFirestore: (snapshot, _) {
+        final json = snapshot.data();
+        if (json == null) {
+          return null;
+        }
+
+        final userDoc = UserDocument.fromJson(json);
+        return User(
+          uid: snapshot.id,
+          provider: AuthProvider.nameOf(userDoc.provider),
+          createdPlatform: AppPlatform.nameOf(userDoc.createdPlatform),
+          createdAt: userDoc.createdAt,
+          updatedAt: userDoc.updatedAt,
+        );
+      },
+      toFirestore: (user, options) {
+        if (user == null) {
+          return {};
+        }
+
+        final userDoc = UserDocument(
+          provider: user.provider.name,
+          createdPlatform: user.createdPlatform?.name,
+          updatedAt: user.updatedAt,
+        ).toJson();
+        if (options?.merge == true) {
+          // マージの場合、null は除外する
+          userDoc.removeWhere((field, dynamic value) => value == null);
+        }
+        return userDoc;
+      },
+    ).doc(uid);
+  }
 
   @override
   Stream<bool> loggedInChanges() =>
@@ -104,23 +143,14 @@ class FirebaseUserRepository implements UserRepository {
       throw e.toAuthException();
     }
   }
-}
 
-extension _DocDocumentSnapshotHelper on DocumentSnapshot<Map<String, dynamic>> {
-  User? toUser() {
-    final json = data();
-    if (json == null) {
-      return null;
-    }
-    final userDoc = UserDocument.fromJson(json);
-    final createdPlatform = userDoc.createdPlatform;
-    return User(
-      uid: id,
-      provider: AuthProvider.nameOf(userDoc.provider),
-      createdPlatform:
-          createdPlatform != null ? AppPlatform.nameOf(createdPlatform) : null,
-      createdAt: userDoc.createdAt,
-      updatedAt: userDoc.updatedAt,
+  @override
+  Future<void> updateUser(UserInputData inputData) async {
+    await docRef?.set(
+      _cacheUser?.copyWith(
+        createdPlatform: inputData.createdPlatform,
+      ),
+      SetOptions(merge: true),
     );
   }
 }
