@@ -27,8 +27,7 @@ Future<void> main() async {
           (ref) {
             final repository = FirebaseUserRepository(
               auth: ref.watch(firebaseAuthProvider),
-              firebaseUser: ref.watch(firebaseUserProvider).value,
-              docRef: ref.watch(userDocRefProvider),
+              firestore: ref.watch(firebaseFirestoreProvider),
             );
             ref.onDispose(repository.dispose);
             return repository;

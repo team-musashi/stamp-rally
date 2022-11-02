@@ -1,21 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'entity/auth_user.dart';
 import 'entity/user.dart';
+
+/// ログイン中かどうかを返すプロバイダー
+final loggedInProvider = StreamProvider(
+  (ref) => ref.watch(userRepositoryProvider).loggedInChanges(),
+  name: 'loggedInProvider',
+);
+
+/// ユーザープロバイダー
+final userProvider = StreamProvider(
+  (ref) => ref.watch(userRepositoryProvider).userChanges(),
+  name: 'userProvider',
+);
 
 /// ユーザーリポジトリプロバイダー
 final userRepositoryProvider = Provider<UserRepository>(
   (ref) => throw UnimplementedError('Provider was not initialized'),
-  name: 'userRepositoryProvider',
 );
 
 /// ユーザーリポジトリ
 abstract class UserRepository {
-  /// 認証ユーザーを返す
-  AuthUser? getAuthUser();
+  /// ログイン中かどうかを返す
+  Stream<bool> loggedInChanges();
 
   /// 匿名認証でログインする
-  Future<AuthUser> loginAnonymously();
+  Future<void> loginAnonymously();
 
   /// ログアウトする
   Future<void> logout();
@@ -23,9 +33,6 @@ abstract class UserRepository {
   /// 認証ユーザーを削除する
   Future<void> delete();
 
-  /// ユーザーを監視する
-  Stream<User?> changes();
-
   /// ユーザーを返す
-  Future<User?> get();
+  Stream<User?> userChanges();
 }

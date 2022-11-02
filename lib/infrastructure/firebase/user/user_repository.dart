@@ -1,77 +1,108 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 import '../../../domain/entity/app_platform.dart';
 import '../../../domain/exceptions.dart';
 import '../../../domain/repository/user/entity/auth_provider.dart';
-import '../../../domain/repository/user/entity/auth_user.dart';
 import '../../../domain/repository/user/entity/user.dart';
 import '../../../domain/repository/user/user_repository.dart';
 import '../../../util/logger.dart';
 import 'documents/user_document.dart';
 
+const _logPrefix = '[USER]';
+
 /// Firebaseユーザーリポジトリ
 class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository({
     required this.auth,
-    this.firebaseUser,
-    this.docRef,
+    required this.firestore,
   }) {
-    docRef?.snapshots().listen((doc) {
-      if (changesController.isClosed) {
+    // 認証状態を監視する
+    auth.userChanges().listen((firebaseUser) {
+      logger.i(
+        '$_logPrefix Received changed firebaseUser: uid = ${firebaseUser?.uid}',
+      );
+      _firebaseUser = firebaseUser;
+      if (firebaseUser == null) {
+        _docRef = null;
+        _cacheUser = null;
+        userChangesController.add(null);
+        logger.i('$_logPrefix Notified changes user: null');
         return;
       }
-      changesController.add(doc.toUser());
+
+      // ユーザードキュメントを監視する
+      _docRef = firestore.collection('user').doc(firebaseUser.uid);
+      _docRef?.snapshots().listen((doc) {
+        if (userChangesController.isClosed) {
+          return;
+        }
+
+        final user = doc.toUser();
+        if (user == _cacheUser) {
+          // ユーザーに変更が無ければ通知しない
+          return;
+        }
+
+        userChangesController.add(user);
+        _cacheUser = user;
+        logger.i('$_logPrefix Notified changes user: $user');
+      });
     });
   }
 
   final firebase_auth.FirebaseAuth auth;
-  final firebase_auth.User? firebaseUser;
-  final DocumentReference<Map<String, dynamic>>? docRef;
-  final changesController = StreamController<User?>.broadcast();
+  final FirebaseFirestore firestore;
+  final userChangesController = StreamController<User?>.broadcast();
+  firebase_auth.User? _firebaseUser;
+  DocumentReference<Map<String, dynamic>>? _docRef;
+  User? _cacheUser;
+  bool _loggedIn = false;
 
   @override
-  Stream<User?> changes() => changesController.stream;
+  Stream<bool> loggedInChanges() =>
+      userChangesController.stream.map<bool>((user) => user != null).where(
+        (loggedIn) {
+          if (_loggedIn == loggedIn) {
+            // ログイン状態に変更がなければ通知しない
+            return false;
+          }
+
+          _loggedIn = loggedIn;
+          logger.i('$_logPrefix Notified changes loggedIn: $_loggedIn');
+          return true;
+        },
+      );
+
+  @override
+  Stream<User?> userChanges() => userChangesController.stream;
 
   void dispose() {
-    changesController.close();
+    userChangesController.close();
   }
 
   @override
-  AuthUser? getAuthUser() {
-    return firebaseUser?.toAuthUser();
-  }
-
-  @override
-  Future<AuthUser> loginAnonymously() async {
-    assert(firebaseUser == null);
-    final credential = await auth.signInAnonymously();
-    return credential.user!.toAuthUser();
+  Future<void> loginAnonymously() async {
+    assert(_firebaseUser == null);
+    await auth.signInAnonymously();
   }
 
   @override
   Future<void> logout() async {
-    assert(firebaseUser != null);
+    assert(_firebaseUser != null);
     await auth.signOut();
   }
 
   @override
   Future<void> delete() async {
-    assert(firebaseUser != null);
+    assert(_firebaseUser != null);
     try {
-      await firebaseUser!.delete();
+      await _firebaseUser!.delete();
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw e.toAuthException();
     }
-  }
-
-  @override
-  Future<User?> get() async {
-    final doc = await docRef?.get();
-    return doc?.toUser();
   }
 }
 
@@ -82,32 +113,15 @@ extension _DocDocumentSnapshotHelper on DocumentSnapshot<Map<String, dynamic>> {
       return null;
     }
     final userDoc = UserDocument.fromJson(json);
+    final createdPlatform = userDoc.createdPlatform;
     return User(
       uid: id,
       provider: AuthProvider.nameOf(userDoc.provider),
-      createdPlatform: AppPlatform.nameOf(userDoc.createdPlatform),
+      createdPlatform:
+          createdPlatform != null ? AppPlatform.nameOf(createdPlatform) : null,
       createdAt: userDoc.createdAt,
       updatedAt: userDoc.updatedAt,
     );
-  }
-}
-
-extension FirebaseUserEx on firebase_auth.User {
-  /// FirebaseUser => AuthUser
-  AuthUser toAuthUser() => AuthUser(
-        uid: uid,
-        provider: providerData.firstOrNull?.providerId.toAuthProvider() ??
-            AuthProvider.anonymous,
-      );
-}
-
-extension _AuthProviderEx on String {
-  /// String => AuthProvider
-  AuthProvider toAuthProvider() {
-    switch (this) {
-      default:
-        return AuthProvider.anonymous;
-    }
   }
 }
 

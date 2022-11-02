@@ -1,19 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/repository/user/user_repository.dart';
+import '../presentation/page/auth/login_page.dart';
 import '../presentation/page/error/error_page.dart';
 import '../presentation/page/home/home_page.dart';
-import '../presentation/page/welcome/welcome_page.dart';
 import '../util/logger.dart';
 
 part 'router.g.dart';
 
+const _logPrefix = '[GO_ROUTER]';
+
 /// 画面遷移の定義Provider
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/',
+    // 初期表示するパス
+    initialLocation: const HomeRoute().location,
+
+    // ルート定義
     routes: $appRoutes,
 
     // エラー画面
@@ -22,41 +29,70 @@ final routerProvider = Provider<GoRouter>(
 
     // リダイレクト
     redirect: (context, state) {
-      final authUser = ref.watch(userRepositoryProvider).getAuthUser();
-      if (authUser != null) {
-        // ログイン済み
-        return null;
-      }
-
-      if (state.location == const WelcomeRoute().location) {
-        return null;
-      }
-
-      // 未ログインなら Welcome 画面にリダイレクトする
+      final loggedIn = ref.read(loggedInProvider).value == true;
       logger.i(
-        '[GO_ROUTER][REDIRECT] Redirect to root: '
-        'location = ${state.location}',
+        '$_logPrefix redirect(): location = ${state.location}, '
+        'loggedIn = $loggedIn',
       );
-      return const WelcomeRoute().location;
+
+      if (loggedIn) {
+        // ログイン済みで、ログイン画面ならホーム画面にリダイレクトする
+        if (state.location == const LoginRoute().location) {
+          logger.i('$_logPrefix redirect(): Redirect to Home page');
+          return const HomeRoute().location;
+        }
+        return null;
+      }
+
+      // 未ログインでも表示できる画面ならリダイレクトしない
+      if (state.location == const LoginRoute().location) {
+        return null;
+      }
+
+      // 未ログインならログイン画面にリダイレクトする
+      logger.i('$_logPrefix redirect(): Redirect to Login page');
+      return const LoginRoute().location;
     },
+
+    // ログイン状態の変化を検知してリダイレクトを再実行する
+    refreshListenable:
+        GoRouterRefreshNotifier(ref.watch(loggedInProvider.stream)),
   ),
 );
 
-@TypedGoRoute<WelcomeRoute>(
-  path: '/welcome',
+/// ログイン状態の変化を通知する
+class GoRouterRefreshNotifier extends ChangeNotifier {
+  GoRouterRefreshNotifier(Stream<dynamic> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen(
+          (dynamic _) => notifyListeners(),
+        );
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
+@TypedGoRoute<LoginRoute>(
+  path: '/login',
 )
 
-/// Welcome 画面
-class WelcomeRoute extends GoRouteData {
-  const WelcomeRoute();
+/// ログイン画面
+class LoginRoute extends GoRouteData {
+  const LoginRoute();
 
-  static const name = 'welcome';
+  static const name = 'login';
 
   @override
   Page<void> buildPage(BuildContext context) {
     return TransitionPage.none(
       name: name,
-      child: const WelcomePage(),
+      child: const LoginPage(),
     );
   }
 }

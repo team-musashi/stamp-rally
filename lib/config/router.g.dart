@@ -9,20 +9,20 @@ part of 'router.dart';
 // **************************************************************************
 
 List<GoRoute> get $appRoutes => [
-      $welcomeRoute,
+      $loginRoute,
       $homeRoute,
     ];
 
-GoRoute get $welcomeRoute => GoRouteData.$route(
-      path: '/welcome',
-      factory: $WelcomeRouteExtension._fromState,
+GoRoute get $loginRoute => GoRouteData.$route(
+      path: '/login',
+      factory: $LoginRouteExtension._fromState,
     );
 
-extension $WelcomeRouteExtension on WelcomeRoute {
-  static WelcomeRoute _fromState(GoRouterState state) => const WelcomeRoute();
+extension $LoginRouteExtension on LoginRoute {
+  static LoginRoute _fromState(GoRouterState state) => const LoginRoute();
 
   String get location => GoRouteData.$location(
-        '/welcome',
+        '/login',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

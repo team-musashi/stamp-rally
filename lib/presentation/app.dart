@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../application/user/state/create_user_result.dart';
 import '../application/user/state/delete_user_result.dart';
 import '../config/router.dart';
 import 'component/async_value_handler.dart';
@@ -15,6 +16,12 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ユーザーの作成結果を監視する
+    ref.listenResult(
+      createUserResultProvider,
+      completeMessage: 'ようこそ！',
+    );
+
     // ユーザーの削除結果を監視する
     ref.listenResult(
       deleteUserResultProvider,

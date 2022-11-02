@@ -8,7 +8,7 @@ enum AppPlatform {
 
   /// 文字列から AppPlatform を返す
   /// 見つからない場合は IterableElementError.noElement() を投げる
-  static AppPlatform nameOf(String? name) =>
+  static AppPlatform nameOf(String name) =>
       AppPlatform.values.firstWhere((platform) => platform.name == name);
 
   /// 現在のプラットフォームを返す
