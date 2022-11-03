@@ -87,8 +87,8 @@ class FirebaseUserRepository implements UserRepository {
         final userDoc = UserDocument.fromJson(json);
         return User(
           uid: snapshot.id,
-          provider: AuthProvider.nameOf(userDoc.provider),
-          createdPlatform: AppPlatform.nameOf(userDoc.createdPlatform),
+          authProvider: AuthProvider.nameOf(userDoc.authProvider),
+          platform: AppPlatform.nameOf(userDoc.platform),
           createdAt: userDoc.createdAt,
           updatedAt: userDoc.updatedAt,
         );
@@ -99,8 +99,8 @@ class FirebaseUserRepository implements UserRepository {
         }
 
         final json = UserDocument(
-          provider: user.provider.name,
-          createdPlatform: user.createdPlatform?.name,
+          authProvider: user.authProvider.name,
+          platform: user.platform?.name,
           updatedAt: user.updatedAt,
         ).toJson();
         if (options?.merge == true) {
@@ -167,7 +167,7 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> updateUser(UserInputData inputData) async {
     await _docRef?.set(
       _cacheUser?.copyWith(
-        createdPlatform: inputData.createdPlatform,
+        platform: inputData.platform,
       ),
       SetOptions(merge: true),
     );

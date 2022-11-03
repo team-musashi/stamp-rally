@@ -9,8 +9,8 @@ part 'user_document.g.dart';
 @freezed
 class UserDocument with _$UserDocument {
   const factory UserDocument({
-    String? provider,
-    String? createdPlatform,
+    String? authProvider,
+    String? platform,
     @ServerTimestampConverter() DateTime? createdAt,
     @ServerTimestampConverter() DateTime? updatedAt,
   }) = _UserDocument;

@@ -10,16 +10,16 @@ part of 'user_document.dart';
 
 _$_UserDocument _$$_UserDocumentFromJson(Map<String, dynamic> json) =>
     _$_UserDocument(
-      provider: json['provider'] as String?,
-      createdPlatform: json['createdPlatform'] as String?,
+      authProvider: json['authProvider'] as String?,
+      platform: json['platform'] as String?,
       createdAt: const ServerTimestampConverter().fromJson(json['createdAt']),
       updatedAt: const ServerTimestampConverter().fromJson(json['updatedAt']),
     );
 
 Map<String, dynamic> _$$_UserDocumentToJson(_$_UserDocument instance) =>
     <String, dynamic>{
-      'provider': instance.provider,
-      'createdPlatform': instance.createdPlatform,
+      'authProvider': instance.authProvider,
+      'platform': instance.platform,
       'createdAt': const ServerTimestampConverter().toJson(instance.createdAt),
       'updatedAt': const ServerTimestampConverter().toJson(instance.updatedAt),
     };

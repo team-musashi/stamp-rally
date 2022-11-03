@@ -44,7 +44,7 @@ class UserService {
       // ユーザードキュメントが追加されたらユーザーを更新する
       await userRepository.updateUser(
         UserInputData(
-          createdPlatform: AppPlatform.currentPlatform,
+          platform: AppPlatform.currentPlatform,
         ),
       );
     });

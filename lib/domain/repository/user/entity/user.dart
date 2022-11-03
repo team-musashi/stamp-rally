@@ -13,10 +13,10 @@ class User with _$User {
     required String uid,
 
     /// 認証プロバイダー
-    required AuthProvider provider,
+    required AuthProvider authProvider,
 
     /// 作成時のプラットフォーム
-    AppPlatform? createdPlatform,
+    AppPlatform? platform,
 
     /// 作成日時
     DateTime? createdAt,

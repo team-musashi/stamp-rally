@@ -20,8 +20,8 @@ UserDocument _$UserDocumentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserDocument {
-  String? get provider => throw _privateConstructorUsedError;
-  String? get createdPlatform => throw _privateConstructorUsedError;
+  String? get authProvider => throw _privateConstructorUsedError;
+  String? get platform => throw _privateConstructorUsedError;
   @ServerTimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @ServerTimestampConverter()
@@ -40,8 +40,8 @@ abstract class $UserDocumentCopyWith<$Res> {
       _$UserDocumentCopyWithImpl<$Res, UserDocument>;
   @useResult
   $Res call(
-      {String? provider,
-      String? createdPlatform,
+      {String? authProvider,
+      String? platform,
       @ServerTimestampConverter() DateTime? createdAt,
       @ServerTimestampConverter() DateTime? updatedAt});
 }
@@ -59,19 +59,19 @@ class _$UserDocumentCopyWithImpl<$Res, $Val extends UserDocument>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? provider = freezed,
-    Object? createdPlatform = freezed,
+    Object? authProvider = freezed,
+    Object? platform = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      provider: freezed == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
+      authProvider: freezed == authProvider
+          ? _value.authProvider
+          : authProvider // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdPlatform: freezed == createdPlatform
-          ? _value.createdPlatform
-          : createdPlatform // ignore: cast_nullable_to_non_nullable
+      platform: freezed == platform
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -94,8 +94,8 @@ abstract class _$$_UserDocumentCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? provider,
-      String? createdPlatform,
+      {String? authProvider,
+      String? platform,
       @ServerTimestampConverter() DateTime? createdAt,
       @ServerTimestampConverter() DateTime? updatedAt});
 }
@@ -111,19 +111,19 @@ class __$$_UserDocumentCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? provider = freezed,
-    Object? createdPlatform = freezed,
+    Object? authProvider = freezed,
+    Object? platform = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$_UserDocument(
-      provider: freezed == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
+      authProvider: freezed == authProvider
+          ? _value.authProvider
+          : authProvider // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdPlatform: freezed == createdPlatform
-          ? _value.createdPlatform
-          : createdPlatform // ignore: cast_nullable_to_non_nullable
+      platform: freezed == platform
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -141,8 +141,8 @@ class __$$_UserDocumentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserDocument extends _UserDocument {
   const _$_UserDocument(
-      {this.provider,
-      this.createdPlatform,
+      {this.authProvider,
+      this.platform,
       @ServerTimestampConverter() this.createdAt,
       @ServerTimestampConverter() this.updatedAt})
       : super._();
@@ -151,9 +151,9 @@ class _$_UserDocument extends _UserDocument {
       _$$_UserDocumentFromJson(json);
 
   @override
-  final String? provider;
+  final String? authProvider;
   @override
-  final String? createdPlatform;
+  final String? platform;
   @override
   @ServerTimestampConverter()
   final DateTime? createdAt;
@@ -163,7 +163,7 @@ class _$_UserDocument extends _UserDocument {
 
   @override
   String toString() {
-    return 'UserDocument(provider: $provider, createdPlatform: $createdPlatform, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserDocument(authProvider: $authProvider, platform: $platform, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -171,10 +171,10 @@ class _$_UserDocument extends _UserDocument {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserDocument &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
-            (identical(other.createdPlatform, createdPlatform) ||
-                other.createdPlatform == createdPlatform) &&
+            (identical(other.authProvider, authProvider) ||
+                other.authProvider == authProvider) &&
+            (identical(other.platform, platform) ||
+                other.platform == platform) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -184,7 +184,7 @@ class _$_UserDocument extends _UserDocument {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, provider, createdPlatform, createdAt, updatedAt);
+      Object.hash(runtimeType, authProvider, platform, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -202,8 +202,8 @@ class _$_UserDocument extends _UserDocument {
 
 abstract class _UserDocument extends UserDocument {
   const factory _UserDocument(
-      {final String? provider,
-      final String? createdPlatform,
+      {final String? authProvider,
+      final String? platform,
       @ServerTimestampConverter() final DateTime? createdAt,
       @ServerTimestampConverter() final DateTime? updatedAt}) = _$_UserDocument;
   const _UserDocument._() : super._();
@@ -212,9 +212,9 @@ abstract class _UserDocument extends UserDocument {
       _$_UserDocument.fromJson;
 
   @override
-  String? get provider;
+  String? get authProvider;
   @override
-  String? get createdPlatform;
+  String? get platform;
   @override
   @ServerTimestampConverter()
   DateTime? get createdAt;

@@ -20,10 +20,10 @@ mixin _$User {
   String get uid => throw _privateConstructorUsedError;
 
   /// 認証プロバイダー
-  AuthProvider get provider => throw _privateConstructorUsedError;
+  AuthProvider get authProvider => throw _privateConstructorUsedError;
 
   /// 作成時のプラットフォーム
-  AppPlatform? get createdPlatform => throw _privateConstructorUsedError;
+  AppPlatform? get platform => throw _privateConstructorUsedError;
 
   /// 作成日時
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -42,8 +42,8 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String uid,
-      AuthProvider provider,
-      AppPlatform? createdPlatform,
+      AuthProvider authProvider,
+      AppPlatform? platform,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -62,8 +62,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? uid = null,
-    Object? provider = null,
-    Object? createdPlatform = freezed,
+    Object? authProvider = null,
+    Object? platform = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -72,13 +72,13 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      provider: null == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
+      authProvider: null == authProvider
+          ? _value.authProvider
+          : authProvider // ignore: cast_nullable_to_non_nullable
               as AuthProvider,
-      createdPlatform: freezed == createdPlatform
-          ? _value.createdPlatform
-          : createdPlatform // ignore: cast_nullable_to_non_nullable
+      platform: freezed == platform
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
               as AppPlatform?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -100,8 +100,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String uid,
-      AuthProvider provider,
-      AppPlatform? createdPlatform,
+      AuthProvider authProvider,
+      AppPlatform? platform,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -116,8 +116,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @override
   $Res call({
     Object? uid = null,
-    Object? provider = null,
-    Object? createdPlatform = freezed,
+    Object? authProvider = null,
+    Object? platform = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -126,13 +126,13 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      provider: null == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
+      authProvider: null == authProvider
+          ? _value.authProvider
+          : authProvider // ignore: cast_nullable_to_non_nullable
               as AuthProvider,
-      createdPlatform: freezed == createdPlatform
-          ? _value.createdPlatform
-          : createdPlatform // ignore: cast_nullable_to_non_nullable
+      platform: freezed == platform
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
               as AppPlatform?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -151,8 +151,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 class _$_User implements _User {
   const _$_User(
       {required this.uid,
-      required this.provider,
-      this.createdPlatform,
+      required this.authProvider,
+      this.platform,
       this.createdAt,
       this.updatedAt});
 
@@ -162,11 +162,11 @@ class _$_User implements _User {
 
   /// 認証プロバイダー
   @override
-  final AuthProvider provider;
+  final AuthProvider authProvider;
 
   /// 作成時のプラットフォーム
   @override
-  final AppPlatform? createdPlatform;
+  final AppPlatform? platform;
 
   /// 作成日時
   @override
@@ -178,7 +178,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(uid: $uid, provider: $provider, createdPlatform: $createdPlatform, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'User(uid: $uid, authProvider: $authProvider, platform: $platform, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -187,10 +187,10 @@ class _$_User implements _User {
         (other.runtimeType == runtimeType &&
             other is _$_User &&
             (identical(other.uid, uid) || other.uid == uid) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
-            (identical(other.createdPlatform, createdPlatform) ||
-                other.createdPlatform == createdPlatform) &&
+            (identical(other.authProvider, authProvider) ||
+                other.authProvider == authProvider) &&
+            (identical(other.platform, platform) ||
+                other.platform == platform) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -199,7 +199,7 @@ class _$_User implements _User {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, uid, provider, createdPlatform, createdAt, updatedAt);
+      runtimeType, uid, authProvider, platform, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -211,8 +211,8 @@ class _$_User implements _User {
 abstract class _User implements User {
   const factory _User(
       {required final String uid,
-      required final AuthProvider provider,
-      final AppPlatform? createdPlatform,
+      required final AuthProvider authProvider,
+      final AppPlatform? platform,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$_User;
 
@@ -223,11 +223,11 @@ abstract class _User implements User {
   @override
 
   /// 認証プロバイダー
-  AuthProvider get provider;
+  AuthProvider get authProvider;
   @override
 
   /// 作成時のプラットフォーム
-  AppPlatform? get createdPlatform;
+  AppPlatform? get platform;
   @override
 
   /// 作成日時

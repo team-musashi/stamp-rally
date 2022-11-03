@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserInputData {
-  AppPlatform? get createdPlatform => throw _privateConstructorUsedError;
+  AppPlatform? get platform => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserInputDataCopyWith<UserInputData> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $UserInputDataCopyWith<$Res> {
           UserInputData value, $Res Function(UserInputData) then) =
       _$UserInputDataCopyWithImpl<$Res, UserInputData>;
   @useResult
-  $Res call({AppPlatform? createdPlatform});
+  $Res call({AppPlatform? platform});
 }
 
 /// @nodoc
@@ -45,12 +45,12 @@ class _$UserInputDataCopyWithImpl<$Res, $Val extends UserInputData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? createdPlatform = freezed,
+    Object? platform = freezed,
   }) {
     return _then(_value.copyWith(
-      createdPlatform: freezed == createdPlatform
-          ? _value.createdPlatform
-          : createdPlatform // ignore: cast_nullable_to_non_nullable
+      platform: freezed == platform
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
               as AppPlatform?,
     ) as $Val);
   }
@@ -64,7 +64,7 @@ abstract class _$$_UserInputDataCopyWith<$Res>
       __$$_UserInputDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AppPlatform? createdPlatform});
+  $Res call({AppPlatform? platform});
 }
 
 /// @nodoc
@@ -78,12 +78,12 @@ class __$$_UserInputDataCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? createdPlatform = freezed,
+    Object? platform = freezed,
   }) {
     return _then(_$_UserInputData(
-      createdPlatform: freezed == createdPlatform
-          ? _value.createdPlatform
-          : createdPlatform // ignore: cast_nullable_to_non_nullable
+      platform: freezed == platform
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
               as AppPlatform?,
     ));
   }
@@ -92,14 +92,14 @@ class __$$_UserInputDataCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserInputData implements _UserInputData {
-  const _$_UserInputData({this.createdPlatform});
+  const _$_UserInputData({this.platform});
 
   @override
-  final AppPlatform? createdPlatform;
+  final AppPlatform? platform;
 
   @override
   String toString() {
-    return 'UserInputData(createdPlatform: $createdPlatform)';
+    return 'UserInputData(platform: $platform)';
   }
 
   @override
@@ -107,12 +107,12 @@ class _$_UserInputData implements _UserInputData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserInputData &&
-            (identical(other.createdPlatform, createdPlatform) ||
-                other.createdPlatform == createdPlatform));
+            (identical(other.platform, platform) ||
+                other.platform == platform));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, createdPlatform);
+  int get hashCode => Object.hash(runtimeType, platform);
 
   @JsonKey(ignore: true)
   @override
@@ -122,11 +122,11 @@ class _$_UserInputData implements _UserInputData {
 }
 
 abstract class _UserInputData implements UserInputData {
-  const factory _UserInputData({final AppPlatform? createdPlatform}) =
+  const factory _UserInputData({final AppPlatform? platform}) =
       _$_UserInputData;
 
   @override
-  AppPlatform? get createdPlatform;
+  AppPlatform? get platform;
   @override
   @JsonKey(ignore: true)
   _$$_UserInputDataCopyWith<_$_UserInputData> get copyWith =>
