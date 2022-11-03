@@ -21,20 +21,21 @@ class FirebaseUserRepository implements UserRepository {
     required this.firestore,
   }) {
     // 認証状態を監視する
-    auth.userChanges().listen((firebaseUser) {
+    auth.userChanges().listen((firebaseUser) async {
       logger.i(
         '$_logPrefix Received changed firebaseUser: uid = ${firebaseUser?.uid}',
       );
       _firebaseUser = firebaseUser;
       if (firebaseUser == null) {
         userChangesController.add(null);
-        _cacheUser = null;
         logger.i('$_logPrefix Notified changes user: null');
+        _cacheUser = null;
+        await _userChangesSubscription?.cancel();
         return;
       }
 
       // ユーザードキュメントを監視する
-      docRef?.snapshots().listen((snapshot) {
+      _userChangesSubscription = docRef?.snapshots().listen((snapshot) {
         if (userChangesController.isClosed) {
           return;
         }
@@ -46,8 +47,8 @@ class FirebaseUserRepository implements UserRepository {
         }
 
         userChangesController.add(user);
-        _cacheUser = user;
         logger.i('$_logPrefix Notified changes user: $user');
+        _cacheUser = user;
       });
     });
   }
@@ -58,6 +59,7 @@ class FirebaseUserRepository implements UserRepository {
   firebase_auth.User? _firebaseUser;
   User? _cacheUser;
   bool _loggedIn = false;
+  StreamSubscription<DocumentSnapshot<User?>>? _userChangesSubscription;
 
   DocumentReference<User?>? get docRef {
     final uid = _firebaseUser?.uid;
