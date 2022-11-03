@@ -135,7 +135,7 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
-  Future<void> delete() async {
+  Future<void> deleteUser() async {
     assert(_firebaseUser != null);
     try {
       await _firebaseUser!.delete();

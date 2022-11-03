@@ -52,7 +52,7 @@ class UserService {
     final notifier = ref.read(deleteUserResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
-      await ref.read(userRepositoryProvider).delete();
+      await ref.read(userRepositoryProvider).deleteUser();
     });
   }
 }

@@ -31,8 +31,8 @@ abstract class UserRepository {
   /// ログアウトする
   Future<void> logout();
 
-  /// 認証ユーザーを削除する
-  Future<void> delete();
+  /// ユーザーを削除する
+  Future<void> deleteUser();
 
   /// ユーザーを返す
   Stream<User?> userChanges();
