@@ -4,7 +4,10 @@ import 'package:collection/collection.dart';
 
 /// アプリのプラットフォーム
 enum AppPlatform {
+  /// Android
   android,
+
+  /// iOS
   iOS,
   ;
 

@@ -14,7 +14,7 @@ import 'document/user_document.dart';
 
 const _logPrefix = '[USER]';
 
-/// Firebaseユーザーリポジトリ
+/// Firebase ユーザーリポジトリ
 class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository({
     required this.auth,
@@ -27,6 +27,7 @@ class FirebaseUserRepository implements UserRepository {
       );
       _firebaseUser = firebaseUser;
       if (firebaseUser == null) {
+        // 認証ユーザーが削除された場合
         userChangesController.add(null);
         logger.i('$_logPrefix Notified changes user: null');
         _cacheUser = null;
@@ -35,7 +36,7 @@ class FirebaseUserRepository implements UserRepository {
       }
 
       // ユーザードキュメントを監視する
-      _userChangesSubscription = docRef?.snapshots().listen((snapshot) {
+      _userChangesSubscription = _docRef?.snapshots().listen((snapshot) {
         if (userChangesController.isClosed) {
           return;
         }
@@ -56,12 +57,21 @@ class FirebaseUserRepository implements UserRepository {
   final firebase_auth.FirebaseAuth auth;
   final FirebaseFirestore firestore;
   final userChangesController = StreamController<User?>.broadcast();
+
+  /// Firebase Auth の認証ユーザー
   firebase_auth.User? _firebaseUser;
+
+  /// キャッシュされた最新のユーザー
   User? _cacheUser;
+
+  /// ログイン済みかどうか
   bool _loggedIn = false;
+
+  /// ユーザードキュメントの監視をキャンセルするために保持
   StreamSubscription<DocumentSnapshot<User?>>? _userChangesSubscription;
 
-  DocumentReference<User?>? get docRef {
+  /// ユーザードキュメントの参照を返す
+  DocumentReference<User?>? get _docRef {
     final uid = _firebaseUser?.uid;
     if (uid == null) {
       return null;
@@ -88,18 +98,22 @@ class FirebaseUserRepository implements UserRepository {
           return {};
         }
 
-        final userDoc = UserDocument(
+        final json = UserDocument(
           provider: user.provider.name,
           createdPlatform: user.createdPlatform?.name,
           updatedAt: user.updatedAt,
         ).toJson();
         if (options?.merge == true) {
-          // マージの場合、null は除外する
-          userDoc.removeWhere((field, dynamic value) => value == null);
+          // 除外しないと null で上書きされてしまうのでマージの場合は null は除外する
+          json.removeWhere((field, dynamic value) => value == null);
         }
-        return userDoc;
+        return json;
       },
     ).doc(uid);
+  }
+
+  void dispose() {
+    userChangesController.close();
   }
 
   @override
@@ -120,14 +134,14 @@ class FirebaseUserRepository implements UserRepository {
   @override
   Stream<User?> userChanges() => userChangesController.stream;
 
-  void dispose() {
-    userChangesController.close();
-  }
-
   @override
   Future<void> loginAnonymously() async {
     assert(_firebaseUser == null);
-    await auth.signInAnonymously();
+    try {
+      await auth.signInAnonymously();
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw e.toAuthException();
+    }
   }
 
   @override
@@ -141,6 +155,9 @@ class FirebaseUserRepository implements UserRepository {
     assert(_firebaseUser != null);
     try {
       await _firebaseUser!.delete();
+
+      // ユーザードキュメントの削除は Firebase の extensionで行うので
+      // ここでは削除しない
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw e.toAuthException();
     }
@@ -148,7 +165,7 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Future<void> updateUser(UserInputData inputData) async {
-    await docRef?.set(
+    await _docRef?.set(
       _cacheUser?.copyWith(
         createdPlatform: inputData.createdPlatform,
       ),

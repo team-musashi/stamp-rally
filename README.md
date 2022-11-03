@@ -57,31 +57,39 @@ make build-runner
 
 ### Presentation 層
 
+ユーザーとの I/F を担う層。Application 層と Domain 層に依存する。Infrastructure 層に依存してはいけない。
+
 #### Widget
 
-ページや UI 部品の Widget クラス群。State を監視（ watch / listen ）して UI に表現する。ユーザーイベントを検知して Service のメソッドを呼び出す。キャッシュが効かなくなるので直接 Repository Interface を呼び出してはいけない。
+ページや UI 部品の Widget クラス群。State を監視（ watch / listen ）して UI に表現する。ユーザーイベントを検知して Service のメソッドを呼び出す。キャッシュが効かなくなるので直接 Repository Interface を呼び出してはいけない。画面遷移の実装は Widget のイベントハンドラー内で行ってよい。
 
 #### Application 層
 
+アプリケーションのロジックや状態を定義する層。Domain 層に依存する。Presentation 層と Infrastructure 層に依存してはいけない。
+
 #### State
 
-アプリのあらゆる状態。Entity そのものでもよいし、新たに定義した状態クラスでもよい。`StateProvider` 等でラップされ Widget や他の State から参照される。
+アプリのあらゆる状態。Domain 層の Entity そのものでもよいし、複数の Repository をまたいだ Entity を統合するクラスでもよい。State は `StateProvider` 等でラップされ Widget や他の State から参照される。
 
 #### Service
 
-ユーザーイベントを受け付けて、複数の Repository Interface を呼び出して Entity を受け取って State を更新する。Widget からのメソッド呼び出しや、依存する State の更新を契機に発火する。
+ユーザーイベントを受け付けて、複数の Repository Interface を呼び出して Entity を受け取って State を更新するサービスクラス。Widget からのメソッド呼び出しや、依存する State の更新を契機に発火する。
 
 ### Domain 層
 
+ドメインロジックやドメインオブジェクト（エンティティ）を定義する層。どの層にも依存してはいけない。
+
 #### Entity
 
-Repository Interface で扱うデータの構造体。どの層にも依存してはいけない。入力値のバリデーションは Entity のコンストラクタで実装する。Infrastructure 層が投げる例外はドメイン層で定義する。
+Repository Interface で扱うドメインオブジェクト（データの構造体）。入力値のバリデーションは Entity のコンストラクタで実装する。Infrastructure 層が投げる例外はドメイン層で定義する。
 
 #### Repository Interface
 
-データの永続化をになう Repository のインターフェース。どの層にも依存してはいけない。
+データの永続化や外部サービス連携を担う Repository のインターフェース。集約毎に定義する。
 
 ### Infrastructure 層
+
+データの永続化や外部サービス連携を担う層。Domain 層に依存する。Presentation 層と Application 層に依存してはいけない。
 
 #### Repository Implements
 
@@ -94,11 +102,11 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 ## フォルダ構成
 
 ```  
-├── config                                   設定値、環境変数など
+├── config                                   アプリケーションの設定値、環境変数など
 ├── application                              アプリケーション層
-│   └── <集約>
-│       ├── <state>                          状態
-│       └── <feature>_service.dart           サービスクラス
+│   └── <関心事>
+│       ├── <state>                          状態クラス群
+│       └── <関心事>_service.dart             サービスクラス
 ├── domain                                   ドメイン層
 │   ├── exceptions.dart                      例外クラス
 │   └── repository
@@ -106,7 +114,7 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 │           ├── <集約>_repository.dart        リポジトリのインターフェースクラス
 │           └── entity                       集約単位のエンティティ
 ├── infrastructure                           インフラストラクチャ層
-│   └── <data_source>
+│   └── <データソース>
 │       └── <集約>
 │           └── <集約>_repository.dart       リポジトリの実装
 ├── presentation
@@ -116,7 +124,7 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 │       └── <関心事>
 │           ├── component                    画面単位の Widget
 │           └── <関心事>_<CURD>page.dart      画面Widget
-└── util                                     どの層からもアクセス可能なクラス、拡張機能、ロガー、言語ファイルなど
+└── util                                     どの層からもアクセス可能な便利クラス
 ```
 
 ### ファイル分割の方針
@@ -131,7 +139,6 @@ git-flow を採用しています。
 
 - 参考サイト
   - [Git-flowって何？](https://qiita.com/KosukeSone/items/514dd24828b485c69a05)
-
 
 ## CI (継続的インテグレーション)
 

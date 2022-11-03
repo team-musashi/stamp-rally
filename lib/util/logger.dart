@@ -1,10 +1,19 @@
 import 'dart:io';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:roggle/roggle.dart';
 
 const _loggerName = '[APP]';
 
+/// ロガー
+///
+/// どこから呼び出してOK
+/// ログレベル毎の使い分けは次の通り
+/// verbose: 垂れ流し系、大量に出力される場合
+/// debug: デバッグ時に一時的に使う場合
+/// info: ユーザーイベントなど、通常のログ
+/// warning: 注意喚起を促す
+/// error: エラー発生時
+/// wtf: あり得ないことが起きた時
 final logger = Roggle(
   printer: SinglePrettyPrinter(
     loggerName: _loggerName,
@@ -16,65 +25,3 @@ final logger = Roggle(
     printCaller: false,
   ),
 );
-
-class ProviderLogger extends ProviderObserver {
-  @override
-  void didAddProvider(
-    ProviderBase<dynamic> provider,
-    Object? value,
-    ProviderContainer container,
-  ) {
-    final name = provider.name;
-    if (name != null) {
-      logger.v(
-        '[RIVERPOD][ADD] $name: value = $value',
-      );
-    }
-  }
-
-  @override
-  void providerDidFail(
-    ProviderBase<dynamic> provider,
-    Object error,
-    StackTrace stackTrace,
-    ProviderContainer container,
-  ) {
-    final name = provider.name;
-    if (name != null) {
-      logger.w(
-        '[RIVERPOD][ERROR] $name',
-        error,
-        stackTrace,
-      );
-    }
-  }
-
-  @override
-  void didUpdateProvider(
-    ProviderBase<dynamic> provider,
-    Object? previousValue,
-    Object? newValue,
-    ProviderContainer container,
-  ) {
-    final name = provider.name;
-    if (name != null) {
-      logger.v(
-        '[RIVERPOD][UPDATE] $name: '
-        'newValue = $newValue',
-      );
-    }
-  }
-
-  @override
-  void didDisposeProvider(
-    ProviderBase<dynamic> provider,
-    ProviderContainer container,
-  ) {
-    final name = provider.name;
-    if (name != null) {
-      logger.v(
-        '[RIVERPOD][DISPOSE] $name',
-      );
-    }
-  }
-}

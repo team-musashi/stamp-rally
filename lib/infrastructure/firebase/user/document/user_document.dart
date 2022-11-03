@@ -5,6 +5,7 @@ import '../../converter.dart';
 part 'user_document.freezed.dart';
 part 'user_document.g.dart';
 
+/// Firestore のユーザードキュメント
 @freezed
 class UserDocument with _$UserDocument {
   const factory UserDocument({

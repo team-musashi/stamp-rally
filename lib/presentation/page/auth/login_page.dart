@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../application/user/user_service.dart';
+import '../../component/create_user.dart';
 
 /// ログイン画面
-class LoginPage extends ConsumerWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () async {
-                await ref.read(userServiceProvider).createUser();
-              },
-              child: const Text('はじめる'),
-            ),
+          children: const [
+            CreateUserButton(),
           ],
         ),
       ),

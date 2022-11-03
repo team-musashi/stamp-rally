@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/repository/user/user_repository.dart';
-import 'infrastructure/firebase/auth.dart';
-import 'infrastructure/firebase/core.dart';
-import 'infrastructure/firebase/firestore.dart';
+import 'infrastructure/firebase/firebase.dart';
 import 'infrastructure/firebase/user/user_repository.dart';
 import 'presentation/app.dart';
-import 'util/logger.dart';
+import 'util/provider_logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +20,6 @@ Future<void> main() async {
       ],
       overrides: [
         // 各 Repository の上書き
-
         userRepositoryProvider.overrideWith(
           (ref) {
             final repository = FirebaseUserRepository(

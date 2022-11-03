@@ -14,7 +14,7 @@ part 'router.g.dart';
 
 const _logPrefix = '[GO_ROUTER]';
 
-/// 画面遷移の定義Provider
+/// ルータープロバイダー
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
     // 初期表示するパス
@@ -153,6 +153,7 @@ class TransitionPage extends CustomTransitionPage<void> {
           name: name,
         );
 
+  /// フェード
   factory TransitionPage.fade({
     required Widget child,
     required String name,
@@ -163,6 +164,7 @@ class TransitionPage extends CustomTransitionPage<void> {
         transitionsBuilder: _fadeTransitionsBuilder,
       );
 
+  /// スライド
   factory TransitionPage.slide({
     required Widget child,
     required String name,
@@ -173,6 +175,7 @@ class TransitionPage extends CustomTransitionPage<void> {
         transitionsBuilder: _slideTransitionsBuilder,
       );
 
+  /// トランジションなし
   factory TransitionPage.none({
     required Widget child,
     required String name,

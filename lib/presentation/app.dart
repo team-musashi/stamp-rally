@@ -10,7 +10,7 @@ import 'component/dialog.dart';
 import 'component/loading.dart';
 import 'component/scaffold_messanger.dart';
 
-/// アプリ
+/// スタンプラリーアプリ
 class App extends ConsumerWidget {
   const App({super.key});
 
@@ -49,6 +49,7 @@ class App extends ConsumerWidget {
                 child: Stack(
                   children: [
                     child!,
+                    // ローディング状態を見て必要ならローディングを表示する
                     if (isLoading) const OverlayLoading(),
                   ],
                 ),

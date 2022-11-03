@@ -6,6 +6,7 @@ environment:
   sdk: '>=2.18.2 <3.0.0'
 dependencies:
   cloud_firestore: ^3.5.1
+  # List 系の拡張されたメソッド (例 firstWhereOrNull) を使いたいため
   collection: ^1.16.0
   cupertino_icons: ^1.0.5
   firebase_auth: ^3.11.2
@@ -15,9 +16,11 @@ dependencies:
   flutter_riverpod: ^2.1.0
   freezed: ^2.2.1
   freezed_annotation: ^2.2.0
+  # Widget 間の余白の入力が楽になるため
   gap: ^2.0.0
   go_router: ^5.1.1
   json_serializable: ^6.5.4
+  # ロガーパッケージ
   roggle: ^0.3.0
 
 dependency_overrides:
@@ -28,6 +31,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   go_router_builder: ^1.0.15
+  # 厳しめの Linter
   pedantic_mono: ^1.20.0
 
 flutter:

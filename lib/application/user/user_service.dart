@@ -12,6 +12,9 @@ final userServiceProvider = Provider(
 );
 
 /// ユーザーサービス
+///
+/// ユーザーに関する操作を提供する
+/// Widget から呼ばれ、各 Repository や State を操作するロジックを実装する
 class UserService {
   const UserService(this.ref);
 

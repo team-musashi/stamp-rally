@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/constants.dart';
 import 'firebase_options_dev.dart' as dev;
@@ -15,3 +18,13 @@ Future<void> initializeFirebaseApp() async {
     options: firebaseOptions,
   );
 }
+
+/// FirebaseAuthプロバイダー
+final firebaseAuthProvider = Provider(
+  (ref) => FirebaseAuth.instance,
+);
+
+/// FirebaseFirestoreプロバイダー
+final firebaseFirestoreProvider = Provider(
+  (ref) => FirebaseFirestore.instance,
+);

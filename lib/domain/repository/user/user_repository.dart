@@ -21,6 +21,8 @@ final userRepositoryProvider = Provider<UserRepository>(
 );
 
 /// ユーザーリポジトリ
+///
+/// ユーザーの認証に関する操作やユーザー情報の取得や更新を行う
 abstract class UserRepository {
   /// ログイン中かどうかを返す
   Stream<bool> loggedInChanges();

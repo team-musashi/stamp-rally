@@ -16,8 +16,6 @@ linter:
 analyzer:
   exclude:
     - '**/*.freezed.dart'
-    - '**/localization/*.dart'
-    - '**/generated_plugin_registrant.dart'
     - '**/assets/*.gen.dart'
     - '**/firebase_options_*.dart'
   errors:
