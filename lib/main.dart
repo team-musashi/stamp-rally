@@ -1,93 +1,37 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:stamp_rally/firebase_options_dev.dart' as dev;
-import 'package:stamp_rally/firebase_options_prod.dart' as prod;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-const flavor = String.fromEnvironment('FLAVOR');
+import 'domain/repository/user/user_repository.dart';
+import 'infrastructure/firebase/firebase.dart';
+import 'infrastructure/firebase/user/user_repository.dart';
+import 'presentation/app.dart';
+import 'util/provider_logger.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Flavor に応じた FirebaseOptions を準備する
-  final firebaseOptions = flavor == 'prod'
-      ? prod.DefaultFirebaseOptions.currentPlatform
-      : dev.DefaultFirebaseOptions.currentPlatform;
-
   // Firebase の初期化
-  await Firebase.initializeApp(
-    options: firebaseOptions,
-  );
+  await initializeFirebaseApp();
 
-  // FirebaseUser を取得する
-  final firebaseUser = await FirebaseAuth.instance.userChanges().first;
-  print('uid = ${firebaseUser?.uid}');
-  if (firebaseUser == null) {
-    // 未サインインなら匿名ユーザーでサインインする
-    final credential = await FirebaseAuth.instance.signInAnonymously();
-    final uid = credential.user!.uid;
-    print('Signed in: uid = $uid');
-  }
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+  runApp(
+    ProviderScope(
+      observers: [
+        ProviderLogger(),
+      ],
+      overrides: [
+        // 各 Repository の上書き
+        userRepositoryProvider.overrideWith(
+          (ref) {
+            final repository = FirebaseUserRepository(
+              auth: ref.watch(firebaseAuthProvider),
+              firestore: ref.watch(firebaseFirestoreProvider),
+            );
+            ref.onDispose(repository.dispose);
+            return repository;
+          },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
+      ],
+      child: const App(),
+    ),
+  );
 }
