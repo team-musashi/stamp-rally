@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 /// アプリのプラットフォーム
 enum AppPlatform {
   android,
-  ios,
+  iOS,
   ;
 
   /// 文字列から AppPlatform を返す
@@ -19,7 +19,7 @@ enum AppPlatform {
       return AppPlatform.android;
     }
     if (Platform.isIOS) {
-      return AppPlatform.ios;
+      return AppPlatform.iOS;
     }
     throw ArgumentError('Unknown platform');
   }
