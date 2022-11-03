@@ -42,7 +42,6 @@ class UserService {
           createdPlatform: AppPlatform.currentPlatform,
         ),
       );
-      return user;
     });
   }
 

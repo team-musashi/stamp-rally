@@ -47,6 +47,7 @@ extension WidgetRefEx on WidgetRef {
       resultProvider,
       (previous, next) async {
         if (next.isLoading) {
+          // 処理中
           if (loading) {
             read(overlayLoadingProvider.notifier).update((_) => true);
           }
@@ -54,8 +55,10 @@ extension WidgetRefEx on WidgetRef {
         }
         await next.when(
           data: (_) async {
+            // 処理完了
             read(overlayLoadingProvider.notifier).update((_) => false);
             if (completeMessage != null) {
+              // 完了メッセージがあれば SnackBar を表示する
               final messengerState =
                   read(scaffoldMessengerKeyProvider).currentState;
               return messengerState?.showSnackBar(
@@ -67,6 +70,7 @@ extension WidgetRefEx on WidgetRef {
             complete?.call();
           },
           error: (e, s) async {
+            // エラーが発生したのでエラーダイアログを表示する
             read(overlayLoadingProvider.notifier).update((_) => false);
             await showDialog<void>(
               context: read(navigatorKeyProvider).currentContext!,
@@ -76,6 +80,7 @@ extension WidgetRefEx on WidgetRef {
             );
           },
           loading: () {
+            // 処理中
             if (loading) {
               read(overlayLoadingProvider.notifier).update((_) => true);
             }

@@ -5,7 +5,7 @@ import 'auth_provider.dart';
 
 part 'user.freezed.dart';
 
-/// ユーザーエンティティ
+/// ユーザー
 @freezed
 class User with _$User {
   const factory User({

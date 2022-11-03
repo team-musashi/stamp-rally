@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../converters.dart';
+import '../../converter.dart';
 
 part 'user_document.freezed.dart';
 part 'user_document.g.dart';

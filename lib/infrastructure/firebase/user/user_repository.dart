@@ -10,7 +10,7 @@ import '../../../domain/repository/user/entity/user.dart';
 import '../../../domain/repository/user/entity/user_input_data.dart';
 import '../../../domain/repository/user/user_repository.dart';
 import '../../../util/logger.dart';
-import 'documents/user_document.dart';
+import 'document/user_document.dart';
 
 const _logPrefix = '[USER]';
 
