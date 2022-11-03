@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stamp_rally/firebase_options_dev.dart' as dev;
 import 'package:stamp_rally/firebase_options_prod.dart' as prod;
+import 'package:stamp_rally/map_package_sample/map_package_samples_page.dart';
 
 const flavor = String.fromEnvironment('FLAVOR');
 Future<void> main() async {
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MapPackageSamples(),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
