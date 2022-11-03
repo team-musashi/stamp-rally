@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/user/state/create_user_result.dart';
 import '../application/user/state/delete_user_result.dart';
 import '../config/router.dart';
+import '../config/theme.dart';
 import 'component/async_value_handler.dart';
 import 'component/dialog.dart';
 import 'component/loading.dart';
 import 'component/scaffold_messanger.dart';
-import 'theme.dart';
 
 /// アプリ
 class App extends ConsumerWidget {
