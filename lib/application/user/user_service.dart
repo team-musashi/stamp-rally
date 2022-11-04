@@ -23,7 +23,7 @@ class UserService {
   /// 匿名ユーザーを作成する
   Future<void> createUser() async {
     // ログイン済みなら何もしない
-    final loggedIn = ref.read(loggedInProvider).value == true;
+    final loggedIn = ref.read(loggedInProvider);
     if (loggedIn) {
       return;
     }

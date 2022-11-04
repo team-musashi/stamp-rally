@@ -3,16 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'entity/user.dart';
 import 'entity/user_input_data.dart';
 
-/// ログイン中かどうかを返すプロバイダー
-final loggedInProvider = StreamProvider(
-  (ref) => ref.watch(userRepositoryProvider).loggedInChanges(),
-  name: 'loggedInProvider',
-);
-
 /// ユーザープロバイダー
 final userProvider = StreamProvider(
   (ref) => ref.watch(userRepositoryProvider).userChanges(),
   name: 'userProvider',
+);
+
+/// ログイン中かどうかを返すStreamプロバイダー
+final loggedInStreamProvider = StreamProvider(
+  (ref) => ref.watch(userRepositoryProvider).loggedInChanges(),
+  name: 'loggedInStreamProvider',
+);
+
+/// ログイン中かどうかを返すプロバイダー
+final loggedInProvider = Provider(
+  (ref) => ref.watch(loggedInStreamProvider).value ?? false,
 );
 
 /// ユーザーリポジトリプロバイダー
