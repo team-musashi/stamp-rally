@@ -29,7 +29,7 @@ final routerProvider = Provider<GoRouter>(
 
     // リダイレクト
     redirect: (context, state) {
-      final loggedIn = ref.read(loggedInProvider).value == true;
+      final loggedIn = ref.read(loggedInProvider);
       logger.i(
         '$_logPrefix redirect(): location = ${state.location}, '
         'loggedIn = $loggedIn',
@@ -56,7 +56,7 @@ final routerProvider = Provider<GoRouter>(
 
     // ログイン状態の変化を検知してリダイレクトを再実行する
     refreshListenable:
-        GoRouterRefreshNotifier(ref.watch(loggedInProvider.stream)),
+        GoRouterRefreshNotifier(ref.watch(loggedInStreamProvider.stream)),
   ),
 );
 
@@ -65,8 +65,11 @@ class GoRouterRefreshNotifier extends ChangeNotifier {
   GoRouterRefreshNotifier(Stream<dynamic> stream) {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
-          (dynamic _) => notifyListeners(),
-        );
+      (dynamic a) {
+        logger.d(a);
+        notifyListeners();
+      },
+    );
   }
 
   late final StreamSubscription<dynamic> _subscription;
