@@ -2,7 +2,7 @@
 
 TODO: ここにサブタイトルを書く
 
-## 開発環境セットアップしよう
+## 開発環境をセットアップしよう
 
 開発マシンの OS は Mac、IDE は VSCode の利用を前提としています。
 
@@ -53,7 +53,7 @@ make build-runner
 - [flutter_riverpod v2](https://pub.dev/packages/flutter_riverpod) + [state_notifier](https://pub.dev/packages/state_notifier) + [freezed](https://pub.dev/packages/freezed) + [go_router](https://pub.dev/packages/go_router)
 - [CODE WITH ANDREA](https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/) と [DDD](https://little-hands.hatenablog.com/entry/2018/12/10/ddd-architecture) のアーキテクチャを参考にして、本アプリは下記の4層アーキテクチャで実装しています。
 
-![アーキテクチャ図](https://user-images.githubusercontent.com/13707135/199193570-3417e7b9-3d6e-4d5a-ad0e-c02e5330c4e7.jpg)
+![アーキテクチャ図](https://user-images.githubusercontent.com/13707135/200081763-c2809366-046d-4a82-8367-9bee5a751b90.png)
 
 ### Presentation 層
 
@@ -135,10 +135,24 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 
 git-flow を採用しています。
 
-<img src="https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.amazonaws.com%2F0%2F53309%2F06140121-a0b6-427f-c149-6858c149738e.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&w=1400&fit=max&s=e54e831191e127e8ec6ed4425c7dfe86" width=400>
-
 - 参考サイト
   - [Git-flowって何？](https://qiita.com/KosukeSone/items/514dd24828b485c69a05)
+
+<img src="https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.amazonaws.com%2F0%2F53309%2F06140121-a0b6-427f-c149-6858c149738e.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&w=1400&fit=max&s=e54e831191e127e8ec6ed4425c7dfe86" width=400>
+
+### 実装するときは？
+
+上のブランチモデルに従います。具体的には次のとおりです。
+
+1. `develop` ブランチに移動（`checkout`）して最新の状態にする（`pull`）
+2. 例 `feature/0-hoge` ブランチを作成して移動する
+- ブランチ名の `0` は Issue 番号、`hoge` は実装する内容を端的に表した言葉です
+- すべてハイフン区切りでお願いします
+3. Feature ブランチ上で実装をする
+4. 実装が完了したら GitHub サイト上で `develop` ブランチ向けにプルリクエストを作成する
+- 原則レビュー不要、必要に応じて誰かにレビュー依頼を出して下さい
+5. GitHub サイト上でマージを実行
+6. Issue を Close する
 
 ## CI (継続的インテグレーション)
 
