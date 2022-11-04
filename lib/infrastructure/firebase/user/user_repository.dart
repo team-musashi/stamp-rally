@@ -154,7 +154,7 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> deleteUser() async {
     assert(_firebaseUser != null);
     try {
-      await _firebaseUser!.delete();
+      await _firebaseUser?.delete();
 
       // ユーザードキュメントの削除は Firebase の extensionで行うので
       // ここでは削除しない
@@ -202,6 +202,8 @@ extension _FirebaseAuthExceptionEx on firebase_auth.FirebaseAuthException {
         return AuthException.invalidActionCode();
       case 'requires-recent-login':
         return AuthException.requiresRecentLogin();
+      case 'unknown':
+        return AuthException.unknown();
       default:
         logger.w(this);
         return AuthException.unknown();
