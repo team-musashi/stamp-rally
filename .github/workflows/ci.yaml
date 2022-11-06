@@ -72,15 +72,8 @@ jobs:
           SLACK_COLOR: good
       # テストに失敗したとき
       - name: Notify Failure Test
-        if: ${{ contains(needs.flutter_test.result, 'failure') }}
+        if: ${{ contains(needs.*.result, 'failure') }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_TITLE: FAILURE TEST ...
-          SLACK_COLOR: danger
-      # Android ビルドに失敗したとき
-      - name: Notify Failure Build for Android
-        if: ${{ contains(needs.flutter_build_android.result, 'failure') }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_TITLE: FAILURE BUILD ANDROID ...
           SLACK_COLOR: danger
