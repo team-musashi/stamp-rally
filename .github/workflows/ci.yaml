@@ -16,6 +16,10 @@ jobs:
     name: Flutter test
     # ジョブを実行するOS
     runs-on: ubuntu-latest
+    env:
+      SLACK_USERNAME: GitHub Actions
+      SLACK_ICON: https://raw.githubusercontent.com/github/explore/2c7e603b797535e5ad8b4beb575ab3b7354666e1/topics/actions/actions.png
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
     # タイムアウト時間（分）
     timeout-minutes: 10
     steps:
@@ -51,4 +55,4 @@ jobs:
         run: flutter test
       # Androidのリリースビルドを実行
       - name: Build for Android
-        run: flutter build appbundle -t lib/main.dart --release
+        run: flutter build appbundle -t lib/main.dart --flavor prod
