@@ -60,7 +60,7 @@ jobs:
 
       # Androidのリリースビルドを実行
       - name: Build for Android
-        run: flutter build appbundle -t lib/main.dart --flavor prod --dart-define=FLAVOR=prod
+        run: flutter build appbundle -t lib/main.dart --release
 
       # Slack通知
       # すべて成功したとき
