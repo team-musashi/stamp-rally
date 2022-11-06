@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  push:
+    branches:
+      - develop
+
+# Android ビルド
+#共同開発用の Slack に通知
+jobs:
+  flutter_test:
+    name: Flutter test
+    # ジョブを実行するOS
+    runs-on: ubuntu-latest
+    # タイムアウト時間（分）
+    timeout-minutes: 10
+    steps:
+      # ソースコードをチェックアウト
+      - name: Checkout
+        uses: actions/checkout@v3
+      # fvm のバージョンとチャネルを環境変数に設定する
+      - name: Check fvm
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+      # Flutter SDK の設定
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          # バージョンとチャネルは fvm の値を使う
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          # 次回以降起動を速くするためにキャッシュしておく
+          cache: true
+          cache-key: flutter
+          cache-path: ${{ runner.tool_cache }}/flutter
+      # flutter pub get を実行
+      - name: Install Flutter dependencies
+        run: flutter pub get
+      # コードフォーマットを実行
+      # フォーマットの結果変更が発生した場合はエラー扱いにする
+      - name: Run Flutter format
+        run: flutter format --set-exit-if-changed .
+      # 静的解析を実行
+      - name: Run Flutter analyze
+        run: flutter analyze
+      # テストを実行
+      - name: Run Flutter Test
+        run: flutter test
