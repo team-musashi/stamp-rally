@@ -49,3 +49,6 @@ jobs:
       # テストを実行
       - name: Run Flutter Test
         run: flutter test
+      # Androidのリリースビルドを実行
+      - name: Build for Android
+        run: flutter build appbundle -t lib/main.dart --release
