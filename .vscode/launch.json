@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "stamp-rally-dev",
+            "name": "app-dev",
             "type": "dart",
             "request": "launch",
             "flutterMode": "debug",
@@ -14,7 +14,7 @@
             ]
           },
           {
-            "name": "stamp-rally-prod",
+            "name": "app-prod",
             "type": "dart",
             "request": "launch",
             "flutterMode": "debug",
