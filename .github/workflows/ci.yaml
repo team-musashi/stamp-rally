@@ -9,8 +9,6 @@ on:
     branches:
       - develop
 
-# Android ビルド
-#共同開発用の Slack に通知
 jobs:
   flutter_test:
     name: Flutter test
@@ -56,3 +54,26 @@ jobs:
       # Androidのリリースビルドを実行
       - name: Build for Android
         run: flutter build appbundle -t lib/main.dart --flavor prod
+
+      # Slack通知
+      # すべて成功したとき
+      - name: Notify Success
+        if: ${{ !contains(needs.*.result, 'failure') }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: SUCCESS TEST AND BUILD!
+          SLACK_COLOR: good
+      # テストに失敗したとき
+      - name: Notify Failure Test
+        if: ${{ needs.flutter_test.result == 'failure' }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: FAILURE TEST ...
+          SLACK_COLOR: danger
+      # Android ビルドに失敗したとき
+      - name: Notify Failure Build for Android
+        if: ${{ needs.flutter_build_android.result == 'failure' }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: FAILURE BUILD ANDROID ...
+          SLACK_COLOR: danger
