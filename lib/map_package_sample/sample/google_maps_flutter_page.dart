@@ -12,7 +12,7 @@ class GoogleMapsFlutterPage extends StatefulWidget {
 class _GoogleMapsFlutterPage extends State<GoogleMapsFlutterPage> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  final LatLng _initPosition = const LatLng(35.689, 139.692);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -23,13 +23,13 @@ class _GoogleMapsFlutterPage extends State<GoogleMapsFlutterPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
+          title: const Text('google_maps_flutter'),
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
+          myLocationEnabled: true,
           initialCameraPosition: CameraPosition(
-            target: _center,
+            target: _initPosition,
             zoom: 11,
           ),
         ),
