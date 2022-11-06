@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stamp_rally/map_package_sample/sample/flutter_google_places_page.dart';
-import 'package:stamp_rally/map_package_sample/sample/flutter_osm_plugin_page.dart';
-import 'package:stamp_rally/map_package_sample/sample/mapbox_search_page.dart';
-import 'package:stamp_rally/map_package_sample/sample/place_picker_page.dart';
+
+import 'sample/flutter_map_page.dart';
+import 'sample/google_maps_flutter_page.dart';
 
 class MapPackageSamples extends StatelessWidget {
   const MapPackageSamples({super.key});
@@ -16,40 +15,25 @@ class MapPackageSamples extends StatelessWidget {
           children: [
             // sample１
             ElevatedButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const FlutterGooglePlacesPage()),
-                    ),
-                child: const Text('flutter_google_places')),
+              onPressed: () => Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const GoogleMapsFlutterPage(),
+                ),
+              ),
+              child: const Text('google_maps_flutter'),
+            ),
 
             // sample２
             ElevatedButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const FlutterOsmPluginPage()),
-                    ),
-                child: const Text('flutter_osm_plugin')),
-
-            // sample３
-            ElevatedButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PlacePickerPage()),
-                    ),
-                child: const Text('place_picker')),
-
-            // sample４
-            ElevatedButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MapBoxSearchPage()),
-                    ),
-                child: const Text('mapbox_search')),
+              onPressed: () => Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FlutterMapPage(),
+                ),
+              ),
+              child: const Text('flutter_map'),
+            ),
           ],
         ),
       ),
