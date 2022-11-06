@@ -10,7 +10,7 @@ on:
       - develop
 
 # Android ビルド
-#共同開発用の Slack に通知
+# 共同開発用の Slack に通知
 jobs:
   flutter_test:
     name: Flutter test
@@ -19,7 +19,7 @@ jobs:
     env:
       SLACK_USERNAME: GitHub Actions
       SLACK_ICON: https://raw.githubusercontent.com/github/explore/2c7e603b797535e5ad8b4beb575ab3b7354666e1/topics/actions/actions.png
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_WEBHOOK: ${{ secrets.STAMP_RALLY_SLACK_WEBHOOK_URL }}
     # タイムアウト時間（分）
     timeout-minutes: 10
     steps:
@@ -55,4 +55,4 @@ jobs:
         run: flutter test
       # Androidのリリースビルドを実行
       - name: Build for Android
-        run: flutter build appbundle -t lib/main.dart --flavor prod
+        run: flutter build appbundle -t lib/main.dart --flavor prod --dart-define=FLAVOR=prod
