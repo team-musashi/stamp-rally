@@ -1,10 +1,16 @@
 name: CI
 
 on:
+  # 手動で実行可能にする
+  workflow_dispatch:
+
+  # PR が作成 or 更新されたら発火する
   pull_request:
     types:
       - opened
       - synchronize
+
+  # develop ブランチに push されたら発火する
   push:
     branches:
       - develop
