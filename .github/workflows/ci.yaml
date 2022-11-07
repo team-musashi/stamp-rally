@@ -72,7 +72,7 @@ jobs:
           SLACK_COLOR: good
       # テストに失敗したとき
       - name: Notify Failure Test
-        if: ${{ contains(needs.*.result, 'failure') }}
+        if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_TITLE: FAILURE TEST ...
