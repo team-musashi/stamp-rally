@@ -62,7 +62,6 @@ jobs:
       - name: Build for Android
         run: flutter build appbundle -t lib/main.dart --flavor prod --dart-define=FLAVOR=prod
 
-      # Slack通知
       # すべて成功したとき
       - name: Notify Success
         if: ${{ !contains(needs.*.result, 'failure') }}
@@ -70,8 +69,9 @@ jobs:
         env:
           SLACK_TITLE: SUCCESS TEST AND BUILD!
           SLACK_COLOR: good
-      # テストに失敗したとき
-      - name: Notify Failure Test
+
+      # あるステップが失敗したとき
+      - name: Notify Failure
         if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
