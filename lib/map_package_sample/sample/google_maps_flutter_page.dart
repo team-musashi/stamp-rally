@@ -10,6 +10,7 @@ import 'package:google_maps_webservice/src/core.dart';
 import 'package:google_maps_webservice/src/places.dart';
 
 import '../api_keys.dart';
+import '../states.dart';
 
 /// https://pub.dev/packages/google_maps_flutter
 class GoogleMapsFlutterPage extends StatefulWidget {
@@ -21,7 +22,7 @@ class GoogleMapsFlutterPage extends StatefulWidget {
 
 class _GoogleMapsFlutterPage extends State<GoogleMapsFlutterPage> {
   Position? currentPosition;
-  late GoogleMapController _controller;
+  final Completer<GoogleMapController> _controller = Completer();
   late StreamSubscription<Position> positionStream;
   final LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
@@ -31,10 +32,6 @@ class _GoogleMapsFlutterPage extends State<GoogleMapsFlutterPage> {
     target: LatLng(35.689, 139.692),
     zoom: 14,
   );
-
-  void _onMapCreated(GoogleMapController controller) {
-    _controller = controller;
-  }
 
   @override
   void initState() {
@@ -68,7 +65,7 @@ class _GoogleMapsFlutterPage extends State<GoogleMapsFlutterPage> {
       ),
       body: GoogleMap(
         compassEnabled: false,
-        onMapCreated: _onMapCreated,
+        onMapCreated: _controller.complete,
         myLocationEnabled: true,
         initialCameraPosition: initPosition,
       ),
@@ -79,7 +76,20 @@ class _GoogleMapsFlutterPage extends State<GoogleMapsFlutterPage> {
             MaterialPageRoute(
               builder: (context) => PlaceSample(),
             ),
-          ),
+          ).then((_) async {
+            final controller = await _controller.future;
+            await controller.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(
+                    States.instance.latitude!,
+                    States.instance.longitude!,
+                  ), // CameraPositionのtargetに経度・緯度の順で指定します。
+                  zoom: 20,
+                ),
+              ),
+            );
+          }),
         },
         child: const Icon(Icons.search),
       ),
@@ -220,7 +230,10 @@ Future<void> displayPrediction(
           TextButton(
             child: const Text('ok'),
             onPressed: () {
-              Navigator.of(context).pop();
+              States.instance.latitude = lat;
+              States.instance.longitude = lng;
+              var count = 0;
+              Navigator.popUntil(context, (_) => count++ >= 2);
             },
           ),
         ],
