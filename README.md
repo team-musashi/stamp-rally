@@ -155,8 +155,11 @@ git-flow を採用しています。
 6. Issue を Close する
 
 ## CI (継続的インテグレーション)
+GitHub Actions を利用して CI を構築しています。
 
-対応していません。
+発火タイミング|実行内容
+--|--|
+developにマージ<br>PR作成・更新|コードフォーマット<br>静的解析（flutter analyze）<br>テスト（flutter test）<br>Androidリリースビルド<br>結果を共同開発用のSlackに通知
 
 ## CD (継続的デリバリー)
 
