@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  # 手動で実行可能にする
+  workflow_dispatch:
+
+  # PR が作成 or 更新されたら発火する
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+  # develop ブランチに push されたら発火する
+  push:
+    branches:
+      - develop
+
+jobs:
+  flutter_test:
+    name: Flutter test
+    # ジョブを実行するOS
+    runs-on: ubuntu-latest
+    env:
+      SLACK_USERNAME: Flutter CI
+      SLACK_ICON: https://user-images.githubusercontent.com/13707135/189456881-a2984bc3-135c-4bd7-8018-1ea185e4157b.png
+      SLACK_WEBHOOK: ${{ secrets.STAMP_RALLY_SLACK_WEBHOOK_URL }}
+    # タイムアウト時間（分）
+    timeout-minutes: 10
+    steps:
+      # ソースコードをチェックアウト
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # fvm のバージョンとチャネルを環境変数に設定する
+      - name: Check fvm
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      # Flutter SDK の設定
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          # バージョンとチャネルは fvm の値を使う
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          # 次回以降起動を速くするためにキャッシュしておく
+          cache: true
+          cache-key: flutter
+          cache-path: ${{ runner.tool_cache }}/flutter
+
+      # flutter pub get を実行
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      # コードフォーマットを実行
+      # フォーマットの結果変更が発生した場合はエラー扱いにする
+      - name: Run Flutter format
+        run: flutter format --set-exit-if-changed .
+
+      # 静的解析を実行
+      - name: Run Flutter analyze
+        run: flutter analyze
+
+      # テストを実行
+      - name: Run Flutter Test
+        run: flutter test
+
+      # Androidのリリースビルドを実行
+      - name: Build for Android
+        run: flutter build appbundle -t lib/main.dart --flavor prod --dart-define=FLAVOR=prod
+
+      # すべて成功したとき
+      - name: Notify Success
+        if: ${{ !contains(needs.*.result, 'failure') }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: SUCCESS TEST AND BUILD!
+          SLACK_COLOR: good
+
+      # あるステップが失敗したとき
+      - name: Notify Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: FAILURE CI ...
+          SLACK_COLOR: danger

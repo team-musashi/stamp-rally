@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '801823217631',
     projectId: 'flutteruniv-stamp-rally-prod',
     storageBucket: 'flutteruniv-stamp-rally-prod.appspot.com',
-    iosClientId: '801823217631-ofu75sbf4i923bev35igtphlrd58i41a.apps.googleusercontent.com',
+    iosClientId:
+        '801823217631-ofu75sbf4i923bev35igtphlrd58i41a.apps.googleusercontent.com',
     iosBundleId: 'jp.keishimizu26629.stamp-rally',
   );
 }
