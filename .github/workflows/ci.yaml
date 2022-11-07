@@ -15,8 +15,8 @@ jobs:
     # ジョブを実行するOS
     runs-on: ubuntu-latest
     env:
-      SLACK_USERNAME: GitHub Actions
-      SLACK_ICON: https://raw.githubusercontent.com/github/explore/2c7e603b797535e5ad8b4beb575ab3b7354666e1/topics/actions/actions.png
+      SLACK_USERNAME: Flutter CI
+      SLACK_ICON: https://user-images.githubusercontent.com/13707135/189456881-a2984bc3-135c-4bd7-8018-1ea185e4157b.png
       SLACK_WEBHOOK: ${{ secrets.STAMP_RALLY_SLACK_WEBHOOK_URL }}
     # タイムアウト時間（分）
     timeout-minutes: 10
@@ -75,5 +75,5 @@ jobs:
         if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_TITLE: FAILURE TEST ...
+          SLACK_TITLE: FAILURE CI ...
           SLACK_COLOR: danger
