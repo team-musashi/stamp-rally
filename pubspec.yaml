@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_google_places: ^0.3.0
+  flutter_map: ^3.0.0
   flutter_riverpod: ^2.1.0
   freezed: ^2.2.1
   freezed_annotation: ^2.2.0
@@ -25,6 +26,8 @@ dependencies:
   json_serializable: ^6.5.4
   # ロガーパッケージ
   roggle: ^0.3.0
+  latlong2: ^0.8.1
+
 
 dependency_overrides:
   firebase_core_platform_interface: ^4.5.1
