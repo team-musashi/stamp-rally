@@ -48,9 +48,15 @@ app-prod|iOS / Android|[flutteruniv-stamp-rally-prod](https://console.firebase.g
 make build-runner
 ```
 
+## システム構成
+
+ポイントは Cloud Functions は裏で動くこと。
+
+![システム構成図](https://user-images.githubusercontent.com/13707135/200761344-7721b670-823f-4e3a-9c58-019ae3e5464b.png)
+
 ## アーキテクチャ / パッケージ
 
-- [flutter_riverpod v2](https://pub.dev/packages/flutter_riverpod) + [state_notifier](https://pub.dev/packages/state_notifier) + [freezed](https://pub.dev/packages/freezed) + [go_router](https://pub.dev/packages/go_router)
+- [flutter_riverpod v2](https://pub.dev/packages/flutter_riverpod) + [go_router](https://pub.dev/packages/go_router)
 - [CODE WITH ANDREA](https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/) と [DDD](https://little-hands.hatenablog.com/entry/2018/12/10/ddd-architecture) のアーキテクチャを参考にして、本アプリは下記の4層アーキテクチャで実装しています。
 
 ![アーキテクチャ図](https://user-images.githubusercontent.com/13707135/200081763-c2809366-046d-4a82-8367-9bee5a751b90.png)
@@ -127,7 +133,15 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 └── util                                     どの層からもアクセス可能な便利クラス
 ```
 
-### ファイル分割の方針
+## 処理の流れの例
+
+ユーザー操作を契機とした処理の流れの例を図にしました。Riverpod の `ref.listen()` を使ってローディング表示や SnackBar の表示を制御しています。図には示していませんがエラー時のエラーダイアログの表示も制御できます。
+
+手続き的に処理をするよりも、コードが簡素になりますしコードの再利用もしやすくなりますが、少し理解しづらいので図にしてみました。
+
+![処理の流れ](https://user-images.githubusercontent.com/13707135/200771755-e7f41636-1cb5-4c44-a966-089c1cb9faec.png)
+
+## ファイル分割の方針
 
 基本的に **関心事** 毎にファイルを分割しています。1つのファイルに複数のクラスがあっても問題ありません。ファイル名は「ファイル名 = クラス名」とはせず **関心事.dart** とします。
 
@@ -153,6 +167,10 @@ git-flow を採用しています。
 - 原則レビュー不要、必要に応じて誰かにレビュー依頼を出して下さい
 5. GitHub サイト上でマージを実行
 6. Issue を Close する
+
+### Firebase 関連のタスクが発生したときは？
+
+発生した時点で [stamp-rally-firebase](https://github.com/team-musashi/stamp-rally-firebase) に Issue を起票して修正をしてください。
 
 ## CI (継続的インテグレーション)
 GitHub Actions を利用して CI を構築しています。

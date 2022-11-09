@@ -21,7 +21,7 @@ class FirebaseUserRepository implements UserRepository {
     required this.firestore,
   }) {
     // 認証状態を監視する
-    auth.userChanges().listen((firebaseUser) async {
+    _authChangesSubscription = auth.userChanges().listen((firebaseUser) async {
       logger.i(
         '$_logPrefix Received changed firebaseUser: uid = ${firebaseUser?.uid}',
       );
@@ -67,6 +67,9 @@ class FirebaseUserRepository implements UserRepository {
   /// ログイン済みかどうか
   bool _loggedIn = false;
 
+  /// 認証状態の監視をキャンセルするために保持
+  StreamSubscription<firebase_auth.User?>? _authChangesSubscription;
+
   /// ユーザードキュメントの監視をキャンセルするために保持
   StreamSubscription<DocumentSnapshot<User?>>? _userChangesSubscription;
 
@@ -101,10 +104,11 @@ class FirebaseUserRepository implements UserRepository {
         final json = UserDocument(
           authProvider: user.authProvider.name,
           platform: user.platform?.name,
+          createdAt: user.createdAt,
           updatedAt: user.updatedAt,
         ).toJson();
-        if (options?.merge == true) {
-          // 除外しないと null で上書きされてしまうのでマージの場合は null は除外する
+        if (options?.merge ?? false) {
+          // null で上書きされてしまうのでマージの場合は null は除外する
           json.removeWhere((field, dynamic value) => value == null);
         }
         return json;
@@ -113,6 +117,8 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   void dispose() {
+    _authChangesSubscription?.cancel();
+    _userChangesSubscription?.cancel();
     userChangesController.close();
   }
 
@@ -165,9 +171,11 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Future<void> updateUser(UserInputData inputData) async {
+    // UserInputData を 現在の User にマージした上で createdAt を上書きしないように null にする
     await _docRef?.set(
       _cacheUser?.copyWith(
         platform: inputData.platform,
+        createdAt: null,
       ),
       SetOptions(merge: true),
     );
