@@ -15,13 +15,10 @@ class SettingPage extends StatelessWidget {
         ),
         title: const Text('設定'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            DeleteUserButton(),
-          ],
-        ),
+      body: Column(
+        children: const [
+          DeleteUserButton(),
+        ],
       ),
     );
   }
