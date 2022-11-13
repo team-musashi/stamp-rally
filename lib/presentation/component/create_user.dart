@@ -9,9 +9,10 @@ class CreateUserButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return TextButton(
+    return ElevatedButton(
       onPressed: () => ref.read(userServiceProvider).createUser(),
-      child: const Text('はじめる'),
+      //TODO：ボタンの文言は https://github.com/team-musashi/stamp-rally/issues/21 が終了してから
+      child: const Text('ログイン'),
     );
   }
 }
