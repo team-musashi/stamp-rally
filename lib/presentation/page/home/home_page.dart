@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../component/common_app_bar.dart';
 import '../../component/delete_user.dart';
 
 /// ホーム画面
@@ -9,8 +10,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ホーム'),
+      appBar: const CommonAppBar(
+        title: 'ホーム',
+        isDispBoundary: true,
       ),
       body: Center(
         child: Column(

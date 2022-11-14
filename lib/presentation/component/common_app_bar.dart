@@ -32,7 +32,7 @@ class CommonAppBar extends StatelessWidget with PreferredSizeWidget {
         style: TextStyle(color: foreColor),
       ),
       backgroundColor: backColor,
-      elevation: isDispBoundary ? 2 : 0,
+      elevation: isDispBoundary ? 4 : 0,
     );
   }
 
