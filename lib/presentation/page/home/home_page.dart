@@ -36,6 +36,7 @@ class HomePage extends StatelessWidget {
 
   // start ヘルパーメソッド群
   /// ハンバーガーメニューを生成するヘルパーメソッド
+  // TODO(cobo): コンポーネント化, https://github.com/team-musashi/stamp-rally/issues/22
   Drawer createHamburgerMenu() {
     // とりあえず中身の要素は仮作成
     return Drawer(
