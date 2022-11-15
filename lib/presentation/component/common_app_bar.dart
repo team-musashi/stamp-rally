@@ -12,6 +12,7 @@ class CommonAppBar extends StatelessWidget with PreferredSizeWidget {
     this.automaticallyImplyLeading = true,
     this.foreColor = Colors.white,
     this.backColor = Colors.blue,
+    this.actions,
     super.key,
   });
   final String title;
@@ -20,10 +21,12 @@ class CommonAppBar extends StatelessWidget with PreferredSizeWidget {
   final bool automaticallyImplyLeading;
   final Color? foreColor;
   final Color? backColor;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      actions: actions,
       automaticallyImplyLeading: automaticallyImplyLeading,
       centerTitle: true,
       iconTheme: IconThemeData(color: foreColor),
