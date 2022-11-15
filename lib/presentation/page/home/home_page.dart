@@ -19,16 +19,14 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              createDelimiterBlock('参加中のスタンプラリー'),
-              createListViewFromListData(entryStampRallyList),
-              createDelimiterBlock('開催中のスタンプラリー'),
-              createListViewFromListData(openStampRallyList),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            createDelimiterBlock('参加中のスタンプラリー'),
+            createListViewFromListData(entryStampRallyList),
+            createDelimiterBlock('開催中のスタンプラリー'),
+            createListViewFromListData(openStampRallyList),
+          ],
         ),
       ),
     );
@@ -82,12 +80,12 @@ class HomePage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final item = list[index];
         return Container(
-          margin: const EdgeInsets.only(top: 8, left: 8, right: 8),
+          margin: const EdgeInsets.only(top: 12, left: 6, right: 6),
           decoration: const BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: Colors.grey, //色
-                spreadRadius: 2.5,
+                spreadRadius: 1,
                 blurRadius: 5,
                 offset: Offset(1, 1),
               ),
@@ -101,11 +99,14 @@ class HomePage extends StatelessWidget {
                 width: 200,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.content),
+                    Text(
+                      item.content,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     Text('開催場所： ${item.detail1}'),
                     Text('所要時間： ${item.detail2}'),
                   ],
