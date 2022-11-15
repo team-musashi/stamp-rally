@@ -8,6 +8,7 @@ import '../domain/repository/user/user_repository.dart';
 import '../presentation/page/auth/login_page.dart';
 import '../presentation/page/error/error_page.dart';
 import '../presentation/page/home/home_page.dart';
+import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 
 part 'router.g.dart';
@@ -112,6 +113,25 @@ class HomeRoute extends GoRouteData {
     return TransitionPage.slide(
       name: name,
       child: const HomePage(),
+    );
+  }
+}
+
+@TypedGoRoute<SettingRoute>(
+  path: '/setting',
+)
+
+/// 設定画面
+class SettingRoute extends GoRouteData {
+  const SettingRoute();
+
+  static const name = 'setting';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      name: name,
+      child: const SettingPage(),
     );
   }
 }

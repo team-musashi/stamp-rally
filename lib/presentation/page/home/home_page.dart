@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/router.dart';
 import '../../component/common_app_bar.dart';
-import '../../component/delete_user.dart';
 
 /// ホーム画面
 class HomePage extends StatelessWidget {
@@ -10,11 +10,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ハンバーガーメニューを表示。中身は仮
-      drawer: createHamburgerMenu(),
-      appBar: const CommonAppBar(
+      appBar: CommonAppBar(
         title: 'ホーム',
-        isDispBoundary: true,
+        actions: [
+          IconButton(
+            onPressed: () => const SettingRoute().push(context),
+            icon: const Icon(Icons.settings),
+          )
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -24,7 +27,6 @@ class HomePage extends StatelessWidget {
               createListViewFromListData(entryStampRallyList),
               createDelimiterBlock('開催中のスタンプラリー'),
               createListViewFromListData(openStampRallyList),
-              const DeleteUserButton(),
             ],
           ),
         ),
@@ -114,7 +116,6 @@ class HomePage extends StatelessWidget {
       },
     );
   }
-
   // end ヘルパーメソッド群
 }
 
