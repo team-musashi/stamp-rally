@@ -166,4 +166,4 @@ final openStampRallyList = [
     'https://gahag.net/img/201608/26s/gahag-0119226962-1.jpg',
   ),
 ];
-  // end ダミーデータ
+// end ダミーデータ
