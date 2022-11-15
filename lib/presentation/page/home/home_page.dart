@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
 }
 
 /// ダミーのリストアイテムオブジェクト
-/// TODO：DB設計が終わったらそちらに置き換えるのでこれは必ず消す
+// TODO(cobo): DB設計が終わったらそちらに置き換えるのでこれは必ず消す, https://github.com/team-musashi/stamp-rally/issues/22
 class DummyListItem {
   DummyListItem(this.content, this.detail1, this.detail2, this.detail3);
   final String content;
