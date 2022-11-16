@@ -20,7 +20,7 @@ mixin _$Spot {
   String get id => throw _privateConstructorUsedError;
 
   /// 場所を回る順番
-  int get title => throw _privateConstructorUsedError;
+  int get order => throw _privateConstructorUsedError;
 
   /// 画像URL
   String get imageUrl => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $SpotCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      int title,
+      int order,
       String imageUrl,
       GeoPoint point,
       DateTime? gotDate});
@@ -62,7 +62,7 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? order = null,
     Object? imageUrl = null,
     Object? point = null,
     Object? gotDate = freezed,
@@ -72,9 +72,9 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
               as int,
       imageUrl: null == imageUrl
           ? _value.imageUrl
@@ -100,7 +100,7 @@ abstract class _$$_SpotCopyWith<$Res> implements $SpotCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      int title,
+      int order,
       String imageUrl,
       GeoPoint point,
       DateTime? gotDate});
@@ -116,7 +116,7 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? order = null,
     Object? imageUrl = null,
     Object? point = null,
     Object? gotDate = freezed,
@@ -126,9 +126,9 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
               as int,
       imageUrl: null == imageUrl
           ? _value.imageUrl
@@ -151,7 +151,7 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
 class _$_Spot implements _Spot {
   const _$_Spot(
       {required this.id,
-      required this.title,
+      required this.order,
       required this.imageUrl,
       required this.point,
       this.gotDate});
@@ -162,7 +162,7 @@ class _$_Spot implements _Spot {
 
   /// 場所を回る順番
   @override
-  final int title;
+  final int order;
 
   /// 画像URL
   @override
@@ -178,7 +178,7 @@ class _$_Spot implements _Spot {
 
   @override
   String toString() {
-    return 'Spot(id: $id, title: $title, imageUrl: $imageUrl, point: $point, gotDate: $gotDate)';
+    return 'Spot(id: $id, order: $order, imageUrl: $imageUrl, point: $point, gotDate: $gotDate)';
   }
 
   @override
@@ -187,7 +187,7 @@ class _$_Spot implements _Spot {
         (other.runtimeType == runtimeType &&
             other is _$_Spot &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
+            (identical(other.order, order) || other.order == order) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.point, point) || other.point == point) &&
@@ -196,7 +196,7 @@ class _$_Spot implements _Spot {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, imageUrl, point, gotDate);
+      Object.hash(runtimeType, id, order, imageUrl, point, gotDate);
 
   @JsonKey(ignore: true)
   @override
@@ -208,7 +208,7 @@ class _$_Spot implements _Spot {
 abstract class _Spot implements Spot {
   const factory _Spot(
       {required final String id,
-      required final int title,
+      required final int order,
       required final String imageUrl,
       required final GeoPoint point,
       final DateTime? gotDate}) = _$_Spot;
@@ -220,7 +220,7 @@ abstract class _Spot implements Spot {
   @override
 
   /// 場所を回る順番
-  int get title;
+  int get order;
   @override
 
   /// 画像URL

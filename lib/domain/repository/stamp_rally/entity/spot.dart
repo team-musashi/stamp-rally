@@ -11,7 +11,7 @@ class Spot with _$Spot {
     required String id,
 
     /// 場所を回る順番
-    required int title,
+    required int order,
 
     /// 画像URL
     required String imageUrl,
