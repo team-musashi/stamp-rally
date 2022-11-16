@@ -19,7 +19,6 @@ class AboutAppSection extends ConsumerWidget {
             const Icon(Icons.apple_sharp), // Todo アプリIconが決まったら差し替え
         applicationLegalese: '(C)2022 stamp-rally', // Todo 権利情報が決まったら差し替え
       ),
-      // Todo PackageInfoPlusから取得する
       child: const AboutApp(
         applicationVersion: applicationVersion,
       ),
