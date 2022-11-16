@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../component/about_app.dart';
 import '../../component/delete_user.dart';
 
 class SettingPage extends StatelessWidget {
@@ -13,29 +14,12 @@ class SettingPage extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const DeleteUserButton(),
-          GestureDetector(
-            onTap: () => showAboutDialog(
-                context: context,
-                applicationName: 'Stamp-Rally',
-                applicationVersion: '1.0.0',
-                applicationIcon: const Icon(Icons.apple_sharp),
-                applicationLegalese: '(C)2022 stamp-rally'),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('このアプリについて', style: TextStyle(fontSize: 16)),
-                  Text(
-                    'v1.0.0',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
+        children: const [
+          DeleteUserButton(),
+          // Todo PackageInfoPlusから取得する
+          AboutApp(
+            applicationName: 'Stamp-Rally',
+            applicationVersion: '1.0.0',
           )
         ],
       ),
