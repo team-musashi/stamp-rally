@@ -11,7 +11,6 @@ class CreateUserButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () => ref.read(userServiceProvider).createUser(),
-      // TODO(cobo): ボタンの文言は https://github.com/team-musashi/stamp-rally/issues/21 が終了してから, https://github.com/team-musashi/stamp-rally/issues/22
       child: const Text('ログイン'),
     );
   }
