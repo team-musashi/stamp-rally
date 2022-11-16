@@ -31,3 +31,16 @@ class ClientTimestampConverter implements JsonConverter<DateTime?, Object?> {
     return dateTime != null ? Timestamp.fromDate(dateTime) : null;
   }
 }
+
+/// 座標コンバーター
+class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
+  const GeoPointConverter();
+
+  @override
+  GeoPoint fromJson(GeoPoint geoPoint) {
+    return geoPoint;
+  }
+
+  @override
+  GeoPoint toJson(GeoPoint geoPoint) => geoPoint;
+}
