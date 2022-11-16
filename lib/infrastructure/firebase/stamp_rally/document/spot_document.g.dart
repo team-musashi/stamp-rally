@@ -13,6 +13,7 @@ _$_SpotDocument _$$_SpotDocumentFromJson(Map<String, dynamic> json) =>
       order: json['order'] as int,
       imageUrl: json['imageUrl'] as String,
       point: const GeoPointConverter().fromJson(json['point'] as GeoPoint),
+      gotDate: const ServerTimestampConverter().fromJson(json['gotDate']),
     );
 
 Map<String, dynamic> _$$_SpotDocumentToJson(_$_SpotDocument instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$_SpotDocumentToJson(_$_SpotDocument instance) =>
       'order': instance.order,
       'imageUrl': instance.imageUrl,
       'point': const GeoPointConverter().toJson(instance.point),
+      'gotDate': const ServerTimestampConverter().toJson(instance.gotDate),
     };

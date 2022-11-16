@@ -13,6 +13,7 @@ class SpotDocument with _$SpotDocument {
     required int order,
     required String imageUrl,
     @GeoPointConverter() required GeoPoint point,
+    @ServerTimestampConverter() DateTime? gotDate,
   }) = _SpotDocument;
 
   const SpotDocument._();
