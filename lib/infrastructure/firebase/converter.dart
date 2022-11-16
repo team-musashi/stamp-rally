@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../domain/entity/value_object/geo_location.dart';
+
 /// サーバー日時コンバーター
 class ServerTimestampConverter implements JsonConverter<DateTime?, Object?> {
   const ServerTimestampConverter();
@@ -32,15 +34,27 @@ class ClientTimestampConverter implements JsonConverter<DateTime?, Object?> {
   }
 }
 
-/// 座標コンバーター
-class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
+/// 緯度経度コンバーター
+class GeoPointConverter implements JsonConverter<GeoLocation?, Object?> {
   const GeoPointConverter();
 
   @override
-  GeoPoint fromJson(GeoPoint geoPoint) {
-    return geoPoint;
+  GeoLocation? fromJson(Object? fieldValue) {
+    return (fieldValue as GeoPoint?)?.toGeoLocation();
   }
 
   @override
-  GeoPoint toJson(GeoPoint geoPoint) => geoPoint;
+  Object? toJson(GeoLocation? geoLocation) {
+    return geoLocation != null
+        ? GeoPoint(geoLocation.latitude, geoLocation.longitude)
+        : null;
+  }
+}
+
+extension _GeoPointEx on GeoPoint {
+  /// GeoPoint => GeoLocation
+  GeoLocation toGeoLocation() => GeoLocation(
+        latitude: latitude,
+        longitude: longitude,
+      );
 }

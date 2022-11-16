@@ -8,7 +8,7 @@ part 'stamp_rally.freezed.dart';
 @freezed
 class StampRally with _$StampRally {
   const factory StampRally({
-    /// ドキュメントID
+    /// ID
     required String id,
 
     /// スタンプラリー名称
@@ -32,7 +32,7 @@ class StampRally with _$StampRally {
     /// 開催終了日
     DateTime? endDate,
 
-    /// スタンプラリーの場所
+    /// スタンプラリーのスポットのリスト
     required List<Spot> spots,
   }) = _StampRally;
 }

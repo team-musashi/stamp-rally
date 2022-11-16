@@ -16,17 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Spot {
-  /// ドキュメントID
+  /// ID
   String get id => throw _privateConstructorUsedError;
 
-  /// 場所を回る順番
+  /// スポットの順番
   int get order => throw _privateConstructorUsedError;
 
   /// 画像URL
   String get imageUrl => throw _privateConstructorUsedError;
 
-  /// 開催開始日
-  GeoPoint get point => throw _privateConstructorUsedError;
+  /// 緯度経度
+  GeoLocation get location => throw _privateConstructorUsedError;
 
   /// スタンプ取得日
   DateTime? get gotDate => throw _privateConstructorUsedError;
@@ -44,8 +44,10 @@ abstract class $SpotCopyWith<$Res> {
       {String id,
       int order,
       String imageUrl,
-      GeoPoint point,
+      GeoLocation location,
       DateTime? gotDate});
+
+  $GeoLocationCopyWith<$Res> get location;
 }
 
 /// @nodoc
@@ -64,7 +66,7 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
     Object? id = null,
     Object? order = null,
     Object? imageUrl = null,
-    Object? point = null,
+    Object? location = null,
     Object? gotDate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,15 +82,23 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      point: null == point
-          ? _value.point
-          : point // ignore: cast_nullable_to_non_nullable
-              as GeoPoint,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoLocation,
       gotDate: freezed == gotDate
           ? _value.gotDate
           : gotDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GeoLocationCopyWith<$Res> get location {
+    return $GeoLocationCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
   }
 }
 
@@ -102,8 +112,11 @@ abstract class _$$_SpotCopyWith<$Res> implements $SpotCopyWith<$Res> {
       {String id,
       int order,
       String imageUrl,
-      GeoPoint point,
+      GeoLocation location,
       DateTime? gotDate});
+
+  @override
+  $GeoLocationCopyWith<$Res> get location;
 }
 
 /// @nodoc
@@ -118,7 +131,7 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
     Object? id = null,
     Object? order = null,
     Object? imageUrl = null,
-    Object? point = null,
+    Object? location = null,
     Object? gotDate = freezed,
   }) {
     return _then(_$_Spot(
@@ -134,10 +147,10 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      point: null == point
-          ? _value.point
-          : point // ignore: cast_nullable_to_non_nullable
-              as GeoPoint,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoLocation,
       gotDate: freezed == gotDate
           ? _value.gotDate
           : gotDate // ignore: cast_nullable_to_non_nullable
@@ -153,14 +166,14 @@ class _$_Spot implements _Spot {
       {required this.id,
       required this.order,
       required this.imageUrl,
-      required this.point,
+      required this.location,
       this.gotDate});
 
-  /// ドキュメントID
+  /// ID
   @override
   final String id;
 
-  /// 場所を回る順番
+  /// スポットの順番
   @override
   final int order;
 
@@ -168,9 +181,9 @@ class _$_Spot implements _Spot {
   @override
   final String imageUrl;
 
-  /// 開催開始日
+  /// 緯度経度
   @override
-  final GeoPoint point;
+  final GeoLocation location;
 
   /// スタンプ取得日
   @override
@@ -178,7 +191,7 @@ class _$_Spot implements _Spot {
 
   @override
   String toString() {
-    return 'Spot(id: $id, order: $order, imageUrl: $imageUrl, point: $point, gotDate: $gotDate)';
+    return 'Spot(id: $id, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate)';
   }
 
   @override
@@ -190,13 +203,14 @@ class _$_Spot implements _Spot {
             (identical(other.order, order) || other.order == order) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.point, point) || other.point == point) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
             (identical(other.gotDate, gotDate) || other.gotDate == gotDate));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, order, imageUrl, point, gotDate);
+      Object.hash(runtimeType, id, order, imageUrl, location, gotDate);
 
   @JsonKey(ignore: true)
   @override
@@ -210,16 +224,16 @@ abstract class _Spot implements Spot {
       {required final String id,
       required final int order,
       required final String imageUrl,
-      required final GeoPoint point,
+      required final GeoLocation location,
       final DateTime? gotDate}) = _$_Spot;
 
   @override
 
-  /// ドキュメントID
+  /// ID
   String get id;
   @override
 
-  /// 場所を回る順番
+  /// スポットの順番
   int get order;
   @override
 
@@ -227,8 +241,8 @@ abstract class _Spot implements Spot {
   String get imageUrl;
   @override
 
-  /// 開催開始日
-  GeoPoint get point;
+  /// 緯度経度
+  GeoLocation get location;
   @override
 
   /// スタンプ取得日

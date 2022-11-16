@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StampRally {
-  /// ドキュメントID
+  /// ID
   String get id => throw _privateConstructorUsedError;
 
   /// スタンプラリー名称
@@ -40,7 +40,7 @@ mixin _$StampRally {
   /// 開催終了日
   DateTime? get endDate => throw _privateConstructorUsedError;
 
-  /// スタンプラリーの場所
+  /// スタンプラリーのスポットのリスト
   List<Spot> get spots => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -227,7 +227,7 @@ class _$_StampRally implements _StampRally {
       required final List<Spot> spots})
       : _spots = spots;
 
-  /// ドキュメントID
+  /// ID
   @override
   final String id;
 
@@ -259,10 +259,10 @@ class _$_StampRally implements _StampRally {
   @override
   final DateTime? endDate;
 
-  /// スタンプラリーの場所
+  /// スタンプラリーのスポットのリスト
   final List<Spot> _spots;
 
-  /// スタンプラリーの場所
+  /// スタンプラリーのスポットのリスト
   @override
   List<Spot> get spots {
     // ignore: implicit_dynamic_type
@@ -328,7 +328,7 @@ abstract class _StampRally implements StampRally {
 
   @override
 
-  /// ドキュメントID
+  /// ID
   String get id;
   @override
 
@@ -360,7 +360,7 @@ abstract class _StampRally implements StampRally {
   DateTime? get endDate;
   @override
 
-  /// スタンプラリーの場所
+  /// スタンプラリーのスポットのリスト
   List<Spot> get spots;
   @override
   @JsonKey(ignore: true)

@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/router.dart';
+import '../../../domain/entity/value_object/geo_location.dart';
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/delimiter_block.dart';
@@ -46,7 +46,9 @@ final entryStampRallyList = [
     title: '参加中スタラリ１',
     requiredTime: 10,
     imageUrl: 'https://gahag.net/img/201608/27s/gahag-0119340780-1.jpg',
-    spots: [const Spot(id: '', order: 1, imageUrl: '', point: GeoPoint(0, 0))],
+    spots: [
+      const Spot(id: '', order: 1, imageUrl: '', location: GeoLocation())
+    ],
     startDate: DateTime.now(),
     endDate: DateTime.now(),
   ),
@@ -57,7 +59,9 @@ final entryStampRallyList = [
     title: '参加中スタラリ２',
     requiredTime: 7,
     imageUrl: 'https://gahag.net/img/201608/27s/gahag-0119419405-1.jpg',
-    spots: [const Spot(id: '', order: 1, imageUrl: '', point: GeoPoint(0, 0))],
+    spots: [
+      const Spot(id: '', order: 1, imageUrl: '', location: GeoLocation())
+    ],
     startDate: DateTime.now(),
     endDate: DateTime.now(),
   ),
@@ -70,7 +74,9 @@ final openStampRallyList = [
     title: '開催中スタラリ１',
     requiredTime: 9,
     imageUrl: 'https://gahag.net/img/201608/27s/gahag-0119324068-1.jpg',
-    spots: [const Spot(id: '', order: 1, imageUrl: '', point: GeoPoint(0, 0))],
+    spots: [
+      const Spot(id: '', order: 1, imageUrl: '', location: GeoLocation())
+    ],
     startDate: DateTime.now(),
     endDate: DateTime.now(),
   ),
@@ -81,7 +87,9 @@ final openStampRallyList = [
     title: '開催中スタラリ２',
     requiredTime: 6,
     imageUrl: 'https://gahag.net/img/201608/27s/gahag-0119319721-1.jpg',
-    spots: [const Spot(id: '', order: 1, imageUrl: '', point: GeoPoint(0, 0))],
+    spots: [
+      const Spot(id: '', order: 1, imageUrl: '', location: GeoLocation())
+    ],
     startDate: DateTime.now(),
     endDate: DateTime.now(),
   ),
@@ -92,7 +100,9 @@ final openStampRallyList = [
     title: '開催中スタラリ３',
     requiredTime: 11,
     imageUrl: 'https://gahag.net/img/201608/26s/gahag-0119226962-1.jpg',
-    spots: [const Spot(id: '', order: 1, imageUrl: '', point: GeoPoint(0, 0))],
+    spots: [
+      const Spot(id: '', order: 1, imageUrl: '', location: GeoLocation())
+    ],
     startDate: DateTime.now(),
     endDate: DateTime.now(),
   ),

@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../domain/entity/value_object/geo_location.dart';
 import '../../converter.dart';
 
 part 'spot_document.freezed.dart';
@@ -12,7 +12,7 @@ class SpotDocument with _$SpotDocument {
   const factory SpotDocument({
     required int order,
     required String imageUrl,
-    @GeoPointConverter() required GeoPoint point,
+    @GeoPointConverter() GeoLocation? location,
     @ServerTimestampConverter() DateTime? gotDate,
   }) = _SpotDocument;
 

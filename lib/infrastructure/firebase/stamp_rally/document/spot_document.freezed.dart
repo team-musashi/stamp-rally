@@ -23,7 +23,7 @@ mixin _$SpotDocument {
   int get order => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   @GeoPointConverter()
-  GeoPoint get point => throw _privateConstructorUsedError;
+  GeoLocation? get location => throw _privateConstructorUsedError;
   @ServerTimestampConverter()
   DateTime? get gotDate => throw _privateConstructorUsedError;
 
@@ -42,8 +42,10 @@ abstract class $SpotDocumentCopyWith<$Res> {
   $Res call(
       {int order,
       String imageUrl,
-      @GeoPointConverter() GeoPoint point,
+      @GeoPointConverter() GeoLocation? location,
       @ServerTimestampConverter() DateTime? gotDate});
+
+  $GeoLocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -61,7 +63,7 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
   $Res call({
     Object? order = null,
     Object? imageUrl = null,
-    Object? point = null,
+    Object? location = freezed,
     Object? gotDate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -73,15 +75,27 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      point: null == point
-          ? _value.point
-          : point // ignore: cast_nullable_to_non_nullable
-              as GeoPoint,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoLocation?,
       gotDate: freezed == gotDate
           ? _value.gotDate
           : gotDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GeoLocationCopyWith<$Res>? get location {
+    if (_value.location == null) {
+      return null;
+    }
+
+    return $GeoLocationCopyWith<$Res>(_value.location!, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
   }
 }
 
@@ -96,8 +110,11 @@ abstract class _$$_SpotDocumentCopyWith<$Res>
   $Res call(
       {int order,
       String imageUrl,
-      @GeoPointConverter() GeoPoint point,
+      @GeoPointConverter() GeoLocation? location,
       @ServerTimestampConverter() DateTime? gotDate});
+
+  @override
+  $GeoLocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -113,7 +130,7 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
   $Res call({
     Object? order = null,
     Object? imageUrl = null,
-    Object? point = null,
+    Object? location = freezed,
     Object? gotDate = freezed,
   }) {
     return _then(_$_SpotDocument(
@@ -125,10 +142,10 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      point: null == point
-          ? _value.point
-          : point // ignore: cast_nullable_to_non_nullable
-              as GeoPoint,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoLocation?,
       gotDate: freezed == gotDate
           ? _value.gotDate
           : gotDate // ignore: cast_nullable_to_non_nullable
@@ -143,7 +160,7 @@ class _$_SpotDocument extends _SpotDocument {
   const _$_SpotDocument(
       {required this.order,
       required this.imageUrl,
-      @GeoPointConverter() required this.point,
+      @GeoPointConverter() this.location,
       @ServerTimestampConverter() this.gotDate})
       : super._();
 
@@ -156,14 +173,14 @@ class _$_SpotDocument extends _SpotDocument {
   final String imageUrl;
   @override
   @GeoPointConverter()
-  final GeoPoint point;
+  final GeoLocation? location;
   @override
   @ServerTimestampConverter()
   final DateTime? gotDate;
 
   @override
   String toString() {
-    return 'SpotDocument(order: $order, imageUrl: $imageUrl, point: $point, gotDate: $gotDate)';
+    return 'SpotDocument(order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate)';
   }
 
   @override
@@ -174,13 +191,15 @@ class _$_SpotDocument extends _SpotDocument {
             (identical(other.order, order) || other.order == order) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.point, point) || other.point == point) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
             (identical(other.gotDate, gotDate) || other.gotDate == gotDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, order, imageUrl, point, gotDate);
+  int get hashCode =>
+      Object.hash(runtimeType, order, imageUrl, location, gotDate);
 
   @JsonKey(ignore: true)
   @override
@@ -200,7 +219,7 @@ abstract class _SpotDocument extends SpotDocument {
   const factory _SpotDocument(
       {required final int order,
       required final String imageUrl,
-      @GeoPointConverter() required final GeoPoint point,
+      @GeoPointConverter() final GeoLocation? location,
       @ServerTimestampConverter() final DateTime? gotDate}) = _$_SpotDocument;
   const _SpotDocument._() : super._();
 
@@ -213,7 +232,7 @@ abstract class _SpotDocument extends SpotDocument {
   String get imageUrl;
   @override
   @GeoPointConverter()
-  GeoPoint get point;
+  GeoLocation? get location;
   @override
   @ServerTimestampConverter()
   DateTime? get gotDate;
