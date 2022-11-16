@@ -1,0 +1,195 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+
+part of 'spot_document.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+SpotDocument _$SpotDocumentFromJson(Map<String, dynamic> json) {
+  return _SpotDocument.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SpotDocument {
+  int get order => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
+  @GeoPointConverter()
+  GeoPoint get point => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SpotDocumentCopyWith<SpotDocument> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SpotDocumentCopyWith<$Res> {
+  factory $SpotDocumentCopyWith(
+          SpotDocument value, $Res Function(SpotDocument) then) =
+      _$SpotDocumentCopyWithImpl<$Res, SpotDocument>;
+  @useResult
+  $Res call({int order, String imageUrl, @GeoPointConverter() GeoPoint point});
+}
+
+/// @nodoc
+class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
+    implements $SpotDocumentCopyWith<$Res> {
+  _$SpotDocumentCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? order = null,
+    Object? imageUrl = null,
+    Object? point = null,
+  }) {
+    return _then(_value.copyWith(
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      point: null == point
+          ? _value.point
+          : point // ignore: cast_nullable_to_non_nullable
+              as GeoPoint,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_SpotDocumentCopyWith<$Res>
+    implements $SpotDocumentCopyWith<$Res> {
+  factory _$$_SpotDocumentCopyWith(
+          _$_SpotDocument value, $Res Function(_$_SpotDocument) then) =
+      __$$_SpotDocumentCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int order, String imageUrl, @GeoPointConverter() GeoPoint point});
+}
+
+/// @nodoc
+class __$$_SpotDocumentCopyWithImpl<$Res>
+    extends _$SpotDocumentCopyWithImpl<$Res, _$_SpotDocument>
+    implements _$$_SpotDocumentCopyWith<$Res> {
+  __$$_SpotDocumentCopyWithImpl(
+      _$_SpotDocument _value, $Res Function(_$_SpotDocument) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? order = null,
+    Object? imageUrl = null,
+    Object? point = null,
+  }) {
+    return _then(_$_SpotDocument(
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      point: null == point
+          ? _value.point
+          : point // ignore: cast_nullable_to_non_nullable
+              as GeoPoint,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SpotDocument extends _SpotDocument {
+  const _$_SpotDocument(
+      {required this.order,
+      required this.imageUrl,
+      @GeoPointConverter() required this.point})
+      : super._();
+
+  factory _$_SpotDocument.fromJson(Map<String, dynamic> json) =>
+      _$$_SpotDocumentFromJson(json);
+
+  @override
+  final int order;
+  @override
+  final String imageUrl;
+  @override
+  @GeoPointConverter()
+  final GeoPoint point;
+
+  @override
+  String toString() {
+    return 'SpotDocument(order: $order, imageUrl: $imageUrl, point: $point)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SpotDocument &&
+            (identical(other.order, order) || other.order == order) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.point, point) || other.point == point));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, order, imageUrl, point);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SpotDocumentCopyWith<_$_SpotDocument> get copyWith =>
+      __$$_SpotDocumentCopyWithImpl<_$_SpotDocument>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SpotDocumentToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SpotDocument extends SpotDocument {
+  const factory _SpotDocument(
+      {required final int order,
+      required final String imageUrl,
+      @GeoPointConverter() required final GeoPoint point}) = _$_SpotDocument;
+  const _SpotDocument._() : super._();
+
+  factory _SpotDocument.fromJson(Map<String, dynamic> json) =
+      _$_SpotDocument.fromJson;
+
+  @override
+  int get order;
+  @override
+  String get imageUrl;
+  @override
+  @GeoPointConverter()
+  GeoPoint get point;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SpotDocumentCopyWith<_$_SpotDocument> get copyWith =>
+      throw _privateConstructorUsedError;
+}
