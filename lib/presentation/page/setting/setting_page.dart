@@ -46,11 +46,8 @@ class _AboutAppListTile extends StatelessWidget {
     const applicationVersion = '1.0.0';
 
     return ListTile(
-      title: const Text('このアプリについて', style: TextStyle(fontSize: 16)),
-      subtitle: const Text(
-        'v$applicationVersion',
-        style: TextStyle(fontSize: 16, color: Colors.grey),
-      ),
+      title: const Text('このアプリについて'),
+      subtitle: const Text('v$applicationVersion'),
       onTap: () {
         showAboutDialog(
           context: context,
