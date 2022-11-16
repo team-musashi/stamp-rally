@@ -14,14 +14,7 @@ class SettingPage extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          DeleteUserButton(),
-          // Todo PackageInfoPlusから取得する
-          AboutApp(
-            applicationName: 'Stamp-Rally',
-            applicationVersion: '1.0.0',
-          )
-        ],
+        children: const [DeleteUserButton(), AboutAppSection()],
       ),
     );
   }
