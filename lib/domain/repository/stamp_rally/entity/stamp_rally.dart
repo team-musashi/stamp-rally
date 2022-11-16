@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../entity/app_platform.dart';
 import 'spot.dart';
 
 part 'stamp_rally.freezed.dart';
