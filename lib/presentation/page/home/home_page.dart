@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/router.dart';
-import '../../component/common_app_bar.dart';
 
 /// ホーム画面
 class HomePage extends StatelessWidget {
@@ -10,8 +9,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(
-        title: 'ホーム',
+      appBar: AppBar(
+        title: const Text('ホーム'),
         actions: [
           IconButton(
             onPressed: () => const SettingRoute().push(context),
