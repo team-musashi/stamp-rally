@@ -15,7 +15,7 @@ class DeleteUserButton extends ConsumerWidget {
         builder: (_) => const DeleteUserConfirmDialog(),
       ),
       child: Text(
-        'ユーザーを削除する',
+        'すべてのデータを削除',
         style: TextStyle(
           color: Theme.of(context).colorScheme.error,
         ),

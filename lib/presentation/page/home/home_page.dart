@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../component/delete_user.dart';
+import '../../../config/router.dart';
 
 /// ホーム画面
 class HomePage extends StatelessWidget {
@@ -11,15 +11,14 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ホーム'),
+        actions: [
+          IconButton(
+            onPressed: () => const SettingRoute().push(context),
+            icon: const Icon(Icons.settings),
+          )
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            DeleteUserButton(),
-          ],
-        ),
-      ),
+      body: const Center(),
     );
   }
 }
