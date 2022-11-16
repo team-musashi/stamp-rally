@@ -100,6 +100,11 @@ class LoginRoute extends GoRouteData {
 
 @TypedGoRoute<HomeRoute>(
   path: '/',
+  routes: [
+    TypedGoRoute<SettingRoute>(
+      path: 'setting',
+    )
+  ],
 )
 
 /// ホーム画面
@@ -116,10 +121,6 @@ class HomeRoute extends GoRouteData {
     );
   }
 }
-
-@TypedGoRoute<SettingRoute>(
-  path: '/setting',
-)
 
 /// 設定画面
 class SettingRoute extends GoRouteData {
