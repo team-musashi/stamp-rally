@@ -17,6 +17,7 @@ class DeleteUserButton extends ConsumerWidget {
       child: Text(
         'すべてのデータを削除',
         style: TextStyle(
+          fontSize: 16,
           color: Theme.of(context).colorScheme.error,
         ),
       ),
