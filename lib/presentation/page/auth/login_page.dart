@@ -9,6 +9,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('ログイン')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

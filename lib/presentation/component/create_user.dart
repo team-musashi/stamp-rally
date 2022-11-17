@@ -9,9 +9,9 @@ class CreateUserButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return TextButton(
+    return ElevatedButton(
       onPressed: () => ref.read(userServiceProvider).createUser(),
-      child: const Text('はじめる'),
+      child: const Text('ログイン'),
     );
   }
 }
