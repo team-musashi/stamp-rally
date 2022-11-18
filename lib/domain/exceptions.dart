@@ -7,90 +7,102 @@ abstract class DomainException implements Exception {
   final Object message;
 }
 
-/// ドメイン層で発生する入力値検査例外
+/// 入力値検査例外
 class ValidatorException extends DomainException {
   const ValidatorException._([
     super.message = 'validator exception',
-    String? code,
+    ValidatorExceptionCode? code,
     this.target,
-  ]) : code = code ?? codeUnknown;
+  ]) : code = code ?? ValidatorExceptionCode.unknown;
 
   /// 引数が不正
   factory ValidatorException.invalidArgument([String? target]) =>
       ValidatorException._(
         'Invalid argument',
-        codeInvalidArgument,
+        ValidatorExceptionCode.invalidArgument,
         target,
       );
 
-  // エラーコードの定義
-  static const codeInvalidArgument = 'invalid-argument';
-  static const codeUnknown = 'unknown';
-
   /// エラーコード
-  final String code;
+  final ValidatorExceptionCode code;
 
   /// 対象
   final String? target;
 
   @override
-  String toString() => 'ValidatorException: $message';
+  String toString() => 'ValidatorException[${code.name}]: $message';
 }
 
-/// インフラストラクチャ層で発生するデータベース関連の例外
+/// 入力値検査例外のエラーコード
+enum ValidatorExceptionCode {
+  /// 引数が不正
+  invalidArgument,
+
+  /// 不明なエラー
+  unknown,
+  ;
+}
+
+/// データベース関連の例外
 ///
 /// リポジトリ実装がこの例外を投げたら、プレゼンテーション層
 /// で受け取って適切に表示すること。
 class DatabaseException extends DomainException {
   const DatabaseException._([
     super.message = 'database exception',
-    String? code,
-  ]) : code = code ?? codeUnknown;
+    DatabaseExceptionCode? code,
+  ]) : code = code ?? DatabaseExceptionCode.unknown;
 
-  /// `Not Found`
+  /// データが見つからない
   factory DatabaseException.notFound() => const DatabaseException._(
         'No data found.',
-        codeNotFound,
+        DatabaseExceptionCode.notFound,
       );
 
   /// 不明なエラー
   factory DatabaseException.unknown() => const DatabaseException._(
         'An unknown error has occurred.',
-        codeUnknown,
+        DatabaseExceptionCode.unknown,
       );
 
-  // エラーコードの定義
-  static const codeNotFound = 'not-found';
-  static const codeUnknown = 'unknown';
-
   /// エラーコード
-  final String code;
+  final DatabaseExceptionCode code;
 
   @override
-  String toString() => 'DatabaseException[$code]: $message';
+  String toString() => 'DatabaseException[${code.name}]: $message';
 }
 
-/// インフラストラクチャ層で発生するネットワーク関連の例外
+/// データベース関連の例外のエラーコード
+enum DatabaseExceptionCode {
+  /// データが見つからない
+  notFound,
+
+  /// 不明なエラー
+  unknown,
+  ;
+}
+
+/// ネットワーク関連の例外
 ///
 /// リポジトリ実装がこの例外を投げたら、プレゼンテーション層
 /// で受け取って適切に表示すること。
 class NetworkException extends DomainException {
   const NetworkException._([
     super.message = 'network exception',
-    String? code,
-  ]) : code = code ?? codeUnknown;
+    NetworkExceptionCode? code,
+  ]) : code = code ?? NetworkExceptionCode.unknown;
 
   /// 1. 無効なJSONを送信すると、`400 Bad Request` レスポンスが返されます。
   /// 2. 間違ったタイプの JSON 値を送信すると、`400 Bad Request` レスポンスが返されます。
   factory NetworkException.badRequest() => const NetworkException._(
         'Illegal request sent. (400)',
-        codeBadRequest,
+        NetworkExceptionCode.badRequest,
       );
 
   /// 無効な認証情報で認証すると、`401 Unauthorized` が返されます。
   factory NetworkException.badCredentials() => const NetworkException._(
         'Illegal request sent. (401)',
-        codeBadCredentials,
+        NetworkExceptionCode.badCredentials,
       );
 
   /// API は、無効な認証情報を含むリクエストを短期間に複数回検出すると、`403 Forbidden` で、
@@ -98,209 +110,267 @@ class NetworkException extends DomainException {
   factory NetworkException.maximumNumberOfLoginAttemptsExceeded() =>
       const NetworkException._(
         'Please wait a while and try again. (403)',
-        codeMaximumNumberOfLoginAttemptsExceeded,
+        NetworkExceptionCode.maximumNumberOfLoginAttemptsExceeded,
       );
 
   /// `404 Not Found`
   factory NetworkException.notFound() => const NetworkException._(
         'No data found. (404)',
-        codeNotFound,
+        NetworkExceptionCode.notFound,
       );
 
   /// 無効なフィールドを送信すると、`422 Unprocessable Entity` レスポンスが返されます。
   factory NetworkException.validationFailed() => const NetworkException._(
         'Illegal request sent. (422)',
-        codeValidationFailed,
+        NetworkExceptionCode.validationFailed,
       );
 
   /// `503 Service Unavailable` サービス停止中
   factory NetworkException.serviceUnavailable() => const NetworkException._(
         'Please wait a while and try again.  (503)',
-        codeServiceUnavailable,
+        NetworkExceptionCode.serviceUnavailable,
       );
 
   /// インターネット接続不可
   factory NetworkException.noInternetConnection() => const NetworkException._(
         'Please try again in a good communication environment. (-2)',
-        codeNoInternetConnection,
+        NetworkExceptionCode.noInternetConnection,
       );
 
   /// 不明なエラー
   factory NetworkException.unknown() => const NetworkException._(
         'An unknown error has occurred. (-1)',
-        codeUnknown,
+        NetworkExceptionCode.unknown,
       );
 
-  // エラーコードの定義
-  static const codeBadRequest = 'bad-request';
-  static const codeBadCredentials = 'bad-credentials';
-  static const codeMaximumNumberOfLoginAttemptsExceeded =
-      'maximum-number-of-login-attempts-exceeded';
-  static const codeNotFound = 'not-found';
-  static const codeValidationFailed = 'validation-failed';
-  static const codeServiceUnavailable = 'service-unavailable';
-  static const codeNoInternetConnection = 'no-internet-connection';
-  static const codeUnknown = 'unknown';
-
   /// エラーコード
-  final String code;
+  final NetworkExceptionCode code;
 
   @override
-  String toString() => 'NetworkException[$code]: $message';
+  String toString() => 'NetworkException[${code.name}]: $message';
 }
 
-/// インフラストラクチャ層で発生する認証関連の例外
+/// ネットワーク関連の例外のエラーコード
+enum NetworkExceptionCode {
+  /// 不正なリクエスト
+  badRequest,
+
+  /// 不正な認証情報
+  badCredentials,
+
+  /// 短期間に無効な認証情報を受け取った
+  maximumNumberOfLoginAttemptsExceeded,
+
+  /// データが見つからない
+  notFound,
+
+  /// 無効なフィールドが見つかった
+  validationFailed,
+
+  /// サービス停止中
+  serviceUnavailable,
+
+  /// インターネット接続不可
+  noInternetConnection,
+
+  /// 不明なエラー
+  unknown,
+  ;
+}
+
+/// 認証関連の例外
 ///
 /// リポジトリ実装がこの例外を投げたら、プレゼンテーション層
 /// で受け取って適切に表示すること。
 class AuthException extends DomainException {
   const AuthException._([
     super.message = 'auth exception',
-    String? code,
-  ]) : code = code ?? codeUnknown;
+    AuthExceptionCode? code,
+  ]) : code = code ?? AuthExceptionCode.unknown;
 
   factory AuthException.invalidEmail() => const AuthException._(
-        'The email address is badly formatted.',
-        codeInvalidEmail,
+        'Indicates the email is invalid',
+        AuthExceptionCode.invalidEmail,
       );
   factory AuthException.wrongPassword() => const AuthException._(
-        'The password is invalid or the user does not have a password.',
-        codeWrongPassword,
+        'Indicates the user attempted sign in with a wrong password',
+        AuthExceptionCode.wrongPassword,
       );
   factory AuthException.weakPassword() => const AuthException._(
-        'Password should be at least 6 characters.',
-        codeWeakPassword,
+        'Indicates an attempt to set a password that is considered too weak',
+        AuthExceptionCode.weakPassword,
       );
   factory AuthException.userNotFound() => const AuthException._(
-        'There is no user record corresponding to this identifier. '
-        'The user may have been deleted.',
-        codeUserNotFound,
+        'Indicates the user account was not found',
+        AuthExceptionCode.userNotFound,
       );
   factory AuthException.userDisabled() => const AuthException._(
-        'The user account has been disabled by an administrator.',
-        codeUserDisabled,
+        'Indicates the user\'s account is disabled on the server.',
+        AuthExceptionCode.userDisabled,
       );
   factory AuthException.tooManyRequests() => const AuthException._(
-        '',
-        codeTooManyRequests,
+        'Indicates that too many requests were made to a server method',
+        AuthExceptionCode.tooManyRequests,
       );
   factory AuthException.operationNotAllowed() => const AuthException._(
-        '',
-        codeOperationNotAllowed,
+        'Indicates the administrator disabled sign in with the '
+        'specified identity provider',
+        AuthExceptionCode.operationNotAllowed,
       );
   factory AuthException.networkRequestFailed() => const AuthException._(
-        '',
-        codeNetworkRequestFailed,
+        'Indicates a network error occurred (such as a timeout, '
+        'interrupted connection, or unreachable host).',
+        AuthExceptionCode.networkRequestFailed,
       );
   factory AuthException.emailAlreadyInUse() => const AuthException._(
-        'The email address is already in use by another account.',
-        codeEmailAlreadyInUse,
+        'Indicates the email used to attempt a sign up is already in use.',
+        AuthExceptionCode.emailAlreadyInUse,
       );
   factory AuthException.userMismatch() => const AuthException._(
-        '',
-        codeUserMismatch,
+        'Indicates that an attempt was made to reauthenticate '
+        'with a user which is not the current user',
+        AuthExceptionCode.userMismatch,
       );
 
   factory AuthException.invalidActionCode() => const AuthException._(
         'The provided email is already in use by an existing user. '
         'Each user must have a unique email.',
-        codeInvalidActionCode,
+        AuthExceptionCode.invalidActionCode,
       );
 
   factory AuthException.notVerifiedEmail() => const AuthException._(
         'Not verified email.',
-        codeNotVerifiedEmail,
+        AuthExceptionCode.notVerifiedEmail,
       );
 
   factory AuthException.requiresRecentLogin() => const AuthException._(
-        'This operation is sensitive and requires recent authentication. '
-        'Log in again before retrying this request.',
-        codeRequiresRecentLogin,
+        'Indicates the user has attemped to change email or password '
+        'more than 5 minutes after signing in',
+        AuthExceptionCode.requiresRecentLogin,
       );
 
   /// 不明なエラー
   factory AuthException.unknown() => const AuthException._(
         'An unknown error has occurred.',
-        codeUnknown,
+        AuthExceptionCode.unknown,
       );
 
-  // エラーコードの定義
-  static const codeInvalidEmail = 'invalid-email';
-  static const codeWrongPassword = 'wrong-password';
-  static const codeWeakPassword = 'weak-password';
-  static const codeUserNotFound = 'user-not-found';
-  static const codeUserDisabled = 'user-disabled';
-  static const codeTooManyRequests = 'too-many-requests';
-  static const codeOperationNotAllowed = 'operation-not-allowed';
-  static const codeNetworkRequestFailed = 'network-request-failed';
-  static const codeEmailAlreadyInUse = 'email-already-in-use';
-  static const codeUserMismatch = 'user-mismatch';
-  static const codeInvalidActionCode = 'invalid-action-code';
-  static const codeNotVerifiedEmail = 'not-verified-email';
-  static const codeRequiresRecentLogin = 'requires-recent-login';
-  static const codeUnknown = 'unknown';
-
   /// エラーコード
-  final String code;
+  final AuthExceptionCode code;
 
   @override
-  String toString() => 'AuthException[$code]: $message';
+  String toString() => 'AuthException[${code.name}]: $message';
+}
+
+/// 認証関連の例外のエラーコード
+enum AuthExceptionCode {
+  /// 不正なメールアドレス
+  invalidEmail,
+
+  /// パスワード誤り
+  wrongPassword,
+
+  /// パスワードが弱い
+  weakPassword,
+
+  /// ユーザーが見つからない
+  userNotFound,
+
+  /// ユーザーが無効
+  userDisabled,
+
+  /// 短期間に大量のアクセス拒否
+  tooManyRequests,
+
+  /// 無効な操作
+  operationNotAllowed,
+
+  /// ネットワーク不正
+  networkRequestFailed,
+
+  /// 既に使われているメールアドレス
+  emailAlreadyInUse,
+
+  /// 異なるユーザーで再認証が実施された
+  userMismatch,
+
+  /// アクションコードが不正
+  invalidActionCode,
+
+  /// メールアドレスが確認されていない
+  notVerifiedEmail,
+
+  /// 最近ログイン済み
+  requiresRecentLogin,
+
+  /// 不明なエラー
+  unknown,
+  ;
 }
 
 extension ObjectHelper on Object {
   /// エラーメッセージを返す
   String get errorMessage {
+    if (this is DatabaseException) {
+      final error = this as DatabaseException;
+      switch (error.code) {
+        case DatabaseExceptionCode.notFound:
+          return 'データが見つかりませんでした';
+        case DatabaseExceptionCode.unknown:
+          return '不明なエラーが発生しました';
+      }
+    }
     if (this is NetworkException) {
       final error = this as NetworkException;
       switch (error.code) {
-        case NetworkException.codeBadRequest:
+        case NetworkExceptionCode.badRequest:
           return '不正なリクエストが送信されました (400)';
-        case NetworkException.codeBadCredentials:
+        case NetworkExceptionCode.badCredentials:
           return '不正なリクエストが送信されました (401)';
-        case NetworkException.codeMaximumNumberOfLoginAttemptsExceeded:
+        case NetworkExceptionCode.maximumNumberOfLoginAttemptsExceeded:
           return 'しばらく時間をおいてから再度お試しください (403)';
-        case NetworkException.codeNotFound:
+        case NetworkExceptionCode.notFound:
           return 'データが見つかりませんでした (404)';
-        case NetworkException.codeValidationFailed:
+        case NetworkExceptionCode.validationFailed:
           return '不正なリクエストが送信されました (422)';
-        case NetworkException.codeServiceUnavailable:
+        case NetworkExceptionCode.serviceUnavailable:
           return 'しばらく時間をおいてから再度お試しください (503)';
-        case NetworkException.codeUnknown:
+        case NetworkExceptionCode.unknown:
           return '不明なエラーが発生しました (-1)';
-        case NetworkException.codeNoInternetConnection:
+        case NetworkExceptionCode.noInternetConnection:
           return '通信環境の良いところで再度お試しください (-2)';
       }
     }
     if (this is AuthException) {
       final error = this as AuthException;
       switch (error.code) {
-        case AuthException.codeInvalidEmail:
+        case AuthExceptionCode.invalidEmail:
           return 'メールアドレスを正しい形式で入力してください。';
-        case AuthException.codeWrongPassword:
+        case AuthExceptionCode.wrongPassword:
           return 'パスワードが間違っています。';
-        case AuthException.codeWeakPassword:
+        case AuthExceptionCode.weakPassword:
           return 'パスワードは6文字以上にしてください。';
-        case AuthException.codeUserNotFound:
+        case AuthExceptionCode.userNotFound:
           return 'アカウントが見つかりません。';
-        case AuthException.codeUserDisabled:
+        case AuthExceptionCode.userDisabled:
           return '無効なアカウントです。';
-        case AuthException.codeTooManyRequests:
+        case AuthExceptionCode.tooManyRequests:
           return 'しばらく経ってから再度お試しください。';
-        case AuthException.codeOperationNotAllowed:
+        case AuthExceptionCode.operationNotAllowed:
           return 'ログインが許可されていません。管理者にご連絡ください。';
-        case AuthException.codeNetworkRequestFailed:
+        case AuthExceptionCode.networkRequestFailed:
           return 'タイムアウトしました。';
-        case AuthException.codeEmailAlreadyInUse:
+        case AuthExceptionCode.emailAlreadyInUse:
           return '既に使われているメールアドレスです。';
-        case AuthException.codeUserMismatch:
+        case AuthExceptionCode.userMismatch:
           return '異なるメールアドレスでログインしようとしています。';
-        case AuthException.codeInvalidActionCode:
+        case AuthExceptionCode.invalidActionCode:
           return '無効なログインリンクです。ログインリンクが正しいかご確認ください。';
-        case AuthException.codeNotVerifiedEmail:
+        case AuthExceptionCode.notVerifiedEmail:
           return '認証が完了していません。メールをご確認ください。';
-        case AuthException.codeRequiresRecentLogin:
+        case AuthExceptionCode.requiresRecentLogin:
           return 'ログインし直してから再度お試し下さい。';
-        case AuthException.codeUnknown:
+        case AuthExceptionCode.unknown:
           return 'エラーが発生しました。';
       }
     }
