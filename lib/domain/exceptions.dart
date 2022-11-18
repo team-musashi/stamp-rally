@@ -249,6 +249,11 @@ class AuthException extends DomainException {
         AuthExceptionCode.requiresRecentLogin,
       );
 
+  factory AuthException.invalidCredential() => const AuthException._(
+        'The supplied auth credential is invalid.',
+        AuthExceptionCode.invalidCredential,
+      );
+
   /// 不明なエラー
   factory AuthException.unknown() => const AuthException._(
         'An unknown error has occurred.',
@@ -302,6 +307,9 @@ enum AuthExceptionCode {
 
   /// 最近ログイン済み
   requiresRecentLogin,
+
+  /// 不正な認証情報
+  invalidCredential,
 
   /// 不明なエラー
   unknown,
@@ -370,6 +378,8 @@ extension ObjectHelper on Object {
           return '認証が完了していません。メールをご確認ください。';
         case AuthExceptionCode.requiresRecentLogin:
           return 'ログインし直してから再度お試し下さい。';
+        case AuthExceptionCode.invalidCredential:
+          return '不正な認証情報です。端末の時刻情報が正しいかご確認ください。';
         case AuthExceptionCode.unknown:
           return 'エラーが発生しました。';
       }

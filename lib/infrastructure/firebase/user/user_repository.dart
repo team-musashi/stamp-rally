@@ -41,7 +41,7 @@ class FirebaseUserRepository implements UserRepository {
           return;
         }
 
-        final user = snapshot.data();
+        final user = snapshot.data()?.toUser(snapshot.id);
         if (user == _cacheUser) {
           // ユーザーに変更が無ければ通知しない
           return;
@@ -71,42 +71,22 @@ class FirebaseUserRepository implements UserRepository {
   StreamSubscription<firebase_auth.User?>? _authChangesSubscription;
 
   /// ユーザードキュメントの監視をキャンセルするために保持
-  StreamSubscription<DocumentSnapshot<User?>>? _userChangesSubscription;
+  StreamSubscription<DocumentSnapshot<UserDocument?>>? _userChangesSubscription;
 
   /// ユーザードキュメントの参照を返す
-  DocumentReference<User?>? get _docRef {
+  DocumentReference<UserDocument?>? get _docRef {
     final uid = _firebaseUser?.uid;
     if (uid == null) {
       return null;
     }
 
-    return firestore.collection('user').withConverter<User?>(
+    return firestore.collection('user').withConverter<UserDocument?>(
       fromFirestore: (snapshot, _) {
         final json = snapshot.data();
-        if (json == null) {
-          return null;
-        }
-
-        final userDoc = UserDocument.fromJson(json);
-        return User(
-          uid: snapshot.id,
-          authProvider: AuthProvider.nameOf(userDoc.authProvider),
-          platform: AppPlatform.nameOf(userDoc.platform),
-          createdAt: userDoc.createdAt,
-          updatedAt: userDoc.updatedAt,
-        );
+        return json != null ? UserDocument.fromJson(json) : null;
       },
-      toFirestore: (user, options) {
-        if (user == null) {
-          return {};
-        }
-
-        final json = UserDocument(
-          authProvider: user.authProvider.name,
-          platform: user.platform?.name,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        ).toJson();
+      toFirestore: (userDoc, options) {
+        final json = userDoc?.toJson() ?? <String, dynamic>{};
         if (options?.merge ?? false) {
           // null で上書きされてしまうのでマージの場合は null は除外する
           json.removeWhere((field, dynamic value) => value == null);
@@ -171,15 +151,25 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Future<void> updateUser(UserInputData inputData) async {
-    // UserInputData を 現在の User にマージした上で createdAt を上書きしないように null にする
     await _docRef?.set(
-      _cacheUser?.copyWith(
-        platform: inputData.platform,
-        createdAt: null,
+      UserDocument(
+        platform: inputData.platform?.name,
+        updatedAt: DateTime.now(),
       ),
       SetOptions(merge: true),
     );
   }
+}
+
+extension _UserDocumentEx on UserDocument {
+  /// UserDocument => User
+  User toUser(String id) => User(
+        uid: id,
+        authProvider: AuthProvider.nameOf(authProvider),
+        platform: AppPlatform.nameOf(platform),
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 }
 
 extension _FirebaseAuthExceptionEx on firebase_auth.FirebaseAuthException {
@@ -203,13 +193,17 @@ extension _FirebaseAuthExceptionEx on firebase_auth.FirebaseAuthException {
       case 'network-request-failed':
         return AuthException.networkRequestFailed();
       case 'email-already-in-use':
+      case 'credential-already-in-use':
         return AuthException.emailAlreadyInUse();
       case 'user-mismatch':
         return AuthException.userMismatch();
       case 'invalid-action-code':
         return AuthException.invalidActionCode();
+      case 'invalid-credential':
+        return AuthException.invalidCredential();
       case 'requires-recent-login':
         return AuthException.requiresRecentLogin();
+      case 'internal-error':
       case 'unknown':
         return AuthException.unknown();
       default:
