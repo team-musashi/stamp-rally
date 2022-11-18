@@ -79,7 +79,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
   @override
   FutureProvider<List<StampRally>> fetchEntryStampRally() {
-    // TODO: implement fetchEntryStampRally
+    // TODO(cobo): todo, https://github.com/team-musashi/stamp-rally/issues/22
     throw UnimplementedError();
   }
 }
