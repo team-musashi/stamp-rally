@@ -9,10 +9,14 @@ import '../../domain/repository/app_info/entity/app_info.dart';
 class PackageInfoAppInfoRepository implements AppInfoRepository {
   const PackageInfoAppInfoRepository({
     required this.copyRight,
+    required this.iconImagePath,
   });
 
   /// CopyRight
   final String copyRight;
+
+  /// アイコン画像へのパス
+  final String iconImagePath;
 
   @override
   Future<AppInfo> getAppInfo() async {
@@ -23,6 +27,7 @@ class PackageInfoAppInfoRepository implements AppInfoRepository {
       version: 'v${packageInfo.version}',
       buildNumber: packageInfo.buildNumber,
       copyRight: copyRight,
+      iconImagePath: iconImagePath,
     );
   }
 }

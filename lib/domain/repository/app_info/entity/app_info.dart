@@ -20,6 +20,9 @@ class AppInfo with _$AppInfo {
 
     /// CopyRight
     required String copyRight,
+
+    /// アイコン画像へのパス
+    required String iconImagePath,
   }) = _AppInfo;
 
   const AppInfo._();

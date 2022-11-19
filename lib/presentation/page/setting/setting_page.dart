@@ -54,8 +54,13 @@ class _AboutAppListTile extends ConsumerWidget {
             context: context,
             applicationName: info.appName,
             applicationVersion: info.version,
-            applicationIcon:
-                const Icon(Icons.apple_sharp), // Todo アプリIconが決まったら差し替え
+            applicationIcon: SizedBox.square(
+              dimension: 60,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(info.iconImagePath),
+              ),
+            ),
             applicationLegalese: info.copyRight,
           );
         },

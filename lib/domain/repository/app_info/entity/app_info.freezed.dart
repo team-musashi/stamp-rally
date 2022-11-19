@@ -31,6 +31,9 @@ mixin _$AppInfo {
   /// CopyRight
   String get copyRight => throw _privateConstructorUsedError;
 
+  /// アイコン画像へのパス
+  String get iconImagePath => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $AppInfoCopyWith<AppInfo> get copyWith => throw _privateConstructorUsedError;
 }
@@ -45,7 +48,8 @@ abstract class $AppInfoCopyWith<$Res> {
       String packageName,
       String version,
       String buildNumber,
-      String copyRight});
+      String copyRight,
+      String iconImagePath});
 }
 
 /// @nodoc
@@ -66,6 +70,7 @@ class _$AppInfoCopyWithImpl<$Res, $Val extends AppInfo>
     Object? version = null,
     Object? buildNumber = null,
     Object? copyRight = null,
+    Object? iconImagePath = null,
   }) {
     return _then(_value.copyWith(
       appName: null == appName
@@ -88,6 +93,10 @@ class _$AppInfoCopyWithImpl<$Res, $Val extends AppInfo>
           ? _value.copyRight
           : copyRight // ignore: cast_nullable_to_non_nullable
               as String,
+      iconImagePath: null == iconImagePath
+          ? _value.iconImagePath
+          : iconImagePath // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -104,7 +113,8 @@ abstract class _$$_AppInfoCopyWith<$Res> implements $AppInfoCopyWith<$Res> {
       String packageName,
       String version,
       String buildNumber,
-      String copyRight});
+      String copyRight,
+      String iconImagePath});
 }
 
 /// @nodoc
@@ -122,6 +132,7 @@ class __$$_AppInfoCopyWithImpl<$Res>
     Object? version = null,
     Object? buildNumber = null,
     Object? copyRight = null,
+    Object? iconImagePath = null,
   }) {
     return _then(_$_AppInfo(
       appName: null == appName
@@ -144,6 +155,10 @@ class __$$_AppInfoCopyWithImpl<$Res>
           ? _value.copyRight
           : copyRight // ignore: cast_nullable_to_non_nullable
               as String,
+      iconImagePath: null == iconImagePath
+          ? _value.iconImagePath
+          : iconImagePath // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -156,7 +171,8 @@ class _$_AppInfo extends _AppInfo {
       required this.packageName,
       required this.version,
       required this.buildNumber,
-      required this.copyRight})
+      required this.copyRight,
+      required this.iconImagePath})
       : super._();
 
   /// アプリ名
@@ -179,9 +195,13 @@ class _$_AppInfo extends _AppInfo {
   @override
   final String copyRight;
 
+  /// アイコン画像へのパス
+  @override
+  final String iconImagePath;
+
   @override
   String toString() {
-    return 'AppInfo(appName: $appName, packageName: $packageName, version: $version, buildNumber: $buildNumber, copyRight: $copyRight)';
+    return 'AppInfo(appName: $appName, packageName: $packageName, version: $version, buildNumber: $buildNumber, copyRight: $copyRight, iconImagePath: $iconImagePath)';
   }
 
   @override
@@ -196,12 +216,14 @@ class _$_AppInfo extends _AppInfo {
             (identical(other.buildNumber, buildNumber) ||
                 other.buildNumber == buildNumber) &&
             (identical(other.copyRight, copyRight) ||
-                other.copyRight == copyRight));
+                other.copyRight == copyRight) &&
+            (identical(other.iconImagePath, iconImagePath) ||
+                other.iconImagePath == iconImagePath));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, appName, packageName, version, buildNumber, copyRight);
+  int get hashCode => Object.hash(runtimeType, appName, packageName, version,
+      buildNumber, copyRight, iconImagePath);
 
   @JsonKey(ignore: true)
   @override
@@ -216,7 +238,8 @@ abstract class _AppInfo extends AppInfo {
       required final String packageName,
       required final String version,
       required final String buildNumber,
-      required final String copyRight}) = _$_AppInfo;
+      required final String copyRight,
+      required final String iconImagePath}) = _$_AppInfo;
   const _AppInfo._() : super._();
 
   @override
@@ -239,6 +262,10 @@ abstract class _AppInfo extends AppInfo {
 
   /// CopyRight
   String get copyRight;
+  @override
+
+  /// アイコン画像へのパス
+  String get iconImagePath;
   @override
   @JsonKey(ignore: true)
   _$$_AppInfoCopyWith<_$_AppInfo> get copyWith =>
