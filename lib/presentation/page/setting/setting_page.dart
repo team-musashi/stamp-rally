@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../application/package_info/package_info_service.dart';
+import '../../../domain/repository/app_info/app_info_repository.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delete_user.dart';
 
@@ -45,10 +45,10 @@ class _AboutAppListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueHandler(
-      value: ref.watch(packageInfoProvider),
+      value: ref.watch(appInfoProvider),
       builder: (info) => ListTile(
         title: const Text('このアプリについて'),
-        subtitle: Text('v${info.version}'),
+        subtitle: Text(info.version),
         onTap: () {
           showAboutDialog(
             context: context,
