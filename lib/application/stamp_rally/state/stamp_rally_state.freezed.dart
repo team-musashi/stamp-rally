@@ -1,0 +1,161 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+
+part of 'stamp_rally_state.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
+mixin _$StampRallyState {
+  int get totalCount => throw _privateConstructorUsedError;
+  List<StampRally> get items => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $StampRallyStateCopyWith<StampRallyState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StampRallyStateCopyWith<$Res> {
+  factory $StampRallyStateCopyWith(
+          StampRallyState value, $Res Function(StampRallyState) then) =
+      _$StampRallyStateCopyWithImpl<$Res, StampRallyState>;
+  @useResult
+  $Res call({int totalCount, List<StampRally> items});
+}
+
+/// @nodoc
+class _$StampRallyStateCopyWithImpl<$Res, $Val extends StampRallyState>
+    implements $StampRallyStateCopyWith<$Res> {
+  _$StampRallyStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalCount = null,
+    Object? items = null,
+  }) {
+    return _then(_value.copyWith(
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<StampRally>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_StampRallyStateCopyWith<$Res>
+    implements $StampRallyStateCopyWith<$Res> {
+  factory _$$_StampRallyStateCopyWith(
+          _$_StampRallyState value, $Res Function(_$_StampRallyState) then) =
+      __$$_StampRallyStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int totalCount, List<StampRally> items});
+}
+
+/// @nodoc
+class __$$_StampRallyStateCopyWithImpl<$Res>
+    extends _$StampRallyStateCopyWithImpl<$Res, _$_StampRallyState>
+    implements _$$_StampRallyStateCopyWith<$Res> {
+  __$$_StampRallyStateCopyWithImpl(
+      _$_StampRallyState _value, $Res Function(_$_StampRallyState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalCount = null,
+    Object? items = null,
+  }) {
+    return _then(_$_StampRallyState(
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<StampRally>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StampRallyState implements _StampRallyState {
+  const _$_StampRallyState(
+      {this.totalCount = 0,
+      final List<StampRally> items = const <StampRally>[]})
+      : _items = items;
+
+  @override
+  @JsonKey()
+  final int totalCount;
+  final List<StampRally> _items;
+  @override
+  @JsonKey()
+  List<StampRally> get items {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
+
+  @override
+  String toString() {
+    return 'StampRallyState(totalCount: $totalCount, items: $items)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StampRallyState &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
+            const DeepCollectionEquality().equals(other._items, _items));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, totalCount, const DeepCollectionEquality().hash(_items));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StampRallyStateCopyWith<_$_StampRallyState> get copyWith =>
+      __$$_StampRallyStateCopyWithImpl<_$_StampRallyState>(this, _$identity);
+}
+
+abstract class _StampRallyState implements StampRallyState {
+  const factory _StampRallyState(
+      {final int totalCount,
+      final List<StampRally> items}) = _$_StampRallyState;
+
+  @override
+  int get totalCount;
+  @override
+  List<StampRally> get items;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StampRallyStateCopyWith<_$_StampRallyState> get copyWith =>
+      throw _privateConstructorUsedError;
+}

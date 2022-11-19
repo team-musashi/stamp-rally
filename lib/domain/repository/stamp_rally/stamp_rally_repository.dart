@@ -12,8 +12,8 @@ final stampRallyRepositoryProvider = Provider<StampRallyRepository>(
 /// スタンプラリーに関する取得や更新を行う
 abstract class StampRallyRepository {
   /// 公開中スタンプラリーを全件取得する
-  StreamProvider<List<StampRally>> fetchAllPublicStampRally();
+  Stream<List<StampRally>> fetchAllPublicStampRally();
 
   /// 参加中スタンプラリーを取得する
-  FutureProvider<List<StampRally>> fetchEntryStampRally();
+  Future<List<StampRally>> fetchEntryStampRally();
 }

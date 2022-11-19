@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -73,13 +75,17 @@ final StreamProvider<List<StampRally>> publicStampRallyStreamProvider =
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
   @override
-  StreamProvider<List<StampRally>> fetchAllPublicStampRally() {
-    return publicStampRallyStreamProvider;
+  Stream<List<StampRally>> fetchAllPublicStampRally() {
+    late Stream<List<StampRally>> result;
+    publicStampRallyStreamProvider.stream.select((value) async {
+      return result = value;
+    });
+    return result;
   }
 
   @override
-  FutureProvider<List<StampRally>> fetchEntryStampRally() {
-    // TODO(cobo): todo, https://github.com/team-musashi/stamp-rally/issues/22
+  Future<List<StampRally>> fetchEntryStampRally() async {
+    // TODO(cobo): implements, https://github.com/team-musashi/stamp-rally/issues/22
     throw UnimplementedError();
   }
 }
