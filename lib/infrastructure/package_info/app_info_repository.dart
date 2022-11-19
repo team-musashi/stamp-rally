@@ -7,21 +7,22 @@ import '../../domain/repository/app_info/entity/app_info.dart';
 
 /// PackageInfoアプリ情報リポジトリ
 class PackageInfoAppInfoRepository implements AppInfoRepository {
-  const PackageInfoAppInfoRepository();
+  const PackageInfoAppInfoRepository({
+    required this.copyRight,
+  });
+
+  /// CopyRight
+  final String copyRight;
 
   @override
   Future<AppInfo> getAppInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
-    return packageInfo.toAppInfo();
+    return AppInfo(
+      appName: packageInfo.appName,
+      packageName: packageInfo.packageName,
+      version: 'v${packageInfo.version}',
+      buildNumber: packageInfo.buildNumber,
+      copyRight: copyRight,
+    );
   }
-}
-
-extension _PackageInfoEx on PackageInfo {
-  /// PackageInfo => AppInfo
-  AppInfo toAppInfo() => AppInfo(
-        appName: appName,
-        packageName: packageName,
-        version: 'v$version',
-        buildNumber: buildNumber,
-      );
 }

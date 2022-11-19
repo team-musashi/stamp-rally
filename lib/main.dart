@@ -23,7 +23,9 @@ Future<void> main() async {
       overrides: [
         // 各 Repository の上書き
         appInfoRepositoryProvider.overrideWith(
-          (ref) => const PackageInfoAppInfoRepository(),
+          (ref) => const PackageInfoAppInfoRepository(
+            copyRight: '(C)2022 team-musashi',
+          ),
         ),
         userRepositoryProvider.overrideWith(
           (ref) {

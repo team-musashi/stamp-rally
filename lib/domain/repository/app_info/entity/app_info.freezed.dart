@@ -28,6 +28,9 @@ mixin _$AppInfo {
   /// ビルド番号
   String get buildNumber => throw _privateConstructorUsedError;
 
+  /// CopyRight
+  String get copyRight => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $AppInfoCopyWith<AppInfo> get copyWith => throw _privateConstructorUsedError;
 }
@@ -38,7 +41,11 @@ abstract class $AppInfoCopyWith<$Res> {
       _$AppInfoCopyWithImpl<$Res, AppInfo>;
   @useResult
   $Res call(
-      {String appName, String packageName, String version, String buildNumber});
+      {String appName,
+      String packageName,
+      String version,
+      String buildNumber,
+      String copyRight});
 }
 
 /// @nodoc
@@ -58,6 +65,7 @@ class _$AppInfoCopyWithImpl<$Res, $Val extends AppInfo>
     Object? packageName = null,
     Object? version = null,
     Object? buildNumber = null,
+    Object? copyRight = null,
   }) {
     return _then(_value.copyWith(
       appName: null == appName
@@ -76,6 +84,10 @@ class _$AppInfoCopyWithImpl<$Res, $Val extends AppInfo>
           ? _value.buildNumber
           : buildNumber // ignore: cast_nullable_to_non_nullable
               as String,
+      copyRight: null == copyRight
+          ? _value.copyRight
+          : copyRight // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -88,7 +100,11 @@ abstract class _$$_AppInfoCopyWith<$Res> implements $AppInfoCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String appName, String packageName, String version, String buildNumber});
+      {String appName,
+      String packageName,
+      String version,
+      String buildNumber,
+      String copyRight});
 }
 
 /// @nodoc
@@ -105,6 +121,7 @@ class __$$_AppInfoCopyWithImpl<$Res>
     Object? packageName = null,
     Object? version = null,
     Object? buildNumber = null,
+    Object? copyRight = null,
   }) {
     return _then(_$_AppInfo(
       appName: null == appName
@@ -123,6 +140,10 @@ class __$$_AppInfoCopyWithImpl<$Res>
           ? _value.buildNumber
           : buildNumber // ignore: cast_nullable_to_non_nullable
               as String,
+      copyRight: null == copyRight
+          ? _value.copyRight
+          : copyRight // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -134,7 +155,8 @@ class _$_AppInfo extends _AppInfo {
       {required this.appName,
       required this.packageName,
       required this.version,
-      required this.buildNumber})
+      required this.buildNumber,
+      required this.copyRight})
       : super._();
 
   /// アプリ名
@@ -153,9 +175,13 @@ class _$_AppInfo extends _AppInfo {
   @override
   final String buildNumber;
 
+  /// CopyRight
+  @override
+  final String copyRight;
+
   @override
   String toString() {
-    return 'AppInfo(appName: $appName, packageName: $packageName, version: $version, buildNumber: $buildNumber)';
+    return 'AppInfo(appName: $appName, packageName: $packageName, version: $version, buildNumber: $buildNumber, copyRight: $copyRight)';
   }
 
   @override
@@ -168,12 +194,14 @@ class _$_AppInfo extends _AppInfo {
                 other.packageName == packageName) &&
             (identical(other.version, version) || other.version == version) &&
             (identical(other.buildNumber, buildNumber) ||
-                other.buildNumber == buildNumber));
+                other.buildNumber == buildNumber) &&
+            (identical(other.copyRight, copyRight) ||
+                other.copyRight == copyRight));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, appName, packageName, version, buildNumber);
+  int get hashCode => Object.hash(
+      runtimeType, appName, packageName, version, buildNumber, copyRight);
 
   @JsonKey(ignore: true)
   @override
@@ -187,7 +215,8 @@ abstract class _AppInfo extends AppInfo {
       {required final String appName,
       required final String packageName,
       required final String version,
-      required final String buildNumber}) = _$_AppInfo;
+      required final String buildNumber,
+      required final String copyRight}) = _$_AppInfo;
   const _AppInfo._() : super._();
 
   @override
@@ -206,6 +235,10 @@ abstract class _AppInfo extends AppInfo {
 
   /// ビルド番号
   String get buildNumber;
+  @override
+
+  /// CopyRight
+  String get copyRight;
   @override
   @JsonKey(ignore: true)
   _$$_AppInfoCopyWith<_$_AppInfo> get copyWith =>

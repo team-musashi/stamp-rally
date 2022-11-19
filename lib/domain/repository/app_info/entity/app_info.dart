@@ -17,6 +17,9 @@ class AppInfo with _$AppInfo {
 
     /// ビルド番号
     required String buildNumber,
+
+    /// CopyRight
+    required String copyRight,
   }) = _AppInfo;
 
   const AppInfo._();
