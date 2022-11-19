@@ -21,6 +21,7 @@ dependencies:
   go_router: ^5.1.1
   json_serializable: ^6.5.4
   # ロガーパッケージ
+  package_info_plus: ^3.0.2
   roggle: ^0.3.0
 
 dependency_overrides:
