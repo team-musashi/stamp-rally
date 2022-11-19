@@ -53,7 +53,7 @@ class _AboutAppListTile extends ConsumerWidget {
           showAboutDialog(
             context: context,
             applicationName: info.appName,
-            applicationVersion: info.version,
+            applicationVersion: '${info.version} build${info.buildNumber}',
             applicationIcon: SizedBox.square(
               dimension: 60,
               child: ClipRRect(
