@@ -8,60 +8,56 @@ import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../firebase.dart';
 import 'document/stamp_rally_document.dart';
 
-/// 公開中コレクション名プロバイダー
-final publicStampRallyCollectionNameProvider = Provider(
-  (_) => 'publicStampRally',
-);
-
-/// 参加中コレクション名プロバイダー
-final entryStampRallyCollectionNameProvider = Provider(
-  (_) => 'entryStampRally',
-);
-
-/// 公開中スタンプラリーコレクションReferenceのプロバイダ
-final publicStampRallyCollectionRefProvider =
-    Provider<CollectionReference<Map<String, dynamic>>>(
-  (ref) => ref
-      .watch(firebaseFirestoreProvider)
-      .collection(ref.watch(publicStampRallyCollectionNameProvider)),
+/// 公開中スタンプラリーコレクションReferenceのプロバイダー
+final publicStampRallyCollectionRefProvider = Provider(
+  (ref) => ref.watch(firebaseFirestoreProvider),
 );
 
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
-    required this.collectionRef,
+    required this.store,
   }) {
-    _changesSubscription = _query.snapshots().listen((snapshot) {
-      if (_changesController.isClosed) {
+    // 公開中のスタンプラリーリストの変更を監視する
+    _publicSubscription = _publicQuery.snapshots().listen((snapshot) {
+      if (_publicChangesController.isClosed) {
         return;
       }
 
-      _changesController.add(
-        snapshot.docs.map((doc) {
-          final stampRallyDoc = StampRallyDocument.fromJson(doc.data());
-          return stampRallyDoc.toStampRally(doc.id);
-        }).toList(),
+      _publicChangesController.add(
+        snapshot.docs.map((doc) => doc.data().toStampRally(doc.id)).toList(),
       );
     });
   }
 
-  final CollectionReference<Map<String, dynamic>> collectionRef;
-  final _changesController = StreamController<List<StampRally>>.broadcast();
+  final FirebaseFirestore store;
+  final _publicChangesController =
+      StreamController<List<StampRally>>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
-  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _changesSubscription;
+  StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
 
   /// 公開中のスタンプラリーリストのクエリ
-  Query<Map<String, dynamic>> get _query => collectionRef;
+  Query<StampRallyDocument> get _publicQuery =>
+      store.collection('publicStampRally').withConverter<StampRallyDocument>(
+        fromFirestore: (snapshot, options) {
+          final json = snapshot.data();
+          return StampRallyDocument.fromJson(json!);
+        },
+        toFirestore: (_, __) {
+          // 更新することは無いため空実装
+          return <String, dynamic>{};
+        },
+      );
 
   void dispose() {
-    _changesSubscription?.cancel();
-    _changesController.close();
+    _publicSubscription?.cancel();
+    _publicChangesController.close();
   }
 
   @override
   Stream<List<StampRally>> changesPublicStampRallies() =>
-      _changesController.stream;
+      _publicChangesController.stream;
 
   @override
   Stream<List<StampRally>> changesEntryStampRallies() {

@@ -47,7 +47,7 @@ Future<void> main() async {
         stampRallyRepositoryProvider.overrideWith(
           (ref) {
             final repository = FirebaseStampRallyRepository(
-              collectionRef: ref.watch(publicStampRallyCollectionRefProvider),
+              store: ref.watch(firebaseFirestoreProvider),
             );
             ref.onDispose(repository.dispose);
             return repository;
