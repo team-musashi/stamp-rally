@@ -20,17 +20,17 @@ class ServerTimestampConverter implements JsonConverter<DateTime?, Object?> {
 }
 
 /// クライアント日時コンバーター
-class ClientTimestampConverter implements JsonConverter<DateTime?, Object?> {
+class ClientTimestampConverter implements JsonConverter<DateTime, Object> {
   const ClientTimestampConverter();
 
   @override
-  DateTime? fromJson(Object? fieldValue) {
-    return (fieldValue as Timestamp?)?.toDate();
+  DateTime fromJson(Object fieldValue) {
+    return (fieldValue as Timestamp).toDate();
   }
 
   @override
-  Object? toJson(DateTime? dateTime) {
-    return dateTime != null ? Timestamp.fromDate(dateTime) : null;
+  Object toJson(DateTime dateTime) {
+    return Timestamp.fromDate(dateTime);
   }
 }
 

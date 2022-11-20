@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../application/stamp_rally/state/stamp_rally_state.dart';
 import '../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'loading.dart';
 
 /// スタンプラリー概要を表示するためのウィジェット
@@ -57,16 +57,16 @@ class StampRallyListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(publicStampRalllyStateProvider);
+    final asyncValue = ref.watch(publicStampRalliesProvider);
 
     return asyncValue.when(
       data: (data) {
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: data.items.length,
+          itemCount: data.length,
           itemBuilder: (BuildContext context, int index) {
-            return StampRallyViewItem(item: data.items[index]);
+            return StampRallyViewItem(item: data[index]);
           },
         );
       },

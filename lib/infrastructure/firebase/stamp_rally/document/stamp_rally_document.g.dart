@@ -16,8 +16,10 @@ _$_StampRallyDocument _$$_StampRallyDocumentFromJson(
       place: json['place'] as String,
       requiredTime: json['requiredTime'] as int,
       imageUrl: json['imageUrl'] as String,
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: const ClientTimestampConverter().fromJson(json['endDate']),
+      startDate: const ClientTimestampConverter()
+          .fromJson(json['startDate'] as Object),
+      endDate: _$JsonConverterFromJson<Object, DateTime>(
+          json['endDate'], const ClientTimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_StampRallyDocumentToJson(
@@ -28,6 +30,19 @@ Map<String, dynamic> _$$_StampRallyDocumentToJson(
       'place': instance.place,
       'requiredTime': instance.requiredTime,
       'imageUrl': instance.imageUrl,
-      'startDate': instance.startDate.toIso8601String(),
-      'endDate': const ClientTimestampConverter().toJson(instance.endDate),
+      'startDate': const ClientTimestampConverter().toJson(instance.startDate),
+      'endDate': _$JsonConverterToJson<Object, DateTime>(
+          instance.endDate, const ClientTimestampConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

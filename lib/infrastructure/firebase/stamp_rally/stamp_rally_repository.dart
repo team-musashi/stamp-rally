@@ -3,21 +3,20 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../firebase.dart';
-import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
-import 'spot_repository.dart';
 
 /// 公開中コレクション名プロバイダー
-final publicStampRallyCollectionNameProvider =
-    Provider((_) => 'publicStampRally');
+final publicStampRallyCollectionNameProvider = Provider(
+  (_) => 'publicStampRally',
+);
 
 /// 参加中コレクション名プロバイダー
-final entryStampRallyCollectionNameProvider =
-    Provider((_) => 'entryStampRally');
+final entryStampRallyCollectionNameProvider = Provider(
+  (_) => 'entryStampRally',
+);
 
 /// 公開中スタンプラリーコレクションReferenceのプロバイダ
 final publicStampRallyCollectionRefProvider =
@@ -27,65 +26,62 @@ final publicStampRallyCollectionRefProvider =
       .collection(ref.watch(publicStampRallyCollectionNameProvider)),
 );
 
-/// 公開中スタンプラリーStreamProvider
-final StreamProvider<List<StampRally>> publicStampRallyStreamProvider =
-    StreamProvider<List<StampRally>>((ref) {
-  return ref
-      .watch(publicStampRallyCollectionRefProvider)
-      .snapshots()
-      .map((snapshot) {
-    final list = snapshot.docs.map((doc) {
-      final stampRallyDoc = StampRallyDocument.fromJson(doc.data());
-
-      // スタンプラリードキュメント配下のスポットサブコレクションを取得
-      final subCollection = <Spot>[];
-      doc.reference
-          .collection(ref.watch(spotCollectionNameProvider))
-          .get()
-          .then((snapshot) {
-        snapshot.docs.map((doc) {
-          final spotDoc = SpotDocument.fromJson(doc.data());
-          subCollection.add(
-            Spot(
-              id: doc.id,
-              order: spotDoc.order,
-              imageUrl: spotDoc.imageUrl,
-              location: spotDoc.location!,
-            ),
-          );
-        });
-      });
-
-      return StampRally(
-        id: doc.id,
-        title: stampRallyDoc.title,
-        explanation: stampRallyDoc.explanation,
-        place: stampRallyDoc.place,
-        requiredTime: stampRallyDoc.requiredTime,
-        imageUrl: stampRallyDoc.imageUrl,
-        startDate: stampRallyDoc.startDate,
-        endDate: stampRallyDoc.endDate,
-        spots: subCollection,
-      );
-    }).toList();
-    return list;
-  });
-});
-
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
-  @override
-  Stream<List<StampRally>> fetchAllPublicStampRally() {
-    late Stream<List<StampRally>> result;
-    publicStampRallyStreamProvider.stream.select((value) async {
-      return result = value;
+  FirebaseStampRallyRepository({
+    required this.collectionRef,
+  }) {
+    _changesSubscription = _query.snapshots().listen((snapshot) {
+      if (_changesController.isClosed) {
+        return;
+      }
+
+      _changesController.add(
+        snapshot.docs.map((doc) {
+          final stampRallyDoc = StampRallyDocument.fromJson(doc.data());
+          return stampRallyDoc.toStampRally(doc.id);
+        }).toList(),
+      );
     });
-    return result;
+  }
+
+  final CollectionReference<Map<String, dynamic>> collectionRef;
+  final _changesController = StreamController<List<StampRally>>.broadcast();
+
+  /// コレクションの監視をキャンセルするために保持
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _changesSubscription;
+
+  /// 公開中のスタンプラリーリストのクエリ
+  Query<Map<String, dynamic>> get _query => collectionRef;
+
+  void dispose() {
+    _changesSubscription?.cancel();
+    _changesController.close();
   }
 
   @override
-  Future<List<StampRally>> fetchEntryStampRally() async {
-    // TODO(cobo): implements, https://github.com/team-musashi/stamp-rally/issues/22
+  Stream<List<StampRally>> changesPublicStampRallies() =>
+      _changesController.stream;
+
+  @override
+  Stream<List<StampRally>> changesEntryStampRallies() {
+    // TODO: implement changesEntryStampRallies
     throw UnimplementedError();
+  }
+}
+
+extension _StampRallyDocumentEx on StampRallyDocument {
+  /// StampRallyDocument => StampRally
+  StampRally toStampRally(String id) {
+    return StampRally(
+      id: id,
+      title: title,
+      explanation: explanation,
+      place: place,
+      requiredTime: requiredTime,
+      imageUrl: imageUrl,
+      startDate: startDate,
+      endDate: endDate,
+    );
   }
 }

@@ -33,6 +33,6 @@ class StampRally with _$StampRally {
     DateTime? endDate,
 
     /// スタンプラリーのスポットのリスト
-    required List<Spot> spots,
+    @Default(<Spot>[]) List<Spot> spots,
   }) = _StampRally;
 }

@@ -42,12 +42,10 @@ class StampRallyStateNotifier
       return;
     }
 
-    state = await AsyncValue.guard(() async {
-      late List<StampRally> items;
-      stampRallyRepository
-          .fetchAllPublicStampRally()
-          .map((result) => items = result);
-      return value.copyWith(items: items);
-    });
+    // state = await AsyncValue.guard(() async {
+    //   late List<StampRally> items;
+    //   stampRallyRepository.findsPublic().map((result) => items = result);
+    //   return value.copyWith(items: items);
+    // });
   }
 }

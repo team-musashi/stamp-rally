@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StampRallyState {
-  int get totalCount => throw _privateConstructorUsedError;
   List<StampRally> get items => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +29,7 @@ abstract class $StampRallyStateCopyWith<$Res> {
           StampRallyState value, $Res Function(StampRallyState) then) =
       _$StampRallyStateCopyWithImpl<$Res, StampRallyState>;
   @useResult
-  $Res call({int totalCount, List<StampRally> items});
+  $Res call({List<StampRally> items});
 }
 
 /// @nodoc
@@ -46,14 +45,9 @@ class _$StampRallyStateCopyWithImpl<$Res, $Val extends StampRallyState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? totalCount = null,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
-      totalCount: null == totalCount
-          ? _value.totalCount
-          : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -70,7 +64,7 @@ abstract class _$$_StampRallyStateCopyWith<$Res>
       __$$_StampRallyStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int totalCount, List<StampRally> items});
+  $Res call({List<StampRally> items});
 }
 
 /// @nodoc
@@ -84,14 +78,9 @@ class __$$_StampRallyStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? totalCount = null,
     Object? items = null,
   }) {
     return _then(_$_StampRallyState(
-      totalCount: null == totalCount
-          ? _value.totalCount
-          : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -104,13 +93,9 @@ class __$$_StampRallyStateCopyWithImpl<$Res>
 
 class _$_StampRallyState implements _StampRallyState {
   const _$_StampRallyState(
-      {this.totalCount = 0,
-      final List<StampRally> items = const <StampRally>[]})
+      {final List<StampRally> items = const <StampRally>[]})
       : _items = items;
 
-  @override
-  @JsonKey()
-  final int totalCount;
   final List<StampRally> _items;
   @override
   @JsonKey()
@@ -121,7 +106,7 @@ class _$_StampRallyState implements _StampRallyState {
 
   @override
   String toString() {
-    return 'StampRallyState(totalCount: $totalCount, items: $items)';
+    return 'StampRallyState(items: $items)';
   }
 
   @override
@@ -129,14 +114,12 @@ class _$_StampRallyState implements _StampRallyState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StampRallyState &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, totalCount, const DeepCollectionEquality().hash(_items));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -146,12 +129,9 @@ class _$_StampRallyState implements _StampRallyState {
 }
 
 abstract class _StampRallyState implements StampRallyState {
-  const factory _StampRallyState(
-      {final int totalCount,
-      final List<StampRally> items}) = _$_StampRallyState;
+  const factory _StampRallyState({final List<StampRally> items}) =
+      _$_StampRallyState;
 
-  @override
-  int get totalCount;
   @override
   List<StampRally> get items;
   @override

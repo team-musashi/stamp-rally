@@ -32,8 +32,15 @@ Future<void> main() async {
             return repository;
           },
         ),
-        stampRallyRepositoryProvider
-            .overrideWithValue(FirebaseStampRallyRepository())
+        stampRallyRepositoryProvider.overrideWith(
+          (ref) {
+            final repository = FirebaseStampRallyRepository(
+              collectionRef: ref.watch(publicStampRallyCollectionRefProvider),
+            );
+            ref.onDispose(repository.dispose);
+            return repository;
+          },
+        ),
       ],
       child: const App(),
     ),
