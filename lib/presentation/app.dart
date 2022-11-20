@@ -44,20 +44,24 @@ class App extends ConsumerWidget {
       builder: (context, child) => Consumer(
         builder: (context, ref, _) {
           final isLoading = ref.watch(overlayLoadingProvider);
-          return Navigator(
-            key: ref.watch(navigatorKeyProvider),
-            onPopPage: (route, dynamic _) => false,
-            pages: [
-              MaterialPage<Widget>(
-                child: Stack(
-                  children: [
-                    child!,
-                    // ローディング状態を見て必要ならローディングを表示する
-                    if (isLoading) const OverlayLoading(),
-                  ],
+          return MediaQuery(
+            // 全ての端末における文字サイズ設定を固定
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+            child: Navigator(
+              key: ref.watch(navigatorKeyProvider),
+              onPopPage: (route, dynamic _) => false,
+              pages: [
+                MaterialPage<Widget>(
+                  child: Stack(
+                    children: [
+                      child!,
+                      // ローディング状態を見て必要ならローディングを表示する
+                      if (isLoading) const OverlayLoading(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
