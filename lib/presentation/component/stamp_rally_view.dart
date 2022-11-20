@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import 'loading.dart';
+import 'async_value_handler.dart';
 
 /// スタンプラリー概要を表示するためのウィジェット
 class StampRallyViewItem extends StatelessWidget {
@@ -57,21 +57,18 @@ class StampRallyListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(publicStampRalliesProvider);
-
-    return asyncValue.when(
-      data: (data) {
+    return AsyncValueHandler<List<StampRally>>(
+      value: ref.watch(publicStampRalliesProvider),
+      builder: (stampRallies) {
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: data.length,
+          itemCount: stampRallies.length,
           itemBuilder: (BuildContext context, int index) {
-            return StampRallyViewItem(item: data[index]);
+            return StampRallyViewItem(item: stampRallies[index]);
           },
         );
       },
-      error: (error, stackTrace) => Container(child: Text(error.toString())),
-      loading: () => const OverlayLoading(),
     );
   }
 }
