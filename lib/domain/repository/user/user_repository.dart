@@ -9,15 +9,10 @@ final userProvider = StreamProvider(
   name: 'userProvider',
 );
 
-/// ログイン中かどうかを返すStreamプロバイダー
-final loggedInStreamProvider = StreamProvider(
-  (ref) => ref.watch(userRepositoryProvider).loggedInChanges(),
-  name: 'loggedInStreamProvider',
-);
-
 /// ログイン中かどうかを返すプロバイダー
-final loggedInProvider = Provider(
-  (ref) => ref.watch(loggedInStreamProvider).value ?? false,
+final loggedInProvider = StreamProvider(
+  (ref) => ref.watch(userRepositoryProvider).loggedInChanges(),
+  name: 'loggedInProvider',
 );
 
 /// ユーザーリポジトリプロバイダー
