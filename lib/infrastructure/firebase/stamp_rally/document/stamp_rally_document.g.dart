@@ -16,10 +16,10 @@ _$_StampRallyDocument _$$_StampRallyDocumentFromJson(
       place: json['place'] as String,
       requiredTime: json['requiredTime'] as int,
       imageUrl: json['imageUrl'] as String,
-      startDate: const ClientTimestampConverter()
-          .fromJson(json['startDate'] as Object),
+      startDate:
+          const TimestampConverter().fromJson(json['startDate'] as Object),
       endDate: _$JsonConverterFromJson<Object, DateTime>(
-          json['endDate'], const ClientTimestampConverter().fromJson),
+          json['endDate'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_StampRallyDocumentToJson(
@@ -30,9 +30,9 @@ Map<String, dynamic> _$$_StampRallyDocumentToJson(
       'place': instance.place,
       'requiredTime': instance.requiredTime,
       'imageUrl': instance.imageUrl,
-      'startDate': const ClientTimestampConverter().toJson(instance.startDate),
+      'startDate': const TimestampConverter().toJson(instance.startDate),
       'endDate': _$JsonConverterToJson<Object, DateTime>(
-          instance.endDate, const ClientTimestampConverter().toJson),
+          instance.endDate, const TimestampConverter().toJson),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

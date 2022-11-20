@@ -22,9 +22,9 @@ UserDocument _$UserDocumentFromJson(Map<String, dynamic> json) {
 mixin _$UserDocument {
   String? get authProvider => throw _privateConstructorUsedError;
   String? get platform => throw _privateConstructorUsedError;
-  @ServerTimestampConverter()
+  @TimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  @ServerTimestampConverter()
+  @TimestampConverter()
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,8 +42,8 @@ abstract class $UserDocumentCopyWith<$Res> {
   $Res call(
       {String? authProvider,
       String? platform,
-      @ServerTimestampConverter() DateTime? createdAt,
-      @ServerTimestampConverter() DateTime? updatedAt});
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -96,8 +96,8 @@ abstract class _$$_UserDocumentCopyWith<$Res>
   $Res call(
       {String? authProvider,
       String? platform,
-      @ServerTimestampConverter() DateTime? createdAt,
-      @ServerTimestampConverter() DateTime? updatedAt});
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -143,8 +143,8 @@ class _$_UserDocument extends _UserDocument {
   const _$_UserDocument(
       {this.authProvider,
       this.platform,
-      @ServerTimestampConverter() this.createdAt,
-      @ServerTimestampConverter() this.updatedAt})
+      @TimestampConverter() this.createdAt,
+      @TimestampConverter() this.updatedAt})
       : super._();
 
   factory _$_UserDocument.fromJson(Map<String, dynamic> json) =>
@@ -155,10 +155,10 @@ class _$_UserDocument extends _UserDocument {
   @override
   final String? platform;
   @override
-  @ServerTimestampConverter()
+  @TimestampConverter()
   final DateTime? createdAt;
   @override
-  @ServerTimestampConverter()
+  @TimestampConverter()
   final DateTime? updatedAt;
 
   @override
@@ -204,8 +204,8 @@ abstract class _UserDocument extends UserDocument {
   const factory _UserDocument(
       {final String? authProvider,
       final String? platform,
-      @ServerTimestampConverter() final DateTime? createdAt,
-      @ServerTimestampConverter() final DateTime? updatedAt}) = _$_UserDocument;
+      @TimestampConverter() final DateTime? createdAt,
+      @TimestampConverter() final DateTime? updatedAt}) = _$_UserDocument;
   const _UserDocument._() : super._();
 
   factory _UserDocument.fromJson(Map<String, dynamic> json) =
@@ -216,10 +216,10 @@ abstract class _UserDocument extends UserDocument {
   @override
   String? get platform;
   @override
-  @ServerTimestampConverter()
+  @TimestampConverter()
   DateTime? get createdAt;
   @override
-  @ServerTimestampConverter()
+  @TimestampConverter()
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)

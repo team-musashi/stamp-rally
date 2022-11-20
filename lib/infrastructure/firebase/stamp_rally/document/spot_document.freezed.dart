@@ -24,7 +24,7 @@ mixin _$SpotDocument {
   String get imageUrl => throw _privateConstructorUsedError;
   @GeoPointConverter()
   GeoLocation? get location => throw _privateConstructorUsedError;
-  @ServerTimestampConverter()
+  @TimestampConverter()
   DateTime? get gotDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $SpotDocumentCopyWith<$Res> {
       {int order,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
-      @ServerTimestampConverter() DateTime? gotDate});
+      @TimestampConverter() DateTime? gotDate});
 
   $GeoLocationCopyWith<$Res>? get location;
 }
@@ -111,7 +111,7 @@ abstract class _$$_SpotDocumentCopyWith<$Res>
       {int order,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
-      @ServerTimestampConverter() DateTime? gotDate});
+      @TimestampConverter() DateTime? gotDate});
 
   @override
   $GeoLocationCopyWith<$Res>? get location;
@@ -161,7 +161,7 @@ class _$_SpotDocument extends _SpotDocument {
       {required this.order,
       required this.imageUrl,
       @GeoPointConverter() this.location,
-      @ServerTimestampConverter() this.gotDate})
+      @TimestampConverter() this.gotDate})
       : super._();
 
   factory _$_SpotDocument.fromJson(Map<String, dynamic> json) =>
@@ -175,7 +175,7 @@ class _$_SpotDocument extends _SpotDocument {
   @GeoPointConverter()
   final GeoLocation? location;
   @override
-  @ServerTimestampConverter()
+  @TimestampConverter()
   final DateTime? gotDate;
 
   @override
@@ -220,7 +220,7 @@ abstract class _SpotDocument extends SpotDocument {
       {required final int order,
       required final String imageUrl,
       @GeoPointConverter() final GeoLocation? location,
-      @ServerTimestampConverter() final DateTime? gotDate}) = _$_SpotDocument;
+      @TimestampConverter() final DateTime? gotDate}) = _$_SpotDocument;
   const _SpotDocument._() : super._();
 
   factory _SpotDocument.fromJson(Map<String, dynamic> json) =
@@ -234,7 +234,7 @@ abstract class _SpotDocument extends SpotDocument {
   @GeoPointConverter()
   GeoLocation? get location;
   @override
-  @ServerTimestampConverter()
+  @TimestampConverter()
   DateTime? get gotDate;
   @override
   @JsonKey(ignore: true)
