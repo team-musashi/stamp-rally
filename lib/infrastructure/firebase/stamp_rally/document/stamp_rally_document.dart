@@ -22,4 +22,10 @@ class StampRallyDocument with _$StampRallyDocument {
 
   factory StampRallyDocument.fromJson(Map<String, dynamic> json) =>
       _$StampRallyDocumentFromJson(json);
+
+  static _StampRallyDocumentField get field => _StampRallyDocumentField();
+}
+
+class _StampRallyDocumentField {
+  String get startDate => 'startDate';
 }
