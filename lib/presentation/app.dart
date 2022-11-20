@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/user/state/create_user_result.dart';
@@ -35,6 +36,8 @@ class App extends ConsumerWidget {
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       debugShowCheckedModeBanner: false,
       theme: themeData,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [Locale('ja')],
       routeInformationProvider: router.routeInformationProvider,
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
