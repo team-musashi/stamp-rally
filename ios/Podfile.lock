@@ -72,6 +72,8 @@ PODS:
   - package_info_plus (0.4.5):
     - Flutter
   - PromisesObjC (2.1.1)
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -80,6 +82,7 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `9.6.0`)
   - Flutter (from `Flutter`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -108,6 +111,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -123,7 +128,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 2082fffcd855f95f883c0a1641133eb9bbe76d40
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
   FirebaseCoreInternal: bca76517fe1ed381e989f5e7d8abb0da8d85bed3
-  FirebaseFirestore: 9bfe2e814686fb3ba2495b97618b38987e4c8526
+  FirebaseFirestore: 56251017e7fb2530d39d42724a6772fd78fd734e
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
@@ -131,6 +136,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: 7bb5b3be75dd1ec739dff78129489fdde58670af
 
