@@ -20,6 +20,7 @@ class Agreement extends ConsumerWidget {
             style: AnchorText.anchorStyleText(context),
             recognizer: TapGestureRecognizer()
               ..onTap = () async {
+                // TODO(susa): 定数はクラスにまとめること
                 await ref.read(urlLauncherServiceProvider).launch(
                       'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
                     );
@@ -31,6 +32,7 @@ class Agreement extends ConsumerWidget {
             style: AnchorText.anchorStyleText(context),
             recognizer: TapGestureRecognizer()
               ..onTap = () async {
+                // TODO(susa): 定数はクラスにまとめること
                 await ref.read(urlLauncherServiceProvider).launch(
                       'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
                     );
