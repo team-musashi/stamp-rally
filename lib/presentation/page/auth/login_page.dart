@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../component/agreement.dart';
 import '../../component/create_user.dart';
 
 /// ログイン画面
@@ -14,6 +15,7 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
+            Agreement(),
             CreateUserButton(),
           ],
         ),
