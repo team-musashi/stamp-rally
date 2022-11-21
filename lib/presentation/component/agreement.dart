@@ -1,13 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../application/url_launcher/url_launcher_service.dart';
 
 /// 利用規約とプライバシーポリシーをまとめたウィジェット
-class Agreement extends StatelessWidget {
+class Agreement extends ConsumerWidget {
   const Agreement({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return RichText(
       text: TextSpan(
         children: [
@@ -16,10 +18,9 @@ class Agreement extends StatelessWidget {
             style: const TextStyle(color: Colors.blue),
             recognizer: TapGestureRecognizer()
               ..onTap = () async {
-                await _onLaunchUrl(
-                  url:
+                await ref.read(urlLauncherServiceProvider).launch(
                       'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
-                );
+                    );
               },
           ),
           const TextSpan(
@@ -31,10 +32,9 @@ class Agreement extends StatelessWidget {
             style: const TextStyle(color: Colors.blue),
             recognizer: TapGestureRecognizer()
               ..onTap = () async {
-                await _onLaunchUrl(
-                  url:
+                await ref.read(urlLauncherServiceProvider).launch(
                       'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
-                );
+                    );
               },
           ),
           const TextSpan(
@@ -44,16 +44,5 @@ class Agreement extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  /// リンク文字列タップ時処理
-  /// 引数にて指定されたUrlを開く
-  Future<void> _onLaunchUrl({required String url}) async {
-    final uri = Uri.parse(url);
-
-    // 指定したUrlが無効の場合は処理終了
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    }
   }
 }
