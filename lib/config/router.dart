@@ -29,8 +29,9 @@ final routerProvider = Provider<GoRouter>(
         ErrorRoute(state.error).buildPage(context),
 
     // リダイレクト
-    redirect: (context, state) {
-      final loggedIn = ref.read(loggedInProvider);
+    redirect: (context, state) async {
+      // loggedInProviderが値をキャッシュしてくれるので時間がかかるのは初回のみ
+      final loggedIn = await ref.read(loggedInProvider.future);
       logger.i(
         '$_logPrefix redirect(): location = ${state.location}, '
         'loggedIn = $loggedIn',
@@ -57,7 +58,7 @@ final routerProvider = Provider<GoRouter>(
 
     // ログイン状態の変化を検知してリダイレクトを再実行する
     refreshListenable:
-        GoRouterRefreshNotifier(ref.watch(loggedInStreamProvider.stream)),
+        GoRouterRefreshNotifier(ref.watch(loggedInProvider.stream)),
   ),
 );
 

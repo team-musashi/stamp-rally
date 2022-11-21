@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/constants.dart';
@@ -18,6 +19,11 @@ Future<void> main() async {
 
   // Firebase の初期化
   await initializeFirebaseApp();
+
+  // 画面の向きを固定
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // 縦固定
+  ]);
 
   runApp(
     ProviderScope(
