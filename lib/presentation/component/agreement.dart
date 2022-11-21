@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/url_launcher/url_launcher_service.dart';
+import 'anchor_text.dart';
 
 /// 利用規約とプライバシーポリシーをまとめたウィジェット
 class Agreement extends ConsumerWidget {
@@ -12,10 +13,11 @@ class Agreement extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return RichText(
       text: TextSpan(
+        style: Theme.of(context).textTheme.bodyMedium,
         children: [
           TextSpan(
             text: 'プライバシーポリシー',
-            style: const TextStyle(color: Colors.blue),
+            style: AnchorText.anchorStyleText(context),
             recognizer: TapGestureRecognizer()
               ..onTap = () async {
                 await ref.read(urlLauncherServiceProvider).launch(
@@ -23,13 +25,10 @@ class Agreement extends ConsumerWidget {
                     );
               },
           ),
-          const TextSpan(
-            text: 'と',
-            style: TextStyle(color: Colors.black),
-          ),
+          const TextSpan(text: ' と '),
           TextSpan(
             text: 'サービス利用規約',
-            style: const TextStyle(color: Colors.blue),
+            style: AnchorText.anchorStyleText(context),
             recognizer: TapGestureRecognizer()
               ..onTap = () async {
                 await ref.read(urlLauncherServiceProvider).launch(
@@ -37,10 +36,7 @@ class Agreement extends ConsumerWidget {
                     );
               },
           ),
-          const TextSpan(
-            text: 'に同意して始める',
-            style: TextStyle(color: Colors.black),
-          ),
+          const TextSpan(text: ' に同意して始める'),
         ],
       ),
     );
