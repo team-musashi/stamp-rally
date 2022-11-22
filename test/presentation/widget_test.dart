@@ -5,7 +5,7 @@ import 'package:stamp_rally/domain/repository/stamp_rally/stamp_rally_repository
 import 'package:stamp_rally/domain/repository/user/user_repository.dart';
 import 'package:stamp_rally/presentation/app.dart';
 
-import '../infrastructure/mock/mock_package_info_appInfo_repository.dart';
+import '../infrastructure/mock/mock_package_info_app_info_repository.dart';
 import '../infrastructure/mock/mock_stamp_rally_repository.dart';
 import '../infrastructure/mock/mock_user_repository.dart';
 
