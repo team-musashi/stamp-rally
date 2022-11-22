@@ -45,6 +45,12 @@ Future<void> main() async {
             iconImagePath: isProd
                 ? Assets.images.iconProd.path
                 : Assets.images.iconDev.path,
+            privacyPolicyUrl: Uri.parse(
+              'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
+            ),
+            termsOfServiceUrl: Uri.parse(
+              'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
+            ),
           ),
         ),
 

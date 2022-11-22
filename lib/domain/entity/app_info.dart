@@ -29,6 +29,12 @@ class AppInfo with _$AppInfo {
 
     /// アイコン画像へのパス
     required String iconImagePath,
+
+    /// プライバシーポリシーのURL
+    required Uri privacyPolicyUrl,
+
+    /// 利用規約のURL
+    required Uri termsOfServiceUrl,
   }) = _AppInfo;
 
   const AppInfo._();
