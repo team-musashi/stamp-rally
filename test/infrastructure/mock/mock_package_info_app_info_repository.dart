@@ -5,11 +5,12 @@ class MockPackageInfoAppInfoRepository implements AppInfoRepository {
   @override
   Future<AppInfo> getAppInfo() async {
     return const AppInfo(
-        appName: 'dummyName',
-        packageName: 'dummy',
-        version: 'dummy',
-        buildNumber: 'dummy',
-        copyRight: 'dummy',
-        iconImagePath: 'dummy');
+      appName: 'dummyName',
+      packageName: 'dummy',
+      version: 'dummy',
+      buildNumber: 'dummy',
+      copyRight: 'dummy',
+      iconImagePath: 'dummy',
+    );
   }
 }
