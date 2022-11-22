@@ -40,6 +40,7 @@ class _Body extends StatelessWidget {
     );
   }
 }
+
 /// 「利用規約」のListTile
 class _TermsOfServiceListTile extends ConsumerWidget {
   const _TermsOfServiceListTile({super.key});
@@ -47,15 +48,15 @@ class _TermsOfServiceListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: const Text('サービス利用規約について'),
-      onTap: () async {
-        await ref.read(urlLauncherServiceProvider).launch(
-          'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
-        );
-      }
-    );
+        title: const Text('サービス利用規約について'),
+        onTap: () async {
+          await ref.read(urlLauncherServiceProvider).launch(
+                'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
+              );
+        });
   }
 }
+
 /// 「プライバシーポリシー」のListTile
 class _PrivacyPolicyListTile extends ConsumerWidget {
   const _PrivacyPolicyListTile({super.key});
@@ -63,13 +64,12 @@ class _PrivacyPolicyListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: const Text('プライバシーポリシー'),
-      onTap: () async {
-        await ref.read(urlLauncherServiceProvider).launch(
-          'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
-        );
-      }
-    );
+        title: const Text('プライバシーポリシー'),
+        onTap: () async {
+          await ref.read(urlLauncherServiceProvider).launch(
+                'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
+              );
+        });
   }
 }
 
