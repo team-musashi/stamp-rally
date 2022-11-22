@@ -65,7 +65,7 @@ class FirebaseUserRepository implements UserRepository {
   User? _cacheUser;
 
   /// ログイン済みかどうか
-  bool _loggedIn = false;
+  bool? _loggedIn;
 
   /// 認証状態の監視をキャンセルするために保持
   StreamSubscription<firebase_auth.User?>? _authChangesSubscription;
