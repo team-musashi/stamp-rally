@@ -7,14 +7,14 @@ import '../application/url_launcher/state/url_launch_data.dart';
 import '../application/url_launcher/state/url_launch_result.dart';
 import '../application/user/state/create_user_result.dart';
 import '../application/user/state/delete_user_result.dart';
-import '../config/router.dart';
-import '../config/theme.dart';
 import '../util/extension.dart';
 import '../util/logger.dart';
 import 'component/async_value_handler.dart';
 import 'component/dialog.dart';
 import 'component/loading.dart';
 import 'component/scaffold_messanger.dart';
+import 'router.dart';
+import 'theme.dart';
 
 /// スタンプラリーアプリ
 class App extends ConsumerWidget {
