@@ -29,13 +29,18 @@ final routerProvider = Provider<GoRouter>(
         ErrorRoute(state.error).buildPage(context),
 
     // リダイレクト
-    redirect: (context, state) async {
+    redirect: (context, state) {
       // loggedInProviderが値をキャッシュしてくれるので時間がかかるのは初回のみ
-      final loggedIn = await ref.read(loggedInProvider.future);
+      final loggedIn = ref.read(loggedInProvider).value;
       logger.i(
         '$_logPrefix redirect(): location = ${state.location}, '
         'loggedIn = $loggedIn',
       );
+      if (loggedIn == null) {
+        // 表示直後はログイン状態が未確定（loggedIn が null になる）
+        // 直後にログイン状態が確定して再度 redirect() が呼ばれるので保留の意味でいったん null を返す
+        return null;
+      }
 
       if (loggedIn) {
         // ログイン済みで、ログイン画面ならホーム画面にリダイレクトする
