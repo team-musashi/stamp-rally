@@ -11,8 +11,8 @@ class UserDocument with _$UserDocument {
   const factory UserDocument({
     String? authProvider,
     String? platform,
-    @ServerTimestampConverter() DateTime? createdAt,
-    @ServerTimestampConverter() DateTime? updatedAt,
+    @TimestampConverter() DateTime? createdAt,
+    @TimestampConverter() DateTime? updatedAt,
   }) = _UserDocument;
 
   const UserDocument._();

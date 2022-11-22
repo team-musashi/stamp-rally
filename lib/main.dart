@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/constants.dart';
 import 'domain/repository/app_info/app_info_repository.dart';
+import 'domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'domain/repository/user/user_repository.dart';
 import 'infrastructure/firebase/firebase.dart';
+import 'infrastructure/firebase/stamp_rally/stamp_rally_repository.dart';
 import 'infrastructure/firebase/user/user_repository.dart';
 import 'infrastructure/package_info/app_info_repository.dart';
 import 'presentation/app.dart';
@@ -43,6 +45,15 @@ Future<void> main() async {
             final repository = FirebaseUserRepository(
               auth: ref.watch(firebaseAuthProvider),
               firestore: ref.watch(firebaseFirestoreProvider),
+            );
+            ref.onDispose(repository.dispose);
+            return repository;
+          },
+        ),
+        stampRallyRepositoryProvider.overrideWith(
+          (ref) {
+            final repository = FirebaseStampRallyRepository(
+              store: ref.watch(firebaseFirestoreProvider),
             );
             ref.onDispose(repository.dispose);
             return repository;

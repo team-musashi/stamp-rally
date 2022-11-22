@@ -25,9 +25,9 @@ mixin _$StampRallyDocument {
   String get place => throw _privateConstructorUsedError;
   int get requiredTime => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  @ClientTimestampConverter()
+  @TimestampConverter()
   DateTime get startDate => throw _privateConstructorUsedError;
-  @ClientTimestampConverter()
+  @TimestampConverter()
   DateTime? get endDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,8 +48,8 @@ abstract class $StampRallyDocumentCopyWith<$Res> {
       String place,
       int requiredTime,
       String imageUrl,
-      @ClientTimestampConverter() DateTime startDate,
-      @ClientTimestampConverter() DateTime? endDate});
+      @TimestampConverter() DateTime startDate,
+      @TimestampConverter() DateTime? endDate});
 }
 
 /// @nodoc
@@ -120,8 +120,8 @@ abstract class _$$_StampRallyDocumentCopyWith<$Res>
       String place,
       int requiredTime,
       String imageUrl,
-      @ClientTimestampConverter() DateTime startDate,
-      @ClientTimestampConverter() DateTime? endDate});
+      @TimestampConverter() DateTime startDate,
+      @TimestampConverter() DateTime? endDate});
 }
 
 /// @nodoc
@@ -185,8 +185,8 @@ class _$_StampRallyDocument extends _StampRallyDocument {
       required this.place,
       required this.requiredTime,
       required this.imageUrl,
-      @ClientTimestampConverter() required this.startDate,
-      @ClientTimestampConverter() this.endDate})
+      @TimestampConverter() required this.startDate,
+      @TimestampConverter() this.endDate})
       : super._();
 
   factory _$_StampRallyDocument.fromJson(Map<String, dynamic> json) =>
@@ -203,10 +203,10 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   @override
   final String imageUrl;
   @override
-  @ClientTimestampConverter()
+  @TimestampConverter()
   final DateTime startDate;
   @override
-  @ClientTimestampConverter()
+  @TimestampConverter()
   final DateTime? endDate;
 
   @override
@@ -254,14 +254,13 @@ class _$_StampRallyDocument extends _StampRallyDocument {
 
 abstract class _StampRallyDocument extends StampRallyDocument {
   const factory _StampRallyDocument(
-          {required final String title,
-          required final String explanation,
-          required final String place,
-          required final int requiredTime,
-          required final String imageUrl,
-          @ClientTimestampConverter() required final DateTime startDate,
-          @ClientTimestampConverter() final DateTime? endDate}) =
-      _$_StampRallyDocument;
+      {required final String title,
+      required final String explanation,
+      required final String place,
+      required final int requiredTime,
+      required final String imageUrl,
+      @TimestampConverter() required final DateTime startDate,
+      @TimestampConverter() final DateTime? endDate}) = _$_StampRallyDocument;
   const _StampRallyDocument._() : super._();
 
   factory _StampRallyDocument.fromJson(Map<String, dynamic> json) =
@@ -278,10 +277,10 @@ abstract class _StampRallyDocument extends StampRallyDocument {
   @override
   String get imageUrl;
   @override
-  @ClientTimestampConverter()
+  @TimestampConverter()
   DateTime get startDate;
   @override
-  @ClientTimestampConverter()
+  @TimestampConverter()
   DateTime? get endDate;
   @override
   @JsonKey(ignore: true)

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
+import 'async_value_handler.dart';
 
 /// スタンプラリー概要を表示するためのウィジェット
 class StampRallyViewItem extends StatelessWidget {
@@ -49,18 +52,22 @@ class StampRallyViewItem extends StatelessWidget {
 }
 
 /// スタンプラリー概要をリスト表示するためのウィジェット
-class StampRallyListView extends StatelessWidget {
-  const StampRallyListView({required this.stampRallyItemList, super.key});
-  final List<StampRally> stampRallyItemList;
+class StampRallyListView extends ConsumerWidget {
+  const StampRallyListView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: stampRallyItemList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return StampRallyViewItem(item: stampRallyItemList[index]);
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AsyncValueHandler<List<StampRally>>(
+      value: ref.watch(publicStampRalliesProvider),
+      builder: (stampRallies) {
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: stampRallies.length,
+          itemBuilder: (BuildContext context, int index) {
+            return StampRallyViewItem(item: stampRallies[index]);
+          },
+        );
       },
     );
   }

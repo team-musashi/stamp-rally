@@ -224,7 +224,7 @@ class _$_StampRally implements _StampRally {
       required this.imageUrl,
       required this.startDate,
       this.endDate,
-      required final List<Spot> spots})
+      final List<Spot> spots = const <Spot>[]})
       : _spots = spots;
 
   /// ID
@@ -264,6 +264,7 @@ class _$_StampRally implements _StampRally {
 
   /// スタンプラリーのスポットのリスト
   @override
+  @JsonKey()
   List<Spot> get spots {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_spots);
@@ -324,7 +325,7 @@ abstract class _StampRally implements StampRally {
       required final String imageUrl,
       required final DateTime startDate,
       final DateTime? endDate,
-      required final List<Spot> spots}) = _$_StampRally;
+      final List<Spot> spots}) = _$_StampRally;
 
   @override
 
