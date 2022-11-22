@@ -1,6 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_info.freezed.dart';
+
+/// アプリ情報プロバイダー
+final appInfoProvider = Provider<AppInfo>(
+  (ref) => throw UnimplementedError('Provider was not initialized'),
+);
 
 /// アプリ情報
 @freezed
