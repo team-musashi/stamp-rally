@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/router.dart';
 import '../../component/delimiter_block.dart';
 import '../../component/stamp_rally_view.dart';
+import '../../router.dart';
 
 /// ホーム画面
 class HomePage extends StatelessWidget {

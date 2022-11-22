@@ -125,12 +125,14 @@ Repository Interface の実装。Data Source を利用してデータの永続�
 │           └── <集約>_repository.dart       リポジトリの実装
 ├── presentation
 │   ├── app.dart                             アプリケーション
+│   ├── router.dart                          ルーティング
+│   ├── theme.dart                           テーマ
 │   ├── component                            プレゼンテーション層で共通の Widget
 │   └── page
 │       └── <関心事>
 │           ├── component                    画面単位の Widget
 │           └── <関心事>_<CURD>page.dart      画面Widget
-└── util                                     どの層からもアクセス可能な便利クラス
+└── util                                     どの層からもアクセス可能な便利クラス（ロガー、定数など）
 ```
 
 ## 処理の流れの例
