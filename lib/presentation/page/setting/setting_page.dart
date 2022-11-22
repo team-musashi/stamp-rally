@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/repository/app_info/app_info_repository.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delete_user.dart';
+import '../../../application/url_launcher/url_launcher_service.dart';
 
 /// 設定画面
 class SettingPage extends StatelessWidget {
@@ -31,9 +32,43 @@ class _Body extends StatelessWidget {
           ListTile(
             title: DeleteUserButton(),
           ),
+          _TermsOfServiceListTile(),
+          _PrivacyPolicyListTile(),
           _AboutAppListTile(),
         ],
       ),
+    );
+  }
+}
+/// 「利用規約」のListTile
+class _TermsOfServiceListTile extends ConsumerWidget {
+  const _TermsOfServiceListTile({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: const Text('サービス利用規約について'),
+      onTap: () async {
+        await ref.read(urlLauncherServiceProvider).launch(
+            'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
+          );
+      }
+    );
+  }
+}
+/// 「プライバシーポリシー」のListTile
+class _PrivacyPolicyListTile extends ConsumerWidget {
+  const _PrivacyPolicyListTile({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: const Text('プライバシーポリシー'),
+      onTap: () async {
+        await ref.read(urlLauncherServiceProvider).launch(
+            'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
+          );
+      }
     );
   }
 }
