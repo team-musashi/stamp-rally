@@ -30,35 +30,39 @@ final routerProvider = Provider<GoRouter>(
 
     // リダイレクト
     redirect: (context, state) {
-      // loggedInProviderが値をキャッシュしてくれるので時間がかかるのは初回のみ
+      const prefix = '$_logPrefix redirect():';
+      logger.i('$prefix START location = ${state.location}');
+
       final loggedIn = ref.read(loggedInProvider).value;
-      logger.i(
-        '$_logPrefix redirect(): location = ${state.location}, '
-        'loggedIn = $loggedIn',
-      );
+      logger.i('$prefix loggedIn = $loggedIn');
       if (loggedIn == null) {
         // 表示直後はログイン状態が未確定（loggedIn が null になる）
         // 直後にログイン状態が確定して再度 redirect() が呼ばれるので保留の意味でいったん null を返す
+        logger.i('$prefix END undetermined loggedIn');
         return null;
       }
 
       if (loggedIn) {
         // ログイン済みで、ログイン画面ならホーム画面にリダイレクトする
         if (state.location == const LoginRoute().location) {
-          logger.i('$_logPrefix redirect(): Redirect to Home page');
-          return const HomeRoute().location;
+          final location = const HomeRoute().location;
+          logger.i('$prefix END redirect to $location');
+          return location;
         }
+        logger.i('$prefix END do nothing because loggedIn is true');
         return null;
       }
 
       // 未ログインでも表示できる画面ならリダイレクトしない
       if (state.location == const LoginRoute().location) {
+        logger.i('$prefix END do nothing');
         return null;
       }
 
       // 未ログインならログイン画面にリダイレクトする
-      logger.i('$_logPrefix redirect(): Redirect to Login page');
-      return const LoginRoute().location;
+      final location = const LoginRoute().location;
+      logger.i('$prefix END redirect to $location');
+      return location;
     },
 
     // ログイン状態の変化を検知してリダイレクトを再実行する
