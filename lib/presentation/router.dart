@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../application/stamp_rally/state/current_public_stamp_rally.dart';
+import '../application/stamp_rally/state/stamp_rally_param.dart';
 import '../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../domain/repository/user/user_repository.dart';
 import '../presentation/page/auth/login_page.dart';
@@ -117,7 +119,7 @@ class LoginRoute extends GoRouteData {
       path: 'setting',
     ),
     TypedGoRoute<StampRallyViewRoute>(
-      path: 'view',
+      path: 'public-stamp-rally/:publicStampRallyId',
     )
   ],
 )
@@ -139,15 +141,42 @@ class HomeRoute extends GoRouteData {
 
 /// スタンプラリー詳細画面
 class StampRallyViewRoute extends GoRouteData {
-  StampRallyViewRoute({this.$extra});
+  StampRallyViewRoute({
+    required this.publicStampRallyId,
+    this.$extra,
+  });
+
+  factory StampRallyViewRoute.fromStampRally(
+    StampRally stampRally,
+  ) =>
+      StampRallyViewRoute(
+        publicStampRallyId: stampRally.id,
+        $extra: stampRally,
+      );
+
+  /// 公開中のスタンプラリーID
+  final String publicStampRallyId;
+
+  /// キャッシュ
   StampRally? $extra;
 
-  static const name = 'view';
+  static const name = 'public-stamp-rally-view';
 
   @override
   Page<void> buildPage(BuildContext context) {
     return TransitionPage.slide(
-      child: StampRallyViewPage(stampRally: $extra!),
+      child: ProviderScope(
+        overrides: [
+          // 現在の公開中のスタンプラリーパラメータを上書きする
+          currentPublicStampRallyParamProvider.overrideWithValue(
+            StampRallyParam(
+              stampRallyId: publicStampRallyId,
+              cache: $extra,
+            ),
+          ),
+        ],
+        child: const StampRallyViewPage(),
+      ),
       name: name,
     );
   }
