@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../firebase.dart';
+import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
 
 /// 公開中スタンプラリーコレクションReferenceのプロバイダー
@@ -47,13 +49,16 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
 
+  static const publicStampRallyCollectionName = 'publicStampRally';
+  static const spotCollectionName = 'spot';
+
   /// 公開中のスタンプラリーリストのクエリ
   ///
   /// ＜検索条件＞
   /// WHERE startDate <= now()
   /// ORDER BY startDate ASC
   Query<StampRallyDocument> get _publicQuery => store
-      .collection('publicStampRally')
+      .collection(publicStampRallyCollectionName)
       .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
@@ -83,6 +88,20 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   Stream<List<StampRally>> changesEntryStampRallies() {
     // TODO(cobo): implement changesEntryStampRallies
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Spot>> fetchSpots({required String stampRallyId}) async {
+    final snapshot = await store
+        .collection(publicStampRallyCollectionName)
+        .doc(stampRallyId)
+        .collection(spotCollectionName)
+        .orderBy(SpotDocument.field.order, descending: false)
+        .get();
+    return snapshot.docs.map((query) {
+      final json = query.data();
+      return SpotDocument.fromJson(json).toSpot(docId: query.id);
+    }).toList();
   }
 }
 

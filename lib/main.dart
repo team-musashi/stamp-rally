@@ -7,11 +7,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'config/firebase_options_dev.dart' as dev;
 import 'config/firebase_options_prod.dart' as prod;
 import 'domain/entity/app_info.dart';
-import 'domain/repository/stamp_rally/spot_repository.dart';
 import 'domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'domain/repository/user/user_repository.dart';
 import 'infrastructure/firebase/firebase.dart';
-import 'infrastructure/firebase/stamp_rally/spot_repository.dart';
 import 'infrastructure/firebase/stamp_rally/stamp_rally_repository.dart';
 import 'infrastructure/firebase/user/user_repository.dart';
 import 'presentation/app.dart';
@@ -80,14 +78,6 @@ Future<void> main() async {
               store: ref.watch(firebaseFirestoreProvider),
             );
             ref.onDispose(repository.dispose);
-            return repository;
-          },
-        ),
-        spotRepositoryProvider.overrideWith(
-          (ref) {
-            final repository = FirebaseSpotRepository(
-              store: ref.watch(firebaseFirestoreProvider),
-            );
             return repository;
           },
         ),

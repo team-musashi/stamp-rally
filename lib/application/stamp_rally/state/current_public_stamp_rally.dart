@@ -24,7 +24,13 @@ final currentPublicStampRallyProvider = FutureProvider.autoDispose<StampRally>(
       final stampRallies = await ref.watch(publicStampRalliesProvider.future);
       stampRally = stampRallies.firstWhere((s) => s.id == param.stampRallyId);
     }
-    return stampRally;
+
+    // スポットのリストを取得してスタンプラリーにマージする
+    final spots =
+        await ref.watch(publicSpotsProviderFamily(param.stampRallyId).future);
+    return stampRally.copyWith(
+      spots: spots,
+    );
   },
   // router で currentPublicStampRallyParamProvider を overrideしているため
   // dependencies で指定してあげないとエラーになる

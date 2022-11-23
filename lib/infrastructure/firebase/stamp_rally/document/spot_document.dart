@@ -22,6 +22,8 @@ class SpotDocument with _$SpotDocument {
   factory SpotDocument.fromJson(Map<String, dynamic> json) =>
       _$SpotDocumentFromJson(json);
 
+  static _SpotDocumentField get field => _SpotDocumentField();
+
   /// SpotDocument -> Spot
   Spot toSpot({required String docId}) {
     return Spot(
@@ -32,4 +34,8 @@ class SpotDocument with _$SpotDocument {
       gotDate: gotDate,
     );
   }
+}
+
+class _SpotDocumentField {
+  String get order => 'order';
 }
