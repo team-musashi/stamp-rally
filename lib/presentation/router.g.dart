@@ -39,8 +39,8 @@ GoRoute get $homeRoute => GoRouteData.$route(
           factory: $SettingRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'explanation',
-          factory: $StampRallyExplanationRouteExtension._fromState,
+          path: 'view',
+          factory: $StampRallyViewRouteExtension._fromState,
         ),
       ],
     );
@@ -69,14 +69,14 @@ extension $SettingRouteExtension on SettingRoute {
   void push(BuildContext context) => context.push(location, extra: this);
 }
 
-extension $StampRallyExplanationRouteExtension on StampRallyExplanationRoute {
-  static StampRallyExplanationRoute _fromState(GoRouterState state) =>
-      StampRallyExplanationRoute(
+extension $StampRallyViewRouteExtension on StampRallyViewRoute {
+  static StampRallyViewRoute _fromState(GoRouterState state) =>
+      StampRallyViewRoute(
         $extra: state.extra as StampRally?,
       );
 
   String get location => GoRouteData.$location(
-        '/explanation',
+        '/view',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

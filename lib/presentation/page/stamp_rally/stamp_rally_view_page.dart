@@ -5,8 +5,8 @@ import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/delimiter_block.dart';
 
 /// スタンプラリー詳細画面
-class StampRallyExplanationPage extends ConsumerWidget {
-  const StampRallyExplanationPage({required this.stampRally, super.key});
+class StampRallyViewPage extends ConsumerWidget {
+  const StampRallyViewPage({required this.stampRally, super.key});
   final StampRally stampRally;
 
   @override
