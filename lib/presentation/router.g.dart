@@ -38,6 +38,10 @@ GoRoute get $homeRoute => GoRouteData.$route(
           path: 'setting',
           factory: $SettingRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'explanation',
+          factory: $StampRallyExplanationRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -58,6 +62,19 @@ extension $SettingRouteExtension on SettingRoute {
 
   String get location => GoRouteData.$location(
         '/setting',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $StampRallyExplanationRouteExtension on StampRallyExplanationRoute {
+  static StampRallyExplanationRoute _fromState(GoRouterState state) =>
+      const StampRallyExplanationRoute();
+
+  String get location => GoRouteData.$location(
+        '/explanation',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

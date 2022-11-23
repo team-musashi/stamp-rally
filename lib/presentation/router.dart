@@ -10,6 +10,7 @@ import '../presentation/page/error/error_page.dart';
 import '../presentation/page/home/home_page.dart';
 import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
+import 'page/stamp_rally/stamp_rally_explanation_page.dart';
 
 part 'router.g.dart';
 
@@ -113,6 +114,9 @@ class LoginRoute extends GoRouteData {
   routes: [
     TypedGoRoute<SettingRoute>(
       path: 'setting',
+    ),
+    TypedGoRoute<StampRallyExplanationRoute>(
+      path: 'explanation',
     )
   ],
 )
@@ -128,6 +132,21 @@ class HomeRoute extends GoRouteData {
     return TransitionPage.slide(
       name: name,
       child: const HomePage(),
+    );
+  }
+}
+
+/// スタンプラリー詳細画面
+class StampRallyExplanationRoute extends GoRouteData {
+  const StampRallyExplanationRoute();
+
+  static const name = 'explanation';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      child: const StampRallyExplanationPage(),
+      name: name,
     );
   }
 }
