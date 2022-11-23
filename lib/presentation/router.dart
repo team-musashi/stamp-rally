@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../domain/repository/user/user_repository.dart';
 import '../presentation/page/auth/login_page.dart';
 import '../presentation/page/error/error_page.dart';
@@ -138,14 +139,15 @@ class HomeRoute extends GoRouteData {
 
 /// スタンプラリー詳細画面
 class StampRallyExplanationRoute extends GoRouteData {
-  const StampRallyExplanationRoute();
+  StampRallyExplanationRoute({this.$extra});
+  StampRally? $extra;
 
   static const name = 'explanation';
 
   @override
   Page<void> buildPage(BuildContext context) {
     return TransitionPage.slide(
-      child: const StampRallyExplanationPage(),
+      child: StampRallyExplanationPage(stampRally: $extra!),
       name: name,
     );
   }

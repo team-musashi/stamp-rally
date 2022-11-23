@@ -71,7 +71,9 @@ extension $SettingRouteExtension on SettingRoute {
 
 extension $StampRallyExplanationRouteExtension on StampRallyExplanationRoute {
   static StampRallyExplanationRoute _fromState(GoRouterState state) =>
-      const StampRallyExplanationRoute();
+      StampRallyExplanationRoute(
+        $extra: state.extra as StampRally?,
+      );
 
   String get location => GoRouteData.$location(
         '/explanation',

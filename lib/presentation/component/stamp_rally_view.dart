@@ -14,7 +14,9 @@ class StampRallyViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => const StampRallyExplanationRoute().push(context),
+      onTap: () {
+        StampRallyExplanationRoute($extra: item).push(context);
+      },
       child: Container(
         margin: const EdgeInsets.only(top: 12, left: 6, right: 6),
         decoration: const BoxDecoration(
