@@ -1,15 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../firebase.dart';
+import '../../../domain/repository/stamp_rally/entity/spot.dart';
+import '../../../domain/repository/stamp_rally/spot_repository.dart';
+import 'document/spot_document.dart';
 
-/// スポットコレクション名プロバイダー
-final spotCollectionNameProvider = Provider((_) => 'spot');
+/// Firebase スポットリポジトリ
+class FirebaseSpotRepository implements SpotRepository {
+  FirebaseSpotRepository({
+    required this.store,
+  });
+  final FirebaseFirestore store;
 
-/// スポットコレクションReferenceのプロバイダ
-final spotCollectionRefProvider =
-    Provider<CollectionReference<Map<String, dynamic>>>(
-  (ref) => ref
-      .watch(firebaseFirestoreProvider)
-      .collection(ref.watch(spotCollectionNameProvider)),
-);
+  @override
+
+  /// StampRally.idに紐づくスポットを取得する
+  Future<List<Spot>> fetchSpots({required String stampRallyId}) async {
+    final snapshot = await store
+        .collection('publicStampRally')
+        .doc(stampRallyId)
+        .collection('spot')
+        .get();
+    final spots = snapshot.docs.map((doc) {
+      final spotDoc = SpotDocument.fromJson(doc.data());
+      return Spot(
+        id: doc.id,
+        imageUrl: spotDoc.imageUrl,
+        location: spotDoc.location!,
+        order: spotDoc.order,
+        gotDate: spotDoc.gotDate,
+      );
+    }).toList();
+
+    return spots;
+  }
+}
