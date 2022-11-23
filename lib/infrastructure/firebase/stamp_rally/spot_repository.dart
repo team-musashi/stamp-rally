@@ -19,6 +19,7 @@ class FirebaseSpotRepository implements SpotRepository {
         .collection('publicStampRally')
         .doc(stampRallyId)
         .collection('spot')
+        .orderBy('order', descending: false)
         .get();
     final spots = snapshot.docs.map((doc) {
       final spotDoc = SpotDocument.fromJson(doc.data());
