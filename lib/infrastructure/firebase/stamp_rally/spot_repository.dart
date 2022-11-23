@@ -21,16 +21,9 @@ class FirebaseSpotRepository implements SpotRepository {
         .collection('spot')
         .orderBy('order', descending: false)
         .get();
-    final spots = snapshot.docs.map((doc) {
-      final spotDoc = SpotDocument.fromJson(doc.data());
-      return Spot(
-        id: doc.id,
-        imageUrl: spotDoc.imageUrl,
-        location: spotDoc.location!,
-        order: spotDoc.order,
-        gotDate: spotDoc.gotDate,
-      );
-    }).toList();
+    final spots = snapshot.docs
+        .map((doc) => SpotDocument.fromJson(doc.data()).toSpot(docId: doc.id))
+        .toList();
 
     return spots;
   }
