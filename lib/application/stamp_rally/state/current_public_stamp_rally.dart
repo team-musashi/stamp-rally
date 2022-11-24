@@ -32,7 +32,7 @@ final currentPublicStampRallyProvider = FutureProvider.autoDispose<StampRally>(
       spots: spots,
     );
   },
-  // router で currentPublicStampRallyParamProvider を overrideしているため
+  // router で currentPublicStampRallyParamProvider を override しているため
   // dependencies で指定してあげないとエラーになる
   dependencies: [
     currentPublicStampRallyParamProvider,

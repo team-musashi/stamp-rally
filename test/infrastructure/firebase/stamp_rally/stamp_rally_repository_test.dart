@@ -28,7 +28,7 @@ void main() {
     test('公開中スタンプラリーは3つであるはず', () async {
       container
           .read(stampRallyRepositoryProvider)
-          .changesPublicStampRallies()
+          .publicStampRalliesChanges()
           .listen((items) {
         expect(items.length, 3);
       });
@@ -36,7 +36,7 @@ void main() {
     test('公開中スタンプラリーの3つ目のタイトルは「３個目の要素」であるはず', () async {
       container
           .read(stampRallyRepositoryProvider)
-          .changesPublicStampRallies()
+          .publicStampRalliesChanges()
           .listen((items) {
         expect(items[2].title, '３個目のタイトル');
       });

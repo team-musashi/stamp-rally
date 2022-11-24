@@ -38,13 +38,13 @@ class MockStampRallyRepository implements StampRallyRepository {
   ];
 
   @override
-  Stream<List<StampRally>> changesEntryStampRallies() {
+  Stream<List<StampRally>> entryStampRalliesChanges() {
     // TODO(cobo): 参加中スタンプラリーの処理ができたらテストコードも一緒に書くこと,
     throw UnimplementedError();
   }
 
   @override
-  Stream<List<StampRally>> changesPublicStampRallies() async* {
+  Stream<List<StampRally>> publicStampRalliesChanges() async* {
     yield publicStampRallies;
   }
 

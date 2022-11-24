@@ -81,11 +81,11 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Stream<List<StampRally>> changesPublicStampRallies() =>
+  Stream<List<StampRally>> publicStampRalliesChanges() =>
       _publicChangesController.stream;
 
   @override
-  Stream<List<StampRally>> changesEntryStampRallies() {
+  Stream<List<StampRally>> entryStampRalliesChanges() {
     // TODO(cobo): implement changesEntryStampRallies
     throw UnimplementedError();
   }
