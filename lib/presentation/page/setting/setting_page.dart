@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../application/url_launcher/url_launcher_service.dart';
 import '../../../domain/repository/app_info/app_info_repository.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delete_user.dart';
-import '../../../application/url_launcher/url_launcher_service.dart';
 
 /// 設定画面
 class SettingPage extends StatelessWidget {
@@ -43,7 +43,7 @@ class _Body extends StatelessWidget {
 
 /// 「利用規約」のListTile
 class _TermsOfServiceListTile extends ConsumerWidget {
-  const _TermsOfServiceListTile({super.key});
+  const _TermsOfServiceListTile();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,13 +53,13 @@ class _TermsOfServiceListTile extends ConsumerWidget {
           await ref.read(urlLauncherServiceProvider).launch(
                 'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
               );
-        });
+        },);
   }
 }
 
 /// 「プライバシーポリシー」のListTile
 class _PrivacyPolicyListTile extends ConsumerWidget {
-  const _PrivacyPolicyListTile({super.key});
+  const _PrivacyPolicyListTile();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,7 +69,7 @@ class _PrivacyPolicyListTile extends ConsumerWidget {
           await ref.read(urlLauncherServiceProvider).launch(
                 'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
               );
-        });
+        },);
   }
 }
 
