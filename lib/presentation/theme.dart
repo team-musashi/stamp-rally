@@ -9,7 +9,7 @@ final themeProvider = Provider(
     );
     return ThemeData(
       useMaterial3: true,
-      primarySwatch: Colors.blue,
+      colorScheme: colorScheme,
       bottomSheetTheme: const BottomSheetThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

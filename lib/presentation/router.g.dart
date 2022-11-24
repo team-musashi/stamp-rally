@@ -37,6 +37,12 @@ GoRoute get $homeRoute => GoRouteData.$route(
         GoRouteData.$route(
           path: 'setting',
           factory: $SettingRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'm3-sample',
+              factory: $M3SampleRouteExtension._fromState,
+            ),
+          ],
         ),
         GoRouteData.$route(
           path: 'public-stamp-rally/:publicStampRallyId',
@@ -62,6 +68,18 @@ extension $SettingRouteExtension on SettingRoute {
 
   String get location => GoRouteData.$location(
         '/setting',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $M3SampleRouteExtension on M3SampleRoute {
+  static M3SampleRoute _fromState(GoRouterState state) => const M3SampleRoute();
+
+  String get location => GoRouteData.$location(
+        '/setting/m3-sample',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);
