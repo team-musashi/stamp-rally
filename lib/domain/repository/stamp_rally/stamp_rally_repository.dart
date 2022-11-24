@@ -4,13 +4,14 @@ import 'entity/spot.dart';
 import 'entity/stamp_rally.dart';
 
 /// 公開中のスタンプラリーリストを返すプロバイダー
-final publicStampRalliesProvider = StreamProvider(
+final publicStampRalliesProvider = StreamProvider.autoDispose(
   (ref) => ref.watch(stampRallyRepositoryProvider).publicStampRalliesChanges(),
   name: 'publicStampRalliesProvider',
 );
 
 /// 公開中のスタンプラリーのスポットリストを返すプロバイダー
-final publicSpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
+final publicSpotsProviderFamily =
+    FutureProvider.autoDispose.family<List<Spot>, String>(
   (ref, stampRallyId) => ref
       .watch(stampRallyRepositoryProvider)
       .fetchSpots(stampRallyId: stampRallyId),

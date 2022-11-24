@@ -76,6 +76,7 @@ Future<void> main() async {
           (ref) {
             final repository = FirebaseStampRallyRepository(
               store: ref.watch(firebaseFirestoreProvider),
+              uid: ref.watch(firebaseUserIdProvider).value,
             );
             ref.onDispose(repository.dispose);
             return repository;

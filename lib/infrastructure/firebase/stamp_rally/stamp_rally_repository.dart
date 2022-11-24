@@ -1,25 +1,24 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import '../firebase.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
-
-/// 公開中スタンプラリーコレクションReferenceのプロバイダー
-final publicStampRallyCollectionRefProvider = Provider(
-  (ref) => ref.watch(firebaseFirestoreProvider),
-);
 
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
     required this.store,
+    this.uid,
   }) {
+    if (uid == null) {
+      // 未ログイン状態のときは監視しない
+      return;
+    }
+
     // 公開中のスタンプラリーリストの変更を監視する
     _publicSubscription = _publicQuery.snapshots().listen((snapshot) {
       if (_publicChangesController.isClosed) {
@@ -43,6 +42,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   final FirebaseFirestore store;
+  final String? uid;
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
 
