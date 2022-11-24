@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/entity/value_object/geo_location.dart';
+import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../converter.dart';
 
 part 'spot_document.freezed.dart';
@@ -20,4 +21,21 @@ class SpotDocument with _$SpotDocument {
 
   factory SpotDocument.fromJson(Map<String, dynamic> json) =>
       _$SpotDocumentFromJson(json);
+
+  static _SpotDocumentField get field => _SpotDocumentField();
+
+  /// SpotDocument -> Spot
+  Spot toSpot({required String docId}) {
+    return Spot(
+      id: docId,
+      imageUrl: imageUrl,
+      location: location!,
+      order: order,
+      gotDate: gotDate,
+    );
+  }
+}
+
+class _SpotDocumentField {
+  String get order => 'order';
 }

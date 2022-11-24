@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:stamp_rally/domain/repository/stamp_rally/entity/spot.dart';
 import 'package:stamp_rally/domain/repository/stamp_rally/entity/stamp_rally.dart';
 import 'package:stamp_rally/domain/repository/stamp_rally/stamp_rally_repository.dart';
 
@@ -37,13 +38,19 @@ class MockStampRallyRepository implements StampRallyRepository {
   ];
 
   @override
-  Stream<List<StampRally>> changesEntryStampRallies() {
+  Stream<List<StampRally>> entryStampRalliesChanges() {
     // TODO(cobo): 参加中スタンプラリーの処理ができたらテストコードも一緒に書くこと,
     throw UnimplementedError();
   }
 
   @override
-  Stream<List<StampRally>> changesPublicStampRallies() async* {
+  Stream<List<StampRally>> publicStampRalliesChanges() async* {
     yield publicStampRallies;
+  }
+
+  @override
+  Future<List<Spot>> fetchSpots({required String stampRallyId}) {
+    // TODO(cobo): implement fetchSpots
+    throw UnimplementedError();
   }
 }

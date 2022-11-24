@@ -1,23 +1,24 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import '../firebase.dart';
+import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
-
-/// 公開中スタンプラリーコレクションReferenceのプロバイダー
-final publicStampRallyCollectionRefProvider = Provider(
-  (ref) => ref.watch(firebaseFirestoreProvider),
-);
 
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
     required this.store,
+    this.uid,
   }) {
+    if (uid == null) {
+      // 未ログイン状態のときは監視しない
+      return;
+    }
+
     // 公開中のスタンプラリーリストの変更を監視する
     _publicSubscription = _publicQuery.snapshots().listen((snapshot) {
       if (_publicChangesController.isClosed) {
@@ -41,11 +42,15 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   final FirebaseFirestore store;
+  final String? uid;
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
+
+  static const publicStampRallyCollectionName = 'publicStampRally';
+  static const spotCollectionName = 'spot';
 
   /// 公開中のスタンプラリーリストのクエリ
   ///
@@ -53,7 +58,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// WHERE startDate <= now()
   /// ORDER BY startDate ASC
   Query<StampRallyDocument> get _publicQuery => store
-      .collection('publicStampRally')
+      .collection(publicStampRallyCollectionName)
       .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
@@ -76,13 +81,27 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Stream<List<StampRally>> changesPublicStampRallies() =>
+  Stream<List<StampRally>> publicStampRalliesChanges() =>
       _publicChangesController.stream;
 
   @override
-  Stream<List<StampRally>> changesEntryStampRallies() {
+  Stream<List<StampRally>> entryStampRalliesChanges() {
     // TODO(cobo): implement changesEntryStampRallies
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Spot>> fetchSpots({required String stampRallyId}) async {
+    final snapshot = await store
+        .collection(publicStampRallyCollectionName)
+        .doc(stampRallyId)
+        .collection(spotCollectionName)
+        .orderBy(SpotDocument.field.order, descending: false)
+        .get();
+    return snapshot.docs.map((query) {
+      final json = query.data();
+      return SpotDocument.fromJson(json).toSpot(docId: query.id);
+    }).toList();
   }
 }
 
