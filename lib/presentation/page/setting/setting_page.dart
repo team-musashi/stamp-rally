@@ -50,7 +50,7 @@ class _TermsOfServiceListTile extends ConsumerWidget {
       title: const Text('サービス利用規約について'),
       onTap: () async {
         await ref.read(urlLauncherServiceProvider).launch(
-              'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
+              ref.read(appInfoProvider).termsOfServiceUrl.toString(),
             );
       },
     );
@@ -67,7 +67,7 @@ class _PrivacyPolicyListTile extends ConsumerWidget {
       title: const Text('プライバシーポリシー'),
       onTap: () async {
         await ref.read(urlLauncherServiceProvider).launch(
-              'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
+              ref.read(appInfoProvider).privacyPolicyUrl.toString(),
             );
       },
     );
