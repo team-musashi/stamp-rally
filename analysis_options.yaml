@@ -20,3 +20,4 @@ analyzer:
     - '**/firebase_options_*.dart'
   errors:
     invalid_annotation_target: ignore
+    todo: ignore
