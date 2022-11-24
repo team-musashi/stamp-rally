@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/url_launcher/url_launcher_service.dart';
-import '../../../domain/repository/app_info/app_info_repository.dart';
-import '../../component/async_value_handler.dart';
+import '../../../domain/entity/app_info.dart';
 import '../../component/delete_user.dart';
 
 /// 設定画面
@@ -79,27 +78,25 @@ class _AboutAppListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AsyncValueHandler(
-      value: ref.watch(appInfoProvider),
-      builder: (info) => ListTile(
-        title: const Text('このアプリについて'),
-        subtitle: Text(info.version),
-        onTap: () {
-          showAboutDialog(
-            context: context,
-            applicationName: info.appName,
-            applicationVersion: '${info.version} build${info.buildNumber}',
-            applicationIcon: SizedBox.square(
-              dimension: 60,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(info.iconImagePath),
-              ),
+    final info = ref.watch(appInfoProvider);
+    return ListTile(
+      title: const Text('このアプリについて'),
+      subtitle: Text(info.version),
+      onTap: () {
+        showAboutDialog(
+          context: context,
+          applicationName: info.appName,
+          applicationVersion: '${info.version} build${info.buildNumber}',
+          applicationIcon: SizedBox.square(
+            dimension: 60,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(info.iconImagePath),
             ),
-            applicationLegalese: info.copyRight,
-          );
-        },
-      ),
+          ),
+          applicationLegalese: info.copyRight,
+        );
+      },
     );
   }
 }
