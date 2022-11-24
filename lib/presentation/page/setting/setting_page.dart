@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../application/url_launcher/url_launcher_service.dart';
 import '../../../domain/entity/app_info.dart';
 import '../../component/delete_user.dart';
 import '../../router.dart';
@@ -32,6 +33,8 @@ class _Body extends StatelessWidget {
           ListTile(
             title: DeleteUserButton(),
           ),
+          _TermsOfServiceListTile(),
+          _PrivacyPolicyListTile(),
           _AboutAppListTile(),
           // デバッグモードのときだけ表示する
           if (kDebugMode) ...[
@@ -40,6 +43,40 @@ class _Body extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// 「利用規約」のListTile
+class _TermsOfServiceListTile extends ConsumerWidget {
+  const _TermsOfServiceListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: const Text('サービス利用規約について'),
+      onTap: () async {
+        await ref.read(urlLauncherServiceProvider).launch(
+              ref.read(appInfoProvider).termsOfServiceUrl.toString(),
+            );
+      },
+    );
+  }
+}
+
+/// 「プライバシーポリシー」のListTile
+class _PrivacyPolicyListTile extends ConsumerWidget {
+  const _PrivacyPolicyListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: const Text('プライバシーポリシー'),
+      onTap: () async {
+        await ref.read(urlLauncherServiceProvider).launch(
+              ref.read(appInfoProvider).privacyPolicyUrl.toString(),
+            );
+      },
     );
   }
 }
