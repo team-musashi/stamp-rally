@@ -5,7 +5,7 @@ import '../../domain/exceptions.dart';
 import '../../util/logger.dart';
 import 'dialog.dart';
 import 'loading.dart';
-import 'scaffold_messanger.dart';
+import 'scaffold_messenger.dart';
 
 /// Riverpod の AsyncValue を良い感じに処理する Widget
 class AsyncValueHandler<T extends Object> extends StatelessWidget {
