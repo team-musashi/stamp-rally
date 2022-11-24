@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../component/dialog.dart';
 import '../../../../component/m3/button.dart';
-import 'header.dart';
+import 'common.dart';
 
 class DialogSection extends ConsumerWidget {
   const DialogSection({super.key});
@@ -14,7 +14,7 @@ class DialogSection extends ConsumerWidget {
     return Column(
       children: [
         const SectionHeader(title: 'Dialog'),
-        const Gap(20),
+        const Gap(contentPadding),
         FilledButton(
           onPressed: () async {
             await showDialog<void>(
@@ -26,7 +26,7 @@ class DialogSection extends ConsumerWidget {
           },
           child: const Text('Show ErrorDialog'),
         ),
-        const Gap(20),
+        const Gap(contentPadding),
       ],
     );
   }

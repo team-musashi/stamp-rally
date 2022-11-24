@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'header.dart';
+import 'common.dart';
 
 class RadioSection extends StatelessWidget {
   const RadioSection({super.key});
@@ -47,7 +47,7 @@ class _ThemeModeRadioGroupState extends State<_ThemeModeRadioGroup> {
                     });
                   },
                 ),
-                const Gap(20),
+                const Gap(contentPadding),
                 Text(themeMode.name),
               ],
             ),

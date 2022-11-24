@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// コンテンツ間のパディング
+const contentPadding = 20.0;
+
 /// セクションヘッダー
 class SectionHeader extends StatelessWidget {
   const SectionHeader({

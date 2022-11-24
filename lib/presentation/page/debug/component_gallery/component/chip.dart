@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'header.dart';
+import 'common.dart';
 
 class ChipSection extends StatelessWidget {
   const ChipSection({super.key});
@@ -11,19 +11,19 @@ class ChipSection extends StatelessWidget {
     return Column(
       children: [
         const SectionHeader(title: 'Chip'),
-        const Gap(20),
+        const Gap(contentPadding),
         FilterChip(
           label: const Text('Filter'),
           selected: true,
           onSelected: (value) {},
         ),
-        const Gap(20),
+        const Gap(contentPadding),
         InputChip(
           label: const Text('Input'),
           selected: true,
           onSelected: (value) {},
         ),
-        const Gap(20),
+        const Gap(contentPadding),
       ],
     );
   }

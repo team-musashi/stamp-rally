@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import 'header.dart';
+import 'common.dart';
 
 class ProgressIndicatorSection extends ConsumerWidget {
   const ProgressIndicatorSection({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'header.dart';
+import 'common.dart';
 
 class TextFieldSection extends StatelessWidget {
   const TextFieldSection({super.key});
@@ -11,7 +11,7 @@ class TextFieldSection extends StatelessWidget {
     return Column(
       children: [
         const SectionHeader(title: 'Text Field'),
-        const Gap(20),
+        const Gap(contentPadding),
         _TextFieldBox(
           child: TextField(
             decoration: InputDecoration(
@@ -25,7 +25,7 @@ class TextFieldSection extends StatelessWidget {
             onChanged: (text) {},
           ),
         ),
-        const Gap(20),
+        const Gap(contentPadding),
         _TextFieldBox(
           child: TextField(
             decoration: const InputDecoration(
@@ -36,7 +36,7 @@ class TextFieldSection extends StatelessWidget {
             obscureText: true,
           ),
         ),
-        const Gap(20),
+        const Gap(contentPadding),
       ],
     );
   }

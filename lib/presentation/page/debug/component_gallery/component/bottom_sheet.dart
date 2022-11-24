@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../component/m3/button.dart';
-import 'header.dart';
+import 'common.dart';
 
 class BottomSheetSection extends ConsumerWidget {
   const BottomSheetSection({super.key});
@@ -13,7 +13,7 @@ class BottomSheetSection extends ConsumerWidget {
     return Column(
       children: [
         const SectionHeader(title: 'Bottom Sheet'),
-        const Gap(20),
+        const Gap(contentPadding),
         FilledButton(
           onPressed: () async {
             await showModalBottomSheet<void>(
@@ -23,7 +23,7 @@ class BottomSheetSection extends ConsumerWidget {
           },
           child: const Text('Show BottomSheet'),
         ),
-        const Gap(20),
+        const Gap(contentPadding),
       ],
     );
   }

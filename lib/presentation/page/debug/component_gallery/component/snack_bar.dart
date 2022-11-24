@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../component/m3/button.dart';
 import '../../../../component/scaffold_messenger.dart';
-import 'header.dart';
+import 'common.dart';
 
 class SnackBarSection extends ConsumerWidget {
   const SnackBarSection({super.key});
@@ -14,7 +14,7 @@ class SnackBarSection extends ConsumerWidget {
     return Column(
       children: [
         const SectionHeader(title: 'Snack Bar'),
-        const Gap(20),
+        const Gap(contentPadding),
         FilledButton(
           onPressed: () {
             final state = ref.read(scaffoldMessengerKeyProvider).currentState!;
@@ -22,7 +22,7 @@ class SnackBarSection extends ConsumerWidget {
           },
           child: const Text('Show SnackBar'),
         ),
-        const Gap(20),
+        const Gap(contentPadding),
       ],
     );
   }

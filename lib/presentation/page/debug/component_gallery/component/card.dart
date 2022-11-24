@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../component/m3/card.dart';
-import 'header.dart';
+import 'common.dart';
 
 class CardSection extends StatelessWidget {
   const CardSection({super.key});
