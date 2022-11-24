@@ -13,7 +13,7 @@ import '../presentation/page/error/error_page.dart';
 import '../presentation/page/home/home_page.dart';
 import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
-import 'page/debug/m3/m3_sample_page.dart';
+import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/stamp_rally_view_page.dart';
 
 part 'router.g.dart';
@@ -119,8 +119,8 @@ class LoginRoute extends GoRouteData {
     TypedGoRoute<SettingRoute>(
       path: 'setting',
       routes: [
-        TypedGoRoute<M3SampleRoute>(
-          path: 'm3-sample',
+        TypedGoRoute<ComponentGalleryRoute>(
+          path: 'component-gallery',
         )
       ],
     ),
@@ -220,17 +220,18 @@ class ErrorRoute extends GoRouteData {
       );
 }
 
-/// マテリアルデザイン3サンプル画面
-class M3SampleRoute extends GoRouteData {
-  const M3SampleRoute();
+/// コンポーネントギャラリー画面
+class ComponentGalleryRoute extends GoRouteData {
+  const ComponentGalleryRoute();
 
-  static const name = 'm3-sample';
+  static const name = 'component-gallery';
+  static const title = 'Component Gallery';
 
   @override
   Page<void> buildPage(BuildContext context) {
     return TransitionPage.slide(
       name: name,
-      child: const M3SamplePage(),
+      child: const ComponentGalleryPage(),
     );
   }
 }

@@ -39,8 +39,8 @@ GoRoute get $homeRoute => GoRouteData.$route(
           factory: $SettingRouteExtension._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'm3-sample',
-              factory: $M3SampleRouteExtension._fromState,
+              path: 'component-gallery',
+              factory: $ComponentGalleryRouteExtension._fromState,
             ),
           ],
         ),
@@ -75,11 +75,12 @@ extension $SettingRouteExtension on SettingRoute {
   void push(BuildContext context) => context.push(location, extra: this);
 }
 
-extension $M3SampleRouteExtension on M3SampleRoute {
-  static M3SampleRoute _fromState(GoRouterState state) => const M3SampleRoute();
+extension $ComponentGalleryRouteExtension on ComponentGalleryRoute {
+  static ComponentGalleryRoute _fromState(GoRouterState state) =>
+      const ComponentGalleryRoute();
 
   String get location => GoRouteData.$location(
-        '/setting/m3-sample',
+        '/setting/component-gallery',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

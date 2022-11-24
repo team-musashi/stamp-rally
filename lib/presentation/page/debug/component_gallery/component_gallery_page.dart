@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../router.dart';
 import 'component/bottom_sheet.dart';
 import 'component/button.dart';
 import 'component/card.dart';
@@ -11,15 +12,15 @@ import 'component/radio.dart';
 import 'component/snack_bar.dart';
 import 'component/text_field.dart';
 
-/// マテリアルデザイン3のコンポーネントを確認するサンプル画面
-class M3SamplePage extends StatelessWidget {
-  const M3SamplePage({super.key});
+/// コンポーネントギャラリー画面
+class ComponentGalleryPage extends StatelessWidget {
+  const ComponentGalleryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('M3 サンプル'),
+        title: const Text(ComponentGalleryRoute.title),
       ),
       body: const _Body(),
     );

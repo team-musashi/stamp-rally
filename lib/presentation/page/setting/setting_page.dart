@@ -39,7 +39,7 @@ class _Body extends StatelessWidget {
           // デバッグモードのときだけ表示する
           if (kDebugMode) ...[
             _SectionHeader(title: 'デバッグ'),
-            _M3SampleListTile(),
+            _ComponentGalleryListTile(),
           ],
         ],
       ),
@@ -132,15 +132,15 @@ class _SectionHeader extends StatelessWidget {
   }
 }
 
-/// 「M3サンプル」のListTile
-class _M3SampleListTile extends ConsumerWidget {
-  const _M3SampleListTile();
+/// 「Component Gallery」のListTile
+class _ComponentGalleryListTile extends ConsumerWidget {
+  const _ComponentGalleryListTile();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: const Text('M3 サンプル'),
-      onTap: () => const M3SampleRoute().go(context),
+      title: const Text(ComponentGalleryRoute.title),
+      onTap: () => const ComponentGalleryRoute().go(context),
     );
   }
 }
