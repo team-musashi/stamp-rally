@@ -4,6 +4,7 @@ import '../../../router.dart';
 import 'component/bottom_sheet.dart';
 import 'component/button.dart';
 import 'component/card.dart';
+import 'component/checkbox.dart';
 import 'component/chip.dart';
 import 'component/dialog.dart';
 import 'component/list.dart';
@@ -44,6 +45,7 @@ class _Body extends StatelessWidget {
           ListSection(),
           ChipSection(),
           RadioSection(),
+          CheckboxSection(),
           TextFieldSection(),
         ],
       ),

@@ -24,6 +24,9 @@ final themeProvider = Provider(
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.all<Color>(colorScheme.primary),
       ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.all<Color>(colorScheme.primary),
+      ),
     );
   },
 );
