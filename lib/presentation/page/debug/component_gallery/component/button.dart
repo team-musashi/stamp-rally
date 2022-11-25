@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../component/m3/button.dart';
+import '../../../../component/m3/icon_button.dart';
 import 'common.dart';
 
 class ButtonSection extends StatelessWidget {
@@ -50,9 +51,36 @@ class ButtonSection extends StatelessWidget {
           icon: const Icon(Icons.add),
         ),
         const Gap(contentPadding),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.share),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.favorite_outline),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.bookmark),
+            ),
+          ],
+        ),
+        const Gap(contentPadding),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FilledIconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.camera),
+            ),
+            FilledTonalIconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.settings),
+            ),
+            OutlinedIconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.more_vert),
+            ),
+          ],
         ),
         const Gap(contentPadding),
       ],
