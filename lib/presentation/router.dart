@@ -13,6 +13,7 @@ import '../presentation/page/error/error_page.dart';
 import '../presentation/page/home/home_page.dart';
 import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
+import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/stamp_rally_view_page.dart';
 
 part 'router.g.dart';
@@ -117,6 +118,11 @@ class LoginRoute extends GoRouteData {
   routes: [
     TypedGoRoute<SettingRoute>(
       path: 'setting',
+      routes: [
+        TypedGoRoute<ComponentGalleryRoute>(
+          path: 'component-gallery',
+        )
+      ],
     ),
     TypedGoRoute<StampRallyViewRoute>(
       path: 'public-stamp-rally/:publicStampRallyId',
@@ -212,6 +218,22 @@ class ErrorRoute extends GoRouteData {
         name: name,
         child: ErrorPage(error: error),
       );
+}
+
+/// コンポーネントギャラリー画面
+class ComponentGalleryRoute extends GoRouteData {
+  const ComponentGalleryRoute();
+
+  static const name = 'component-gallery';
+  static const title = 'Component Gallery';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      name: name,
+      child: const ComponentGalleryPage(),
+    );
+  }
 }
 
 /// デフォルトのTransitionPage

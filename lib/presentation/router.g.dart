@@ -37,6 +37,12 @@ GoRoute get $homeRoute => GoRouteData.$route(
         GoRouteData.$route(
           path: 'setting',
           factory: $SettingRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'component-gallery',
+              factory: $ComponentGalleryRouteExtension._fromState,
+            ),
+          ],
         ),
         GoRouteData.$route(
           path: 'public-stamp-rally/:publicStampRallyId',
@@ -62,6 +68,19 @@ extension $SettingRouteExtension on SettingRoute {
 
   String get location => GoRouteData.$location(
         '/setting',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $ComponentGalleryRouteExtension on ComponentGalleryRoute {
+  static ComponentGalleryRoute _fromState(GoRouterState state) =>
+      const ComponentGalleryRoute();
+
+  String get location => GoRouteData.$location(
+        '/setting/component-gallery',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

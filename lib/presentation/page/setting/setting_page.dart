@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/url_launcher/url_launcher_service.dart';
 import '../../../domain/entity/app_info.dart';
 import '../../component/delete_user.dart';
+import '../../router.dart';
 
 /// 設定画面
 class SettingPage extends StatelessWidget {
@@ -34,6 +36,11 @@ class _Body extends StatelessWidget {
           _TermsOfServiceListTile(),
           _PrivacyPolicyListTile(),
           _AboutAppListTile(),
+          // デバッグモードのときだけ表示する
+          if (kDebugMode) ...[
+            _SectionHeader(title: 'デバッグ'),
+            _ComponentGalleryListTile(),
+          ],
         ],
       ),
     );
@@ -99,6 +106,41 @@ class _AboutAppListTile extends ConsumerWidget {
           applicationLegalese: info.copyRight,
         );
       },
+    );
+  }
+}
+
+/// セクションヘッダー
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        title,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.surfaceVariant,
+        ),
+      ),
+      tileColor: Theme.of(context).colorScheme.onSurfaceVariant,
+    );
+  }
+}
+
+/// 「Component Gallery」のListTile
+class _ComponentGalleryListTile extends ConsumerWidget {
+  const _ComponentGalleryListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: const Text(ComponentGalleryRoute.title),
+      onTap: () => const ComponentGalleryRoute().go(context),
     );
   }
 }
