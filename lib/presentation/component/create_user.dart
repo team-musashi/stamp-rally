@@ -9,9 +9,25 @@ class CreateUserButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      onPressed: () => ref.read(userServiceProvider).createUser(),
-      child: const Text('ログイン'),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 56),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () => ref.read(userServiceProvider).createUser(),
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+          ),
+          child: const Text(
+            '同意して始める',
+            style: TextStyle(
+              fontSize: 18,
+              color: Color.fromRGBO(255, 115, 241, 1),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
