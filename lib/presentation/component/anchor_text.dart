@@ -6,8 +6,8 @@ class AnchorText extends StatelessWidget {
 
   final String text;
 
-  static TextStyle anchorStyleText(BuildContext context) => TextStyle(
-        color: Theme.of(context).colorScheme.primary,
+  static TextStyle anchorStyleText(BuildContext context) => const TextStyle(
+        decoration: TextDecoration.underline,
       );
 
   @override

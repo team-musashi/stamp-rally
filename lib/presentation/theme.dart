@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 /// テーマプロバイダー
 final themeProvider = Provider(
   (ref) {
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.blue,
+    final colorScheme = ColorScheme.light(
+      primary: HexColor('FF73F1'),
+      secondary: HexColor('FFA776'),
     );
     return ThemeData(
       useMaterial3: true,

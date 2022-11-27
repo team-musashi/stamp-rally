@@ -13,9 +13,24 @@ class Agreement extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return RichText(
+      textAlign: TextAlign.center,
       text: TextSpan(
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.surface,
+              fontWeight: FontWeight.bold,
+            ),
         children: [
+          TextSpan(
+            text: '利用規約',
+            style: AnchorText.anchorStyleText(context),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () async {
+                await ref.read(urlLauncherServiceProvider).launch(
+                      ref.read(appInfoProvider).termsOfServiceUrl.toString(),
+                    );
+              },
+          ),
+          const TextSpan(text: ' と '),
           TextSpan(
             text: 'プライバシーポリシー',
             style: AnchorText.anchorStyleText(context),
@@ -26,18 +41,7 @@ class Agreement extends ConsumerWidget {
                     );
               },
           ),
-          const TextSpan(text: ' と '),
-          TextSpan(
-            text: 'サービス利用規約',
-            style: AnchorText.anchorStyleText(context),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () async {
-                await ref.read(urlLauncherServiceProvider).launch(
-                      ref.read(appInfoProvider).termsOfServiceUrl.toString(),
-                    );
-              },
-          ),
-          const TextSpan(text: ' に同意して始める'),
+          const TextSpan(text: ' に\n同意の上ご利用ください'),
         ],
       ),
     );
