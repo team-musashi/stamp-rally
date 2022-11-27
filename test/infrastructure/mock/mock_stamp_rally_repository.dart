@@ -53,4 +53,10 @@ class MockStampRallyRepository implements StampRallyRepository {
     // TODO(cobo): implement fetchSpots
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> entryStampRally({required String stampRallyId}) {
+    // TODO(cobo): implement entryStampRally
+    throw UnimplementedError();
+  }
 }
