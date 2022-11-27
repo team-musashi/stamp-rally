@@ -5,26 +5,29 @@ import '../../application/user/user_service.dart';
 
 /// ユーザー作成ボタン
 class CreateUserButton extends ConsumerWidget {
-  const CreateUserButton({super.key});
+  const CreateUserButton({
+    super.key,
+    required this.padding,
+    this.buttonStyle,
+    this.textStyle,
+  });
+
+  final EdgeInsetsGeometry padding;
+  final ButtonStyle? buttonStyle;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 56),
+      padding: padding,
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () => ref.read(userServiceProvider).createUser(),
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-          ),
+          style: buttonStyle,
           child: Text(
             '同意して始める',
-            style: TextStyle(
-              fontSize: 18,
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
+            style: textStyle,
           ),
         ),
       ),

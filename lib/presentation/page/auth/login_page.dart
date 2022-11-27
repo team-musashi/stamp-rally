@@ -33,12 +33,22 @@ class LoginPage extends StatelessWidget {
               ],
             ),
             Column(
-              children: const [
-                CreateUserButton(),
-                SizedBox(
+              children: [
+                CreateUserButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 56),
+                  buttonStyle: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                  ),
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
                   height: 12,
                 ),
-                Agreement()
+                const Agreement()
               ],
             )
           ],
