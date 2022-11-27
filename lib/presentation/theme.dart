@@ -6,6 +6,8 @@ final themeProvider = Provider(
   (ref) {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: Colors.blue,
+      primary: const Color.fromRGBO(255, 115, 241, 1),
+      secondary: const Color.fromRGBO(255, 167, 118, 1),
     );
     return ThemeData(
       useMaterial3: true,

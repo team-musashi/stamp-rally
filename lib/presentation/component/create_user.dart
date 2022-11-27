@@ -18,11 +18,11 @@ class CreateUserButton extends ConsumerWidget {
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 4),
           ),
-          child: const Text(
+          child: Text(
             '同意して始める',
             style: TextStyle(
               fontSize: 18,
-              color: Color.fromRGBO(255, 115, 241, 1),
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
