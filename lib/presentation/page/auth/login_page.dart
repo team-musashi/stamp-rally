@@ -10,14 +10,29 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ログイン')),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Agreement(),
-            CreateUserButton(),
-          ],
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(255, 167, 118, 1),
+                Color.fromRGBO(255, 115, 241, 1)
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              CreateUserButton(),
+              SizedBox(
+                height: 12,
+              ),
+              Agreement()
+            ],
+          ),
         ),
       ),
     );
