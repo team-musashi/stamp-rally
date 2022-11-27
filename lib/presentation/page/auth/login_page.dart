@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../util/assets/assets.gen.dart';
 
 import '../../component/agreement.dart';
 import '../../component/create_user.dart';
@@ -27,14 +28,8 @@ class LoginPage extends StatelessWidget {
           children: [
             Column(
               children: [
-                Image.asset(
-                  'assets/images/icon_stamp.png',
-                  height: 36,
-                ),
-                Image.asset(
-                  'assets/images/logo_stamp_rarry.png',
-                  height: 146,
-                ),
+                Assets.images.iconStamp.image(height: 36),
+                Assets.images.logoStampRarry.image(height: 146),
               ],
             ),
             Column(
