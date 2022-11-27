@@ -21,6 +21,8 @@ dependencies:
   # Widget 間の余白の入力が楽になるため
   gap: ^2.0.0
   go_router: ^5.1.1
+  # Color を #RGB 指定できるようにするため
+  hexcolor: ^3.0.1
   json_serializable: ^6.5.4
   # ロガーパッケージ
   package_info_plus: ^3.0.2
