@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../../util/assets/assets.gen.dart';
 import '../../component/agreement.dart';
@@ -41,9 +42,7 @@ class LoginPage extends StatelessWidget {
                     child: CreateUserButton(),
                   ),
                 ),
-                SizedBox(
-                  height: 12,
-                ),
+                Gap(12),
                 Agreement()
               ],
             )
