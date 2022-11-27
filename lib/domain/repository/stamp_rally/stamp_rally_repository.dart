@@ -33,4 +33,9 @@ abstract class StampRallyRepository {
 
   /// 公開中のスタンプラリーに紐づくスポットリストを返す
   Future<List<Spot>> fetchSpots({required String stampRallyId});
+
+  /// スタンプラリーに参加する
+  ///
+  /// param：参加するスタンプラリーのID
+  Future<void> entryStampRally({required String stampRallyId});
 }

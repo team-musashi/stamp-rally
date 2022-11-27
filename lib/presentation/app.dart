@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../application/stamp_rally/state/entry_stamp_rally_result.dart';
 import '../application/url_launcher/exception/url_launcher_exception.dart';
 import '../application/url_launcher/state/url_launch_data.dart';
 import '../application/url_launcher/state/url_launch_result.dart';
@@ -56,6 +57,12 @@ class App extends ConsumerWidget {
     ref.listenResult(
       deleteUserResultProvider,
       completeMessage: 'ユーザーを削除しました。',
+    );
+
+    // スタンプラリー参加の結果を監視する
+    ref.listenResult(
+      entryStampRallyResultProvider,
+      completeMessage: 'スタンプラリーに参加しました。',
     );
 
     final router = ref.watch(routerProvider);

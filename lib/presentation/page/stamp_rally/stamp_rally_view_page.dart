@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
@@ -40,7 +41,9 @@ class _Body extends ConsumerWidget {
               Text('所要時間：${stampRally.requiredTime.toString()}時間'),
               DelimiterBlock(text: stampRally.explanation),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async => ref
+                    .read(stampRallyServiceProvider)
+                    .entryStampRally(stampRallyId: stampRally.id),
                 child: const Text('参加する'),
               ),
             ],
