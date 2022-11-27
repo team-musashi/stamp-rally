@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../util/assets/assets.gen.dart';
 
+import '../../../util/assets/assets.gen.dart';
 import '../../component/agreement.dart';
+import '../../component/button_box.dart';
 import '../../component/create_user.dart';
 
 /// ログイン画面
@@ -33,22 +34,17 @@ class LoginPage extends StatelessWidget {
               ],
             ),
             Column(
-              children: [
-                CreateUserButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 56),
-                  buttonStyle: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                  ),
-                  textStyle: TextStyle(
-                    fontSize: 18,
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 56),
+                  child: ButtonBox(
+                    child: CreateUserButton(),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 12,
                 ),
-                const Agreement()
+                Agreement()
               ],
             )
           ],
