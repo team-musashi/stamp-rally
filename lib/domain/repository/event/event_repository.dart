@@ -9,6 +9,10 @@ final eventRepositoryProvider = Provider<EventRepository>(
 abstract class EventRepository {
   /// スタンプラリーに参加する
   ///
-  /// param：参加するスタンプラリーのID
-  Future<void> entryStampRally({required String stampRallyId});
+  /// param_1：ユーザID
+  /// param_2：参加するスタンプラリーのID
+  Future<void> entryStampRally({
+    required String? uid,
+    required String stampRallyId,
+  });
 }

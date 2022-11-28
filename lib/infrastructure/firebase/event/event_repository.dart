@@ -12,9 +12,15 @@ class FirebaseEventRepository implements EventRepository {
   static const eventCollectionName = 'event';
 
   @override
-  Future<void> entryStampRally({required String stampRallyId}) async {
+  Future<void> entryStampRally({
+    required String? uid,
+    required String stampRallyId,
+  }) async {
     await store.collection(eventCollectionName).add(
-          EventDocument.entryStampRally(stampRallyId: stampRallyId).toJson(),
+          EventDocument.entryStampRally(
+            uid: uid,
+            stampRallyId: stampRallyId,
+          ).toJson(),
         );
   }
 }

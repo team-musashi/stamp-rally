@@ -20,8 +20,10 @@ EventDocument _$EventDocumentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$EventDocument {
+  String get uid => throw _privateConstructorUsedError;
   String get eventType => throw _privateConstructorUsedError;
   Map<String, dynamic> get data => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +38,11 @@ abstract class $EventDocumentCopyWith<$Res> {
           EventDocument value, $Res Function(EventDocument) then) =
       _$EventDocumentCopyWithImpl<$Res, EventDocument>;
   @useResult
-  $Res call({String eventType, Map<String, dynamic> data, DateTime createdAt});
+  $Res call(
+      {String uid,
+      String eventType,
+      Map<String, dynamic> data,
+      @TimestampConverter() DateTime createdAt});
 }
 
 /// @nodoc
@@ -52,11 +58,16 @@ class _$EventDocumentCopyWithImpl<$Res, $Val extends EventDocument>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? uid = null,
     Object? eventType = null,
     Object? data = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       eventType: null == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
@@ -81,7 +92,11 @@ abstract class _$$_EventDocumentCopyWith<$Res>
       __$$_EventDocumentCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String eventType, Map<String, dynamic> data, DateTime createdAt});
+  $Res call(
+      {String uid,
+      String eventType,
+      Map<String, dynamic> data,
+      @TimestampConverter() DateTime createdAt});
 }
 
 /// @nodoc
@@ -95,11 +110,16 @@ class __$$_EventDocumentCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? uid = null,
     Object? eventType = null,
     Object? data = null,
     Object? createdAt = null,
   }) {
     return _then(_$_EventDocument(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       eventType: null == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
@@ -120,14 +140,17 @@ class __$$_EventDocumentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_EventDocument implements _EventDocument {
   _$_EventDocument(
-      {required this.eventType,
+      {required this.uid,
+      required this.eventType,
       required final Map<String, dynamic> data,
-      required this.createdAt})
+      @TimestampConverter() required this.createdAt})
       : _data = data;
 
   factory _$_EventDocument.fromJson(Map<String, dynamic> json) =>
       _$$_EventDocumentFromJson(json);
 
+  @override
+  final String uid;
   @override
   final String eventType;
   final Map<String, dynamic> _data;
@@ -138,11 +161,12 @@ class _$_EventDocument implements _EventDocument {
   }
 
   @override
+  @TimestampConverter()
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'EventDocument(eventType: $eventType, data: $data, createdAt: $createdAt)';
+    return 'EventDocument(uid: $uid, eventType: $eventType, data: $data, createdAt: $createdAt)';
   }
 
   @override
@@ -150,6 +174,7 @@ class _$_EventDocument implements _EventDocument {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EventDocument &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.eventType, eventType) ||
                 other.eventType == eventType) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
@@ -159,7 +184,7 @@ class _$_EventDocument implements _EventDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, eventType,
+  int get hashCode => Object.hash(runtimeType, uid, eventType,
       const DeepCollectionEquality().hash(_data), createdAt);
 
   @JsonKey(ignore: true)
@@ -178,18 +203,23 @@ class _$_EventDocument implements _EventDocument {
 
 abstract class _EventDocument implements EventDocument {
   factory _EventDocument(
-      {required final String eventType,
-      required final Map<String, dynamic> data,
-      required final DateTime createdAt}) = _$_EventDocument;
+          {required final String uid,
+          required final String eventType,
+          required final Map<String, dynamic> data,
+          @TimestampConverter() required final DateTime createdAt}) =
+      _$_EventDocument;
 
   factory _EventDocument.fromJson(Map<String, dynamic> json) =
       _$_EventDocument.fromJson;
 
   @override
+  String get uid;
+  @override
   String get eventType;
   @override
   Map<String, dynamic> get data;
   @override
+  @TimestampConverter()
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
