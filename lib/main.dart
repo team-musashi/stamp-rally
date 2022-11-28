@@ -7,8 +7,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'config/firebase_options_dev.dart' as dev;
 import 'config/firebase_options_prod.dart' as prod;
 import 'domain/entity/app_info.dart';
+import 'domain/repository/event/event_repository.dart';
 import 'domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'domain/repository/user/user_repository.dart';
+import 'infrastructure/firebase/event/event_repository.dart';
 import 'infrastructure/firebase/firebase.dart';
 import 'infrastructure/firebase/stamp_rally/stamp_rally_repository.dart';
 import 'infrastructure/firebase/user/user_repository.dart';
@@ -82,6 +84,12 @@ Future<void> main() async {
             return repository;
           },
         ),
+        eventRepositoryProvider.overrideWith((ref) {
+          final repository = FirebaseEventRepository(
+            store: ref.watch(firebaseFirestoreProvider),
+          );
+          return repository;
+        })
       ],
       child: const App(),
     ),

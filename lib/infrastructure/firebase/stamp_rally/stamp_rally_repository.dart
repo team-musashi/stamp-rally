@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import 'document/event_document.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
 
@@ -50,7 +49,6 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
 
-  static const eventCollectionName = 'event';
   static const publicStampRallyCollectionName = 'publicStampRally';
   static const spotCollectionName = 'spot';
 
@@ -104,13 +102,6 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       final json = query.data();
       return SpotDocument.fromJson(json).toSpot(docId: query.id);
     }).toList();
-  }
-
-  @override
-  Future<void> entryStampRally({required String stampRallyId}) async {
-    await store.collection(eventCollectionName).add(
-          EventDocument.entryStampRally(stampRallyId: stampRallyId).toJson(),
-        );
   }
 }
 
