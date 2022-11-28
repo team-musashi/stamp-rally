@@ -17,7 +17,7 @@ class EventDocument with _$EventDocument {
   /// 参加イベント
   factory EventDocument.entryStampRally({required String stampRallyId}) {
     return EventDocument(
-      eventType: EventEnum.entryStampRally.name,
+      eventType: EventType.entryStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
     );
@@ -26,7 +26,7 @@ class EventDocument with _$EventDocument {
   /// 参加キャンセルイベント
   factory EventDocument.leaveStampRally({required String stampRallyId}) {
     return EventDocument(
-      eventType: EventEnum.leaveStampRally.name,
+      eventType: EventType.leaveStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
     );
@@ -41,4 +41,7 @@ class _EventDocumentField {
   String get createdAt => 'createdAt';
 }
 
-enum EventEnum { entryStampRally, leaveStampRally }
+enum EventType {
+  entryStampRally,
+  leaveStampRally,
+}
