@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'event_document.dart';
+part of 'command_document.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,41 +14,41 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-EventDocument _$EventDocumentFromJson(Map<String, dynamic> json) {
-  return _EventDocument.fromJson(json);
+CommandDocument _$CommandDocumentFromJson(Map<String, dynamic> json) {
+  return _CommandDocument.fromJson(json);
 }
 
 /// @nodoc
-mixin _$EventDocument {
+mixin _$CommandDocument {
   String get uid => throw _privateConstructorUsedError;
-  String get eventType => throw _privateConstructorUsedError;
+  String get commandType => throw _privateConstructorUsedError;
   Map<String, dynamic> get data => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $EventDocumentCopyWith<EventDocument> get copyWith =>
+  $CommandDocumentCopyWith<CommandDocument> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EventDocumentCopyWith<$Res> {
-  factory $EventDocumentCopyWith(
-          EventDocument value, $Res Function(EventDocument) then) =
-      _$EventDocumentCopyWithImpl<$Res, EventDocument>;
+abstract class $CommandDocumentCopyWith<$Res> {
+  factory $CommandDocumentCopyWith(
+          CommandDocument value, $Res Function(CommandDocument) then) =
+      _$CommandDocumentCopyWithImpl<$Res, CommandDocument>;
   @useResult
   $Res call(
       {String uid,
-      String eventType,
+      String commandType,
       Map<String, dynamic> data,
       @TimestampConverter() DateTime createdAt});
 }
 
 /// @nodoc
-class _$EventDocumentCopyWithImpl<$Res, $Val extends EventDocument>
-    implements $EventDocumentCopyWith<$Res> {
-  _$EventDocumentCopyWithImpl(this._value, this._then);
+class _$CommandDocumentCopyWithImpl<$Res, $Val extends CommandDocument>
+    implements $CommandDocumentCopyWith<$Res> {
+  _$CommandDocumentCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -59,7 +59,7 @@ class _$EventDocumentCopyWithImpl<$Res, $Val extends EventDocument>
   @override
   $Res call({
     Object? uid = null,
-    Object? eventType = null,
+    Object? commandType = null,
     Object? data = null,
     Object? createdAt = null,
   }) {
@@ -68,9 +68,9 @@ class _$EventDocumentCopyWithImpl<$Res, $Val extends EventDocument>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      eventType: null == eventType
-          ? _value.eventType
-          : eventType // ignore: cast_nullable_to_non_nullable
+      commandType: null == commandType
+          ? _value.commandType
+          : commandType // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
           ? _value.data
@@ -85,44 +85,44 @@ class _$EventDocumentCopyWithImpl<$Res, $Val extends EventDocument>
 }
 
 /// @nodoc
-abstract class _$$_EventDocumentCopyWith<$Res>
-    implements $EventDocumentCopyWith<$Res> {
-  factory _$$_EventDocumentCopyWith(
-          _$_EventDocument value, $Res Function(_$_EventDocument) then) =
-      __$$_EventDocumentCopyWithImpl<$Res>;
+abstract class _$$_CommandDocumentCopyWith<$Res>
+    implements $CommandDocumentCopyWith<$Res> {
+  factory _$$_CommandDocumentCopyWith(
+          _$_CommandDocument value, $Res Function(_$_CommandDocument) then) =
+      __$$_CommandDocumentCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String uid,
-      String eventType,
+      String commandType,
       Map<String, dynamic> data,
       @TimestampConverter() DateTime createdAt});
 }
 
 /// @nodoc
-class __$$_EventDocumentCopyWithImpl<$Res>
-    extends _$EventDocumentCopyWithImpl<$Res, _$_EventDocument>
-    implements _$$_EventDocumentCopyWith<$Res> {
-  __$$_EventDocumentCopyWithImpl(
-      _$_EventDocument _value, $Res Function(_$_EventDocument) _then)
+class __$$_CommandDocumentCopyWithImpl<$Res>
+    extends _$CommandDocumentCopyWithImpl<$Res, _$_CommandDocument>
+    implements _$$_CommandDocumentCopyWith<$Res> {
+  __$$_CommandDocumentCopyWithImpl(
+      _$_CommandDocument _value, $Res Function(_$_CommandDocument) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? uid = null,
-    Object? eventType = null,
+    Object? commandType = null,
     Object? data = null,
     Object? createdAt = null,
   }) {
-    return _then(_$_EventDocument(
+    return _then(_$_CommandDocument(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      eventType: null == eventType
-          ? _value.eventType
-          : eventType // ignore: cast_nullable_to_non_nullable
+      commandType: null == commandType
+          ? _value.commandType
+          : commandType // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
           ? _value._data
@@ -138,21 +138,21 @@ class __$$_EventDocumentCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_EventDocument implements _EventDocument {
-  _$_EventDocument(
+class _$_CommandDocument implements _CommandDocument {
+  _$_CommandDocument(
       {required this.uid,
-      required this.eventType,
+      required this.commandType,
       required final Map<String, dynamic> data,
       @TimestampConverter() required this.createdAt})
       : _data = data;
 
-  factory _$_EventDocument.fromJson(Map<String, dynamic> json) =>
-      _$$_EventDocumentFromJson(json);
+  factory _$_CommandDocument.fromJson(Map<String, dynamic> json) =>
+      _$$_CommandDocumentFromJson(json);
 
   @override
   final String uid;
   @override
-  final String eventType;
+  final String commandType;
   final Map<String, dynamic> _data;
   @override
   Map<String, dynamic> get data {
@@ -166,17 +166,17 @@ class _$_EventDocument implements _EventDocument {
 
   @override
   String toString() {
-    return 'EventDocument(uid: $uid, eventType: $eventType, data: $data, createdAt: $createdAt)';
+    return 'CommandDocument(uid: $uid, commandType: $commandType, data: $data, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventDocument &&
+            other is _$_CommandDocument &&
             (identical(other.uid, uid) || other.uid == uid) &&
-            (identical(other.eventType, eventType) ||
-                other.eventType == eventType) &&
+            (identical(other.commandType, commandType) ||
+                other.commandType == commandType) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
@@ -184,38 +184,38 @@ class _$_EventDocument implements _EventDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, eventType,
+  int get hashCode => Object.hash(runtimeType, uid, commandType,
       const DeepCollectionEquality().hash(_data), createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventDocumentCopyWith<_$_EventDocument> get copyWith =>
-      __$$_EventDocumentCopyWithImpl<_$_EventDocument>(this, _$identity);
+  _$$_CommandDocumentCopyWith<_$_CommandDocument> get copyWith =>
+      __$$_CommandDocumentCopyWithImpl<_$_CommandDocument>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EventDocumentToJson(
+    return _$$_CommandDocumentToJson(
       this,
     );
   }
 }
 
-abstract class _EventDocument implements EventDocument {
-  factory _EventDocument(
+abstract class _CommandDocument implements CommandDocument {
+  factory _CommandDocument(
           {required final String uid,
-          required final String eventType,
+          required final String commandType,
           required final Map<String, dynamic> data,
           @TimestampConverter() required final DateTime createdAt}) =
-      _$_EventDocument;
+      _$_CommandDocument;
 
-  factory _EventDocument.fromJson(Map<String, dynamic> json) =
-      _$_EventDocument.fromJson;
+  factory _CommandDocument.fromJson(Map<String, dynamic> json) =
+      _$_CommandDocument.fromJson;
 
   @override
   String get uid;
   @override
-  String get eventType;
+  String get commandType;
   @override
   Map<String, dynamic> get data;
   @override
@@ -223,6 +223,6 @@ abstract class _EventDocument implements EventDocument {
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$_EventDocumentCopyWith<_$_EventDocument> get copyWith =>
+  _$$_CommandDocumentCopyWith<_$_CommandDocument> get copyWith =>
       throw _privateConstructorUsedError;
 }

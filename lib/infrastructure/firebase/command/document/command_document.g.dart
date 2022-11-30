@@ -2,25 +2,25 @@
 
 // ignore_for_file: type=lint, implicit_dynamic_parameter, implicit_dynamic_type, implicit_dynamic_method, strict_raw_type
 
-part of 'event_document.dart';
+part of 'command_document.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_EventDocument _$$_EventDocumentFromJson(Map<String, dynamic> json) =>
-    _$_EventDocument(
+_$_CommandDocument _$$_CommandDocumentFromJson(Map<String, dynamic> json) =>
+    _$_CommandDocument(
       uid: json['uid'] as String,
-      eventType: json['eventType'] as String,
+      commandType: json['commandType'] as String,
       data: json['data'] as Map<String, dynamic>,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Object),
     );
 
-Map<String, dynamic> _$$_EventDocumentToJson(_$_EventDocument instance) =>
+Map<String, dynamic> _$$_CommandDocumentToJson(_$_CommandDocument instance) =>
     <String, dynamic>{
       'uid': instance.uid,
-      'eventType': instance.eventType,
+      'commandType': instance.commandType,
       'data': instance.data,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
     };

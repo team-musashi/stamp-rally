@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// イベントリポジトリプロバイダー
-final eventRepositoryProvider = Provider<EventRepository>(
+/// コマンドリポジトリプロバイダー
+final commandRepositoryProvider = Provider<CommandRepository>(
   (_) => throw UnimplementedError('Provider was not initialized'),
 );
 
-/// イベントリポジトリ
-abstract class EventRepository {
+/// コマンドリポジトリ
+abstract class CommandRepository {
   /// スタンプラリーに参加する
   ///
   /// param_1：ユーザID

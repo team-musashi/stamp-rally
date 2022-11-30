@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/repository/event/event_repository.dart';
+import '../../domain/repository/command/command_repository.dart';
 import '../../infrastructure/firebase/firebase.dart';
 import 'state/entry_stamp_rally_result.dart';
 
@@ -22,7 +22,7 @@ class StampRallyService {
     final notifier = ref.read(entryStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
-      await ref.read(eventRepositoryProvider).entryStampRally(
+      await ref.read(commandRepositoryProvider).entryStampRally(
             uid: ref.read(firebaseUserIdProvider).value,
             stampRallyId: stampRallyId,
           );
