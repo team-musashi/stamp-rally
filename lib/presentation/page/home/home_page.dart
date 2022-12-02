@@ -24,8 +24,9 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: const [
             DelimiterBlock(text: '参加中のスタンプラリー'),
-            StampRallyListView(),
+            EntryStampRallyListView(),
             DelimiterBlock(text: '開催中のスタンプラリー'),
+            PublicStampRallyListView(),
           ],
         ),
       ),

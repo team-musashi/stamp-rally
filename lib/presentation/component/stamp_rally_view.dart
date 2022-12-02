@@ -57,24 +57,39 @@ class StampRallyViewItem extends StatelessWidget {
   }
 }
 
-/// スタンプラリー概要をリスト表示するためのウィジェット
-class StampRallyListView extends ConsumerWidget {
-  const StampRallyListView({super.key});
+/// 公開中スタンプラリー概要をリスト表示するためのウィジェット
+class PublicStampRallyListView extends ConsumerWidget {
+  const PublicStampRallyListView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AsyncValueHandler<List<StampRally>>(
+      value: ref.watch(publicStampRalliesProvider),
+      builder: _buildStampRallies,
+    );
+  }
+}
+
+/// 参加中スタンプラリー概要をリスト表示するためのウィジェット
+class EntryStampRallyListView extends ConsumerWidget {
+  const EntryStampRallyListView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueHandler<List<StampRally>>(
       value: ref.watch(entryStampRalliesProvider),
-      builder: (stampRallies) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: stampRallies.length,
-          itemBuilder: (BuildContext context, int index) {
-            return StampRallyViewItem(item: stampRallies[index]);
-          },
-        );
-      },
+      builder: _buildStampRallies,
     );
   }
+}
+
+Widget _buildStampRallies(List<StampRally> stampRallies) {
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: stampRallies.length,
+    itemBuilder: (BuildContext context, int index) {
+      return StampRallyViewItem(item: stampRallies[index]);
+    },
+  );
 }
