@@ -30,9 +30,11 @@ class _Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: const [
+          _SectionHeader(title: 'アカウント'),
           ListTile(
             title: DeleteUserButton(),
           ),
+          _SectionHeader(title: 'サポート'),
           _TermsOfServiceListTile(),
           _PrivacyPolicyListTile(),
           _AboutAppListTile(),
@@ -53,13 +55,16 @@ class _TermsOfServiceListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      title: const Text('サービス利用規約について'),
-      onTap: () async {
-        await ref.read(urlLauncherServiceProvider).launch(
-              ref.read(appInfoProvider).termsOfServiceUrl.toString(),
-            );
-      },
+    return _DelimiterListTile(
+      listTile: ListTile(
+        title: const Text('サービス利用規約について'),
+        onTap: () async {
+          await ref.read(urlLauncherServiceProvider).launch(
+                ref.read(appInfoProvider).termsOfServiceUrl.toString(),
+              );
+        },
+        tileColor: Theme.of(context).colorScheme.surface,
+      ),
     );
   }
 }
@@ -70,13 +75,16 @@ class _PrivacyPolicyListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      title: const Text('プライバシーポリシー'),
-      onTap: () async {
-        await ref.read(urlLauncherServiceProvider).launch(
-              ref.read(appInfoProvider).privacyPolicyUrl.toString(),
-            );
-      },
+    return _DelimiterListTile(
+      listTile: ListTile(
+        title: const Text('プライバシーポリシー'),
+        onTap: () async {
+          await ref.read(urlLauncherServiceProvider).launch(
+                ref.read(appInfoProvider).privacyPolicyUrl.toString(),
+              );
+        },
+        tileColor: Theme.of(context).colorScheme.surface,
+      ),
     );
   }
 }
@@ -88,24 +96,27 @@ class _AboutAppListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final info = ref.watch(appInfoProvider);
-    return ListTile(
-      title: const Text('このアプリについて'),
-      subtitle: Text(info.version),
-      onTap: () {
-        showAboutDialog(
-          context: context,
-          applicationName: info.appName,
-          applicationVersion: '${info.version} build${info.buildNumber}',
-          applicationIcon: SizedBox.square(
-            dimension: 60,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(info.iconImagePath),
+    return _DelimiterListTile(
+      listTile: ListTile(
+        title: const Text('このアプリについて'),
+        subtitle: Text(info.version),
+        onTap: () {
+          showAboutDialog(
+            context: context,
+            applicationName: info.appName,
+            applicationVersion: '${info.version} build${info.buildNumber}',
+            applicationIcon: SizedBox.square(
+              dimension: 60,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(info.iconImagePath),
+              ),
             ),
-          ),
-          applicationLegalese: info.copyRight,
-        );
-      },
+            applicationLegalese: info.copyRight,
+          );
+        },
+        tileColor: Theme.of(context).colorScheme.surface,
+      ),
     );
   }
 }
@@ -120,14 +131,12 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+    return _DelimiterListTile(
+      listTile: ListTile(
+        title: Text(
+          title,
         ),
       ),
-      tileColor: Theme.of(context).colorScheme.onSurfaceVariant,
     );
   }
 }
@@ -138,9 +147,31 @@ class _ComponentGalleryListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      title: const Text(ComponentGalleryRoute.title),
-      onTap: () => const ComponentGalleryRoute().go(context),
+    return _DelimiterListTile(
+      listTile: ListTile(
+        title: const Text(ComponentGalleryRoute.title),
+        onTap: () => const ComponentGalleryRoute().go(context),
+        tileColor: Theme.of(context).colorScheme.surface,
+      ),
+    );
+  }
+}
+
+/// 区切り線がついたListTile
+class _DelimiterListTile extends StatelessWidget {
+  const _DelimiterListTile({required this.listTile});
+
+  final ListTile listTile;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        listTile,
+        const Divider(
+          height: 1,
+        ),
+      ],
     );
   }
 }
