@@ -12,7 +12,8 @@ class CommandDocument with _$CommandDocument {
     required String uid,
     required String commandType,
     required Map<String, dynamic> data,
-    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() DateTime? createdAt,
+    @TimestampConverter() DateTime? updatedAt,
   }) = _CommandDocument;
   factory CommandDocument.fromJson(Map<String, dynamic> json) =>
       _$CommandDocumentFromJson(json);

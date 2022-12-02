@@ -24,7 +24,9 @@ mixin _$CommandDocument {
   String get commandType => throw _privateConstructorUsedError;
   Map<String, dynamic> get data => throw _privateConstructorUsedError;
   @TimestampConverter()
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +44,8 @@ abstract class $CommandDocumentCopyWith<$Res> {
       {String uid,
       String commandType,
       Map<String, dynamic> data,
-      @TimestampConverter() DateTime createdAt});
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -61,7 +64,8 @@ class _$CommandDocumentCopyWithImpl<$Res, $Val extends CommandDocument>
     Object? uid = null,
     Object? commandType = null,
     Object? data = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -76,10 +80,14 @@ class _$CommandDocumentCopyWithImpl<$Res, $Val extends CommandDocument>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -96,7 +104,8 @@ abstract class _$$_CommandDocumentCopyWith<$Res>
       {String uid,
       String commandType,
       Map<String, dynamic> data,
-      @TimestampConverter() DateTime createdAt});
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -113,7 +122,8 @@ class __$$_CommandDocumentCopyWithImpl<$Res>
     Object? uid = null,
     Object? commandType = null,
     Object? data = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$_CommandDocument(
       uid: null == uid
@@ -128,10 +138,14 @@ class __$$_CommandDocumentCopyWithImpl<$Res>
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -143,7 +157,8 @@ class _$_CommandDocument implements _CommandDocument {
       {required this.uid,
       required this.commandType,
       required final Map<String, dynamic> data,
-      @TimestampConverter() required this.createdAt})
+      @TimestampConverter() this.createdAt,
+      @TimestampConverter() this.updatedAt})
       : _data = data;
 
   factory _$_CommandDocument.fromJson(Map<String, dynamic> json) =>
@@ -162,11 +177,14 @@ class _$_CommandDocument implements _CommandDocument {
 
   @override
   @TimestampConverter()
-  final DateTime createdAt;
+  final DateTime? createdAt;
+  @override
+  @TimestampConverter()
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'CommandDocument(uid: $uid, commandType: $commandType, data: $data, createdAt: $createdAt)';
+    return 'CommandDocument(uid: $uid, commandType: $commandType, data: $data, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -179,13 +197,15 @@ class _$_CommandDocument implements _CommandDocument {
                 other.commandType == commandType) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, uid, commandType,
-      const DeepCollectionEquality().hash(_data), createdAt);
+      const DeepCollectionEquality().hash(_data), createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -203,11 +223,11 @@ class _$_CommandDocument implements _CommandDocument {
 
 abstract class _CommandDocument implements CommandDocument {
   factory _CommandDocument(
-          {required final String uid,
-          required final String commandType,
-          required final Map<String, dynamic> data,
-          @TimestampConverter() required final DateTime createdAt}) =
-      _$_CommandDocument;
+      {required final String uid,
+      required final String commandType,
+      required final Map<String, dynamic> data,
+      @TimestampConverter() final DateTime? createdAt,
+      @TimestampConverter() final DateTime? updatedAt}) = _$_CommandDocument;
 
   factory _CommandDocument.fromJson(Map<String, dynamic> json) =
       _$_CommandDocument.fromJson;
@@ -220,7 +240,10 @@ abstract class _CommandDocument implements CommandDocument {
   Map<String, dynamic> get data;
   @override
   @TimestampConverter()
-  DateTime get createdAt;
+  DateTime? get createdAt;
+  @override
+  @TimestampConverter()
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_CommandDocumentCopyWith<_$_CommandDocument> get copyWith =>

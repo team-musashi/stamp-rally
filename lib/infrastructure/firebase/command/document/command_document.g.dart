@@ -13,8 +13,10 @@ _$_CommandDocument _$$_CommandDocumentFromJson(Map<String, dynamic> json) =>
       uid: json['uid'] as String,
       commandType: json['commandType'] as String,
       data: json['data'] as Map<String, dynamic>,
-      createdAt:
-          const TimestampConverter().fromJson(json['createdAt'] as Object),
+      createdAt: _$JsonConverterFromJson<Object, DateTime>(
+          json['createdAt'], const TimestampConverter().fromJson),
+      updatedAt: _$JsonConverterFromJson<Object, DateTime>(
+          json['updatedAt'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_CommandDocumentToJson(_$_CommandDocument instance) =>
@@ -22,5 +24,20 @@ Map<String, dynamic> _$$_CommandDocumentToJson(_$_CommandDocument instance) =>
       'uid': instance.uid,
       'commandType': instance.commandType,
       'data': instance.data,
-      'createdAt': const TimestampConverter().toJson(instance.createdAt),
+      'createdAt': _$JsonConverterToJson<Object, DateTime>(
+          instance.createdAt, const TimestampConverter().toJson),
+      'updatedAt': _$JsonConverterToJson<Object, DateTime>(
+          instance.updatedAt, const TimestampConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

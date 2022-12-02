@@ -16,6 +16,10 @@ _$_SpotDocument _$$_SpotDocumentFromJson(Map<String, dynamic> json) =>
           json['location'], const GeoPointConverter().fromJson),
       gotDate: _$JsonConverterFromJson<Object, DateTime>(
           json['gotDate'], const TimestampConverter().fromJson),
+      createdAt: _$JsonConverterFromJson<Object, DateTime>(
+          json['createdAt'], const TimestampConverter().fromJson),
+      updatedAt: _$JsonConverterFromJson<Object, DateTime>(
+          json['updatedAt'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_SpotDocumentToJson(_$_SpotDocument instance) =>
@@ -26,6 +30,10 @@ Map<String, dynamic> _$$_SpotDocumentToJson(_$_SpotDocument instance) =>
           instance.location, const GeoPointConverter().toJson),
       'gotDate': _$JsonConverterToJson<Object, DateTime>(
           instance.gotDate, const TimestampConverter().toJson),
+      'createdAt': _$JsonConverterToJson<Object, DateTime>(
+          instance.createdAt, const TimestampConverter().toJson),
+      'updatedAt': _$JsonConverterToJson<Object, DateTime>(
+          instance.updatedAt, const TimestampConverter().toJson),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

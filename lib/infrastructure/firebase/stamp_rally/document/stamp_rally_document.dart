@@ -16,6 +16,8 @@ class StampRallyDocument with _$StampRallyDocument {
     required String imageUrl,
     @TimestampConverter() required DateTime startDate,
     @TimestampConverter() DateTime? endDate,
+    @TimestampConverter() DateTime? createdAt,
+    @TimestampConverter() DateTime? updatedAt,
   }) = _StampRallyDocument;
 
   const StampRallyDocument._();
