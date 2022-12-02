@@ -39,18 +39,48 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         }).toList(),
       );
     });
+
+    // 参加中のスタンプラリーリストの変更を監視する
+    if (_entryQuery == null) {
+      return;
+    }
+
+    _entrySubscription = _entryQuery!.snapshots().listen((snapshot) {
+      if (_entryChangesController.isClosed) {
+        return;
+      }
+
+      _entryChangesController.add(
+        snapshot.docs
+            .map((doc) => doc.data().toStampRally(doc.id))
+            .where((stampRally) {
+          final endDate = stampRally.endDate;
+          if (endDate == null) {
+            // 終了日時が無い場合は常に開催中のため表示する
+            return true;
+          }
+          // 終了日時を超えていたら表示しない
+          return endDate.isAfter(DateTime.now());
+        }).toList(),
+      );
+    });
   }
 
   final FirebaseFirestore store;
   final String? uid;
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
+  final _entryChangesController =
+      StreamController<List<StampRally>>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
+  StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
-  static const spotCollectionName = 'spot';
+  static const spotCollectionName = 'publicSpot';
+  static const entryStampRallyCollectionName = 'entryStampRally';
+  static const entrySpotCollectionName = 'entrySpot';
 
   /// 公開中のスタンプラリーリストのクエリ
   ///
@@ -75,9 +105,37 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       )
       .orderBy(StampRallyDocument.field.startDate);
 
+  /// 参加中のスタンプラリーリストのクエリ
+  ///
+  /// ＜検索条件＞
+  /// WHERE startDate <= now()
+  /// ORDER BY startDate ASC
+  Query<StampRallyDocument>? get _entryQuery => uid == null
+      ? null
+      : store
+          .collection('user')
+          .doc(uid)
+          .collection(entryStampRallyCollectionName)
+          .withConverter<StampRallyDocument>(
+            fromFirestore: (snapshot, options) {
+              final json = snapshot.data();
+              return StampRallyDocument.fromJson(json!);
+            },
+            toFirestore: (_, __) {
+              return <String, dynamic>{};
+            },
+          )
+          .where(
+            StampRallyDocument.field.startDate,
+            isLessThanOrEqualTo: DateTime.now(),
+          )
+          .orderBy(StampRallyDocument.field.startDate);
+
   void dispose() {
     _publicSubscription?.cancel();
+    _entrySubscription?.cancel();
     _publicChangesController.close();
+    _entryChangesController.close();
   }
 
   @override
@@ -85,10 +143,8 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       _publicChangesController.stream;
 
   @override
-  Stream<List<StampRally>> entryStampRalliesChanges() {
-    // TODO(cobo): implement changesEntryStampRallies
-    throw UnimplementedError();
-  }
+  Stream<List<StampRally>> entryStampRalliesChanges() =>
+      _entryChangesController.stream;
 
   @override
   Future<List<Spot>> fetchSpots({required String stampRallyId}) async {

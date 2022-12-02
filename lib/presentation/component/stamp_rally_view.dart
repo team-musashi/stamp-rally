@@ -64,7 +64,7 @@ class StampRallyListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueHandler<List<StampRally>>(
-      value: ref.watch(publicStampRalliesProvider),
+      value: ref.watch(entryStampRalliesProvider),
       builder: (stampRallies) {
         return ListView.builder(
           shrinkWrap: true,

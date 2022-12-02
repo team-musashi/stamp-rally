@@ -9,13 +9,19 @@ final publicStampRalliesProvider = StreamProvider.autoDispose(
   name: 'publicStampRalliesProvider',
 );
 
-/// 公開中のスタンプラリーのスポットリストを返すプロバイダー
-final publicSpotsProviderFamily =
+/// 参加中のスタンプラリーリストを返すプロバイダー
+final entryStampRalliesProvider = StreamProvider.autoDispose(
+  (ref) => ref.watch(stampRallyRepositoryProvider).entryStampRalliesChanges(),
+  name: 'entryStampRalliesProvider',
+);
+
+/// 公開中/参加中のスタンプラリーのスポットリストを返すプロバイダー
+final spotsProviderFamily =
     FutureProvider.autoDispose.family<List<Spot>, String>(
   (ref, stampRallyId) => ref
       .watch(stampRallyRepositoryProvider)
       .fetchSpots(stampRallyId: stampRallyId),
-  name: 'publicSpotsProviderFamily',
+  name: 'spotsProviderFamily',
 );
 
 /// スタンプラリーリポジトリプロバイダー

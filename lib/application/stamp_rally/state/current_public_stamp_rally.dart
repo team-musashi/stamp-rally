@@ -27,7 +27,7 @@ final currentPublicStampRallyProvider = FutureProvider.autoDispose<StampRally>(
 
     // スポットのリストを取得してスタンプラリーにマージする
     final spots =
-        await ref.watch(publicSpotsProviderFamily(param.stampRallyId).future);
+        await ref.watch(spotsProviderFamily(param.stampRallyId).future);
     return stampRally.copyWith(
       spots: spots,
     );
