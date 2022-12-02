@@ -8,6 +8,7 @@ final themeProvider = Provider(
     final colorScheme = ColorScheme.light(
       primary: HexColor('FF73F1'),
       secondary: HexColor('FFA776'),
+      surface: HexColor('FFFFFF'),
     );
     return ThemeData(
       useMaterial3: true,
