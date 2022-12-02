@@ -31,8 +31,7 @@ class _Body extends StatelessWidget {
       child: Column(
         children: const [
           _SectionHeader(title: 'アカウント'),
-          DeleteUserButton(),
-          Divider(height: 1),
+          _DeleteUserListTile(),
 
           _SectionHeader(title: 'サポート'),
           _TermsOfServiceListTile(),
@@ -45,6 +44,27 @@ class _Body extends StatelessWidget {
             _ComponentGalleryListTile(),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// 「すべてのデータを削除」のListTile
+class _DeleteUserListTile extends ConsumerWidget {
+  const _DeleteUserListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _DelimiterListTile(
+      onTap: () => showDialog<void>(
+        context: context,
+        builder: (_) => const DeleteUserConfirmDialog(),
+      ),
+      title: Text(
+        'すべてのデータを削除',
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.error,
+        ),
       ),
     );
   }

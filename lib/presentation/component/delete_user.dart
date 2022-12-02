@@ -3,28 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/user/user_service.dart';
 
-/// ユーザー削除ボタン
-class DeleteUserButton extends ConsumerWidget {
-  const DeleteUserButton({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      onTap: () => showDialog<void>(
-        context: context,
-        builder: (_) => const DeleteUserConfirmDialog(),
-      ),
-      title: Text(
-        'すべてのデータを削除',
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.error,
-        ),
-      ),
-      tileColor: Theme.of(context).colorScheme.surface,
-    );
-  }
-}
-
 /// ユーザー削除確認ダイアログ
 class DeleteUserConfirmDialog extends ConsumerWidget {
   const DeleteUserConfirmDialog({super.key});
