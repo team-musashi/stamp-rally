@@ -9,17 +9,18 @@ class DeleteUserButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return TextButton(
-      onPressed: () => showDialog<void>(
+    return ListTile(
+      onTap: () => showDialog<void>(
         context: context,
         builder: (_) => const DeleteUserConfirmDialog(),
       ),
-      child: Text(
+      title: Text(
         'すべてのデータを削除',
         style: TextStyle(
           color: Theme.of(context).colorScheme.error,
         ),
       ),
+      tileColor: Theme.of(context).colorScheme.surface,
     );
   }
 }

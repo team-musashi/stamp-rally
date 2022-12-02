@@ -31,13 +31,14 @@ class _Body extends StatelessWidget {
       child: Column(
         children: const [
           _SectionHeader(title: 'アカウント'),
-          _DelimiterListTile(
-            title: DeleteUserButton(),
-          ),
+          DeleteUserButton(),
+          Divider(height: 1),
+
           _SectionHeader(title: 'サポート'),
           _TermsOfServiceListTile(),
           _PrivacyPolicyListTile(),
           _AboutAppListTile(),
+
           // デバッグモードのときだけ表示する
           if (kDebugMode) ...[
             _SectionHeader(title: 'デバッグ'),
