@@ -124,7 +124,10 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _DelimiterListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
       isHeaderCell: true,
     );
   }
