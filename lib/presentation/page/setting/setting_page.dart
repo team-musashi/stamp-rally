@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/url_launcher/url_launcher_service.dart';
 import '../../../domain/entity/app_info.dart';
 import '../../component/delete_user.dart';
+import '../../component/list_tile.dart';
 import '../../router.dart';
 
 /// 設定画面
@@ -30,16 +31,18 @@ class _Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: const [
-          ListTile(
-            title: DeleteUserButton(),
-          ),
-          _TermsOfServiceListTile(),
-          _PrivacyPolicyListTile(),
-          _AboutAppListTile(),
+          SectionHeader(title: 'アカウント'),
+          _DeleteUserItem(),
+
+          SectionHeader(title: 'サポート'),
+          _TermsOfServiceItem(),
+          _PrivacyPolicyItem(),
+          _AboutAppItem(),
+
           // デバッグモードのときだけ表示する
           if (kDebugMode) ...[
-            _SectionHeader(title: 'デバッグ'),
-            _ComponentGalleryListTile(),
+            SectionHeader(title: 'デバッグ'),
+            _ComponentGalleryItem(),
           ],
         ],
       ),
@@ -47,13 +50,34 @@ class _Body extends StatelessWidget {
   }
 }
 
-/// 「利用規約」のListTile
-class _TermsOfServiceListTile extends ConsumerWidget {
-  const _TermsOfServiceListTile();
+/// すべてのデータを削除
+class _DeleteUserItem extends ConsumerWidget {
+  const _DeleteUserItem();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
+    return SectionItem(
+      onTap: () => showDialog<void>(
+        context: context,
+        builder: (_) => const DeleteUserConfirmDialog(),
+      ),
+      title: Text(
+        'すべてのデータを削除',
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.error,
+        ),
+      ),
+    );
+  }
+}
+
+/// 利用規約
+class _TermsOfServiceItem extends ConsumerWidget {
+  const _TermsOfServiceItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SectionItem(
       title: const Text('サービス利用規約について'),
       onTap: () async {
         await ref.read(urlLauncherServiceProvider).launch(
@@ -64,13 +88,13 @@ class _TermsOfServiceListTile extends ConsumerWidget {
   }
 }
 
-/// 「プライバシーポリシー」のListTile
-class _PrivacyPolicyListTile extends ConsumerWidget {
-  const _PrivacyPolicyListTile();
+/// プライバシーポリシー
+class _PrivacyPolicyItem extends ConsumerWidget {
+  const _PrivacyPolicyItem();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
+    return SectionItem(
       title: const Text('プライバシーポリシー'),
       onTap: () async {
         await ref.read(urlLauncherServiceProvider).launch(
@@ -81,14 +105,14 @@ class _PrivacyPolicyListTile extends ConsumerWidget {
   }
 }
 
-/// 「このアプリについて」のListTile
-class _AboutAppListTile extends ConsumerWidget {
-  const _AboutAppListTile();
+/// このアプリについて
+class _AboutAppItem extends ConsumerWidget {
+  const _AboutAppItem();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final info = ref.watch(appInfoProvider);
-    return ListTile(
+    return SectionItem(
       title: const Text('このアプリについて'),
       subtitle: Text(info.version),
       onTap: () {
@@ -110,35 +134,13 @@ class _AboutAppListTile extends ConsumerWidget {
   }
 }
 
-/// セクションヘッダー
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-  });
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.surfaceVariant,
-        ),
-      ),
-      tileColor: Theme.of(context).colorScheme.onSurfaceVariant,
-    );
-  }
-}
-
-/// 「Component Gallery」のListTile
-class _ComponentGalleryListTile extends ConsumerWidget {
-  const _ComponentGalleryListTile();
+/// Component Gallery
+class _ComponentGalleryItem extends ConsumerWidget {
+  const _ComponentGalleryItem();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
+    return SectionItem(
       title: const Text(ComponentGalleryRoute.title),
       onTap: () => const ComponentGalleryRoute().go(context),
     );
