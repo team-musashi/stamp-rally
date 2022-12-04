@@ -15,13 +15,22 @@ final entryStampRalliesProvider = StreamProvider.autoDispose(
   name: 'entryStampRalliesProvider',
 );
 
-/// 公開中/参加中のスタンプラリーのスポットリストを返すプロバイダー
-final spotsProviderFamily =
+/// 公開中のスタンプラリーのスポットリストを返すプロバイダー
+final publicSpotsProviderFamily =
     FutureProvider.autoDispose.family<List<Spot>, String>(
   (ref, stampRallyId) => ref
       .watch(stampRallyRepositoryProvider)
-      .fetchSpots(stampRallyId: stampRallyId),
-  name: 'spotsProviderFamily',
+      .fetchPublicSpots(publicStampRallyId: stampRallyId),
+  name: 'publicSpotsProviderFamily',
+);
+
+/// 参加中のスタンプラリーのスポットリストを返すプロバイダー
+final entrySpotsProviderFamily =
+    FutureProvider.autoDispose.family<List<Spot>, String>(
+  (ref, stampRallyId) => ref
+      .watch(stampRallyRepositoryProvider)
+      .fetchEntrySpots(entryStampRallyId: stampRallyId),
+  name: 'entrySpotsProviderFamily',
 );
 
 /// スタンプラリーリポジトリプロバイダー
@@ -38,5 +47,8 @@ abstract class StampRallyRepository {
   Stream<List<StampRally>> entryStampRalliesChanges();
 
   /// 公開中のスタンプラリーに紐づくスポットリストを返す
-  Future<List<Spot>> fetchSpots({required String stampRallyId});
+  Future<List<Spot>> fetchPublicSpots({required String publicStampRallyId});
+
+  /// 参加中のスタンプラリーに紐づくスポットリストを返す
+  Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId});
 }

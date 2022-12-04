@@ -27,7 +27,9 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
       _publicChangesController.add(
         snapshot.docs
-            .map((doc) => doc.data().toStampRally(doc.id))
+            .map(
+          (doc) => doc.data().toStampRally(doc.id, type: StampRallyType.public),
+        )
             .where((stampRally) {
           final endDate = stampRally.endDate;
           if (endDate == null) {
@@ -41,18 +43,16 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
     });
 
     // 参加中のスタンプラリーリストの変更を監視する
-    if (_entryQuery == null) {
-      return;
-    }
-
-    _entrySubscription = _entryQuery!.snapshots().listen((snapshot) {
+    _entrySubscription = _entryQuery.snapshots().listen((snapshot) {
       if (_entryChangesController.isClosed) {
         return;
       }
 
       _entryChangesController.add(
         snapshot.docs
-            .map((doc) => doc.data().toStampRally(doc.id))
+            .map(
+          (doc) => doc.data().toStampRally(doc.id, type: StampRallyType.entry),
+        )
             .where((stampRally) {
           final endDate = stampRally.endDate;
           if (endDate == null) {
@@ -78,7 +78,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
-  static const spotCollectionName = 'publicSpot';
+  static const publicSpotCollectionName = 'publicSpot';
   static const entryStampRallyCollectionName = 'entryStampRally';
   static const entrySpotCollectionName = 'entrySpot';
 
@@ -110,26 +110,24 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ＜検索条件＞
   /// WHERE startDate <= now()
   /// ORDER BY startDate ASC
-  Query<StampRallyDocument>? get _entryQuery => uid == null
-      ? null
-      : store
-          .collection('user')
-          .doc(uid)
-          .collection(entryStampRallyCollectionName)
-          .withConverter<StampRallyDocument>(
-            fromFirestore: (snapshot, options) {
-              final json = snapshot.data();
-              return StampRallyDocument.fromJson(json!);
-            },
-            toFirestore: (_, __) {
-              return <String, dynamic>{};
-            },
-          )
-          .where(
-            StampRallyDocument.field.startDate,
-            isLessThanOrEqualTo: DateTime.now(),
-          )
-          .orderBy(StampRallyDocument.field.startDate);
+  Query<StampRallyDocument> get _entryQuery => store
+      .collection('user')
+      .doc(uid)
+      .collection(entryStampRallyCollectionName)
+      .withConverter<StampRallyDocument>(
+        fromFirestore: (snapshot, options) {
+          final json = snapshot.data();
+          return StampRallyDocument.fromJson(json!);
+        },
+        toFirestore: (_, __) {
+          return <String, dynamic>{};
+        },
+      )
+      .where(
+        StampRallyDocument.field.startDate,
+        isLessThanOrEqualTo: DateTime.now(),
+      )
+      .orderBy(StampRallyDocument.field.startDate);
 
   void dispose() {
     _publicSubscription?.cancel();
@@ -147,11 +145,31 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       _entryChangesController.stream;
 
   @override
-  Future<List<Spot>> fetchSpots({required String stampRallyId}) async {
+  Future<List<Spot>> fetchPublicSpots({
+    required String publicStampRallyId,
+  }) async {
     final snapshot = await store
         .collection(publicStampRallyCollectionName)
-        .doc(stampRallyId)
-        .collection(spotCollectionName)
+        .doc(publicStampRallyId)
+        .collection(publicSpotCollectionName)
+        .orderBy(SpotDocument.field.order, descending: false)
+        .get();
+    return snapshot.docs.map((query) {
+      final json = query.data();
+      return SpotDocument.fromJson(json).toSpot(docId: query.id);
+    }).toList();
+  }
+
+  @override
+  Future<List<Spot>> fetchEntrySpots({
+    required String entryStampRallyId,
+  }) async {
+    final snapshot = await store
+        .collection('user')
+        .doc(uid)
+        .collection(entryStampRallyCollectionName)
+        .doc(entryStampRallyId)
+        .collection(entrySpotCollectionName)
         .orderBy(SpotDocument.field.order, descending: false)
         .get();
     return snapshot.docs.map((query) {
@@ -163,7 +181,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
 extension _StampRallyDocumentEx on StampRallyDocument {
   /// StampRallyDocument => StampRally
-  StampRally toStampRally(String id) {
+  StampRally toStampRally(String id, {required StampRallyType type}) {
     return StampRally(
       id: id,
       title: title,
@@ -173,6 +191,7 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       imageUrl: imageUrl,
       startDate: startDate,
       endDate: endDate,
+      type: type,
     );
   }
 }

@@ -40,5 +40,13 @@ class StampRally with _$StampRally {
 
     /// スタンプラリーのスポットのリスト
     @Default(<Spot>[]) List<Spot> spots,
+
+    /// スタンプラリーの種類（公開中／参加中）
+    required StampRallyType type,
   }) = _StampRally;
+}
+
+enum StampRallyType {
+  public,
+  entry,
 }
