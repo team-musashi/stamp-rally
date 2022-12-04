@@ -46,7 +46,7 @@ class _Body extends ConsumerWidget {
                   await ref
                       .read(stampRallyServiceProvider)
                       .entryStampRally(stampRallyId: stampRally.id);
-                  const SpotIndexRoute().push(context);
+                  SpotIndexRoute.fromStampRally(stampRally).push(context);
                 },
                 child: const Text('参加する'),
               ),

@@ -129,8 +129,8 @@ class LoginRoute extends GoRouteData {
       path: 'public-stamp-rally/:publicStampRallyId',
     ),
     TypedGoRoute<SpotIndexRoute>(
-      path: 'spot-index',
-    )
+      path: ':stampRallyId/spot-index',
+    ),
   ],
 )
 
@@ -194,15 +194,43 @@ class StampRallyViewRoute extends GoRouteData {
 
 /// スポット一覧画面
 class SpotIndexRoute extends GoRouteData {
-  const SpotIndexRoute();
+  SpotIndexRoute({
+    required this.stampRallyId,
+    this.$extra,
+  });
+
+  factory SpotIndexRoute.fromStampRally(
+    StampRally stampRally,
+  ) =>
+      SpotIndexRoute(
+        stampRallyId: stampRally.id,
+        $extra: stampRally,
+      );
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String stampRallyId;
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
+  StampRally? $extra;
 
   static const name = 'spot-index';
 
   @override
   Page<void> buildPage(BuildContext context) {
     return TransitionPage.slide(
+      child: ProviderScope(
+        overrides: [
+          // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+          currentPublicStampRallyParamProvider.overrideWithValue(
+            StampRallyParam(
+              stampRallyId: stampRallyId,
+              cache: $extra,
+            ),
+          ),
+        ],
+        child: const SpotIndexPage(),
+      ),
       name: name,
-      child: const SpotIndexPage(),
     );
   }
 }
