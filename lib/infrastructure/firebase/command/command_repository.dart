@@ -5,21 +5,25 @@ import 'document/command_document.dart';
 
 /// Firebase コマンドリポジトリ
 class FirebaseCommandRepository implements CommandRepository {
-  FirebaseCommandRepository({required this.store});
+  FirebaseCommandRepository({
+    required this.store,
+    required this.uid,
+  });
 
   final FirebaseFirestore store;
+  final String? uid;
 
   static const commandCollectionName = 'command';
 
   @override
   Future<void> entryStampRally({
-    required String? uid,
-    required String stampRallyId,
+    required String publicStampRallyId,
   }) async {
+    assert(uid != null);
     await store.collection(commandCollectionName).add(
           CommandDocument.entryStampRally(
             uid: uid,
-            stampRallyId: stampRallyId,
+            stampRallyId: publicStampRallyId,
           ).toJson(),
         );
   }

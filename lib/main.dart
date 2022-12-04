@@ -87,6 +87,7 @@ Future<void> main() async {
         commandRepositoryProvider.overrideWith((ref) {
           final repository = FirebaseCommandRepository(
             store: ref.watch(firebaseFirestoreProvider),
+            uid: ref.watch(firebaseUserIdProvider).value,
           );
           return repository;
         })
