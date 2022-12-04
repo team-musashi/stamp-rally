@@ -14,6 +14,7 @@ import '../presentation/page/home/home_page.dart';
 import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
+import 'page/stamp_rally/spot_index_page.dart';
 import 'page/stamp_rally/stamp_rally_view_page.dart';
 
 part 'router.g.dart';
@@ -126,6 +127,9 @@ class LoginRoute extends GoRouteData {
     ),
     TypedGoRoute<StampRallyViewRoute>(
       path: 'public-stamp-rally/:publicStampRallyId',
+    ),
+    TypedGoRoute<SpotIndexRoute>(
+      path: 'spot-index',
     )
   ],
 )
@@ -184,6 +188,21 @@ class StampRallyViewRoute extends GoRouteData {
         child: const StampRallyViewPage(),
       ),
       name: name,
+    );
+  }
+}
+
+/// スポット一覧画面
+class SpotIndexRoute extends GoRouteData {
+  const SpotIndexRoute();
+
+  static const name = 'spot-index';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      name: name,
+      child: const SpotIndexPage(),
     );
   }
 }
