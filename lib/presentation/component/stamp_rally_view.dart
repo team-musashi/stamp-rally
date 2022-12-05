@@ -18,6 +18,8 @@ class StampRallyViewItem extends StatelessWidget {
         StampRallyViewRoute.fromStampRally(item).push(context);
       },
       child: Container(
+        width: 168,
+        height: 112,
         margin: const EdgeInsets.only(top: 12, left: 6, right: 6),
         decoration: const BoxDecoration(
           boxShadow: [
@@ -30,27 +32,9 @@ class StampRallyViewItem extends StatelessWidget {
           ],
           color: Colors.white,
         ),
-        child: Row(
-          children: [
-            Image(
-              image: NetworkImage(item.imageUrl),
-              width: 200,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text('開催場所： ${item.place}'),
-                  Text('所要時間： ${item.requiredTime}時間'),
-                ],
-              ),
-            )
-          ],
+        child: Image(
+          image: NetworkImage(item.imageUrl),
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -66,7 +50,10 @@ class StampRallyListView extends ConsumerWidget {
     return AsyncValueHandler<List<StampRally>>(
       value: ref.watch(publicStampRalliesProvider),
       builder: (stampRallies) {
-        return ListView.builder(
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: stampRallies.length,
