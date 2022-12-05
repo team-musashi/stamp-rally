@@ -127,9 +127,11 @@ class LoginRoute extends GoRouteData {
     ),
     TypedGoRoute<StampRallyViewRoute>(
       path: 'public-stamp-rally/:publicStampRallyId',
-    ),
-    TypedGoRoute<SpotIndexRoute>(
-      path: ':stampRallyId/spot-index',
+      routes: [
+        TypedGoRoute<SpotIndexRoute>(
+          path: 'spots',
+        ),
+      ],
     ),
   ],
 )
@@ -153,7 +155,8 @@ class HomeRoute extends GoRouteData {
 class StampRallyViewRoute extends GoRouteData {
   StampRallyViewRoute({
     required this.publicStampRallyId,
-    this.$extra,
+    // 【暫定対応】extraがあると次のネストした画面を開いたときにエラーになる
+    // this.$extra,
   });
 
   factory StampRallyViewRoute.fromStampRally(
@@ -161,14 +164,14 @@ class StampRallyViewRoute extends GoRouteData {
   ) =>
       StampRallyViewRoute(
         publicStampRallyId: stampRally.id,
-        $extra: stampRally,
+        // $extra: stampRally,
       );
 
   /// 公開中のスタンプラリーID
   final String publicStampRallyId;
 
   /// キャッシュ
-  StampRally? $extra;
+  // StampRally? $extra;
 
   static const name = 'public-stamp-rally-view';
 
@@ -181,7 +184,7 @@ class StampRallyViewRoute extends GoRouteData {
           currentPublicStampRallyParamProvider.overrideWithValue(
             StampRallyParam(
               stampRallyId: publicStampRallyId,
-              cache: $extra,
+              // cache: $extra,
             ),
           ),
         ],
@@ -195,7 +198,7 @@ class StampRallyViewRoute extends GoRouteData {
 /// スポット一覧画面
 class SpotIndexRoute extends GoRouteData {
   SpotIndexRoute({
-    required this.stampRallyId,
+    required this.publicStampRallyId,
     this.$extra,
   });
 
@@ -203,12 +206,12 @@ class SpotIndexRoute extends GoRouteData {
     StampRally stampRally,
   ) =>
       SpotIndexRoute(
-        stampRallyId: stampRally.id,
+        publicStampRallyId: stampRally.id,
         $extra: stampRally,
       );
 
   /// スタンプラリー詳細画面に表示中のスタンプラリーID
-  final String stampRallyId;
+  final String publicStampRallyId;
 
   /// スタンプラリー詳細画面に表示中のスタンプラリー情報
   StampRally? $extra;
@@ -223,7 +226,7 @@ class SpotIndexRoute extends GoRouteData {
           // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
           currentPublicStampRallyParamProvider.overrideWithValue(
             StampRallyParam(
-              stampRallyId: stampRallyId,
+              stampRallyId: publicStampRallyId,
               cache: $extra,
             ),
           ),
