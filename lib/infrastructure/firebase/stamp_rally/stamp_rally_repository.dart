@@ -11,16 +11,15 @@ import 'document/stamp_rally_document.dart';
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
-    required this.store,
-    this.uid,
+    required this.userDocRef,
   }) {
-    if (uid == null) {
+    if (userDocRef == null) {
       // 未ログイン状態のときは監視しない
       return;
     }
 
     // 公開中のスタンプラリーリストの変更を監視する
-    _publicSubscription = _publicQuery.snapshots().listen((snapshot) {
+    _publicSubscription = _publicQuery?.snapshots().listen((snapshot) {
       if (_publicChangesController.isClosed) {
         return;
       }
@@ -41,7 +40,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
     });
 
     // 参加中のスタンプラリーリストの変更を監視する
-    _entrySubscription = _entryQuery.snapshots().listen((snapshot) {
+    _entrySubscription = _entryQuery?.snapshots().listen((snapshot) {
       if (_entryChangesController.isClosed) {
         return;
       }
@@ -62,8 +61,8 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
     });
   }
 
-  final FirebaseFirestore store;
-  final String? uid;
+  FirebaseFirestore? get firestore => userDocRef?.firestore;
+  final DocumentReference<Map<String, dynamic>>? userDocRef;
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
   final _entryChangesController =
@@ -83,8 +82,8 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ＜検索条件＞
   /// WHERE startDate <= now()
   /// ORDER BY startDate ASC
-  Query<StampRallyDocument> get _publicQuery => store
-      .collection(publicStampRallyCollectionName)
+  Query<StampRallyDocument>? get _publicQuery => firestore
+      ?.collection(publicStampRallyCollectionName)
       .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
@@ -106,10 +105,8 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ＜検索条件＞
   /// WHERE startDate <= now()
   /// ORDER BY startDate ASC
-  Query<StampRallyDocument> get _entryQuery => store
-      .collection('user')
-      .doc(uid)
-      .collection(entryStampRallyCollectionName)
+  Query<StampRallyDocument>? get _entryQuery => userDocRef
+      ?.collection(entryStampRallyCollectionName)
       .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
@@ -144,34 +141,34 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   Future<List<Spot>> fetchPublicSpots({
     required String publicStampRallyId,
   }) async {
-    final snapshot = await store
-        .collection(publicStampRallyCollectionName)
+    final snapshot = await firestore
+        ?.collection(publicStampRallyCollectionName)
         .doc(publicStampRallyId)
         .collection(publicSpotCollectionName)
         .orderBy(SpotDocument.field.order, descending: false)
         .get();
-    return snapshot.docs.map((query) {
-      final json = query.data();
-      return SpotDocument.fromJson(json).toSpot(docId: query.id);
-    }).toList();
+    return snapshot?.docs.map((query) {
+          final json = query.data();
+          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+        }).toList() ??
+        [];
   }
 
   @override
   Future<List<Spot>> fetchEntrySpots({
     required String entryStampRallyId,
   }) async {
-    final snapshot = await store
-        .collection('user')
-        .doc(uid)
-        .collection(entryStampRallyCollectionName)
+    final snapshot = await userDocRef
+        ?.collection(entryStampRallyCollectionName)
         .doc(entryStampRallyId)
         .collection(entrySpotCollectionName)
         .orderBy(SpotDocument.field.order, descending: false)
         .get();
-    return snapshot.docs.map((query) {
-      final json = query.data();
-      return SpotDocument.fromJson(json).toSpot(docId: query.id);
-    }).toList();
+    return snapshot?.docs.map((query) {
+          final json = query.data();
+          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+        }).toList() ??
+        [];
   }
 }
 

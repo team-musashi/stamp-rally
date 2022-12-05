@@ -68,7 +68,7 @@ Future<void> main() async {
           (ref) {
             final repository = FirebaseUserRepository(
               auth: ref.watch(firebaseAuthProvider),
-              firestore: ref.watch(firebaseFirestoreProvider),
+              userColletionRef: ref.watch(userCollectionRefProvider),
             );
             ref.onDispose(repository.dispose);
             return repository;
@@ -77,8 +77,7 @@ Future<void> main() async {
         stampRallyRepositoryProvider.overrideWith(
           (ref) {
             final repository = FirebaseStampRallyRepository(
-              store: ref.watch(firebaseFirestoreProvider),
-              uid: ref.watch(firebaseUserIdProvider).value,
+              userDocRef: ref.watch(userDocRefProvider),
             );
             ref.onDispose(repository.dispose);
             return repository;
@@ -86,7 +85,7 @@ Future<void> main() async {
         ),
         commandRepositoryProvider.overrideWith((ref) {
           final repository = FirebaseCommandRepository(
-            store: ref.watch(firebaseFirestoreProvider),
+            commandCollectionRef: ref.watch(commandCollectionRefProvider),
             uid: ref.watch(firebaseUserIdProvider).value,
           );
           return repository;
