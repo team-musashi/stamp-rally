@@ -30,4 +30,5 @@ class StampRallyDocument with _$StampRallyDocument {
 
 class _StampRallyDocumentField {
   String get startDate => 'startDate';
+  String get createdAt => 'createdAt';
 }

@@ -48,15 +48,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       _entryChangesController.add(
         snapshot.docs
             .map((doc) => doc.data().toEntryStampRally(doc.id))
-            .where((stampRally) {
-          final endDate = stampRally.endDate;
-          if (endDate == null) {
-            // 終了日時が無い場合は常に開催中のため表示する
-            return true;
-          }
-          // 終了日時を超えていたら表示しない
-          return endDate.isAfter(DateTime.now());
-        }).toList(),
+            .toList(),
       );
     });
   }
@@ -103,11 +95,10 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// 参加中のスタンプラリーリストのクエリ
   ///
   /// ＜検索条件＞
-  /// WHERE startDate <= now()
-  /// ORDER BY startDate ASC
+  /// ORDER BY createdAt DESC
   Query<StampRallyDocument>? get _entryQuery => userDocRef
-      ?.collection(entryStampRallyCollectionName)
-      .withConverter<StampRallyDocument>(
+          ?.collection(entryStampRallyCollectionName)
+          .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
           return StampRallyDocument.fromJson(json!);
@@ -115,12 +106,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         toFirestore: (_, __) {
           return <String, dynamic>{};
         },
-      )
-      .where(
-        StampRallyDocument.field.startDate,
-        isLessThanOrEqualTo: DateTime.now(),
-      )
-      .orderBy(StampRallyDocument.field.startDate);
+      ).orderBy(StampRallyDocument.field.createdAt, descending: true);
 
   void dispose() {
     _publicSubscription?.cancel();
