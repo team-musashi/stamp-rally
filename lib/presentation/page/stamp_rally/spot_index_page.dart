@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
+import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../component/async_value_handler.dart';
 
+/// スポット一覧画面
 class SpotIndexPage extends StatelessWidget {
   const SpotIndexPage({super.key});
 
@@ -22,14 +25,19 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final spots = ref.watch(currentPublicStampRallyParamProvider).cache!.spots;
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: spots.length,
-      itemBuilder: (context, index) {
-        return Image(
-          image: NetworkImage(spots[index].imageUrl),
+    return AsyncValueHandler<StampRally>(
+      value: ref.watch(currentPublicStampRallyProvider),
+      builder: (stampRally) {
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: stampRally.spots.length,
+          itemBuilder: (context, index) {
+            final spot = stampRally.spots[index];
+            return Image(
+              image: NetworkImage(spot.imageUrl),
+            );
+          },
         );
       },
     );
