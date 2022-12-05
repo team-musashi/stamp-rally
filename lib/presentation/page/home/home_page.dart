@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../util/assets/assets.gen.dart';
 import '../../component/delimiter_block.dart';
 import '../../component/stamp_rally_view.dart';
 import '../../router.dart';
@@ -12,7 +13,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ホーム'),
+        title: Column(
+          children: [
+            // Todo: アイコンが確定次第差し替える
+            Assets.images.iconStamp.image(
+                height: 12, color: Theme.of(context).colorScheme.primary),
+            Assets.images.logoStampRarry.image(
+                height: 32, color: Theme.of(context).colorScheme.primary),
+          ],
+        ),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () => const SettingRoute().push(context),
