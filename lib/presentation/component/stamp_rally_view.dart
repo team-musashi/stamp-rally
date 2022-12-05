@@ -20,21 +20,16 @@ class StampRallyViewItem extends StatelessWidget {
       child: Container(
         width: 168,
         height: 112,
-        margin: const EdgeInsets.only(top: 12, left: 6, right: 6),
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey, //色
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(1, 1),
-            ),
-          ],
-          color: Colors.white,
+        margin: const EdgeInsets.only(left: 8, bottom: 12, right: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
         ),
-        child: Image(
-          image: NetworkImage(item.imageUrl),
-          fit: BoxFit.cover,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Image(
+            image: NetworkImage(item.imageUrl),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -60,6 +55,7 @@ class StampRallyListView extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return StampRallyViewItem(item: stampRallies[index]);
           },
+          padding: const EdgeInsets.only(top: 12, left: 4, bottom: 8, right: 4),
         );
       },
     );
