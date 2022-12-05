@@ -27,9 +27,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
       _publicChangesController.add(
         snapshot.docs
-            .map(
-          (doc) => doc.data().toStampRally(doc.id, type: StampRallyType.public),
-        )
+            .map((doc) => doc.data().toPublicStampRally(doc.id))
             .where((stampRally) {
           final endDate = stampRally.endDate;
           if (endDate == null) {
@@ -50,9 +48,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
       _entryChangesController.add(
         snapshot.docs
-            .map(
-          (doc) => doc.data().toStampRally(doc.id, type: StampRallyType.entry),
-        )
+            .map((doc) => doc.data().toEntryStampRally(doc.id))
             .where((stampRally) {
           final endDate = stampRally.endDate;
           if (endDate == null) {
@@ -180,8 +176,20 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 }
 
 extension _StampRallyDocumentEx on StampRallyDocument {
+  /// StampRallyDocument => PublicStampRally
+  StampRally toPublicStampRally(String id) => _toStampRally(
+        id,
+        type: StampRallyType.public,
+      );
+
+  /// StampRallyDocument => EntryStampRally
+  StampRally toEntryStampRally(String id) => _toStampRally(
+        id,
+        type: StampRallyType.entry,
+      );
+
   /// StampRallyDocument => StampRally
-  StampRally toStampRally(String id, {required StampRallyType type}) {
+  StampRally _toStampRally(String id, {required StampRallyType type}) {
     return StampRally(
       id: id,
       title: title,
