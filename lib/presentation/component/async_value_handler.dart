@@ -37,13 +37,13 @@ class AsyncValueHandler<T extends Object> extends StatelessWidget {
 
 extension WidgetRefEx on WidgetRef {
   /// XXXResultProviderを良い感じに処理する
-  void listenResult(
-    ProviderListenable<AsyncValue<void>> resultProvider, {
-    void Function()? complete,
+  void listenResult<T>(
+    ProviderListenable<AsyncValue<T>> resultProvider, {
+    void Function(T data)? complete,
     bool loading = true,
     String? completeMessage,
   }) {
-    listen<AsyncValue<void>>(
+    listen<AsyncValue<T>>(
       resultProvider,
       (previous, next) async {
         if (next.isLoading) {
@@ -54,20 +54,20 @@ extension WidgetRefEx on WidgetRef {
           return;
         }
         await next.when(
-          data: (_) async {
+          data: (data) async {
             // 処理完了
             read(overlayLoadingProvider.notifier).update((_) => false);
             if (completeMessage != null) {
               // 完了メッセージがあれば SnackBar を表示する
               final messengerState =
                   read(scaffoldMessengerKeyProvider).currentState;
-              return messengerState?.showSnackBar(
+              messengerState?.showSnackBar(
                 SnackBar(
                   content: Text(completeMessage),
                 ),
               );
             }
-            complete?.call();
+            complete?.call(data);
           },
           error: (e, s) async {
             // エラーが発生したのでエラーダイアログを表示する
