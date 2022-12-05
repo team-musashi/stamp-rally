@@ -5,9 +5,9 @@ import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
 
-/// スポット一覧画面
-class SpotIndexPage extends StatelessWidget {
-  const SpotIndexPage({super.key});
+/// 公開スポット一覧画面
+class PublicSpotIndexPage extends StatelessWidget {
+  const PublicSpotIndexPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -15,7 +15,14 @@ class StampRallyViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        StampRallyViewRoute.fromStampRally(item).go(context);
+        switch (item.type) {
+          case StampRallyType.public:
+            PublicStampRallyViewRoute.fromStampRally(item).go(context);
+            break;
+          case StampRallyType.entry:
+            EntryStampRallyViewRoute.fromStampRally(item).go(context);
+            break;
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(top: 12, left: 6, right: 6),
