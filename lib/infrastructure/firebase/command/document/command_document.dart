@@ -28,6 +28,7 @@ class CommandDocument with _$CommandDocument {
       commandType: CommandType.entryStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
   }
 
@@ -41,19 +42,17 @@ class CommandDocument with _$CommandDocument {
       commandType: CommandType.leaveStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
   }
-
-  static _CommandDocumentField get field => _CommandDocumentField();
 }
 
-class _CommandDocumentField {
-  String get commandType => 'commandType';
-  String get data => 'data';
-  String get createdAt => 'createdAt';
-}
-
+/// コマンドタイプ
 enum CommandType {
+  /// スタンプラリーに参加する
   entryStampRally,
+
+  /// スタンプラリーへの参加をキャンセルする
   leaveStampRally,
+  ;
 }
