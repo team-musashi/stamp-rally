@@ -44,6 +44,7 @@ class HomePage extends StatelessWidget {
                 ),
               )
             ],
+            padding: const EdgeInsets.only(bottom: 8),
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(30), // Creates border
               color: Theme.of(context).colorScheme.primaryContainer,
