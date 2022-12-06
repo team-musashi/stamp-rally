@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
             ],
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(30), // Creates border
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             indicatorPadding: const EdgeInsets.symmetric(horizontal: 8),
             labelColor: Theme.of(context).colorScheme.background,
