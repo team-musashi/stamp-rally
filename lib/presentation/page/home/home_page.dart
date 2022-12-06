@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
             indicatorPadding: const EdgeInsets.symmetric(horizontal: 8),
-            labelColor: Theme.of(context).colorScheme.background,
+            labelColor: Theme.of(context).colorScheme.surface,
             unselectedLabelColor: Colors.black,
           ),
           centerTitle: true,
