@@ -45,3 +45,8 @@ app.*.map.json
 
 # fvm related
 .fvm/flutter_sdk
+
+# node
+node_modules
+package.json
+package-lock.json
