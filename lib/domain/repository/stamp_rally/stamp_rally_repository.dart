@@ -4,7 +4,7 @@ import 'entity/spot.dart';
 import 'entity/stamp_rally.dart';
 
 /// 公開中のスタンプラリーリストを返すプロバイダー
-final publicStampRalliesProvider = StreamProvider.autoDispose(
+final publicStampRalliesProvider = StreamProvider(
   (ref) => ref.watch(stampRallyRepositoryProvider).publicStampRalliesChanges(),
   name: 'publicStampRalliesProvider',
 );
