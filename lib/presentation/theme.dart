@@ -7,7 +7,7 @@ final themeProvider = Provider(
   (ref) {
     final colorScheme = ColorScheme.light(
       primary: HexColor('FF73F1'),
-      primaryContainer: HexColor('#FFAFCC'),
+      primaryContainer: HexColor('FFAFCC'),
       secondary: HexColor('FFA776'),
     );
     return ThemeData(
