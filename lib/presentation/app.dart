@@ -47,13 +47,13 @@ class App extends ConsumerWidget {
     );
 
     // ユーザーの作成結果を監視する
-    ref.listenResult(
+    ref.listenResult<void>(
       createUserResultProvider,
       completeMessage: 'ようこそ！',
     );
 
     // ユーザーの削除結果を監視する
-    ref.listenResult(
+    ref.listenResult<void>(
       deleteUserResultProvider,
       completeMessage: 'ユーザーを削除しました。',
     );

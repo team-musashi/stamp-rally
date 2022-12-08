@@ -2,34 +2,28 @@
 
 // ignore_for_file: type=lint, implicit_dynamic_parameter, implicit_dynamic_type, implicit_dynamic_method, strict_raw_type
 
-part of 'spot_document.dart';
+part of 'command_document.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SpotDocument _$$_SpotDocumentFromJson(Map<String, dynamic> json) =>
-    _$_SpotDocument(
-      order: json['order'] as int,
-      imageUrl: json['imageUrl'] as String,
-      location: _$JsonConverterFromJson<Object, GeoLocation>(
-          json['location'], const GeoPointConverter().fromJson),
-      gotDate: _$JsonConverterFromJson<Object, DateTime>(
-          json['gotDate'], const TimestampConverter().fromJson),
+_$_CommandDocument _$$_CommandDocumentFromJson(Map<String, dynamic> json) =>
+    _$_CommandDocument(
+      uid: json['uid'] as String,
+      commandType: json['commandType'] as String,
+      data: json['data'] as Map<String, dynamic>,
       createdAt: _$JsonConverterFromJson<Object, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
       updatedAt: _$JsonConverterFromJson<Object, DateTime>(
           json['updatedAt'], const TimestampConverter().fromJson),
     );
 
-Map<String, dynamic> _$$_SpotDocumentToJson(_$_SpotDocument instance) =>
+Map<String, dynamic> _$$_CommandDocumentToJson(_$_CommandDocument instance) =>
     <String, dynamic>{
-      'order': instance.order,
-      'imageUrl': instance.imageUrl,
-      'location': _$JsonConverterToJson<Object, GeoLocation>(
-          instance.location, const GeoPointConverter().toJson),
-      'gotDate': _$JsonConverterToJson<Object, DateTime>(
-          instance.gotDate, const TimestampConverter().toJson),
+      'uid': instance.uid,
+      'commandType': instance.commandType,
+      'data': instance.data,
       'createdAt': _$JsonConverterToJson<Object, DateTime>(
           instance.createdAt, const TimestampConverter().toJson),
       'updatedAt': _$JsonConverterToJson<Object, DateTime>(

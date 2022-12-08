@@ -15,6 +15,8 @@ class SpotDocument with _$SpotDocument {
     required String imageUrl,
     @GeoPointConverter() GeoLocation? location,
     @TimestampConverter() DateTime? gotDate,
+    @TimestampConverter() DateTime? createdAt,
+    @TimestampConverter() DateTime? updatedAt,
   }) = _SpotDocument;
 
   const SpotDocument._();

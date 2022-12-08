@@ -29,6 +29,10 @@ mixin _$StampRallyDocument {
   DateTime get startDate => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get endDate => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +53,9 @@ abstract class $StampRallyDocumentCopyWith<$Res> {
       int requiredTime,
       String imageUrl,
       @TimestampConverter() DateTime startDate,
-      @TimestampConverter() DateTime? endDate});
+      @TimestampConverter() DateTime? endDate,
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -72,6 +78,8 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
     Object? imageUrl = null,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -102,6 +110,14 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -121,7 +137,9 @@ abstract class _$$_StampRallyDocumentCopyWith<$Res>
       int requiredTime,
       String imageUrl,
       @TimestampConverter() DateTime startDate,
-      @TimestampConverter() DateTime? endDate});
+      @TimestampConverter() DateTime? endDate,
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -142,6 +160,8 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
     Object? imageUrl = null,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$_StampRallyDocument(
       title: null == title
@@ -172,6 +192,14 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -186,7 +214,9 @@ class _$_StampRallyDocument extends _StampRallyDocument {
       required this.requiredTime,
       required this.imageUrl,
       @TimestampConverter() required this.startDate,
-      @TimestampConverter() this.endDate})
+      @TimestampConverter() this.endDate,
+      @TimestampConverter() this.createdAt,
+      @TimestampConverter() this.updatedAt})
       : super._();
 
   factory _$_StampRallyDocument.fromJson(Map<String, dynamic> json) =>
@@ -208,10 +238,16 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   @override
   @TimestampConverter()
   final DateTime? endDate;
+  @override
+  @TimestampConverter()
+  final DateTime? createdAt;
+  @override
+  @TimestampConverter()
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'StampRallyDocument(title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate)';
+    return 'StampRallyDocument(title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -229,13 +265,17 @@ class _$_StampRallyDocument extends _StampRallyDocument {
                 other.imageUrl == imageUrl) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, title, explanation, place,
-      requiredTime, imageUrl, startDate, endDate);
+      requiredTime, imageUrl, startDate, endDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -260,7 +300,9 @@ abstract class _StampRallyDocument extends StampRallyDocument {
       required final int requiredTime,
       required final String imageUrl,
       @TimestampConverter() required final DateTime startDate,
-      @TimestampConverter() final DateTime? endDate}) = _$_StampRallyDocument;
+      @TimestampConverter() final DateTime? endDate,
+      @TimestampConverter() final DateTime? createdAt,
+      @TimestampConverter() final DateTime? updatedAt}) = _$_StampRallyDocument;
   const _StampRallyDocument._() : super._();
 
   factory _StampRallyDocument.fromJson(Map<String, dynamic> json) =
@@ -282,6 +324,12 @@ abstract class _StampRallyDocument extends StampRallyDocument {
   @override
   @TimestampConverter()
   DateTime? get endDate;
+  @override
+  @TimestampConverter()
+  DateTime? get createdAt;
+  @override
+  @TimestampConverter()
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_StampRallyDocumentCopyWith<_$_StampRallyDocument> get copyWith =>

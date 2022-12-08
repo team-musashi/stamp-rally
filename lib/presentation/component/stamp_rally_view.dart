@@ -15,7 +15,14 @@ class StampRallyViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        StampRallyViewRoute.fromStampRally(item).push(context);
+        switch (item.type) {
+          case StampRallyType.public:
+            PublicStampRallyViewRoute.fromStampRally(item).go(context);
+            break;
+          case StampRallyType.entry:
+            EntryStampRallyViewRoute.fromStampRally(item).go(context);
+            break;
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(top: 12, left: 6, right: 6),
@@ -57,24 +64,39 @@ class StampRallyViewItem extends StatelessWidget {
   }
 }
 
-/// スタンプラリー概要をリスト表示するためのウィジェット
-class StampRallyListView extends ConsumerWidget {
-  const StampRallyListView({super.key});
+/// 公開中スタンプラリー概要をリスト表示するためのウィジェット
+class PublicStampRallyListView extends ConsumerWidget {
+  const PublicStampRallyListView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueHandler<List<StampRally>>(
       value: ref.watch(publicStampRalliesProvider),
-      builder: (stampRallies) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: stampRallies.length,
-          itemBuilder: (BuildContext context, int index) {
-            return StampRallyViewItem(item: stampRallies[index]);
-          },
-        );
-      },
+      builder: _buildStampRallies,
     );
   }
+}
+
+/// 参加中スタンプラリー概要をリスト表示するためのウィジェット
+class EntryStampRallyListView extends ConsumerWidget {
+  const EntryStampRallyListView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AsyncValueHandler<List<StampRally>>(
+      value: ref.watch(entryStampRalliesProvider),
+      builder: _buildStampRallies,
+    );
+  }
+}
+
+Widget _buildStampRallies(List<StampRally> stampRallies) {
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: stampRallies.length,
+    itemBuilder: (BuildContext context, int index) {
+      return StampRallyViewItem(item: stampRallies[index]);
+    },
+  );
 }
