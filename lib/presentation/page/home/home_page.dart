@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../util/assets/assets.gen.dart';
-import '../../component/stamp_rally_view.dart';
 import '../../router.dart';
+import 'component/home_tab.dart';
 
 /// ホーム画面
 class HomePage extends StatelessWidget {
@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: HomeTab.values.length,
       child: Scaffold(
         appBar: AppBar(
           title: Column(
@@ -28,26 +28,14 @@ class HomePage extends StatelessWidget {
             ],
           ),
           bottom: TabBar(
-            tabs: const [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: Text(
-                  '公開中',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: Text(
-                  '参加中',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: Text(
-                  '完了済',
-                ),
-              )
-            ],
+            tabs: HomeTab.values
+                .map(
+                  (tab) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Text(tab.title),
+                  ),
+                )
+                .toList(),
             padding: const EdgeInsets.only(bottom: 8),
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(30), // Creates border
@@ -65,14 +53,8 @@ class HomePage extends StatelessWidget {
             )
           ],
         ),
-        body: const TabBarView(
-          children: [
-            SingleChildScrollView(
-              child: StampRallyListView(),
-            ),
-            Center(child: Text('参加中')), // Todo: 参加中ListView
-            Center(child: Text('完了済')) // Todo: 完了済ListView
-          ],
+        body: TabBarView(
+          children: HomeTab.values.map((tab) => tab.view).toList(),
         ),
       ),
     );
