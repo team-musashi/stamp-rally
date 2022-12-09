@@ -34,8 +34,7 @@ final routerProvider = Provider<GoRouter>(
     routes: $appRoutes,
 
     // エラー画面
-    errorPageBuilder: (context, state) =>
-        ErrorRoute(state.error).buildPage(context),
+    errorBuilder: (context, state) => ErrorRoute(state.error).build(context),
 
     // リダイレクト
     redirect: (context, state) {
@@ -106,14 +105,9 @@ class GoRouterRefreshNotifier extends ChangeNotifier {
 class LoginRoute extends GoRouteData {
   const LoginRoute();
 
-  static const name = 'login';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.none(
-      name: name,
-      child: const LoginPage(),
-    );
+  Widget build(BuildContext context) {
+    return const LoginPage();
   }
 }
 
@@ -151,14 +145,9 @@ class LoginRoute extends GoRouteData {
 class HomeRoute extends GoRouteData {
   const HomeRoute();
 
-  static const name = 'home';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      name: name,
-      child: const HomePage(),
-    );
+  Widget build(BuildContext context) {
+    return const HomePage();
   }
 }
 
@@ -184,24 +173,19 @@ class PublicStampRallyViewRoute extends GoRouteData {
   /// キャッシュ
   // StampRally? $extra;
 
-  static const name = 'public-stamp-rally-view';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      child: ProviderScope(
-        overrides: [
-          // 現在の公開中のスタンプラリーパラメータを上書きする
-          currentPublicStampRallyParamProvider.overrideWithValue(
-            StampRallyParam(
-              stampRallyId: publicStampRallyId,
-              // cache: $extra,
-            ),
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在の公開中のスタンプラリーパラメータを上書きする
+        currentPublicStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: publicStampRallyId,
+            // cache: $extra,
           ),
-        ],
-        child: const PublicStampRallyViewPage(),
-      ),
-      name: name,
+        ),
+      ],
+      child: const PublicStampRallyViewPage(),
     );
   }
 }
@@ -227,24 +211,19 @@ class PublicSpotIndexRoute extends GoRouteData {
   /// スタンプラリー詳細画面に表示中のスタンプラリー情報
   StampRally? $extra;
 
-  static const name = 'public-spot-index';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      child: ProviderScope(
-        overrides: [
-          // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
-          currentPublicStampRallyParamProvider.overrideWithValue(
-            StampRallyParam(
-              stampRallyId: publicStampRallyId,
-              cache: $extra,
-            ),
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+        currentPublicStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: publicStampRallyId,
+            cache: $extra,
           ),
-        ],
-        child: const PublicSpotIndexPage(),
-      ),
-      name: name,
+        ),
+      ],
+      child: const PublicSpotIndexPage(),
     );
   }
 }
@@ -271,24 +250,19 @@ class EntryStampRallyViewRoute extends GoRouteData {
   /// キャッシュ
   // StampRally? $extra;
 
-  static const name = 'entry-stamp-rally-view';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      child: ProviderScope(
-        overrides: [
-          // 現在の参加中のスタンプラリーパラメータを上書きする
-          currentEntryStampRallyParamProvider.overrideWithValue(
-            StampRallyParam(
-              stampRallyId: entryStampRallyId,
-              // cache: $extra,
-            ),
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在の参加中のスタンプラリーパラメータを上書きする
+        currentEntryStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: entryStampRallyId,
+            // cache: $extra,
           ),
-        ],
-        child: const EntryStampRallyViewPage(),
-      ),
-      name: name,
+        ),
+      ],
+      child: const EntryStampRallyViewPage(),
     );
   }
 }
@@ -314,24 +288,19 @@ class EntrySpotIndexRoute extends GoRouteData {
   /// スタンプラリー詳細画面に表示中のスタンプラリー情報
   StampRally? $extra;
 
-  static const name = 'entry-spot-index';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      child: ProviderScope(
-        overrides: [
-          // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
-          currentEntryStampRallyParamProvider.overrideWithValue(
-            StampRallyParam(
-              stampRallyId: entryStampRallyId,
-              cache: $extra,
-            ),
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+        currentEntryStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: entryStampRallyId,
+            cache: $extra,
           ),
-        ],
-        child: const EntrySpotIndexPage(),
-      ),
-      name: name,
+        ),
+      ],
+      child: const EntrySpotIndexPage(),
     );
   }
 }
@@ -340,14 +309,9 @@ class EntrySpotIndexRoute extends GoRouteData {
 class SettingRoute extends GoRouteData {
   const SettingRoute();
 
-  static const name = 'setting';
-
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      name: name,
-      child: const SettingPage(),
-    );
+  Widget build(BuildContext context) {
+    return const SettingPage();
   }
 }
 
@@ -359,113 +323,20 @@ class ErrorRoute extends GoRouteData {
 
   final Exception? error;
 
-  static const name = 'error';
-
   @override
-  Page<void> buildPage(BuildContext context) => TransitionPage.fade(
-        name: name,
-        child: ErrorPage(error: error),
-      );
+  Widget build(BuildContext context) {
+    return ErrorPage(error: error);
+  }
 }
 
 /// コンポーネントギャラリー画面
 class ComponentGalleryRoute extends GoRouteData {
   const ComponentGalleryRoute();
 
-  static const name = 'component-gallery';
   static const title = 'Component Gallery';
 
   @override
-  Page<void> buildPage(BuildContext context) {
-    return TransitionPage.slide(
-      name: name,
-      child: const ComponentGalleryPage(),
-    );
+  Widget build(BuildContext context) {
+    return const ComponentGalleryPage();
   }
-}
-
-/// デフォルトのTransitionPage
-class TransitionPage extends CustomTransitionPage<void> {
-  const TransitionPage({
-    required String name,
-    required super.child,
-    required super.transitionsBuilder,
-    super.transitionDuration,
-    super.maintainState,
-    super.fullscreenDialog,
-    super.opaque,
-    super.barrierDismissible,
-    super.barrierColor,
-    super.barrierLabel,
-    super.key,
-    super.arguments,
-    super.restorationId,
-  }) : super(
-          name: name,
-        );
-
-  /// フェード
-  factory TransitionPage.fade({
-    required Widget child,
-    required String name,
-  }) =>
-      TransitionPage(
-        name: name,
-        child: child,
-        transitionsBuilder: _fadeTransitionsBuilder,
-      );
-
-  /// スライド
-  factory TransitionPage.slide({
-    required Widget child,
-    required String name,
-  }) =>
-      TransitionPage(
-        name: name,
-        child: child,
-        transitionsBuilder: _slideTransitionsBuilder,
-      );
-
-  /// トランジションなし
-  factory TransitionPage.none({
-    required Widget child,
-    required String name,
-  }) =>
-      TransitionPage(
-        name: name,
-        child: child,
-        transitionsBuilder: _noneTransitionsBuilder,
-      );
-
-  static Widget _slideTransitionsBuilder(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) =>
-      SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(1, 0),
-          end: Offset.zero,
-        ).animate(
-          CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
-        ),
-        child: child,
-      );
-
-  static Widget _fadeTransitionsBuilder(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) =>
-      FadeTransition(opacity: animation, child: child);
-
-  static Widget _noneTransitionsBuilder(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) =>
-      child;
 }
