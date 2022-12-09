@@ -16,6 +16,7 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 1,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
+      type: StampRallyType.public,
     ),
     StampRally(
       id: 'b',
@@ -25,6 +26,7 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 2,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
+      type: StampRallyType.public,
     ),
     StampRally(
       id: 'c',
@@ -34,6 +36,7 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 3,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
+      type: StampRallyType.public,
     )
   ];
 
@@ -49,7 +52,13 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<List<Spot>> fetchSpots({required String stampRallyId}) {
+  Future<List<Spot>> fetchPublicSpots({required String publicStampRallyId}) {
+    // TODO(cobo): implement fetchSpots
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId}) {
     // TODO(cobo): implement fetchSpots
     throw UnimplementedError();
   }

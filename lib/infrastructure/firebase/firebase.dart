@@ -21,3 +21,19 @@ final firebaseUserIdProvider = Provider(
 final firebaseFirestoreProvider = Provider(
   (ref) => FirebaseFirestore.instance,
 );
+
+/// ユーザーコレクション参照プロバイダー
+final userCollectionRefProvider = Provider(
+  (ref) => ref.watch(firebaseFirestoreProvider).collection('user'),
+);
+
+/// ユーザードキュメント参照プロバイダー
+final userDocRefProvider = Provider(
+  (ref) {
+    final uid = ref.watch(firebaseUserIdProvider).value;
+    if (uid == null) {
+      return null;
+    }
+    return ref.watch(userCollectionRefProvider).doc(uid);
+  },
+);

@@ -22,5 +22,11 @@ class Spot with _$Spot {
 
     /// スタンプ取得日
     DateTime? gotDate,
+
+    /// 作成日時
+    DateTime? createdAt,
+
+    /// 更新日時
+    DateTime? updatedAt,
   }) = _Spot;
 }

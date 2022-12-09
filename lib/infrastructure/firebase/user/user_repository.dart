@@ -18,7 +18,7 @@ const _logPrefix = '[USER]';
 class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository({
     required this.auth,
-    required this.firestore,
+    required this.userColletionRef,
   }) {
     // 認証状態を監視する
     _authChangesSubscription = auth.userChanges().listen((firebaseUser) async {
@@ -55,7 +55,7 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   final firebase_auth.FirebaseAuth auth;
-  final FirebaseFirestore firestore;
+  final CollectionReference<Map<String, dynamic>> userColletionRef;
   final userChangesController = StreamController<User?>.broadcast();
 
   /// Firebase Auth の認証ユーザー
@@ -80,7 +80,7 @@ class FirebaseUserRepository implements UserRepository {
       return null;
     }
 
-    return firestore.collection('user').withConverter<UserDocument?>(
+    return userColletionRef.withConverter<UserDocument?>(
       fromFirestore: (snapshot, _) {
         final json = snapshot.data();
         return json != null ? UserDocument.fromJson(json) : null;

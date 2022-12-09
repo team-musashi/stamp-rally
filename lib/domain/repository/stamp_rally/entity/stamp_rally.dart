@@ -32,7 +32,21 @@ class StampRally with _$StampRally {
     /// 開催終了日
     DateTime? endDate,
 
+    /// 作成日時
+    DateTime? createdAt,
+
+    /// 更新日時
+    DateTime? updatedAt,
+
     /// スタンプラリーのスポットのリスト
     @Default(<Spot>[]) List<Spot> spots,
+
+    /// スタンプラリーの種類（公開中／参加中）
+    required StampRallyType type,
   }) = _StampRally;
+}
+
+enum StampRallyType {
+  public,
+  entry,
 }

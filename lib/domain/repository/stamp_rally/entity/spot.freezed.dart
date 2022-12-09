@@ -31,6 +31,12 @@ mixin _$Spot {
   /// スタンプ取得日
   DateTime? get gotDate => throw _privateConstructorUsedError;
 
+  /// 作成日時
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+
+  /// 更新日時
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $SpotCopyWith<Spot> get copyWith => throw _privateConstructorUsedError;
 }
@@ -45,7 +51,9 @@ abstract class $SpotCopyWith<$Res> {
       int order,
       String imageUrl,
       GeoLocation location,
-      DateTime? gotDate});
+      DateTime? gotDate,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 
   $GeoLocationCopyWith<$Res> get location;
 }
@@ -68,6 +76,8 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
     Object? imageUrl = null,
     Object? location = null,
     Object? gotDate = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -89,6 +99,14 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
       gotDate: freezed == gotDate
           ? _value.gotDate
           : gotDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
@@ -113,7 +131,9 @@ abstract class _$$_SpotCopyWith<$Res> implements $SpotCopyWith<$Res> {
       int order,
       String imageUrl,
       GeoLocation location,
-      DateTime? gotDate});
+      DateTime? gotDate,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 
   @override
   $GeoLocationCopyWith<$Res> get location;
@@ -133,6 +153,8 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
     Object? imageUrl = null,
     Object? location = null,
     Object? gotDate = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$_Spot(
       id: null == id
@@ -155,6 +177,14 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.gotDate
           : gotDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -167,7 +197,9 @@ class _$_Spot implements _Spot {
       required this.order,
       required this.imageUrl,
       required this.location,
-      this.gotDate});
+      this.gotDate,
+      this.createdAt,
+      this.updatedAt});
 
   /// ID
   @override
@@ -189,9 +221,17 @@ class _$_Spot implements _Spot {
   @override
   final DateTime? gotDate;
 
+  /// 作成日時
+  @override
+  final DateTime? createdAt;
+
+  /// 更新日時
+  @override
+  final DateTime? updatedAt;
+
   @override
   String toString() {
-    return 'Spot(id: $id, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate)';
+    return 'Spot(id: $id, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -205,12 +245,16 @@ class _$_Spot implements _Spot {
                 other.imageUrl == imageUrl) &&
             (identical(other.location, location) ||
                 other.location == location) &&
-            (identical(other.gotDate, gotDate) || other.gotDate == gotDate));
+            (identical(other.gotDate, gotDate) || other.gotDate == gotDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, order, imageUrl, location, gotDate);
+  int get hashCode => Object.hash(runtimeType, id, order, imageUrl, location,
+      gotDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -225,7 +269,9 @@ abstract class _Spot implements Spot {
       required final int order,
       required final String imageUrl,
       required final GeoLocation location,
-      final DateTime? gotDate}) = _$_Spot;
+      final DateTime? gotDate,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$_Spot;
 
   @override
 
@@ -247,6 +293,14 @@ abstract class _Spot implements Spot {
 
   /// スタンプ取得日
   DateTime? get gotDate;
+  @override
+
+  /// 作成日時
+  DateTime? get createdAt;
+  @override
+
+  /// 更新日時
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_SpotCopyWith<_$_Spot> get copyWith => throw _privateConstructorUsedError;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../application/stamp_rally/state/stamp_rally_param.dart';
 import '../domain/repository/stamp_rally/entity/stamp_rally.dart';
@@ -14,7 +15,10 @@ import '../presentation/page/home/home_page.dart';
 import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
-import 'page/stamp_rally/stamp_rally_view_page.dart';
+import 'page/stamp_rally/entry_spot_index_page.dart';
+import 'page/stamp_rally/entry_stamp_rally_view_page.dart';
+import 'page/stamp_rally/public_spot_index_page.dart';
+import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
 part 'router.g.dart';
 
@@ -124,9 +128,22 @@ class LoginRoute extends GoRouteData {
         )
       ],
     ),
-    TypedGoRoute<StampRallyViewRoute>(
+    TypedGoRoute<PublicStampRallyViewRoute>(
       path: 'public-stamp-rally/:publicStampRallyId',
-    )
+      routes: [
+        TypedGoRoute<PublicSpotIndexRoute>(
+          path: 'spots',
+        ),
+      ],
+    ),
+    TypedGoRoute<EntryStampRallyViewRoute>(
+      path: 'entry-stamp-rally/:entryStampRallyId',
+      routes: [
+        TypedGoRoute<EntrySpotIndexRoute>(
+          path: 'spots',
+        ),
+      ],
+    ),
   ],
 )
 
@@ -145,26 +162,27 @@ class HomeRoute extends GoRouteData {
   }
 }
 
-/// スタンプラリー詳細画面
-class StampRallyViewRoute extends GoRouteData {
-  StampRallyViewRoute({
+/// 公開スタンプラリー詳細画面
+class PublicStampRallyViewRoute extends GoRouteData {
+  PublicStampRallyViewRoute({
     required this.publicStampRallyId,
-    this.$extra,
+    // 【暫定対応】extraがあると次のネストした画面を開いたときにエラーになる
+    // this.$extra,
   });
 
-  factory StampRallyViewRoute.fromStampRally(
+  factory PublicStampRallyViewRoute.fromStampRally(
     StampRally stampRally,
   ) =>
-      StampRallyViewRoute(
+      PublicStampRallyViewRoute(
         publicStampRallyId: stampRally.id,
-        $extra: stampRally,
+        // $extra: stampRally,
       );
 
   /// 公開中のスタンプラリーID
   final String publicStampRallyId;
 
   /// キャッシュ
-  StampRally? $extra;
+  // StampRally? $extra;
 
   static const name = 'public-stamp-rally-view';
 
@@ -177,11 +195,141 @@ class StampRallyViewRoute extends GoRouteData {
           currentPublicStampRallyParamProvider.overrideWithValue(
             StampRallyParam(
               stampRallyId: publicStampRallyId,
+              // cache: $extra,
+            ),
+          ),
+        ],
+        child: const PublicStampRallyViewPage(),
+      ),
+      name: name,
+    );
+  }
+}
+
+/// 公開スポット一覧画面
+class PublicSpotIndexRoute extends GoRouteData {
+  PublicSpotIndexRoute({
+    required this.publicStampRallyId,
+    this.$extra,
+  });
+
+  factory PublicSpotIndexRoute.fromStampRally(
+    StampRally stampRally,
+  ) =>
+      PublicSpotIndexRoute(
+        publicStampRallyId: stampRally.id,
+        $extra: stampRally,
+      );
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String publicStampRallyId;
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
+  StampRally? $extra;
+
+  static const name = 'public-spot-index';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      child: ProviderScope(
+        overrides: [
+          // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+          currentPublicStampRallyParamProvider.overrideWithValue(
+            StampRallyParam(
+              stampRallyId: publicStampRallyId,
               cache: $extra,
             ),
           ),
         ],
-        child: const StampRallyViewPage(),
+        child: const PublicSpotIndexPage(),
+      ),
+      name: name,
+    );
+  }
+}
+
+/// 参加スタンプラリー詳細画面
+class EntryStampRallyViewRoute extends GoRouteData {
+  EntryStampRallyViewRoute({
+    required this.entryStampRallyId,
+    // 【暫定対応】extraがあると次のネストした画面を開いたときにエラーになる
+    // this.$extra,
+  });
+
+  factory EntryStampRallyViewRoute.fromStampRally(
+    StampRally stampRally,
+  ) =>
+      EntryStampRallyViewRoute(
+        entryStampRallyId: stampRally.id,
+        // $extra: stampRally,
+      );
+
+  /// 参加中のスタンプラリーID
+  final String entryStampRallyId;
+
+  /// キャッシュ
+  // StampRally? $extra;
+
+  static const name = 'entry-stamp-rally-view';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      child: ProviderScope(
+        overrides: [
+          // 現在の参加中のスタンプラリーパラメータを上書きする
+          currentEntryStampRallyParamProvider.overrideWithValue(
+            StampRallyParam(
+              stampRallyId: entryStampRallyId,
+              // cache: $extra,
+            ),
+          ),
+        ],
+        child: const EntryStampRallyViewPage(),
+      ),
+      name: name,
+    );
+  }
+}
+
+/// 参加スポット一覧画面
+class EntrySpotIndexRoute extends GoRouteData {
+  EntrySpotIndexRoute({
+    required this.entryStampRallyId,
+    this.$extra,
+  });
+
+  factory EntrySpotIndexRoute.fromStampRally(
+    StampRally stampRally,
+  ) =>
+      EntrySpotIndexRoute(
+        entryStampRallyId: stampRally.id,
+        $extra: stampRally,
+      );
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String entryStampRallyId;
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
+  StampRally? $extra;
+
+  static const name = 'entry-spot-index';
+
+  @override
+  Page<void> buildPage(BuildContext context) {
+    return TransitionPage.slide(
+      child: ProviderScope(
+        overrides: [
+          // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+          currentEntryStampRallyParamProvider.overrideWithValue(
+            StampRallyParam(
+              stampRallyId: entryStampRallyId,
+              cache: $extra,
+            ),
+          ),
+        ],
+        child: const EntrySpotIndexPage(),
       ),
       name: name,
     );
