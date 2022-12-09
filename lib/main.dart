@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'config/firebase_options_dev.dart' as dev;
-import 'config/firebase_options_prod.dart' as prod;
 import 'domain/entity/app_info.dart';
 import 'domain/repository/command/command_repository.dart';
 import 'domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'domain/repository/user/user_repository.dart';
+import 'firebase_options_dev.dart' as dev;
+import 'firebase_options_prod.dart' as prod;
 import 'infrastructure/firebase/command/command_repository.dart';
 import 'infrastructure/firebase/firebase.dart';
 import 'infrastructure/firebase/stamp_rally/stamp_rally_repository.dart';
