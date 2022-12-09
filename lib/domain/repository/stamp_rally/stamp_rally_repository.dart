@@ -3,15 +3,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'entity/spot.dart';
 import 'entity/stamp_rally.dart';
 
-/// 公開中のスタンプラリーリストを返すプロバイダー
-final publicStampRalliesProvider = StreamProvider.autoDispose(
+/// 公開中のスタンプラリーリストを返すStreamプロバイダー
+final _publicStampRalliesStreamProvider = StreamProvider(
   (ref) => ref.watch(stampRallyRepositoryProvider).publicStampRalliesChanges(),
+);
+
+/// 公開中のスタンプラリーリストを返すプロバイダー
+final publicStampRalliesProvider = FutureProvider(
+  (ref) async => ref.watch(_publicStampRalliesStreamProvider.future),
   name: 'publicStampRalliesProvider',
 );
 
-/// 参加中のスタンプラリーリストを返すプロバイダー
-final entryStampRalliesProvider = StreamProvider.autoDispose(
+/// 参加中のスタンプラリーリストを返すStreamプロバイダー
+final _entryStampRalliesProvider = StreamProvider(
   (ref) => ref.watch(stampRallyRepositoryProvider).entryStampRalliesChanges(),
+);
+
+/// 参加中のスタンプラリーリストを返すプロバイダー
+final entryStampRalliesProvider = FutureProvider(
+  (ref) async => ref.watch(_entryStampRalliesProvider.future),
   name: 'entryStampRalliesProvider',
 );
 
