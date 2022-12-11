@@ -94,9 +94,17 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// 参加中のスタンプラリーリストのクエリ
   ///
   /// ＜検索条件＞
+  /// WHERE status == entry
   /// ORDER BY createdAt DESC
+  /// limit 1
   Query<StampRallyDocument>? get _entryQuery => userDocRef
           ?.collection(entryStampRallyCollectionName)
+          .where(
+            StampRallyDocument.field.status,
+            isEqualTo: StampRallyEntryStatus.entry.name,
+          )
+          .orderBy(StampRallyDocument.field.createdAt, descending: true)
+          .limit(1)
           .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
@@ -105,7 +113,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         toFirestore: (_, __) {
           return <String, dynamic>{};
         },
-      ).orderBy(StampRallyDocument.field.createdAt, descending: true);
+      );
 
   void dispose() {
     _publicSubscription?.cancel();
