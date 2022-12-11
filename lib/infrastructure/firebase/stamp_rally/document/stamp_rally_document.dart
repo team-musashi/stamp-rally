@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../converter.dart';
 
 part 'stamp_rally_document.freezed.dart';

@@ -16,7 +16,6 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 1,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
-      type: StampRallyType.public,
     ),
     StampRally(
       id: 'b',
@@ -26,7 +25,6 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 2,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
-      type: StampRallyType.public,
     ),
     StampRally(
       id: 'c',
@@ -36,7 +34,6 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 3,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
-      type: StampRallyType.public,
     )
   ];
 
@@ -49,6 +46,12 @@ class MockStampRallyRepository implements StampRallyRepository {
   @override
   Stream<List<StampRally>> publicStampRalliesChanges() async* {
     yield publicStampRallies;
+  }
+
+  @override
+  Stream<bool> isEntryChanges() {
+    // TODO(cobo): implement isEntryChanges
+    throw UnimplementedError();
   }
 
   @override
