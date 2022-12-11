@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../../component/async_value_handler.dart';
+import '../../../router.dart';
+import 'stamp_rally.dart';
 
 /// 参加中画面
 class EntryView extends ConsumerWidget {
@@ -17,7 +20,21 @@ class EntryView extends ConsumerWidget {
           return const Text('参加中のスタンプラリーはありません');
         } else {
           final stampRally = stampRallies[0];
-          return Text(stampRally.title); // ToDo Figmaにあわせてデザイン実装
+          // ToDo Figmaにあわせてデザイン実装
+          return Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  EntryStampRallyViewRoute.fromStampRally(stampRally)
+                      .push(context);
+                },
+                child: StampRallyThumbnail(
+                  stampRally: stampRally,
+                ),
+              ),
+              Text(stampRally.title),
+            ],
+          );
         }
       },
     );

@@ -45,7 +45,7 @@ class _Body extends ConsumerWidget {
           // package:riverpod/…/framework/container.dart:1
           // Failed assertion: line 405 pos 11: '_overrideForProvider[override._origin].runtimeType ==
           //               override._override.runtimeType'
-          EntryStampRallyViewRoute.fromStampRally(stampRally).push(context);
+          const HomeRoute().push(context);
         }
       },
     );
