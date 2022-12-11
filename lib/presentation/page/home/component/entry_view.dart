@@ -33,6 +33,12 @@ class EntryView extends ConsumerWidget {
                 ),
               ),
               Text(stampRally.title),
+              ElevatedButton(
+                onPressed: () {
+                  // ToDo 参加完了処理
+                },
+                child: const Text('参加完了'),
+              ),
             ],
           );
         }
