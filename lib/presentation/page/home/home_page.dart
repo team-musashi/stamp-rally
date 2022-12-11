@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../../util/assets/assets.gen.dart';
 import '../../router.dart';
 import 'component/home_tab.dart';
 
 /// ホーム画面
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isEntry = ref.watch(isEntryProvider).value;
+
     return DefaultTabController(
       length: HomeTab.values.length,
+      initialIndex:
+          isEntry == true ? HomeTab.entry.index : HomeTab.public.index,
       child: Scaffold(
         appBar: AppBar(
           title: Column(
