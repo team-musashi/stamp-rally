@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
@@ -26,7 +27,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
       _publicChangesController.add(
         snapshot.docs
-            .map((doc) => doc.data().toPublicStampRally(doc.id))
+            .map((doc) => doc.data().toStampRally(doc.id))
             .where((stampRally) {
           final endDate = stampRally.endDate;
           if (endDate == null) {
@@ -46,9 +47,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       }
 
       _entryChangesController.add(
-        snapshot.docs
-            .map((doc) => doc.data().toEntryStampRally(doc.id))
-            .toList(),
+        snapshot.docs.map((doc) => doc.data().toStampRally(doc.id)).toList(),
       );
     });
   }
@@ -159,20 +158,13 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 }
 
 extension _StampRallyDocumentEx on StampRallyDocument {
-  /// StampRallyDocument => PublicStampRally
-  StampRally toPublicStampRally(String id) => _toStampRally(
+  /// StampRallyDocument => StampRally
+  StampRally toStampRally(String id) => _toStampRally(
         id,
-        type: StampRallyType.public,
-      );
-
-  /// StampRallyDocument => EntryStampRally
-  StampRally toEntryStampRally(String id) => _toStampRally(
-        id,
-        type: StampRallyType.entry,
       );
 
   /// StampRallyDocument => StampRally
-  StampRally _toStampRally(String id, {required StampRallyType type}) {
+  StampRally _toStampRally(String id) {
     return StampRally(
       id: id,
       title: title,
@@ -180,9 +172,9 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       place: place,
       requiredTime: requiredTime,
       imageUrl: imageUrl,
+      status: status,
       startDate: startDate,
       endDate: endDate,
-      type: type,
     );
   }
 }

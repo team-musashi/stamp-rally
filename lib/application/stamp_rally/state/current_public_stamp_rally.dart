@@ -26,7 +26,6 @@ final currentPublicStampRallyProvider = FutureProvider.autoDispose<StampRally>(
     }
 
     // スポットのリストを取得してスタンプラリーにマージする
-    assert(stampRally.type == StampRallyType.public, '公開中のはず');
     final spots =
         await ref.watch(publicSpotsProviderFamily(param.stampRallyId).future);
     return stampRally.copyWith(

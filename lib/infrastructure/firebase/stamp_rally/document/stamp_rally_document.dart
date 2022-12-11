@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../converter.dart';
 
 part 'stamp_rally_document.freezed.dart';
@@ -14,6 +15,7 @@ class StampRallyDocument with _$StampRallyDocument {
     required String place,
     required int requiredTime,
     required String imageUrl,
+    String? status,
     @TimestampConverter() required DateTime startDate,
     @TimestampConverter() DateTime? endDate,
     @TimestampConverter() DateTime? createdAt,
@@ -29,6 +31,7 @@ class StampRallyDocument with _$StampRallyDocument {
 }
 
 class _StampRallyDocumentField {
+  String get status => 'status';
   String get startDate => 'startDate';
   String get createdAt => 'createdAt';
 }

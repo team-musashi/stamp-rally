@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'stamp_rally_param.dart';
 
@@ -26,7 +27,7 @@ final currentEntryStampRallyProvider = FutureProvider.autoDispose<StampRally>(
     }
 
     // スポットのリストを取得してスタンプラリーにマージする
-    assert(stampRally.type == StampRallyType.entry, '参加中のはず');
+    assert(stampRally.status == StampRallyEntryStatus.entry.name, '参加中のはず');
     final spots =
         await ref.watch(entrySpotsProviderFamily(param.stampRallyId).future);
     return stampRally.copyWith(

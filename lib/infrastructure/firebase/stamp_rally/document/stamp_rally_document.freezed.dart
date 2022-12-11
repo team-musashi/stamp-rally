@@ -25,6 +25,7 @@ mixin _$StampRallyDocument {
   String get place => throw _privateConstructorUsedError;
   int get requiredTime => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime get startDate => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -52,6 +53,7 @@ abstract class $StampRallyDocumentCopyWith<$Res> {
       String place,
       int requiredTime,
       String imageUrl,
+      String? status,
       @TimestampConverter() DateTime startDate,
       @TimestampConverter() DateTime? endDate,
       @TimestampConverter() DateTime? createdAt,
@@ -76,6 +78,7 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
     Object? place = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
+    Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
     Object? createdAt = freezed,
@@ -102,6 +105,10 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -136,6 +143,7 @@ abstract class _$$_StampRallyDocumentCopyWith<$Res>
       String place,
       int requiredTime,
       String imageUrl,
+      String? status,
       @TimestampConverter() DateTime startDate,
       @TimestampConverter() DateTime? endDate,
       @TimestampConverter() DateTime? createdAt,
@@ -158,6 +166,7 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
     Object? place = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
+    Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
     Object? createdAt = freezed,
@@ -184,6 +193,10 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -213,6 +226,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
       required this.place,
       required this.requiredTime,
       required this.imageUrl,
+      this.status,
       @TimestampConverter() required this.startDate,
       @TimestampConverter() this.endDate,
       @TimestampConverter() this.createdAt,
@@ -233,6 +247,8 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   @override
   final String imageUrl;
   @override
+  final String? status;
+  @override
   @TimestampConverter()
   final DateTime startDate;
   @override
@@ -247,7 +263,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
 
   @override
   String toString() {
-    return 'StampRallyDocument(title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'StampRallyDocument(title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -263,6 +279,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
                 other.requiredTime == requiredTime) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
@@ -275,7 +292,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, title, explanation, place,
-      requiredTime, imageUrl, startDate, endDate, createdAt, updatedAt);
+      requiredTime, imageUrl, status, startDate, endDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -299,6 +316,7 @@ abstract class _StampRallyDocument extends StampRallyDocument {
       required final String place,
       required final int requiredTime,
       required final String imageUrl,
+      final String? status,
       @TimestampConverter() required final DateTime startDate,
       @TimestampConverter() final DateTime? endDate,
       @TimestampConverter() final DateTime? createdAt,
@@ -318,6 +336,8 @@ abstract class _StampRallyDocument extends StampRallyDocument {
   int get requiredTime;
   @override
   String get imageUrl;
+  @override
+  String? get status;
   @override
   @TimestampConverter()
   DateTime get startDate;
