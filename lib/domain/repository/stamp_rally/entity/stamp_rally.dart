@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'spot.dart';
+import 'stamp_rally_entry_status.dart';
 
 part 'stamp_rally.freezed.dart';
 
@@ -27,7 +28,7 @@ class StampRally with _$StampRally {
     required String imageUrl,
 
     /// 参加ステータス
-    String? status,
+    StampRallyEntryStatus? status,
 
     /// 開催開始日
     required DateTime startDate,
@@ -44,4 +45,5 @@ class StampRally with _$StampRally {
     /// スタンプラリーのスポットのリスト
     @Default(<Spot>[]) List<Spot> spots,
   }) = _StampRally;
+  const StampRally._();
 }

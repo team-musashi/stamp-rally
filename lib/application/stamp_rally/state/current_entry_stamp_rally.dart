@@ -27,7 +27,7 @@ final currentEntryStampRallyProvider = FutureProvider.autoDispose<StampRally>(
     }
 
     // スポットのリストを取得してスタンプラリーにマージする
-    assert(stampRally.status == StampRallyEntryStatus.entry.name, '参加中のはず');
+    assert(stampRally.status == StampRallyEntryStatus.entry, '参加中のはず');
     final spots =
         await ref.watch(entrySpotsProviderFamily(param.stampRallyId).future);
     return stampRally.copyWith(

@@ -35,7 +35,7 @@ mixin _$StampRally {
   String get imageUrl => throw _privateConstructorUsedError;
 
   /// 参加ステータス
-  String? get status => throw _privateConstructorUsedError;
+  StampRallyEntryStatus? get status => throw _privateConstructorUsedError;
 
   /// 開催開始日
   DateTime get startDate => throw _privateConstructorUsedError;
@@ -70,7 +70,7 @@ abstract class $StampRallyCopyWith<$Res> {
       String place,
       int requiredTime,
       String imageUrl,
-      String? status,
+      StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
       DateTime? createdAt,
@@ -132,7 +132,7 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as StampRallyEntryStatus?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -172,7 +172,7 @@ abstract class _$$_StampRallyCopyWith<$Res>
       String place,
       int requiredTime,
       String imageUrl,
-      String? status,
+      StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
       DateTime? createdAt,
@@ -232,7 +232,7 @@ class __$$_StampRallyCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as StampRallyEntryStatus?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -259,7 +259,7 @@ class __$$_StampRallyCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StampRally implements _StampRally {
+class _$_StampRally extends _StampRally {
   const _$_StampRally(
       {required this.id,
       required this.title,
@@ -273,7 +273,8 @@ class _$_StampRally implements _StampRally {
       this.createdAt,
       this.updatedAt,
       final List<Spot> spots = const <Spot>[]})
-      : _spots = spots;
+      : _spots = spots,
+        super._();
 
   /// ID
   @override
@@ -301,7 +302,7 @@ class _$_StampRally implements _StampRally {
 
   /// 参加ステータス
   @override
-  final String? status;
+  final StampRallyEntryStatus? status;
 
   /// 開催開始日
   @override
@@ -383,7 +384,7 @@ class _$_StampRally implements _StampRally {
       __$$_StampRallyCopyWithImpl<_$_StampRally>(this, _$identity);
 }
 
-abstract class _StampRally implements StampRally {
+abstract class _StampRally extends StampRally {
   const factory _StampRally(
       {required final String id,
       required final String title,
@@ -391,12 +392,13 @@ abstract class _StampRally implements StampRally {
       required final String place,
       required final int requiredTime,
       required final String imageUrl,
-      final String? status,
+      final StampRallyEntryStatus? status,
       required final DateTime startDate,
       final DateTime? endDate,
       final DateTime? createdAt,
       final DateTime? updatedAt,
       final List<Spot> spots}) = _$_StampRally;
+  const _StampRally._() : super._();
 
   @override
 
@@ -425,7 +427,7 @@ abstract class _StampRally implements StampRally {
   @override
 
   /// 参加ステータス
-  String? get status;
+  StampRallyEntryStatus? get status;
   @override
 
   /// 開催開始日

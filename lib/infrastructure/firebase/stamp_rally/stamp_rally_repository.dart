@@ -189,12 +189,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
 extension _StampRallyDocumentEx on StampRallyDocument {
   /// StampRallyDocument => StampRally
-  StampRally toStampRally(String id) => _toStampRally(
-        id,
-      );
-
-  /// StampRallyDocument => StampRally
-  StampRally _toStampRally(String id) {
+  StampRally toStampRally(String id) {
     return StampRally(
       id: id,
       title: title,
@@ -202,7 +197,7 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       place: place,
       requiredTime: requiredTime,
       imageUrl: imageUrl,
-      status: status,
+      status: StampRallyEntryStatus.nameOf(status),
       startDate: startDate,
       endDate: endDate,
     );
