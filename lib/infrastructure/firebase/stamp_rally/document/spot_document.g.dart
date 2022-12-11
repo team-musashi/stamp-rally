@@ -10,6 +10,8 @@ part of 'spot_document.dart';
 
 _$_SpotDocument _$$_SpotDocumentFromJson(Map<String, dynamic> json) =>
     _$_SpotDocument(
+      title: json['title'] as String,
+      explanation: json['explanation'] as String,
       order: json['order'] as int,
       imageUrl: json['imageUrl'] as String,
       location: _$JsonConverterFromJson<Object, GeoLocation>(
@@ -24,6 +26,8 @@ _$_SpotDocument _$$_SpotDocumentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_SpotDocumentToJson(_$_SpotDocument instance) =>
     <String, dynamic>{
+      'title': instance.title,
+      'explanation': instance.explanation,
       'order': instance.order,
       'imageUrl': instance.imageUrl,
       'location': _$JsonConverterToJson<Object, GeoLocation>(
