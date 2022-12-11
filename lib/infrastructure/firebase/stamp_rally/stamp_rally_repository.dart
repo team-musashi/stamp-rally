@@ -6,8 +6,11 @@ import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
+import '../../../util/logger.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
+
+const _logPrefix = '[STAMP_RALLY]';
 
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
@@ -62,6 +65,9 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
+
+  /// 参加中であるかどうか
+  bool? _isEntry;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
   static const publicSpotCollectionName = 'publicSpot';
@@ -129,6 +135,22 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   @override
   Stream<List<StampRally>> entryStampRalliesChanges() =>
       _entryChangesController.stream;
+
+  @override
+  Stream<bool> isEntryChanges() => _entryChangesController.stream
+          .map<bool>((stampRallies) => stampRallies.isNotEmpty)
+          .where(
+        (isEntry) {
+          if (_isEntry == isEntry) {
+            // スタンプラリーの参加状況に変更が無ければ通知しない
+            return false;
+          }
+
+          _isEntry = _isEntry;
+          logger.i('$_logPrefix Notified changes isEntry: $_isEntry');
+          return true;
+        },
+      );
 
   @override
   Future<List<Spot>> fetchPublicSpots({

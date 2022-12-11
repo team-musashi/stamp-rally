@@ -25,6 +25,12 @@ final entryStampRalliesProvider = FutureProvider(
   name: 'entryStampRalliesProvider',
 );
 
+/// スタンプラリーに参加中であるかどうかを返すプロバイダー
+final isEntryProvider = StreamProvider(
+  (ref) => ref.watch(stampRallyRepositoryProvider).isEntryChanges(),
+  name: 'isEntryProvider',
+);
+
 /// 公開中のスタンプラリーのスポットリストを返すプロバイダー
 final publicSpotsProviderFamily =
     FutureProvider.autoDispose.family<List<Spot>, String>(
@@ -55,6 +61,9 @@ abstract class StampRallyRepository {
 
   /// 参加中のスタンプラリーリストを返す
   Stream<List<StampRally>> entryStampRalliesChanges();
+
+  /// スタンプラリーに参加中であるかどうかを返す
+  Stream<bool> isEntryChanges();
 
   /// 公開中のスタンプラリーに紐づくスポットリストを返す
   Future<List<Spot>> fetchPublicSpots({required String publicStampRallyId});

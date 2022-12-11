@@ -7,6 +7,7 @@ import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../application/stamp_rally/state/entry_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
 import '../../router.dart';
@@ -70,11 +71,13 @@ class _Body extends ConsumerWidget {
                 child: const Text('スポット一覧'),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  await ref
-                      .read(stampRallyServiceProvider)
-                      .entryStampRally(stampRallyId: stampRally.id);
-                },
+                onPressed: ref.read(isEntryProvider).value == true
+                    ? null
+                    : () async {
+                        await ref
+                            .read(stampRallyServiceProvider)
+                            .entryStampRally(stampRallyId: stampRally.id);
+                      },
                 child: const Text('参加する'),
               ),
             ],
