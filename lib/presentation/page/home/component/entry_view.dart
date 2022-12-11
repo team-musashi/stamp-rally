@@ -17,32 +17,44 @@ class EntryView extends ConsumerWidget {
       value: ref.watch(entryStampRalliesProvider),
       builder: (stampRallies) {
         if (stampRallies.isEmpty) {
-          return const Text('参加中のスタンプラリーはありません');
-        } else {
-          final stampRally = stampRallies[0];
-          // ToDo Figmaにあわせてデザイン実装
-          return Column(
-            children: [
-              InkWell(
-                onTap: () {
-                  EntryStampRallyViewRoute.fromStampRally(stampRally)
-                      .push(context);
-                },
-                child: StampRallyThumbnail(
-                  stampRally: stampRally,
-                ),
-              ),
-              Text(stampRally.title),
-              ElevatedButton(
-                onPressed: () {
-                  // ToDo 参加完了処理
-                },
-                child: const Text('参加完了'),
-              ),
-            ],
-          );
+          return const _EmptyView();
         }
+
+        final stampRally = stampRallies[0];
+        // ToDo Figmaにあわせてデザイン実装
+        return Column(
+          children: [
+            InkWell(
+              onTap: () {
+                EntryStampRallyViewRoute.fromStampRally(stampRally)
+                    .push(context);
+              },
+              child: StampRallyThumbnail(
+                stampRally: stampRally,
+              ),
+            ),
+            Text(stampRally.title),
+            ElevatedButton(
+              onPressed: () {
+                // ToDo 参加完了処理
+              },
+              child: const Text('参加完了'),
+            ),
+          ],
+        );
       },
+    );
+  }
+}
+
+/// 参加中のスタンプラリーがない場合の表示
+class _EmptyView extends StatelessWidget {
+  const _EmptyView();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('参加中のスタンプラリーはありません'),
     );
   }
 }
