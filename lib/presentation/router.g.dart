@@ -51,6 +51,12 @@ GoRoute get $homeRoute => GoRouteData.$route(
             GoRouteData.$route(
               path: 'spots',
               factory: $PublicSpotIndexRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'spot-detail/:index',
+                  factory: $PublicSpotDetailRouteExtension._fromState,
+                ),
+              ],
             ),
           ],
         ),
@@ -123,11 +129,27 @@ extension $PublicSpotIndexRouteExtension on PublicSpotIndexRoute {
   static PublicSpotIndexRoute _fromState(GoRouterState state) =>
       PublicSpotIndexRoute(
         publicStampRallyId: state.params['publicStampRallyId']!,
-        $extra: state.extra as StampRally?,
       );
 
   String get location => GoRouteData.$location(
         '/public-stamp-rally/${Uri.encodeComponent(publicStampRallyId)}/spots',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $PublicSpotDetailRouteExtension on PublicSpotDetailRoute {
+  static PublicSpotDetailRoute _fromState(GoRouterState state) =>
+      PublicSpotDetailRoute(
+        publicStampRallyId: state.params['publicStampRallyId']!,
+        index: int.parse(state.params['index']!),
+        $extra: state.extra as StampRally?,
+      );
+
+  String get location => GoRouteData.$location(
+        '/public-stamp-rally/${Uri.encodeComponent(publicStampRallyId)}/spots/spot-detail/${Uri.encodeComponent(index.toString())}',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

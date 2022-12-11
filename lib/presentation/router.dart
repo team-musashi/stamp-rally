@@ -17,6 +17,7 @@ import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/entry_spot_index_page.dart';
 import 'page/stamp_rally/entry_stamp_rally_view_page.dart';
+import 'page/stamp_rally/public_spot_detail_page.dart';
 import 'page/stamp_rally/public_spot_index_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
@@ -127,6 +128,11 @@ class LoginRoute extends GoRouteData {
       routes: [
         TypedGoRoute<PublicSpotIndexRoute>(
           path: 'spots',
+          routes: [
+            TypedGoRoute<PublicSpotDetailRoute>(
+              path: 'spot-detail/:index',
+            ),
+          ],
         ),
       ],
     ),
@@ -194,7 +200,7 @@ class PublicStampRallyViewRoute extends GoRouteData {
 class PublicSpotIndexRoute extends GoRouteData {
   PublicSpotIndexRoute({
     required this.publicStampRallyId,
-    this.$extra,
+    // this.$extra,
   });
 
   factory PublicSpotIndexRoute.fromStampRally(
@@ -202,14 +208,14 @@ class PublicSpotIndexRoute extends GoRouteData {
   ) =>
       PublicSpotIndexRoute(
         publicStampRallyId: stampRally.id,
-        $extra: stampRally,
+        // $extra: stampRally,
       );
 
   /// スタンプラリー詳細画面に表示中のスタンプラリーID
   final String publicStampRallyId;
 
   /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  StampRally? $extra;
+  // StampRally? $extra;
 
   @override
   Widget build(BuildContext context) {
@@ -219,11 +225,57 @@ class PublicSpotIndexRoute extends GoRouteData {
         currentPublicStampRallyParamProvider.overrideWithValue(
           StampRallyParam(
             stampRallyId: publicStampRallyId,
-            cache: $extra,
+            // cache: $extra,
           ),
         ),
       ],
       child: const PublicSpotIndexPage(),
+    );
+  }
+}
+
+/// 公開中スポット詳細画面
+class PublicSpotDetailRoute extends GoRouteData {
+  PublicSpotDetailRoute({
+    required this.publicStampRallyId,
+    required this.index,
+    this.$extra,
+  });
+
+  factory PublicSpotDetailRoute.fromStampRally(
+    StampRally stampRally,
+    int index,
+  ) =>
+      PublicSpotDetailRoute(
+        publicStampRallyId: stampRally.id,
+        $extra: stampRally,
+        index: index,
+      );
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String publicStampRallyId;
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
+  StampRally? $extra;
+
+  /// 選択したスポットの番号
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+        currentPublicStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: publicStampRallyId,
+            // cache: $extra,
+          ),
+        ),
+      ],
+      child: PublicSpotDetailPage(
+        index: index,
+      ),
     );
   }
 }
