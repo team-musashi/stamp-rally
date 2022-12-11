@@ -46,7 +46,23 @@ GoRoute get $homeRoute => GoRouteData.$route(
         ),
         GoRouteData.$route(
           path: 'public-stamp-rally/:publicStampRallyId',
-          factory: $StampRallyViewRouteExtension._fromState,
+          factory: $PublicStampRallyViewRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'spots',
+              factory: $PublicSpotIndexRouteExtension._fromState,
+            ),
+          ],
+        ),
+        GoRouteData.$route(
+          path: 'entry-stamp-rally/:entryStampRallyId',
+          factory: $EntryStampRallyViewRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'spots',
+              factory: $EntrySpotIndexRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -88,15 +104,61 @@ extension $ComponentGalleryRouteExtension on ComponentGalleryRoute {
   void push(BuildContext context) => context.push(location, extra: this);
 }
 
-extension $StampRallyViewRouteExtension on StampRallyViewRoute {
-  static StampRallyViewRoute _fromState(GoRouterState state) =>
-      StampRallyViewRoute(
+extension $PublicStampRallyViewRouteExtension on PublicStampRallyViewRoute {
+  static PublicStampRallyViewRoute _fromState(GoRouterState state) =>
+      PublicStampRallyViewRoute(
+        publicStampRallyId: state.params['publicStampRallyId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/public-stamp-rally/${Uri.encodeComponent(publicStampRallyId)}',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $PublicSpotIndexRouteExtension on PublicSpotIndexRoute {
+  static PublicSpotIndexRoute _fromState(GoRouterState state) =>
+      PublicSpotIndexRoute(
         publicStampRallyId: state.params['publicStampRallyId']!,
         $extra: state.extra as StampRally?,
       );
 
   String get location => GoRouteData.$location(
-        '/public-stamp-rally/${Uri.encodeComponent(publicStampRallyId)}',
+        '/public-stamp-rally/${Uri.encodeComponent(publicStampRallyId)}/spots',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $EntryStampRallyViewRouteExtension on EntryStampRallyViewRoute {
+  static EntryStampRallyViewRoute _fromState(GoRouterState state) =>
+      EntryStampRallyViewRoute(
+        entryStampRallyId: state.params['entryStampRallyId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/entry-stamp-rally/${Uri.encodeComponent(entryStampRallyId)}',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $EntrySpotIndexRouteExtension on EntrySpotIndexRoute {
+  static EntrySpotIndexRoute _fromState(GoRouterState state) =>
+      EntrySpotIndexRoute(
+        entryStampRallyId: state.params['entryStampRallyId']!,
+        $extra: state.extra as StampRally?,
+      );
+
+  String get location => GoRouteData.$location(
+        '/entry-stamp-rally/${Uri.encodeComponent(entryStampRallyId)}/spots',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

@@ -40,8 +40,17 @@ mixin _$StampRally {
   /// 開催終了日
   DateTime? get endDate => throw _privateConstructorUsedError;
 
+  /// 作成日時
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+
+  /// 更新日時
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+
   /// スタンプラリーのスポットのリスト
   List<Spot> get spots => throw _privateConstructorUsedError;
+
+  /// スタンプラリーの種類（公開中／参加中）
+  StampRallyType get type => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StampRallyCopyWith<StampRally> get copyWith =>
@@ -63,7 +72,10 @@ abstract class $StampRallyCopyWith<$Res> {
       String imageUrl,
       DateTime startDate,
       DateTime? endDate,
-      List<Spot> spots});
+      DateTime? createdAt,
+      DateTime? updatedAt,
+      List<Spot> spots,
+      StampRallyType type});
 }
 
 /// @nodoc
@@ -87,7 +99,10 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
     Object? imageUrl = null,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? spots = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -122,10 +137,22 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       spots: null == spots
           ? _value.spots
           : spots // ignore: cast_nullable_to_non_nullable
               as List<Spot>,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as StampRallyType,
     ) as $Val);
   }
 }
@@ -147,7 +174,10 @@ abstract class _$$_StampRallyCopyWith<$Res>
       String imageUrl,
       DateTime startDate,
       DateTime? endDate,
-      List<Spot> spots});
+      DateTime? createdAt,
+      DateTime? updatedAt,
+      List<Spot> spots,
+      StampRallyType type});
 }
 
 /// @nodoc
@@ -169,7 +199,10 @@ class __$$_StampRallyCopyWithImpl<$Res>
     Object? imageUrl = null,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? spots = null,
+    Object? type = null,
   }) {
     return _then(_$_StampRally(
       id: null == id
@@ -204,10 +237,22 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       spots: null == spots
           ? _value._spots
           : spots // ignore: cast_nullable_to_non_nullable
               as List<Spot>,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as StampRallyType,
     ));
   }
 }
@@ -224,7 +269,10 @@ class _$_StampRally implements _StampRally {
       required this.imageUrl,
       required this.startDate,
       this.endDate,
-      final List<Spot> spots = const <Spot>[]})
+      this.createdAt,
+      this.updatedAt,
+      final List<Spot> spots = const <Spot>[],
+      required this.type})
       : _spots = spots;
 
   /// ID
@@ -259,6 +307,14 @@ class _$_StampRally implements _StampRally {
   @override
   final DateTime? endDate;
 
+  /// 作成日時
+  @override
+  final DateTime? createdAt;
+
+  /// 更新日時
+  @override
+  final DateTime? updatedAt;
+
   /// スタンプラリーのスポットのリスト
   final List<Spot> _spots;
 
@@ -270,9 +326,13 @@ class _$_StampRally implements _StampRally {
     return EqualUnmodifiableListView(_spots);
   }
 
+  /// スタンプラリーの種類（公開中／参加中）
+  @override
+  final StampRallyType type;
+
   @override
   String toString() {
-    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate, spots: $spots)';
+    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots, type: $type)';
   }
 
   @override
@@ -292,7 +352,12 @@ class _$_StampRally implements _StampRally {
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
-            const DeepCollectionEquality().equals(other._spots, _spots));
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            const DeepCollectionEquality().equals(other._spots, _spots) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
@@ -306,7 +371,10 @@ class _$_StampRally implements _StampRally {
       imageUrl,
       startDate,
       endDate,
-      const DeepCollectionEquality().hash(_spots));
+      createdAt,
+      updatedAt,
+      const DeepCollectionEquality().hash(_spots),
+      type);
 
   @JsonKey(ignore: true)
   @override
@@ -325,7 +393,10 @@ abstract class _StampRally implements StampRally {
       required final String imageUrl,
       required final DateTime startDate,
       final DateTime? endDate,
-      final List<Spot> spots}) = _$_StampRally;
+      final DateTime? createdAt,
+      final DateTime? updatedAt,
+      final List<Spot> spots,
+      required final StampRallyType type}) = _$_StampRally;
 
   @override
 
@@ -361,8 +432,20 @@ abstract class _StampRally implements StampRally {
   DateTime? get endDate;
   @override
 
+  /// 作成日時
+  DateTime? get createdAt;
+  @override
+
+  /// 更新日時
+  DateTime? get updatedAt;
+  @override
+
   /// スタンプラリーのスポットのリスト
   List<Spot> get spots;
+  @override
+
+  /// スタンプラリーの種類（公開中／参加中）
+  StampRallyType get type;
   @override
   @JsonKey(ignore: true)
   _$$_StampRallyCopyWith<_$_StampRally> get copyWith =>

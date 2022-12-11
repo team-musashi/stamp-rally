@@ -20,6 +20,10 @@ _$_StampRallyDocument _$$_StampRallyDocumentFromJson(
           const TimestampConverter().fromJson(json['startDate'] as Object),
       endDate: _$JsonConverterFromJson<Object, DateTime>(
           json['endDate'], const TimestampConverter().fromJson),
+      createdAt: _$JsonConverterFromJson<Object, DateTime>(
+          json['createdAt'], const TimestampConverter().fromJson),
+      updatedAt: _$JsonConverterFromJson<Object, DateTime>(
+          json['updatedAt'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_StampRallyDocumentToJson(
@@ -33,6 +37,10 @@ Map<String, dynamic> _$$_StampRallyDocumentToJson(
       'startDate': const TimestampConverter().toJson(instance.startDate),
       'endDate': _$JsonConverterToJson<Object, DateTime>(
           instance.endDate, const TimestampConverter().toJson),
+      'createdAt': _$JsonConverterToJson<Object, DateTime>(
+          instance.createdAt, const TimestampConverter().toJson),
+      'updatedAt': _$JsonConverterToJson<Object, DateTime>(
+          instance.updatedAt, const TimestampConverter().toJson),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(
