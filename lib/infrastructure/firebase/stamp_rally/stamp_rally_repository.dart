@@ -146,7 +146,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
             return false;
           }
 
-          _isEntry = _isEntry;
+          _isEntry = isEntry;
           logger.i('$_logPrefix Notified changes isEntry: $_isEntry');
           return true;
         },

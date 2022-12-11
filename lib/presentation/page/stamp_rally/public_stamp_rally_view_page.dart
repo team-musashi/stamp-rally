@@ -50,6 +50,8 @@ class _Body extends ConsumerWidget {
       },
     );
 
+    final isEntry = ref.watch(isEntryProvider).value;
+
     return AsyncValueHandler(
       value: ref.watch(currentPublicStampRallyProvider),
       builder: (stampRally) {
@@ -71,7 +73,7 @@ class _Body extends ConsumerWidget {
                 child: const Text('スポット一覧'),
               ),
               ElevatedButton(
-                onPressed: ref.read(isEntryProvider).value == true
+                onPressed: isEntry == true
                     ? null
                     : () async {
                         await ref
