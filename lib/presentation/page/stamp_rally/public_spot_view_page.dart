@@ -6,8 +6,8 @@ import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
 
 /// スポット詳細画面
-class PublicSpotDetailPage extends StatelessWidget {
-  const PublicSpotDetailPage({super.key});
+class PublicSpotViewPage extends StatelessWidget {
+  const PublicSpotViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {

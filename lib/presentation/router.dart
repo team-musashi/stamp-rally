@@ -20,8 +20,8 @@ import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/entry_spot_index_page.dart';
 import 'page/stamp_rally/entry_stamp_rally_view_page.dart';
-import 'page/stamp_rally/public_spot_detail_page.dart';
 import 'page/stamp_rally/public_spot_index_page.dart';
+import 'page/stamp_rally/public_spot_view_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
 part 'router.g.dart';
@@ -132,8 +132,8 @@ class LoginRoute extends GoRouteData {
         TypedGoRoute<PublicSpotIndexRoute>(
           path: 'spots',
           routes: [
-            TypedGoRoute<PublicSpotDetailRoute>(
-              path: 'spot-detail/:publicSpotId',
+            TypedGoRoute<PublicSpotViewRoute>(
+              path: ':publicSpotId',
             ),
           ],
         ),
@@ -238,18 +238,18 @@ class PublicSpotIndexRoute extends GoRouteData {
 }
 
 /// 公開中スポット詳細画面
-class PublicSpotDetailRoute extends GoRouteData {
-  PublicSpotDetailRoute({
+class PublicSpotViewRoute extends GoRouteData {
+  PublicSpotViewRoute({
     required this.publicStampRallyId,
     required this.publicSpotId,
     this.$extra,
   });
 
-  factory PublicSpotDetailRoute.fromSpot(
+  factory PublicSpotViewRoute.fromSpot(
     StampRally stampRally,
     Spot spot,
   ) =>
-      PublicSpotDetailRoute(
+      PublicSpotViewRoute(
         publicStampRallyId: stampRally.id,
         publicSpotId: spot.id,
         $extra: spot,
@@ -274,6 +274,7 @@ class PublicSpotDetailRoute extends GoRouteData {
             stampRallyId: publicStampRallyId,
           ),
         ),
+        // 現在のスポットパラメータをスポット詳細画面のスポット情報で上書き
         currentPublicSpotParamProvider.overrideWithValue(
           SpotParam(
             spotId: publicSpotId,
@@ -281,7 +282,7 @@ class PublicSpotDetailRoute extends GoRouteData {
           ),
         ),
       ],
-      child: const PublicSpotDetailPage(),
+      child: const PublicSpotViewPage(),
     );
   }
 }
