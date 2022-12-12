@@ -36,6 +36,9 @@ class StampRally with _$StampRally {
     /// 開催終了日
     DateTime? endDate,
 
+    /// 参加可能かどうか
+    @Default(true) bool canEntry,
+
     /// 作成日時
     DateTime? createdAt,
 

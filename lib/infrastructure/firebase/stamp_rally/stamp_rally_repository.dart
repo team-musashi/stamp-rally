@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import '../../../util/logger.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
-
-const _logPrefix = '[STAMP_RALLY]';
 
 /// Firebase スタンプラリーリポジトリ
 class FirebaseStampRallyRepository implements StampRallyRepository {
@@ -28,19 +27,16 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         return;
       }
 
-      _publicChangesController.add(
-        snapshot.docs
-            .map((doc) => doc.data().toStampRally(doc.id))
-            .where((stampRally) {
-          final endDate = stampRally.endDate;
-          if (endDate == null) {
-            // 終了日時が無い場合は常に開催中のため表示する
-            return true;
-          }
-          // 終了日時を超えていたら表示しない
-          return endDate.isAfter(DateTime.now());
-        }).toList(),
-      );
+      final latest = snapshot.toStampRallies();
+      if (listEquals(latest, _cachePublicStampRallies)) {
+        // キャッシュとまったく同じなら変更を通知しない
+        return;
+      }
+
+      _publicChangesController.add(latest);
+
+      // キャッシュを更新する
+      _cachePublicStampRallies = latest;
     });
 
     // 参加中のスタンプラリーリストの変更を監視する
@@ -49,9 +45,17 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         return;
       }
 
-      _entryChangesController.add(
-        snapshot.docs.map((doc) => doc.data().toStampRally(doc.id)).toList(),
-      );
+      final doc = snapshot.docs.firstOrNull;
+      final latest = doc?.data().toStampRally(doc.id);
+      if (latest == _cacheEntryStampRally) {
+        // キャッシュとまったく同じなら変更を通知しない
+        return;
+      }
+
+      _entryChangesController.add(latest);
+
+      // キャッシュを更新する
+      _cacheEntryStampRally = latest;
     });
   }
 
@@ -59,15 +63,15 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   final DocumentReference<Map<String, dynamic>>? userDocRef;
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
-  final _entryChangesController =
-      StreamController<List<StampRally>>.broadcast();
+  final _entryChangesController = StreamController<StampRally?>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
 
-  /// 参加中であるかどうか
-  bool? _isEntry;
+  /// キャッシュ
+  List<StampRally>? _cachePublicStampRallies;
+  StampRally? _cacheEntryStampRally;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
   static const publicSpotCollectionName = 'publicSpot';
@@ -129,28 +133,39 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   @override
+  Future<List<StampRally>> fetchPublicStampRallies() async {
+    // キャッシュがあればキャッシュを返す
+    final cache = _cachePublicStampRallies;
+    if (cache != null) {
+      return cache;
+    }
+
+    // キャッシュがなければ取得してくる
+    final snapshot = await _publicQuery?.get();
+    return snapshot?.toStampRallies() ?? [];
+  }
+
+  @override
   Stream<List<StampRally>> publicStampRalliesChanges() =>
       _publicChangesController.stream;
 
   @override
-  Stream<List<StampRally>> entryStampRalliesChanges() =>
-      _entryChangesController.stream;
+  Future<StampRally?> fetchEntryStampRally() async {
+    // キャッシュがあればキャッシュを返す
+    final cache = _cacheEntryStampRally;
+    if (cache != null) {
+      return cache;
+    }
+
+    // キャッシュがなければ取得してくる
+    final snapshot = await _entryQuery?.get();
+    final doc = snapshot?.docs.firstOrNull;
+    return doc?.data().toStampRally(doc.id);
+  }
 
   @override
-  Stream<bool> isEntryChanges() => _entryChangesController.stream
-          .map<bool>((stampRallies) => stampRallies.isNotEmpty)
-          .where(
-        (isEntry) {
-          if (_isEntry == isEntry) {
-            // スタンプラリーの参加状況に変更が無ければ通知しない
-            return false;
-          }
-
-          _isEntry = isEntry;
-          logger.i('$_logPrefix Notified changes isEntry: $_isEntry');
-          return true;
-        },
-      );
+  Stream<StampRally?> entryStampRallyChanges() =>
+      _entryChangesController.stream;
 
   @override
   Future<List<Spot>> fetchPublicSpots({
@@ -185,6 +200,20 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         }).toList() ??
         [];
   }
+}
+
+extension _QuerySnapshotEx on QuerySnapshot<StampRallyDocument> {
+  /// QuerySnapshot => List<StampRally>
+  List<StampRally> toStampRallies() =>
+      docs.map((doc) => doc.data().toStampRally(doc.id)).where((stampRally) {
+        final endDate = stampRally.endDate;
+        if (endDate == null) {
+          // 終了日時が無い場合は常に開催中のため表示する
+          return true;
+        }
+        // 終了日時を超えていたら表示しない
+        return endDate.isAfter(DateTime.now());
+      }).toList();
 }
 
 extension _StampRallyDocumentEx on StampRallyDocument {

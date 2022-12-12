@@ -15,17 +15,24 @@ class AsyncValueHandler<T extends Object> extends StatelessWidget {
     required this.builder,
     this.loading,
     this.error,
+    this.orNull,
   });
 
   final AsyncValue<T?> value;
   final Widget Function(T) builder;
   final Widget Function()? loading;
   final Widget Function(Object, StackTrace?)? error;
+  final Widget Function()? orNull;
 
   @override
   Widget build(BuildContext context) {
     return value.when(
-      data: (data) => data == null ? const SizedBox() : builder(data),
+      data: (data) {
+        if (data == null) {
+          return orNull?.call() ?? const SizedBox();
+        }
+        return builder(data);
+      },
       error: (e, s) {
         logger.e('An error has occurred.', e, s);
         return error?.call(e, s) ?? const SizedBox();

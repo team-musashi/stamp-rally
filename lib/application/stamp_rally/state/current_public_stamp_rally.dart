@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
+import 'exists_entry_stamp_rally.dart';
 import 'stamp_rally_param.dart';
 
 /// 現在の公開中のスタンプラリーパラメータ
@@ -28,9 +29,19 @@ final currentPublicStampRallyProvider = FutureProvider.autoDispose<StampRally>(
     // スポットのリストを取得してスタンプラリーにマージする
     final spots =
         await ref.watch(publicSpotsProviderFamily(param.stampRallyId).future);
-    return stampRally.copyWith(
+    stampRally = stampRally.copyWith(
       spots: spots,
     );
+
+    // 参加中なら参加不可にする
+    final existsEntry = await ref.watch(existsEntryStampRallyProvider.future);
+    if (existsEntry) {
+      stampRally = stampRally.copyWith(
+        canEntry: false,
+      );
+    }
+
+    return stampRally;
   },
   // router で currentPublicStampRallyParamProvider を override しているため
   // dependencies で指定してあげないとエラーになる

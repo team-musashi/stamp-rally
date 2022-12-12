@@ -38,20 +38,8 @@ class MockStampRallyRepository implements StampRallyRepository {
   ];
 
   @override
-  Stream<List<StampRally>> entryStampRalliesChanges() {
-    // TODO(cobo): 参加中スタンプラリーの処理ができたらテストコードも一緒に書くこと,
-    throw UnimplementedError();
-  }
-
-  @override
   Stream<List<StampRally>> publicStampRalliesChanges() async* {
     yield publicStampRallies;
-  }
-
-  @override
-  Stream<bool> isEntryChanges() {
-    // TODO(cobo): implement isEntryChanges
-    throw UnimplementedError();
   }
 
   @override
@@ -63,6 +51,24 @@ class MockStampRallyRepository implements StampRallyRepository {
   @override
   Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId}) {
     // TODO(cobo): implement fetchSpots
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<StampRally?> entryStampRallyChanges() {
+    // TODO(some): implement entryStampRallyChanges
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<StampRally?> fetchEntryStampRally() {
+    // TODO(some): implement fetchEntryStampRally
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<StampRally>> fetchPublicStampRallies() {
+    // TODO(some): implement fetchPublicStampRallies
     throw UnimplementedError();
   }
 }

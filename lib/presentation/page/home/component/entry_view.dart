@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
-import '../../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
+import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
@@ -13,27 +12,22 @@ class EntryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AsyncValueHandler<List<StampRally>>(
-      value: ref.watch(entryStampRalliesProvider),
-      builder: (stampRallies) {
-        if (stampRallies.isEmpty) {
-          return const _EmptyView();
-        }
-
-        final stampRally = stampRallies[0];
-        // ToDo Figmaにあわせてデザイン実装
+    return AsyncValueHandler(
+      value: ref.watch(currentEntryStampRallyProvider),
+      builder: (stampRally) {
+        // Todo Figmaにあわせてデザイン実装
         return Column(
           children: [
             InkWell(
               onTap: () {
-                EntryStampRallyViewRoute.fromStampRally(stampRally)
-                    .push(context);
+                EntrySpotIndexRoute.fromStampRally(stampRally).push(context);
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,
               ),
             ),
             Text(stampRally.title),
+            Text('チェックポイント数：${stampRally.spots.length}'),
             ElevatedButton(
               onPressed: () {
                 // ToDo 参加完了処理
@@ -43,6 +37,7 @@ class EntryView extends ConsumerWidget {
           ],
         );
       },
+      orNull: () => const _EmptyView(),
     );
   }
 }

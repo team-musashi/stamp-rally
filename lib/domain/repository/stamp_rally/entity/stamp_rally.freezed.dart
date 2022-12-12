@@ -43,6 +43,9 @@ mixin _$StampRally {
   /// 開催終了日
   DateTime? get endDate => throw _privateConstructorUsedError;
 
+  /// 参加可能かどうか
+  bool get canEntry => throw _privateConstructorUsedError;
+
   /// 作成日時
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -73,6 +76,7 @@ abstract class $StampRallyCopyWith<$Res> {
       StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
+      bool canEntry,
       DateTime? createdAt,
       DateTime? updatedAt,
       List<Spot> spots});
@@ -100,6 +104,7 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
     Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? canEntry = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? spots = null,
@@ -141,6 +146,10 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      canEntry: null == canEntry
+          ? _value.canEntry
+          : canEntry // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -175,6 +184,7 @@ abstract class _$$_StampRallyCopyWith<$Res>
       StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
+      bool canEntry,
       DateTime? createdAt,
       DateTime? updatedAt,
       List<Spot> spots});
@@ -200,6 +210,7 @@ class __$$_StampRallyCopyWithImpl<$Res>
     Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? canEntry = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? spots = null,
@@ -241,6 +252,10 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      canEntry: null == canEntry
+          ? _value.canEntry
+          : canEntry // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -270,6 +285,7 @@ class _$_StampRally extends _StampRally {
       this.status,
       required this.startDate,
       this.endDate,
+      this.canEntry = true,
       this.createdAt,
       this.updatedAt,
       final List<Spot> spots = const <Spot>[]})
@@ -312,6 +328,11 @@ class _$_StampRally extends _StampRally {
   @override
   final DateTime? endDate;
 
+  /// 参加可能かどうか
+  @override
+  @JsonKey()
+  final bool canEntry;
+
   /// 作成日時
   @override
   final DateTime? createdAt;
@@ -333,7 +354,7 @@ class _$_StampRally extends _StampRally {
 
   @override
   String toString() {
-    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
+    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, canEntry: $canEntry, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
   }
 
   @override
@@ -354,6 +375,8 @@ class _$_StampRally extends _StampRally {
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.canEntry, canEntry) ||
+                other.canEntry == canEntry) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -373,6 +396,7 @@ class _$_StampRally extends _StampRally {
       status,
       startDate,
       endDate,
+      canEntry,
       createdAt,
       updatedAt,
       const DeepCollectionEquality().hash(_spots));
@@ -395,6 +419,7 @@ abstract class _StampRally extends StampRally {
       final StampRallyEntryStatus? status,
       required final DateTime startDate,
       final DateTime? endDate,
+      final bool canEntry,
       final DateTime? createdAt,
       final DateTime? updatedAt,
       final List<Spot> spots}) = _$_StampRally;
@@ -436,6 +461,10 @@ abstract class _StampRally extends StampRally {
 
   /// 開催終了日
   DateTime? get endDate;
+  @override
+
+  /// 参加可能かどうか
+  bool get canEntry;
   @override
 
   /// 作成日時
