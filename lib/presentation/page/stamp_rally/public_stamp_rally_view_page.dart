@@ -37,14 +37,7 @@ class _Body extends ConsumerWidget {
       completeMessage: 'スタンプラリーに参加しました。',
       complete: (stampRally) {
         if (stampRally != null) {
-          // TODO(some): go()にすると以下のRiverpodのエラーが出るので暫定的にpush()にしておく
-          // Replaced the override of type Null with an override of type ValueProvider<StampRallyParam>, which is different.
-          // Changing the kind of override or reordering overrides is not supported.
-          // 'package:riverpod/src/framework/container.dart':
-          // package:riverpod/…/framework/container.dart:1
-          // Failed assertion: line 405 pos 11: '_overrideForProvider[override._origin].runtimeType ==
-          //               override._override.runtimeType'
-          EntryStampRallyViewRoute.fromStampRally(stampRally).push(context);
+          const HomeRoute().go(context);
         }
       },
     );
@@ -70,11 +63,13 @@ class _Body extends ConsumerWidget {
                 child: const Text('スポット一覧'),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  await ref
-                      .read(stampRallyServiceProvider)
-                      .entryStampRally(stampRallyId: stampRally.id);
-                },
+                onPressed: stampRally.canEntry
+                    ? () async {
+                        await ref
+                            .read(stampRallyServiceProvider)
+                            .entryStampRally(stampRallyId: stampRally.id);
+                      }
+                    : null,
                 child: const Text('参加する'),
               ),
             ],

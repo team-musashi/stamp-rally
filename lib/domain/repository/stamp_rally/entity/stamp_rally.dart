@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'spot.dart';
+import 'stamp_rally_entry_status.dart';
 
 part 'stamp_rally.freezed.dart';
 
@@ -26,11 +27,17 @@ class StampRally with _$StampRally {
     /// 画像URL
     required String imageUrl,
 
+    /// 参加ステータス
+    StampRallyEntryStatus? status,
+
     /// 開催開始日
     required DateTime startDate,
 
     /// 開催終了日
     DateTime? endDate,
+
+    /// 参加可能かどうか
+    @Default(true) bool canEntry,
 
     /// 作成日時
     DateTime? createdAt,
@@ -40,13 +47,6 @@ class StampRally with _$StampRally {
 
     /// スタンプラリーのスポットのリスト
     @Default(<Spot>[]) List<Spot> spots,
-
-    /// スタンプラリーの種類（公開中／参加中）
-    required StampRallyType type,
   }) = _StampRally;
-}
-
-enum StampRallyType {
-  public,
-  entry,
+  const StampRally._();
 }

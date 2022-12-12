@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/repository/command/command_repository.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
+import '../../util/logger.dart';
 import 'state/entry_stamp_rally_result.dart';
 
 /// スタンプラリーサービスプロバイダー
@@ -27,9 +28,10 @@ class StampRallyService {
           );
 
       // 参加スタンプラリーに追加されるのを待つ
-      // TODO(sume): refresh()だと全件取得して非効率なので要改善
-      final stampRallies = await ref.refresh(entryStampRalliesProvider.future);
-      return stampRallies.first;
+      final entryStampRally =
+          await ref.refresh(entryStampRallyStreamProvider.future);
+      logger.i('Added entryStampRally: id = ${entryStampRally?.id}');
+      return entryStampRally;
     });
   }
 }

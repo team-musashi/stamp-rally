@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
@@ -24,19 +27,16 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         return;
       }
 
-      _publicChangesController.add(
-        snapshot.docs
-            .map((doc) => doc.data().toPublicStampRally(doc.id))
-            .where((stampRally) {
-          final endDate = stampRally.endDate;
-          if (endDate == null) {
-            // 終了日時が無い場合は常に開催中のため表示する
-            return true;
-          }
-          // 終了日時を超えていたら表示しない
-          return endDate.isAfter(DateTime.now());
-        }).toList(),
-      );
+      final latest = snapshot.toStampRallies();
+      if (listEquals(latest, _cachePublicStampRallies)) {
+        // キャッシュとまったく同じなら変更を通知しない
+        return;
+      }
+
+      _publicChangesController.add(latest);
+
+      // キャッシュを更新する
+      _cachePublicStampRallies = latest;
     });
 
     // 参加中のスタンプラリーリストの変更を監視する
@@ -45,11 +45,17 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         return;
       }
 
-      _entryChangesController.add(
-        snapshot.docs
-            .map((doc) => doc.data().toEntryStampRally(doc.id))
-            .toList(),
-      );
+      final doc = snapshot.docs.firstOrNull;
+      final latest = doc?.data().toStampRally(doc.id);
+      if (latest == _cacheEntryStampRally) {
+        // キャッシュとまったく同じなら変更を通知しない
+        return;
+      }
+
+      _entryChangesController.add(latest);
+
+      // キャッシュを更新する
+      _cacheEntryStampRally = latest;
     });
   }
 
@@ -57,12 +63,15 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   final DocumentReference<Map<String, dynamic>>? userDocRef;
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
-  final _entryChangesController =
-      StreamController<List<StampRally>>.broadcast();
+  final _entryChangesController = StreamController<StampRally?>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
+
+  /// キャッシュ
+  List<StampRally>? _cachePublicStampRallies;
+  StampRally? _cacheEntryStampRally;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
   static const publicSpotCollectionName = 'publicSpot';
@@ -95,9 +104,17 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// 参加中のスタンプラリーリストのクエリ
   ///
   /// ＜検索条件＞
+  /// WHERE status == entry
   /// ORDER BY createdAt DESC
+  /// limit 1
   Query<StampRallyDocument>? get _entryQuery => userDocRef
           ?.collection(entryStampRallyCollectionName)
+          .where(
+            StampRallyDocument.field.status,
+            isEqualTo: StampRallyEntryStatus.entry.name,
+          )
+          .orderBy(StampRallyDocument.field.createdAt, descending: true)
+          .limit(1)
           .withConverter<StampRallyDocument>(
         fromFirestore: (snapshot, options) {
           final json = snapshot.data();
@@ -106,7 +123,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         toFirestore: (_, __) {
           return <String, dynamic>{};
         },
-      ).orderBy(StampRallyDocument.field.createdAt, descending: true);
+      );
 
   void dispose() {
     _publicSubscription?.cancel();
@@ -116,11 +133,38 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   @override
+  Future<List<StampRally>> fetchPublicStampRallies() async {
+    // キャッシュがあればキャッシュを返す
+    final cache = _cachePublicStampRallies;
+    if (cache != null) {
+      return cache;
+    }
+
+    // キャッシュがなければ取得してくる
+    final snapshot = await _publicQuery?.get();
+    return snapshot?.toStampRallies() ?? [];
+  }
+
+  @override
   Stream<List<StampRally>> publicStampRalliesChanges() =>
       _publicChangesController.stream;
 
   @override
-  Stream<List<StampRally>> entryStampRalliesChanges() =>
+  Future<StampRally?> fetchEntryStampRally() async {
+    // キャッシュがあればキャッシュを返す
+    final cache = _cacheEntryStampRally;
+    if (cache != null) {
+      return cache;
+    }
+
+    // キャッシュがなければ取得してくる
+    final snapshot = await _entryQuery?.get();
+    final doc = snapshot?.docs.firstOrNull;
+    return doc?.data().toStampRally(doc.id);
+  }
+
+  @override
+  Stream<StampRally?> entryStampRallyChanges() =>
       _entryChangesController.stream;
 
   @override
@@ -158,21 +202,23 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 }
 
+extension _QuerySnapshotEx on QuerySnapshot<StampRallyDocument> {
+  /// QuerySnapshot => List<StampRally>
+  List<StampRally> toStampRallies() =>
+      docs.map((doc) => doc.data().toStampRally(doc.id)).where((stampRally) {
+        final endDate = stampRally.endDate;
+        if (endDate == null) {
+          // 終了日時が無い場合は常に開催中のため表示する
+          return true;
+        }
+        // 終了日時を超えていたら表示しない
+        return endDate.isAfter(DateTime.now());
+      }).toList();
+}
+
 extension _StampRallyDocumentEx on StampRallyDocument {
-  /// StampRallyDocument => PublicStampRally
-  StampRally toPublicStampRally(String id) => _toStampRally(
-        id,
-        type: StampRallyType.public,
-      );
-
-  /// StampRallyDocument => EntryStampRally
-  StampRally toEntryStampRally(String id) => _toStampRally(
-        id,
-        type: StampRallyType.entry,
-      );
-
   /// StampRallyDocument => StampRally
-  StampRally _toStampRally(String id, {required StampRallyType type}) {
+  StampRally toStampRally(String id) {
     return StampRally(
       id: id,
       title: title,
@@ -180,9 +226,9 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       place: place,
       requiredTime: requiredTime,
       imageUrl: imageUrl,
+      status: StampRallyEntryStatus.nameOf(status),
       startDate: startDate,
       endDate: endDate,
-      type: type,
     );
   }
 }

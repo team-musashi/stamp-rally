@@ -16,7 +16,6 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 1,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
-      type: StampRallyType.public,
     ),
     StampRally(
       id: 'b',
@@ -26,7 +25,6 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 2,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
-      type: StampRallyType.public,
     ),
     StampRally(
       id: 'c',
@@ -36,15 +34,8 @@ class MockStampRallyRepository implements StampRallyRepository {
       requiredTime: 3,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
-      type: StampRallyType.public,
     )
   ];
-
-  @override
-  Stream<List<StampRally>> entryStampRalliesChanges() {
-    // TODO(cobo): 参加中スタンプラリーの処理ができたらテストコードも一緒に書くこと,
-    throw UnimplementedError();
-  }
 
   @override
   Stream<List<StampRally>> publicStampRalliesChanges() async* {
@@ -60,6 +51,24 @@ class MockStampRallyRepository implements StampRallyRepository {
   @override
   Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId}) {
     // TODO(cobo): implement fetchSpots
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<StampRally?> entryStampRallyChanges() {
+    // TODO(some): implement entryStampRallyChanges
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<StampRally?> fetchEntryStampRally() {
+    // TODO(some): implement fetchEntryStampRally
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<StampRally>> fetchPublicStampRallies() {
+    // TODO(some): implement fetchPublicStampRallies
     throw UnimplementedError();
   }
 }

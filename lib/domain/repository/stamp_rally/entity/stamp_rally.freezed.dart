@@ -34,11 +34,17 @@ mixin _$StampRally {
   /// 画像URL
   String get imageUrl => throw _privateConstructorUsedError;
 
+  /// 参加ステータス
+  StampRallyEntryStatus? get status => throw _privateConstructorUsedError;
+
   /// 開催開始日
   DateTime get startDate => throw _privateConstructorUsedError;
 
   /// 開催終了日
   DateTime? get endDate => throw _privateConstructorUsedError;
+
+  /// 参加可能かどうか
+  bool get canEntry => throw _privateConstructorUsedError;
 
   /// 作成日時
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -48,9 +54,6 @@ mixin _$StampRally {
 
   /// スタンプラリーのスポットのリスト
   List<Spot> get spots => throw _privateConstructorUsedError;
-
-  /// スタンプラリーの種類（公開中／参加中）
-  StampRallyType get type => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StampRallyCopyWith<StampRally> get copyWith =>
@@ -70,12 +73,13 @@ abstract class $StampRallyCopyWith<$Res> {
       String place,
       int requiredTime,
       String imageUrl,
+      StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
+      bool canEntry,
       DateTime? createdAt,
       DateTime? updatedAt,
-      List<Spot> spots,
-      StampRallyType type});
+      List<Spot> spots});
 }
 
 /// @nodoc
@@ -97,12 +101,13 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
     Object? place = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
+    Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? canEntry = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? spots = null,
-    Object? type = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -129,6 +134,10 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as StampRallyEntryStatus?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -137,6 +146,10 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      canEntry: null == canEntry
+          ? _value.canEntry
+          : canEntry // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -149,10 +162,6 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.spots
           : spots // ignore: cast_nullable_to_non_nullable
               as List<Spot>,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as StampRallyType,
     ) as $Val);
   }
 }
@@ -172,12 +181,13 @@ abstract class _$$_StampRallyCopyWith<$Res>
       String place,
       int requiredTime,
       String imageUrl,
+      StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
+      bool canEntry,
       DateTime? createdAt,
       DateTime? updatedAt,
-      List<Spot> spots,
-      StampRallyType type});
+      List<Spot> spots});
 }
 
 /// @nodoc
@@ -197,12 +207,13 @@ class __$$_StampRallyCopyWithImpl<$Res>
     Object? place = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
+    Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? canEntry = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? spots = null,
-    Object? type = null,
   }) {
     return _then(_$_StampRally(
       id: null == id
@@ -229,6 +240,10 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as StampRallyEntryStatus?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -237,6 +252,10 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      canEntry: null == canEntry
+          ? _value.canEntry
+          : canEntry // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -249,17 +268,13 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value._spots
           : spots // ignore: cast_nullable_to_non_nullable
               as List<Spot>,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as StampRallyType,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_StampRally implements _StampRally {
+class _$_StampRally extends _StampRally {
   const _$_StampRally(
       {required this.id,
       required this.title,
@@ -267,13 +282,15 @@ class _$_StampRally implements _StampRally {
       required this.place,
       required this.requiredTime,
       required this.imageUrl,
+      this.status,
       required this.startDate,
       this.endDate,
+      this.canEntry = true,
       this.createdAt,
       this.updatedAt,
-      final List<Spot> spots = const <Spot>[],
-      required this.type})
-      : _spots = spots;
+      final List<Spot> spots = const <Spot>[]})
+      : _spots = spots,
+        super._();
 
   /// ID
   @override
@@ -299,6 +316,10 @@ class _$_StampRally implements _StampRally {
   @override
   final String imageUrl;
 
+  /// 参加ステータス
+  @override
+  final StampRallyEntryStatus? status;
+
   /// 開催開始日
   @override
   final DateTime startDate;
@@ -306,6 +327,11 @@ class _$_StampRally implements _StampRally {
   /// 開催終了日
   @override
   final DateTime? endDate;
+
+  /// 参加可能かどうか
+  @override
+  @JsonKey()
+  final bool canEntry;
 
   /// 作成日時
   @override
@@ -326,13 +352,9 @@ class _$_StampRally implements _StampRally {
     return EqualUnmodifiableListView(_spots);
   }
 
-  /// スタンプラリーの種類（公開中／参加中）
-  @override
-  final StampRallyType type;
-
   @override
   String toString() {
-    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots, type: $type)';
+    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, canEntry: $canEntry, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
   }
 
   @override
@@ -349,15 +371,17 @@ class _$_StampRally implements _StampRally {
                 other.requiredTime == requiredTime) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.canEntry, canEntry) ||
+                other.canEntry == canEntry) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            const DeepCollectionEquality().equals(other._spots, _spots) &&
-            (identical(other.type, type) || other.type == type));
+            const DeepCollectionEquality().equals(other._spots, _spots));
   }
 
   @override
@@ -369,12 +393,13 @@ class _$_StampRally implements _StampRally {
       place,
       requiredTime,
       imageUrl,
+      status,
       startDate,
       endDate,
+      canEntry,
       createdAt,
       updatedAt,
-      const DeepCollectionEquality().hash(_spots),
-      type);
+      const DeepCollectionEquality().hash(_spots));
 
   @JsonKey(ignore: true)
   @override
@@ -383,7 +408,7 @@ class _$_StampRally implements _StampRally {
       __$$_StampRallyCopyWithImpl<_$_StampRally>(this, _$identity);
 }
 
-abstract class _StampRally implements StampRally {
+abstract class _StampRally extends StampRally {
   const factory _StampRally(
       {required final String id,
       required final String title,
@@ -391,12 +416,14 @@ abstract class _StampRally implements StampRally {
       required final String place,
       required final int requiredTime,
       required final String imageUrl,
+      final StampRallyEntryStatus? status,
       required final DateTime startDate,
       final DateTime? endDate,
+      final bool canEntry,
       final DateTime? createdAt,
       final DateTime? updatedAt,
-      final List<Spot> spots,
-      required final StampRallyType type}) = _$_StampRally;
+      final List<Spot> spots}) = _$_StampRally;
+  const _StampRally._() : super._();
 
   @override
 
@@ -424,12 +451,20 @@ abstract class _StampRally implements StampRally {
   String get imageUrl;
   @override
 
+  /// 参加ステータス
+  StampRallyEntryStatus? get status;
+  @override
+
   /// 開催開始日
   DateTime get startDate;
   @override
 
   /// 開催終了日
   DateTime? get endDate;
+  @override
+
+  /// 参加可能かどうか
+  bool get canEntry;
   @override
 
   /// 作成日時
@@ -442,10 +477,6 @@ abstract class _StampRally implements StampRally {
 
   /// スタンプラリーのスポットのリスト
   List<Spot> get spots;
-  @override
-
-  /// スタンプラリーの種類（公開中／参加中）
-  StampRallyType get type;
   @override
   @JsonKey(ignore: true)
   _$$_StampRallyCopyWith<_$_StampRally> get copyWith =>
