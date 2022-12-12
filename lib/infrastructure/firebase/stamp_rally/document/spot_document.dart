@@ -11,6 +11,8 @@ part 'spot_document.g.dart';
 @freezed
 class SpotDocument with _$SpotDocument {
   const factory SpotDocument({
+    required String title,
+    required String explanation,
     required int order,
     required String imageUrl,
     @GeoPointConverter() GeoLocation? location,
@@ -30,6 +32,8 @@ class SpotDocument with _$SpotDocument {
   Spot toSpot({required String docId}) {
     return Spot(
       id: docId,
+      title: title,
+      explanation: explanation,
       imageUrl: imageUrl,
       location: location!,
       order: order,
@@ -39,5 +43,7 @@ class SpotDocument with _$SpotDocument {
 }
 
 class _SpotDocumentField {
+  String get title => 'title';
+  String get explanation => 'explanation';
   String get order => 'order';
 }

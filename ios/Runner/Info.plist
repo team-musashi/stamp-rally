@@ -52,5 +52,9 @@
     	<string>https</string>
     	<string>http</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>スポットで撮影した写真を取得します</string>
+	<key>NSCameraUsageDescription</key>
+	<string>スポット到着時に写真を撮影します</string>
 </dict>
 </plist>

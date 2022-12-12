@@ -5,8 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../application/stamp_rally/state/current_public_spot.dart';
 import '../application/stamp_rally/state/current_public_stamp_rally.dart';
+import '../application/stamp_rally/state/spot_param.dart';
 import '../application/stamp_rally/state/stamp_rally_param.dart';
+import '../domain/repository/stamp_rally/entity/spot.dart';
 import '../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../domain/repository/user/user_repository.dart';
 import '../presentation/page/auth/login_page.dart';
@@ -17,6 +20,7 @@ import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/entry_spot_index_page.dart';
 import 'page/stamp_rally/public_spot_index_page.dart';
+import 'page/stamp_rally/public_spot_view_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
 part 'router.g.dart';
@@ -126,6 +130,11 @@ class LoginRoute extends GoRouteData {
       routes: [
         TypedGoRoute<PublicSpotIndexRoute>(
           path: 'spots',
+          routes: [
+            TypedGoRoute<PublicSpotViewRoute>(
+              path: ':publicSpotId',
+            ),
+          ],
         ),
       ],
     ),
@@ -188,7 +197,7 @@ class PublicStampRallyViewRoute extends GoRouteData {
 class PublicSpotIndexRoute extends GoRouteData {
   PublicSpotIndexRoute({
     required this.publicStampRallyId,
-    this.$extra,
+    // this.$extra,
   });
 
   factory PublicSpotIndexRoute.fromStampRally(
@@ -196,14 +205,14 @@ class PublicSpotIndexRoute extends GoRouteData {
   ) =>
       PublicSpotIndexRoute(
         publicStampRallyId: stampRally.id,
-        $extra: stampRally,
+        // $extra: stampRally,
       );
 
   /// スタンプラリー詳細画面に表示中のスタンプラリーID
   final String publicStampRallyId;
 
   /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  StampRally? $extra;
+  // StampRally? $extra;
 
   @override
   Widget build(BuildContext context) {
@@ -213,11 +222,61 @@ class PublicSpotIndexRoute extends GoRouteData {
         currentPublicStampRallyParamProvider.overrideWithValue(
           StampRallyParam(
             stampRallyId: publicStampRallyId,
-            cache: $extra,
+            // cache: $extra,
           ),
         ),
       ],
       child: const PublicSpotIndexPage(),
+    );
+  }
+}
+
+/// 公開中スポット詳細画面
+class PublicSpotViewRoute extends GoRouteData {
+  PublicSpotViewRoute({
+    required this.publicStampRallyId,
+    required this.publicSpotId,
+    this.$extra,
+  });
+
+  factory PublicSpotViewRoute.fromSpot(
+    StampRally stampRally,
+    Spot spot,
+  ) =>
+      PublicSpotViewRoute(
+        publicStampRallyId: stampRally.id,
+        publicSpotId: spot.id,
+        $extra: spot,
+      );
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String publicStampRallyId;
+
+  /// スポット詳細画面に表示中のスポットID
+  final String publicSpotId;
+
+  /// スポット詳細画面に表示中のスポット情報
+  Spot? $extra;
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
+        currentPublicStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: publicStampRallyId,
+          ),
+        ),
+        // 現在のスポットパラメータをスポット詳細画面のスポット情報で上書き
+        currentPublicSpotParamProvider.overrideWithValue(
+          SpotParam(
+            spotId: publicSpotId,
+            cache: $extra,
+          ),
+        ),
+      ],
+      child: const PublicSpotViewPage(),
     );
   }
 }

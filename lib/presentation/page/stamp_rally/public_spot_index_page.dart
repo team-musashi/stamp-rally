@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
+import '../../router.dart';
 
 /// 公開スポット一覧画面
 class PublicSpotIndexPage extends StatelessWidget {
@@ -34,8 +35,13 @@ class _Body extends ConsumerWidget {
           itemCount: stampRally.spots.length,
           itemBuilder: (context, index) {
             final spot = stampRally.spots[index];
-            return Image(
-              image: NetworkImage(spot.imageUrl),
+            return InkWell(
+              onTap: () async {
+                PublicSpotViewRoute.fromSpot(stampRally, spot).go(context);
+              },
+              child: Image(
+                image: NetworkImage(spot.imageUrl),
+              ),
             );
           },
         );
