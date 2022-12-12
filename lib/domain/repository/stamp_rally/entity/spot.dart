@@ -11,6 +11,12 @@ class Spot with _$Spot {
     /// ID
     required String id,
 
+    /// スポットの名前
+    required String title,
+
+    /// スポットの詳細説明
+    required String explanation,
+
     /// スポットの順番
     required int order,
 

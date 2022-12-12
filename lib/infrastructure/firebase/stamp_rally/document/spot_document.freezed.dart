@@ -20,6 +20,8 @@ SpotDocument _$SpotDocumentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SpotDocument {
+  String get title => throw _privateConstructorUsedError;
+  String get explanation => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   @GeoPointConverter()
@@ -44,7 +46,9 @@ abstract class $SpotDocumentCopyWith<$Res> {
       _$SpotDocumentCopyWithImpl<$Res, SpotDocument>;
   @useResult
   $Res call(
-      {int order,
+      {String title,
+      String explanation,
+      int order,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
       @TimestampConverter() DateTime? gotDate,
@@ -67,6 +71,8 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? title = null,
+    Object? explanation = null,
     Object? order = null,
     Object? imageUrl = null,
     Object? location = freezed,
@@ -75,6 +81,14 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      explanation: null == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -124,7 +138,9 @@ abstract class _$$_SpotDocumentCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int order,
+      {String title,
+      String explanation,
+      int order,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
       @TimestampConverter() DateTime? gotDate,
@@ -146,6 +162,8 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? title = null,
+    Object? explanation = null,
     Object? order = null,
     Object? imageUrl = null,
     Object? location = freezed,
@@ -154,6 +172,14 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
     Object? updatedAt = freezed,
   }) {
     return _then(_$_SpotDocument(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      explanation: null == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -186,7 +212,9 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SpotDocument extends _SpotDocument {
   const _$_SpotDocument(
-      {required this.order,
+      {required this.title,
+      required this.explanation,
+      required this.order,
       required this.imageUrl,
       @GeoPointConverter() this.location,
       @TimestampConverter() this.gotDate,
@@ -197,6 +225,10 @@ class _$_SpotDocument extends _SpotDocument {
   factory _$_SpotDocument.fromJson(Map<String, dynamic> json) =>
       _$$_SpotDocumentFromJson(json);
 
+  @override
+  final String title;
+  @override
+  final String explanation;
   @override
   final int order;
   @override
@@ -216,7 +248,7 @@ class _$_SpotDocument extends _SpotDocument {
 
   @override
   String toString() {
-    return 'SpotDocument(order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'SpotDocument(title: $title, explanation: $explanation, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -224,6 +256,9 @@ class _$_SpotDocument extends _SpotDocument {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SpotDocument &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.explanation, explanation) ||
+                other.explanation == explanation) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
@@ -238,8 +273,8 @@ class _$_SpotDocument extends _SpotDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, order, imageUrl, location, gotDate, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, title, explanation, order,
+      imageUrl, location, gotDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -257,7 +292,9 @@ class _$_SpotDocument extends _SpotDocument {
 
 abstract class _SpotDocument extends SpotDocument {
   const factory _SpotDocument(
-      {required final int order,
+      {required final String title,
+      required final String explanation,
+      required final int order,
       required final String imageUrl,
       @GeoPointConverter() final GeoLocation? location,
       @TimestampConverter() final DateTime? gotDate,
@@ -268,6 +305,10 @@ abstract class _SpotDocument extends SpotDocument {
   factory _SpotDocument.fromJson(Map<String, dynamic> json) =
       _$_SpotDocument.fromJson;
 
+  @override
+  String get title;
+  @override
+  String get explanation;
   @override
   int get order;
   @override
