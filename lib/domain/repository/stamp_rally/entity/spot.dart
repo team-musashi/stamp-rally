@@ -14,7 +14,7 @@ class Spot with _$Spot {
     /// スポットの名前
     required String title,
 
-    /// スポットの詳細説明
+    /// スポットの概要
     required String summary,
 
     /// スポットの順番

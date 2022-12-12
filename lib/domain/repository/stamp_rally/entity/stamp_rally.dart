@@ -15,7 +15,7 @@ class StampRally with _$StampRally {
     /// スタンプラリー名称
     required String title,
 
-    /// スタンプラリーの詳細説明
+    /// スタンプラリーの概要
     required String summary,
 
     /// 開催場所
