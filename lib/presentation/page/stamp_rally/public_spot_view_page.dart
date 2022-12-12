@@ -28,12 +28,16 @@ class _Body extends ConsumerWidget {
     return AsyncValueHandler(
       value: ref.watch(currentPublicSpotProvider),
       builder: (spot) {
+        final address = spot.address;
+        final tel = spot.tel;
         return Column(
           children: [
             Image(
               image: NetworkImage(spot.imageUrl),
             ),
             Text(spot.title),
+            if (address != null) Text(address),
+            if (tel != null) Text(tel),
             DelimiterBlock(text: spot.summary),
           ],
         );
