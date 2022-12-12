@@ -30,8 +30,6 @@ class _Body extends ConsumerWidget {
       value: ref.watch(currentPublicStampRallyProvider),
       builder: (stampRally) {
         return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
           itemCount: stampRally.spots.length,
           itemBuilder: (context, index) {
             final spot = stampRally.spots[index];
