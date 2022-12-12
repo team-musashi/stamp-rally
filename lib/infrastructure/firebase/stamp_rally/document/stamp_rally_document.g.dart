@@ -12,8 +12,8 @@ _$_StampRallyDocument _$$_StampRallyDocumentFromJson(
         Map<String, dynamic> json) =>
     _$_StampRallyDocument(
       title: json['title'] as String,
-      explanation: json['explanation'] as String,
-      place: json['place'] as String,
+      summary: json['summary'] as String,
+      area: json['area'] as String,
       requiredTime: json['requiredTime'] as int,
       imageUrl: json['imageUrl'] as String,
       status: json['status'] as String?,
@@ -31,8 +31,8 @@ Map<String, dynamic> _$$_StampRallyDocumentToJson(
         _$_StampRallyDocument instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'explanation': instance.explanation,
-      'place': instance.place,
+      'summary': instance.summary,
+      'area': instance.area,
       'requiredTime': instance.requiredTime,
       'imageUrl': instance.imageUrl,
       'status': instance.status,

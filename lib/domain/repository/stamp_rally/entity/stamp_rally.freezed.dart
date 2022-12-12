@@ -22,11 +22,11 @@ mixin _$StampRally {
   /// スタンプラリー名称
   String get title => throw _privateConstructorUsedError;
 
-  /// スタンプラリーの詳細説明
-  String get explanation => throw _privateConstructorUsedError;
+  /// スタンプラリーの概要
+  String get summary => throw _privateConstructorUsedError;
 
-  /// 開催場所
-  String get place => throw _privateConstructorUsedError;
+  /// エリア
+  String get area => throw _privateConstructorUsedError;
 
   /// 所用時間
   int get requiredTime => throw _privateConstructorUsedError;
@@ -69,8 +69,8 @@ abstract class $StampRallyCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      String explanation,
-      String place,
+      String summary,
+      String area,
       int requiredTime,
       String imageUrl,
       StampRallyEntryStatus? status,
@@ -97,8 +97,8 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? explanation = null,
-    Object? place = null,
+    Object? summary = null,
+    Object? area = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
     Object? status = freezed,
@@ -118,13 +118,13 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      explanation: null == explanation
-          ? _value.explanation
-          : explanation // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
-      place: null == place
-          ? _value.place
-          : place // ignore: cast_nullable_to_non_nullable
+      area: null == area
+          ? _value.area
+          : area // ignore: cast_nullable_to_non_nullable
               as String,
       requiredTime: null == requiredTime
           ? _value.requiredTime
@@ -177,8 +177,8 @@ abstract class _$$_StampRallyCopyWith<$Res>
   $Res call(
       {String id,
       String title,
-      String explanation,
-      String place,
+      String summary,
+      String area,
       int requiredTime,
       String imageUrl,
       StampRallyEntryStatus? status,
@@ -203,8 +203,8 @@ class __$$_StampRallyCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? explanation = null,
-    Object? place = null,
+    Object? summary = null,
+    Object? area = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
     Object? status = freezed,
@@ -224,13 +224,13 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      explanation: null == explanation
-          ? _value.explanation
-          : explanation // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
-      place: null == place
-          ? _value.place
-          : place // ignore: cast_nullable_to_non_nullable
+      area: null == area
+          ? _value.area
+          : area // ignore: cast_nullable_to_non_nullable
               as String,
       requiredTime: null == requiredTime
           ? _value.requiredTime
@@ -278,8 +278,8 @@ class _$_StampRally extends _StampRally {
   const _$_StampRally(
       {required this.id,
       required this.title,
-      required this.explanation,
-      required this.place,
+      required this.summary,
+      required this.area,
       required this.requiredTime,
       required this.imageUrl,
       this.status,
@@ -300,13 +300,13 @@ class _$_StampRally extends _StampRally {
   @override
   final String title;
 
-  /// スタンプラリーの詳細説明
+  /// スタンプラリーの概要
   @override
-  final String explanation;
+  final String summary;
 
-  /// 開催場所
+  /// エリア
   @override
-  final String place;
+  final String area;
 
   /// 所用時間
   @override
@@ -354,7 +354,7 @@ class _$_StampRally extends _StampRally {
 
   @override
   String toString() {
-    return 'StampRally(id: $id, title: $title, explanation: $explanation, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, canEntry: $canEntry, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
+    return 'StampRally(id: $id, title: $title, summary: $summary, area: $area, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, canEntry: $canEntry, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
   }
 
   @override
@@ -364,9 +364,8 @@ class _$_StampRally extends _StampRally {
             other is _$_StampRally &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.explanation, explanation) ||
-                other.explanation == explanation) &&
-            (identical(other.place, place) || other.place == place) &&
+            (identical(other.summary, summary) || other.summary == summary) &&
+            (identical(other.area, area) || other.area == area) &&
             (identical(other.requiredTime, requiredTime) ||
                 other.requiredTime == requiredTime) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -389,8 +388,8 @@ class _$_StampRally extends _StampRally {
       runtimeType,
       id,
       title,
-      explanation,
-      place,
+      summary,
+      area,
       requiredTime,
       imageUrl,
       status,
@@ -412,8 +411,8 @@ abstract class _StampRally extends StampRally {
   const factory _StampRally(
       {required final String id,
       required final String title,
-      required final String explanation,
-      required final String place,
+      required final String summary,
+      required final String area,
       required final int requiredTime,
       required final String imageUrl,
       final StampRallyEntryStatus? status,
@@ -435,12 +434,12 @@ abstract class _StampRally extends StampRally {
   String get title;
   @override
 
-  /// スタンプラリーの詳細説明
-  String get explanation;
+  /// スタンプラリーの概要
+  String get summary;
   @override
 
-  /// 開催場所
-  String get place;
+  /// エリア
+  String get area;
   @override
 
   /// 所用時間

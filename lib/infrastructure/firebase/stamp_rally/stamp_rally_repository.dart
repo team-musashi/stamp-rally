@@ -222,8 +222,8 @@ extension _StampRallyDocumentEx on StampRallyDocument {
     return StampRally(
       id: id,
       title: title,
-      explanation: explanation,
-      place: place,
+      summary: summary,
+      area: area,
       requiredTime: requiredTime,
       imageUrl: imageUrl,
       status: StampRallyEntryStatus.nameOf(status),

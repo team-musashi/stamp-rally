@@ -10,8 +10,8 @@ part 'stamp_rally_document.g.dart';
 class StampRallyDocument with _$StampRallyDocument {
   const factory StampRallyDocument({
     required String title,
-    required String explanation,
-    required String place,
+    required String summary,
+    required String area,
     required int requiredTime,
     required String imageUrl,
     String? status,

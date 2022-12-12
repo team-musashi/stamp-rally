@@ -53,9 +53,10 @@ class _Body extends ConsumerWidget {
                 stampRally.title,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
+              Text('エリア：${stampRally.area}'),
               Text('チェックポイント数：${stampRally.spots.length}'),
               Text('所要時間：${stampRally.requiredTime.toString()}時間'),
-              DelimiterBlock(text: stampRally.explanation),
+              DelimiterBlock(text: stampRally.summary),
               ElevatedButton(
                 onPressed: () async {
                   PublicSpotIndexRoute.fromStampRally(stampRally).go(context);

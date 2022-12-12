@@ -11,8 +11,8 @@ class MockStampRallyRepository implements StampRallyRepository {
     StampRally(
       id: 'a',
       title: '１個目のタイトル',
-      explanation: '１個目の詳細',
-      place: '１個目の場所 ',
+      summary: '１個目の詳細',
+      area: '１個目の場所 ',
       requiredTime: 1,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
@@ -20,8 +20,8 @@ class MockStampRallyRepository implements StampRallyRepository {
     StampRally(
       id: 'b',
       title: '２個目のタイトル',
-      explanation: '２個目の詳細',
-      place: '２個目の場所 ',
+      summary: '２個目の詳細',
+      area: '２個目の場所 ',
       requiredTime: 2,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
@@ -29,8 +29,8 @@ class MockStampRallyRepository implements StampRallyRepository {
     StampRally(
       id: 'c',
       title: '３個目のタイトル',
-      explanation: '３個目の詳細',
-      place: '３個目の場所 ',
+      summary: '３個目の詳細',
+      area: '３個目の場所 ',
       requiredTime: 3,
       imageUrl: 'dummy',
       startDate: DateTime.now(),
