@@ -5,8 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../application/stamp_rally/state/current_public_spot.dart';
 import '../application/stamp_rally/state/current_public_stamp_rally.dart';
+import '../application/stamp_rally/state/spot_param.dart';
 import '../application/stamp_rally/state/stamp_rally_param.dart';
+import '../domain/repository/stamp_rally/entity/spot.dart';
 import '../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../domain/repository/user/user_repository.dart';
 import '../presentation/page/auth/login_page.dart';
@@ -130,7 +133,7 @@ class LoginRoute extends GoRouteData {
           path: 'spots',
           routes: [
             TypedGoRoute<PublicSpotDetailRoute>(
-              path: 'spot-detail/:index',
+              path: 'spot-detail/:publicSpotId',
             ),
           ],
         ),
@@ -238,28 +241,28 @@ class PublicSpotIndexRoute extends GoRouteData {
 class PublicSpotDetailRoute extends GoRouteData {
   PublicSpotDetailRoute({
     required this.publicStampRallyId,
-    required this.index,
+    required this.publicSpotId,
     this.$extra,
   });
 
-  factory PublicSpotDetailRoute.fromStampRally(
+  factory PublicSpotDetailRoute.fromSpot(
     StampRally stampRally,
-    int index,
+    Spot spot,
   ) =>
       PublicSpotDetailRoute(
         publicStampRallyId: stampRally.id,
-        $extra: stampRally,
-        index: index,
+        publicSpotId: spot.id,
+        $extra: spot,
       );
 
   /// スタンプラリー詳細画面に表示中のスタンプラリーID
   final String publicStampRallyId;
 
-  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  StampRally? $extra;
+  /// スポット詳細画面に表示中のスポットID
+  final String publicSpotId;
 
-  /// 選択したスポットの番号
-  final int index;
+  /// スポット詳細画面に表示中のスポット情報
+  Spot? $extra;
 
   @override
   Widget build(BuildContext context) {
@@ -269,13 +272,16 @@ class PublicSpotDetailRoute extends GoRouteData {
         currentPublicStampRallyParamProvider.overrideWithValue(
           StampRallyParam(
             stampRallyId: publicStampRallyId,
-            // cache: $extra,
+          ),
+        ),
+        currentPublicSpotParamProvider.overrideWithValue(
+          SpotParam(
+            spotId: publicSpotId,
+            cache: $extra,
           ),
         ),
       ],
-      child: PublicSpotDetailPage(
-        index: index,
-      ),
+      child: const PublicSpotDetailPage(),
     );
   }
 }

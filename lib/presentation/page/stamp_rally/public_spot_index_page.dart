@@ -37,8 +37,7 @@ class _Body extends ConsumerWidget {
             final spot = stampRally.spots[index];
             return InkWell(
               onTap: () async {
-                PublicSpotDetailRoute.fromStampRally(stampRally, index)
-                    .go(context);
+                PublicSpotDetailRoute.fromSpot(stampRally, spot).go(context);
               },
               child: Image(
                 image: NetworkImage(spot.imageUrl),

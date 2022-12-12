@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
-import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../application/stamp_rally/state/current_public_spot.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
 
 /// スポット詳細画面
 class PublicSpotDetailPage extends StatelessWidget {
-  const PublicSpotDetailPage({super.key, required this.index});
-
-  final int index;
+  const PublicSpotDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +15,26 @@ class PublicSpotDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('スポット詳細'),
       ),
-      body: _Body(index: index),
+      body: const _Body(),
     );
   }
 }
 
 class _Body extends ConsumerWidget {
-  const _Body({required this.index});
-
-  final int index;
+  const _Body();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AsyncValueHandler<StampRally>(
-      value: ref.watch(currentPublicStampRallyProvider),
-      builder: (stampRally) {
+    return AsyncValueHandler(
+      value: ref.watch(currentPublicSpotProvider),
+      builder: (spot) {
         return Column(
           children: [
             Image(
-              image: NetworkImage(stampRally.spots[index].imageUrl),
+              image: NetworkImage(spot.imageUrl),
             ),
-            Text(stampRally.spots[index].title),
-            DelimiterBlock(text: stampRally.spots[index].explanation),
+            Text(spot.title),
+            DelimiterBlock(text: spot.explanation),
           ],
         );
       },
