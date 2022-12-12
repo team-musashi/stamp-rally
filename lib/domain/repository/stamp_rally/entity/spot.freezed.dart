@@ -23,7 +23,7 @@ mixin _$Spot {
   String get title => throw _privateConstructorUsedError;
 
   /// スポットの詳細説明
-  String get explanation => throw _privateConstructorUsedError;
+  String get summary => throw _privateConstructorUsedError;
 
   /// スポットの順番
   int get order => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ abstract class $SpotCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      String explanation,
+      String summary,
       int order,
       String imageUrl,
       GeoLocation location,
@@ -81,7 +81,7 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? explanation = null,
+    Object? summary = null,
     Object? order = null,
     Object? imageUrl = null,
     Object? location = null,
@@ -98,9 +98,9 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      explanation: null == explanation
-          ? _value.explanation
-          : explanation // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
       order: null == order
           ? _value.order
@@ -147,7 +147,7 @@ abstract class _$$_SpotCopyWith<$Res> implements $SpotCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
-      String explanation,
+      String summary,
       int order,
       String imageUrl,
       GeoLocation location,
@@ -170,7 +170,7 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? explanation = null,
+    Object? summary = null,
     Object? order = null,
     Object? imageUrl = null,
     Object? location = null,
@@ -187,9 +187,9 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      explanation: null == explanation
-          ? _value.explanation
-          : explanation // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
       order: null == order
           ? _value.order
@@ -225,7 +225,7 @@ class _$_Spot implements _Spot {
   const _$_Spot(
       {required this.id,
       required this.title,
-      required this.explanation,
+      required this.summary,
       required this.order,
       required this.imageUrl,
       required this.location,
@@ -243,7 +243,7 @@ class _$_Spot implements _Spot {
 
   /// スポットの詳細説明
   @override
-  final String explanation;
+  final String summary;
 
   /// スポットの順番
   @override
@@ -271,7 +271,7 @@ class _$_Spot implements _Spot {
 
   @override
   String toString() {
-    return 'Spot(id: $id, title: $title, explanation: $explanation, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Spot(id: $id, title: $title, summary: $summary, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -281,8 +281,7 @@ class _$_Spot implements _Spot {
             other is _$_Spot &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.explanation, explanation) ||
-                other.explanation == explanation) &&
+            (identical(other.summary, summary) || other.summary == summary) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
@@ -296,7 +295,7 @@ class _$_Spot implements _Spot {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, explanation, order,
+  int get hashCode => Object.hash(runtimeType, id, title, summary, order,
       imageUrl, location, gotDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
@@ -310,7 +309,7 @@ abstract class _Spot implements Spot {
   const factory _Spot(
       {required final String id,
       required final String title,
-      required final String explanation,
+      required final String summary,
       required final int order,
       required final String imageUrl,
       required final GeoLocation location,
@@ -329,7 +328,7 @@ abstract class _Spot implements Spot {
   @override
 
   /// スポットの詳細説明
-  String get explanation;
+  String get summary;
   @override
 
   /// スポットの順番

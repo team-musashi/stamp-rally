@@ -21,7 +21,7 @@ SpotDocument _$SpotDocumentFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SpotDocument {
   String get title => throw _privateConstructorUsedError;
-  String get explanation => throw _privateConstructorUsedError;
+  String get summary => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   @GeoPointConverter()
@@ -47,7 +47,7 @@ abstract class $SpotDocumentCopyWith<$Res> {
   @useResult
   $Res call(
       {String title,
-      String explanation,
+      String summary,
       int order,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
@@ -72,7 +72,7 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
   @override
   $Res call({
     Object? title = null,
-    Object? explanation = null,
+    Object? summary = null,
     Object? order = null,
     Object? imageUrl = null,
     Object? location = freezed,
@@ -85,9 +85,9 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      explanation: null == explanation
-          ? _value.explanation
-          : explanation // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
       order: null == order
           ? _value.order
@@ -139,7 +139,7 @@ abstract class _$$_SpotDocumentCopyWith<$Res>
   @useResult
   $Res call(
       {String title,
-      String explanation,
+      String summary,
       int order,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
@@ -163,7 +163,7 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? explanation = null,
+    Object? summary = null,
     Object? order = null,
     Object? imageUrl = null,
     Object? location = freezed,
@@ -176,9 +176,9 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      explanation: null == explanation
-          ? _value.explanation
-          : explanation // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
       order: null == order
           ? _value.order
@@ -213,7 +213,7 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
 class _$_SpotDocument extends _SpotDocument {
   const _$_SpotDocument(
       {required this.title,
-      required this.explanation,
+      required this.summary,
       required this.order,
       required this.imageUrl,
       @GeoPointConverter() this.location,
@@ -228,7 +228,7 @@ class _$_SpotDocument extends _SpotDocument {
   @override
   final String title;
   @override
-  final String explanation;
+  final String summary;
   @override
   final int order;
   @override
@@ -248,7 +248,7 @@ class _$_SpotDocument extends _SpotDocument {
 
   @override
   String toString() {
-    return 'SpotDocument(title: $title, explanation: $explanation, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'SpotDocument(title: $title, summary: $summary, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -257,8 +257,7 @@ class _$_SpotDocument extends _SpotDocument {
         (other.runtimeType == runtimeType &&
             other is _$_SpotDocument &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.explanation, explanation) ||
-                other.explanation == explanation) &&
+            (identical(other.summary, summary) || other.summary == summary) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
@@ -273,8 +272,8 @@ class _$_SpotDocument extends _SpotDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, explanation, order,
-      imageUrl, location, gotDate, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, title, summary, order, imageUrl,
+      location, gotDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -293,7 +292,7 @@ class _$_SpotDocument extends _SpotDocument {
 abstract class _SpotDocument extends SpotDocument {
   const factory _SpotDocument(
       {required final String title,
-      required final String explanation,
+      required final String summary,
       required final int order,
       required final String imageUrl,
       @GeoPointConverter() final GeoLocation? location,
@@ -308,7 +307,7 @@ abstract class _SpotDocument extends SpotDocument {
   @override
   String get title;
   @override
-  String get explanation;
+  String get summary;
   @override
   int get order;
   @override

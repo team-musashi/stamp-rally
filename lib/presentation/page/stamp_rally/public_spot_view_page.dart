@@ -34,7 +34,7 @@ class _Body extends ConsumerWidget {
               image: NetworkImage(spot.imageUrl),
             ),
             Text(spot.title),
-            DelimiterBlock(text: spot.explanation),
+            DelimiterBlock(text: spot.summary),
           ],
         );
       },

@@ -222,7 +222,7 @@ extension _StampRallyDocumentEx on StampRallyDocument {
     return StampRally(
       id: id,
       title: title,
-      explanation: explanation,
+      summary: summary,
       place: place,
       requiredTime: requiredTime,
       imageUrl: imageUrl,
