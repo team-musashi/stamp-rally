@@ -19,14 +19,20 @@ mixin _$Spot {
   /// ID
   String get id => throw _privateConstructorUsedError;
 
+  /// スポットの順番
+  int get order => throw _privateConstructorUsedError;
+
   /// スポットの名前
   String get title => throw _privateConstructorUsedError;
 
   /// スポットの概要
   String get summary => throw _privateConstructorUsedError;
 
-  /// スポットの順番
-  int get order => throw _privateConstructorUsedError;
+  /// スポットの住所
+  String? get address => throw _privateConstructorUsedError;
+
+  /// スポットの電話番号
+  String? get tel => throw _privateConstructorUsedError;
 
   /// 画像URL
   String get imageUrl => throw _privateConstructorUsedError;
@@ -54,9 +60,11 @@ abstract class $SpotCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      int order,
       String title,
       String summary,
-      int order,
+      String? address,
+      String? tel,
       String imageUrl,
       GeoLocation location,
       DateTime? gotDate,
@@ -80,9 +88,11 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
   @override
   $Res call({
     Object? id = null,
+    Object? order = null,
     Object? title = null,
     Object? summary = null,
-    Object? order = null,
+    Object? address = freezed,
+    Object? tel = freezed,
     Object? imageUrl = null,
     Object? location = null,
     Object? gotDate = freezed,
@@ -94,6 +104,10 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -102,10 +116,14 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
           ? _value.summary
           : summary // ignore: cast_nullable_to_non_nullable
               as String,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tel: freezed == tel
+          ? _value.tel
+          : tel // ignore: cast_nullable_to_non_nullable
+              as String?,
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -146,9 +164,11 @@ abstract class _$$_SpotCopyWith<$Res> implements $SpotCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      int order,
       String title,
       String summary,
-      int order,
+      String? address,
+      String? tel,
       String imageUrl,
       GeoLocation location,
       DateTime? gotDate,
@@ -169,9 +189,11 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
   @override
   $Res call({
     Object? id = null,
+    Object? order = null,
     Object? title = null,
     Object? summary = null,
-    Object? order = null,
+    Object? address = freezed,
+    Object? tel = freezed,
     Object? imageUrl = null,
     Object? location = null,
     Object? gotDate = freezed,
@@ -183,6 +205,10 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -191,10 +217,14 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.summary
           : summary // ignore: cast_nullable_to_non_nullable
               as String,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tel: freezed == tel
+          ? _value.tel
+          : tel // ignore: cast_nullable_to_non_nullable
+              as String?,
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -224,9 +254,11 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
 class _$_Spot implements _Spot {
   const _$_Spot(
       {required this.id,
+      required this.order,
       required this.title,
       required this.summary,
-      required this.order,
+      this.address,
+      this.tel,
       required this.imageUrl,
       required this.location,
       this.gotDate,
@@ -237,6 +269,10 @@ class _$_Spot implements _Spot {
   @override
   final String id;
 
+  /// スポットの順番
+  @override
+  final int order;
+
   /// スポットの名前
   @override
   final String title;
@@ -245,9 +281,13 @@ class _$_Spot implements _Spot {
   @override
   final String summary;
 
-  /// スポットの順番
+  /// スポットの住所
   @override
-  final int order;
+  final String? address;
+
+  /// スポットの電話番号
+  @override
+  final String? tel;
 
   /// 画像URL
   @override
@@ -271,7 +311,7 @@ class _$_Spot implements _Spot {
 
   @override
   String toString() {
-    return 'Spot(id: $id, title: $title, summary: $summary, order: $order, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Spot(id: $id, order: $order, title: $title, summary: $summary, address: $address, tel: $tel, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -280,9 +320,11 @@ class _$_Spot implements _Spot {
         (other.runtimeType == runtimeType &&
             other is _$_Spot &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.order, order) || other.order == order) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.summary, summary) || other.summary == summary) &&
-            (identical(other.order, order) || other.order == order) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.tel, tel) || other.tel == tel) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.location, location) ||
@@ -295,8 +337,8 @@ class _$_Spot implements _Spot {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, summary, order,
-      imageUrl, location, gotDate, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, order, title, summary,
+      address, tel, imageUrl, location, gotDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -308,9 +350,11 @@ class _$_Spot implements _Spot {
 abstract class _Spot implements Spot {
   const factory _Spot(
       {required final String id,
+      required final int order,
       required final String title,
       required final String summary,
-      required final int order,
+      final String? address,
+      final String? tel,
       required final String imageUrl,
       required final GeoLocation location,
       final DateTime? gotDate,
@@ -323,6 +367,10 @@ abstract class _Spot implements Spot {
   String get id;
   @override
 
+  /// スポットの順番
+  int get order;
+  @override
+
   /// スポットの名前
   String get title;
   @override
@@ -331,8 +379,12 @@ abstract class _Spot implements Spot {
   String get summary;
   @override
 
-  /// スポットの順番
-  int get order;
+  /// スポットの住所
+  String? get address;
+  @override
+
+  /// スポットの電話番号
+  String? get tel;
   @override
 
   /// 画像URL

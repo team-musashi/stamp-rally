@@ -11,14 +11,20 @@ class Spot with _$Spot {
     /// ID
     required String id,
 
+    /// スポットの順番
+    required int order,
+
     /// スポットの名前
     required String title,
 
     /// スポットの概要
     required String summary,
 
-    /// スポットの順番
-    required int order,
+    /// スポットの住所
+    String? address,
+
+    /// スポットの電話番号
+    String? tel,
 
     /// 画像URL
     required String imageUrl,
