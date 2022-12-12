@@ -22,7 +22,7 @@ mixin _$Spot {
   /// スポットの名前
   String get title => throw _privateConstructorUsedError;
 
-  /// スポットの詳細説明
+  /// スポットの概要
   String get summary => throw _privateConstructorUsedError;
 
   /// スポットの順番
@@ -241,7 +241,7 @@ class _$_Spot implements _Spot {
   @override
   final String title;
 
-  /// スポットの詳細説明
+  /// スポットの概要
   @override
   final String summary;
 
@@ -327,7 +327,7 @@ abstract class _Spot implements Spot {
   String get title;
   @override
 
-  /// スポットの詳細説明
+  /// スポットの概要
   String get summary;
   @override
 

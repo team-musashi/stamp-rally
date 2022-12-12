@@ -22,7 +22,7 @@ StampRallyDocument _$StampRallyDocumentFromJson(Map<String, dynamic> json) {
 mixin _$StampRallyDocument {
   String get title => throw _privateConstructorUsedError;
   String get summary => throw _privateConstructorUsedError;
-  String get place => throw _privateConstructorUsedError;
+  String get area => throw _privateConstructorUsedError;
   int get requiredTime => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $StampRallyDocumentCopyWith<$Res> {
   $Res call(
       {String title,
       String summary,
-      String place,
+      String area,
       int requiredTime,
       String imageUrl,
       String? status,
@@ -75,7 +75,7 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
   $Res call({
     Object? title = null,
     Object? summary = null,
-    Object? place = null,
+    Object? area = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
     Object? status = freezed,
@@ -93,9 +93,9 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
           ? _value.summary
           : summary // ignore: cast_nullable_to_non_nullable
               as String,
-      place: null == place
-          ? _value.place
-          : place // ignore: cast_nullable_to_non_nullable
+      area: null == area
+          ? _value.area
+          : area // ignore: cast_nullable_to_non_nullable
               as String,
       requiredTime: null == requiredTime
           ? _value.requiredTime
@@ -140,7 +140,7 @@ abstract class _$$_StampRallyDocumentCopyWith<$Res>
   $Res call(
       {String title,
       String summary,
-      String place,
+      String area,
       int requiredTime,
       String imageUrl,
       String? status,
@@ -163,7 +163,7 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? summary = null,
-    Object? place = null,
+    Object? area = null,
     Object? requiredTime = null,
     Object? imageUrl = null,
     Object? status = freezed,
@@ -181,9 +181,9 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
           ? _value.summary
           : summary // ignore: cast_nullable_to_non_nullable
               as String,
-      place: null == place
-          ? _value.place
-          : place // ignore: cast_nullable_to_non_nullable
+      area: null == area
+          ? _value.area
+          : area // ignore: cast_nullable_to_non_nullable
               as String,
       requiredTime: null == requiredTime
           ? _value.requiredTime
@@ -223,7 +223,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   const _$_StampRallyDocument(
       {required this.title,
       required this.summary,
-      required this.place,
+      required this.area,
       required this.requiredTime,
       required this.imageUrl,
       this.status,
@@ -241,7 +241,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   @override
   final String summary;
   @override
-  final String place;
+  final String area;
   @override
   final int requiredTime;
   @override
@@ -263,7 +263,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
 
   @override
   String toString() {
-    return 'StampRallyDocument(title: $title, summary: $summary, place: $place, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'StampRallyDocument(title: $title, summary: $summary, area: $area, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -273,7 +273,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
             other is _$_StampRallyDocument &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.summary, summary) || other.summary == summary) &&
-            (identical(other.place, place) || other.place == place) &&
+            (identical(other.area, area) || other.area == area) &&
             (identical(other.requiredTime, requiredTime) ||
                 other.requiredTime == requiredTime) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -290,7 +290,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, summary, place,
+  int get hashCode => Object.hash(runtimeType, title, summary, area,
       requiredTime, imageUrl, status, startDate, endDate, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
@@ -312,7 +312,7 @@ abstract class _StampRallyDocument extends StampRallyDocument {
   const factory _StampRallyDocument(
       {required final String title,
       required final String summary,
-      required final String place,
+      required final String area,
       required final int requiredTime,
       required final String imageUrl,
       final String? status,
@@ -330,7 +330,7 @@ abstract class _StampRallyDocument extends StampRallyDocument {
   @override
   String get summary;
   @override
-  String get place;
+  String get area;
   @override
   int get requiredTime;
   @override

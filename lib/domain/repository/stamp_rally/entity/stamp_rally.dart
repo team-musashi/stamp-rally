@@ -18,8 +18,8 @@ class StampRally with _$StampRally {
     /// スタンプラリーの概要
     required String summary,
 
-    /// 開催場所
-    required String place,
+    /// エリア
+    required String area,
 
     /// 所用時間
     required int requiredTime,

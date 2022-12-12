@@ -13,7 +13,7 @@ _$_StampRallyDocument _$$_StampRallyDocumentFromJson(
     _$_StampRallyDocument(
       title: json['title'] as String,
       summary: json['summary'] as String,
-      place: json['place'] as String,
+      area: json['area'] as String,
       requiredTime: json['requiredTime'] as int,
       imageUrl: json['imageUrl'] as String,
       status: json['status'] as String?,
@@ -32,7 +32,7 @@ Map<String, dynamic> _$$_StampRallyDocumentToJson(
     <String, dynamic>{
       'title': instance.title,
       'summary': instance.summary,
-      'place': instance.place,
+      'area': instance.area,
       'requiredTime': instance.requiredTime,
       'imageUrl': instance.imageUrl,
       'status': instance.status,

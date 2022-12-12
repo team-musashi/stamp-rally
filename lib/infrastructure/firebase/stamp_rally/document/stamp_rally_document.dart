@@ -11,7 +11,7 @@ class StampRallyDocument with _$StampRallyDocument {
   const factory StampRallyDocument({
     required String title,
     required String summary,
-    required String place,
+    required String area,
     required int requiredTime,
     required String imageUrl,
     String? status,

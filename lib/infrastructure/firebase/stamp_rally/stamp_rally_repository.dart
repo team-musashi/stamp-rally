@@ -223,7 +223,7 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       id: id,
       title: title,
       summary: summary,
-      place: place,
+      area: area,
       requiredTime: requiredTime,
       imageUrl: imageUrl,
       status: StampRallyEntryStatus.nameOf(status),
