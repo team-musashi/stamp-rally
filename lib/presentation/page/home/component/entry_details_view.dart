@@ -6,6 +6,7 @@ import '../../../component/async_value_handler.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
 
+/// 参加中スタンプラリーの詳細情報表示用View
 class EntryDetailsView extends ConsumerWidget {
   const EntryDetailsView({super.key});
 
