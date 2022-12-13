@@ -29,6 +29,7 @@ dependencies:
   # ロガーパッケージ
   package_info_plus: ^3.0.2
   roggle: ^0.3.0
+  toggle_switch: ^2.0.1
   url_launcher: ^6.1.6
 
 dependency_overrides:
