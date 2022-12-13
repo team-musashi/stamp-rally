@@ -399,6 +399,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.15"
+  google_maps_flutter:
+    dependency: "direct main"
+    description:
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.2"
+  google_maps_flutter_android:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
+  google_maps_flutter_ios:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.12"
+  google_maps_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.4"
   graphs:
     dependency: transitive
     description:
