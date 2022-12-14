@@ -7,6 +7,7 @@ import '../../../../application/stamp_rally/state/entry_stamp_rally_result.dart'
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../component/dialog.dart';
+import '../../../component/widget_ref.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
 

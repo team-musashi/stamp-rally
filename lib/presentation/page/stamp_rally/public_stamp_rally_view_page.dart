@@ -9,6 +9,7 @@ import '../../../application/stamp_rally/state/entry_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
+import '../../component/widget_ref.dart';
 import '../../router.dart';
 
 /// 公開スタンプラリー詳細画面
