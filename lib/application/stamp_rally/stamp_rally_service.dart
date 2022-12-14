@@ -34,4 +34,21 @@ class StampRallyService {
       return entryStampRally;
     });
   }
+
+  /// 参加中スタンプラリーを完了する
+  Future<void> completeStampRally({required String stampRallyId}) async {
+    final notifier = ref.read(entryStampRallyResultProvider.notifier);
+    notifier.state = const AsyncValue.loading();
+    notifier.state = await AsyncValue.guard(() async {
+      await ref
+          .read(commandRepositoryProvider)
+          .completeStampRally(entryStampRallyId: stampRallyId);
+
+      // 参加中スタンプラリーが更新されるのを待つ
+      final entryStampRally =
+          await ref.refresh(entryStampRallyStreamProvider.future);
+      logger.i('updated entryStampRally: id = ${entryStampRally?.id}');
+      return entryStampRally;
+    });
+  }
 }

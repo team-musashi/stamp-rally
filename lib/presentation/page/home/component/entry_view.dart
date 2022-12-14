@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../../../../application/stamp_rally/state/entry_stamp_rally_result.dart';
+import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
@@ -12,6 +15,15 @@ class EntryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // スタンプラリー完了の結果を監視する
+    ref.listenResult<StampRally?>(
+      entryStampRallyResultProvider,
+      completeMessage: 'スタンプラリーを完了にしました。',
+      complete: (stampRally) {
+        const HomeRoute().go(context);
+      },
+    );
+
     return AsyncValueHandler(
       value: ref.watch(currentEntryStampRallyProvider),
       builder: (stampRally) {
@@ -29,8 +41,10 @@ class EntryView extends ConsumerWidget {
             Text(stampRally.title),
             Text('チェックポイント数：${stampRally.spots.length}'),
             ElevatedButton(
-              onPressed: () {
-                // ToDo 参加完了処理
+              onPressed: () async {
+                await ref
+                    .read(stampRallyServiceProvider)
+                    .completeStampRally(stampRallyId: stampRally.id);
               },
               child: const Text('参加完了'),
             ),
