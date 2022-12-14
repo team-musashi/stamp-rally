@@ -45,6 +45,20 @@ class CommandDocument with _$CommandDocument {
       updatedAt: DateTime.now(),
     );
   }
+
+  /// 参加完了コマンド
+  factory CommandDocument.completeStampRally({
+    required String? uid,
+    required String stampRallyId,
+  }) {
+    return CommandDocument(
+      uid: uid ?? '',
+      commandType: CommandType.completeStampRally.name,
+      data: <String, dynamic>{'stampRallyId': stampRallyId},
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+  }
 }
 
 /// コマンドタイプ
@@ -54,5 +68,8 @@ enum CommandType {
 
   /// スタンプラリーへの参加をキャンセルする
   leaveStampRally,
+
+  /// スタンプラリーへの参加を完了する
+  completeStampRally,
   ;
 }

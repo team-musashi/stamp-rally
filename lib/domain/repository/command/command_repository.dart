@@ -12,4 +12,9 @@ abstract class CommandRepository {
   Future<void> entryStampRally({
     required String publicStampRallyId,
   });
+
+  /// スタンプラリーを完了する
+  Future<void> completeStampRally({
+    required String entryStampRallyId,
+  });
 }
