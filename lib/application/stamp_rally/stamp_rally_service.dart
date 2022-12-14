@@ -19,11 +19,11 @@ class StampRallyService {
   final Ref ref;
 
   /// スタンプラリーに参加する
-  Future<void> entryStampRally({required String stampRallyId}) async {
+  Future<void> enterStampRally({required String stampRallyId}) async {
     final notifier = ref.read(entryStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
-      await ref.read(commandRepositoryProvider).entryStampRally(
+      await ref.read(commandRepositoryProvider).enterStampRally(
             publicStampRallyId: stampRallyId,
           );
 

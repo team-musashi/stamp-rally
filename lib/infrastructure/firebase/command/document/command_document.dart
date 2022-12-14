@@ -19,13 +19,13 @@ class CommandDocument with _$CommandDocument {
       _$CommandDocumentFromJson(json);
 
   /// 参加コマンド
-  factory CommandDocument.entryStampRally({
+  factory CommandDocument.enterStampRally({
     required String? uid,
     required String stampRallyId,
   }) {
     return CommandDocument(
       uid: uid ?? '',
-      commandType: CommandType.entryStampRally.name,
+      commandType: CommandType.enterStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
@@ -64,7 +64,7 @@ class CommandDocument with _$CommandDocument {
 /// コマンドタイプ
 enum CommandType {
   /// スタンプラリーに参加する
-  entryStampRally,
+  enterStampRally,
 
   /// スタンプラリーへの参加をキャンセルする
   withdrawStampRally,
