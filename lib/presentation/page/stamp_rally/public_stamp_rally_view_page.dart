@@ -5,10 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
-import '../../../application/stamp_rally/state/entry_stamp_rally_result.dart';
+import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
+import '../../component/widget_ref.dart';
 import '../../router.dart';
 
 /// 公開スタンプラリー詳細画面
@@ -33,7 +34,7 @@ class _Body extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // スタンプラリー参加の結果を監視する
     ref.listenResult<StampRally?>(
-      entryStampRallyResultProvider,
+      enterStampRallyResultProvider,
       completeMessage: 'スタンプラリーに参加しました。',
       complete: (stampRally) {
         if (stampRally != null) {
@@ -68,7 +69,7 @@ class _Body extends ConsumerWidget {
                     ? () async {
                         await ref
                             .read(stampRallyServiceProvider)
-                            .entryStampRally(stampRallyId: stampRally.id);
+                            .enterStampRally(stampRallyId: stampRally.id);
                       }
                     : null,
                 child: const Text('参加する'),
