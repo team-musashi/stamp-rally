@@ -15,10 +15,9 @@ class EntryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // スタンプラリー完了の結果を監視する
+    // スタンプラリー完了・中断の結果を監視する
     ref.listenResult<StampRally?>(
       entryStampRallyResultProvider,
-      completeMessage: 'スタンプラリーを完了にしました。',
       complete: (stampRally) {
         const HomeRoute().go(context);
       },
@@ -47,6 +46,14 @@ class EntryView extends ConsumerWidget {
                     .completeStampRally(stampRallyId: stampRally.id);
               },
               child: const Text('参加完了'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await ref
+                    .read(stampRallyServiceProvider)
+                    .withdrawalStampRally(stampRallyId: stampRally.id);
+              },
+              child: const Text('参加中断'),
             ),
           ],
         );
