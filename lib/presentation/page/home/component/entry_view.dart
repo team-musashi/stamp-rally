@@ -5,7 +5,6 @@ import '../../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../../application/stamp_rally/state/complete_stamp_rally_result.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../application/stamp_rally/state/withdraw_stamp_rally_result.dart';
-import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../component/dialog.dart';
 import '../../../component/widget_ref.dart';
@@ -19,19 +18,19 @@ class EntryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // スタンプラリー中断の結果を監視する
-    ref.listenResult<StampRally?>(
+    ref.listenResult<void>(
       withdrawStampRallyResultProvider,
       completeMessage: 'スタンプラリーを中断しました。',
-      complete: (stampRally) {
+      complete: (_) {
         const HomeRoute().go(context);
       },
     );
 
     // スタンプラリー完了の結果を監視する
-    ref.listenResult<StampRally?>(
+    ref.listenResult<void>(
       completeStampRallyResultProvider,
       completeMessage: 'スタンプラリーを完了にしました。',
-      complete: (stampRally) {
+      complete: (_) {
         const HomeRoute().go(context);
       },
     );

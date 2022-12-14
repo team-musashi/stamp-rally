@@ -49,8 +49,8 @@ class StampRallyService {
       // 参加中スタンプラリーが中断されるのを待つ
       final entryStampRally =
           await ref.refresh(entryStampRallyStreamProvider.future);
-      logger.i('withdrawn entryStampRally: id = ${entryStampRally?.id}');
-      return entryStampRally;
+      assert(entryStampRally == null);
+      logger.i('withdrawn entryStampRally: id = $stampRallyId');
     });
   }
 
@@ -66,8 +66,8 @@ class StampRallyService {
       // 参加中スタンプラリーが更新されるのを待つ
       final entryStampRally =
           await ref.refresh(entryStampRallyStreamProvider.future);
-      logger.i('completed entryStampRally: id = ${entryStampRally?.id}');
-      return entryStampRally;
+      assert(entryStampRally == null);
+      logger.i('completed entryStampRally: id = $stampRallyId');
     });
   }
 }
