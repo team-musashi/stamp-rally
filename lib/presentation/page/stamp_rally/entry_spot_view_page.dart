@@ -5,7 +5,7 @@ import '../../../application/stamp_rally/state/current_entry_spot.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
 
-/// スポット詳細画面
+/// 参加中スポット詳細画面
 class EntrySpotViewPage extends StatelessWidget {
   const EntrySpotViewPage({super.key});
 
