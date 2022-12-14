@@ -9,7 +9,17 @@ final commandRepositoryProvider = Provider<CommandRepository>(
 /// コマンドリポジトリ
 abstract class CommandRepository {
   /// スタンプラリーに参加する
-  Future<void> entryStampRally({
+  Future<void> enterStampRally({
     required String publicStampRallyId,
+  });
+
+  /// スタンプラリーを中断する
+  Future<void> withdrawStampRally({
+    required String entryStampRallyId,
+  });
+
+  /// スタンプラリーを完了する
+  Future<void> completeStampRally({
+    required String entryStampRallyId,
   });
 }

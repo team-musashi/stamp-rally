@@ -19,13 +19,13 @@ class CommandDocument with _$CommandDocument {
       _$CommandDocumentFromJson(json);
 
   /// 参加コマンド
-  factory CommandDocument.entryStampRally({
+  factory CommandDocument.enterStampRally({
     required String? uid,
     required String stampRallyId,
   }) {
     return CommandDocument(
       uid: uid ?? '',
-      commandType: CommandType.entryStampRally.name,
+      commandType: CommandType.enterStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
@@ -33,13 +33,27 @@ class CommandDocument with _$CommandDocument {
   }
 
   /// 参加キャンセルコマンド
-  factory CommandDocument.leaveStampRally({
+  factory CommandDocument.withdrawStampRally({
     required String? uid,
     required String stampRallyId,
   }) {
     return CommandDocument(
       uid: uid ?? '',
-      commandType: CommandType.leaveStampRally.name,
+      commandType: CommandType.withdrawStampRally.name,
+      data: <String, dynamic>{'stampRallyId': stampRallyId},
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+  }
+
+  /// 参加完了コマンド
+  factory CommandDocument.completeStampRally({
+    required String? uid,
+    required String stampRallyId,
+  }) {
+    return CommandDocument(
+      uid: uid ?? '',
+      commandType: CommandType.completeStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
@@ -50,9 +64,12 @@ class CommandDocument with _$CommandDocument {
 /// コマンドタイプ
 enum CommandType {
   /// スタンプラリーに参加する
-  entryStampRally,
+  enterStampRally,
 
   /// スタンプラリーへの参加をキャンセルする
-  leaveStampRally,
+  withdrawStampRally,
+
+  /// スタンプラリーへの参加を完了する
+  completeStampRally,
   ;
 }
