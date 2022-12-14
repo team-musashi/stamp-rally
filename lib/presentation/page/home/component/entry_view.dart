@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../application/stamp_rally/stamp_rally_service.dart';
+import '../../../../application/stamp_rally/state/complete_stamp_rally_result.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
-import '../../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
+import '../../../../application/stamp_rally/state/withdraw_stamp_rally_result.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../component/dialog.dart';
@@ -17,9 +18,17 @@ class EntryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // スタンプラリー完了・中断の結果を監視する
+    // スタンプラリー中断の結果を監視する
     ref.listenResult<StampRally?>(
-      enterStampRallyResultProvider,
+      withdrawStampRallyResultProvider,
+      complete: (stampRally) {
+        const HomeRoute().go(context);
+      },
+    );
+
+    // スタンプラリー完了の結果を監視する
+    ref.listenResult<StampRally?>(
+      completeStampRallyResultProvider,
       complete: (stampRally) {
         const HomeRoute().go(context);
       },

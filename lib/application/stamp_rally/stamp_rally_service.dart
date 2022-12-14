@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repository/command/command_repository.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../util/logger.dart';
+import 'state/complete_stamp_rally_result.dart';
 import 'state/enter_stamp_rally_result.dart';
+import 'state/withdraw_stamp_rally_result.dart';
 
 /// スタンプラリーサービスプロバイダー
 final stampRallyServiceProvider = Provider(
@@ -37,7 +39,7 @@ class StampRallyService {
 
   /// 参加中スタンプラリーを中断する
   Future<void> withdrawStampRally({required String stampRallyId}) async {
-    final notifier = ref.read(enterStampRallyResultProvider.notifier);
+    final notifier = ref.read(withdrawStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
       await ref
@@ -54,7 +56,7 @@ class StampRallyService {
 
   /// 参加中スタンプラリーを完了する
   Future<void> completeStampRally({required String stampRallyId}) async {
-    final notifier = ref.read(enterStampRallyResultProvider.notifier);
+    final notifier = ref.read(completeStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
       await ref
