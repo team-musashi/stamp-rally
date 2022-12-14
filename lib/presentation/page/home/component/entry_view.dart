@@ -6,6 +6,7 @@ import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart
 import '../../../../application/stamp_rally/state/entry_stamp_rally_result.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
+import '../../../component/dialog.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
 
@@ -40,19 +41,33 @@ class EntryView extends ConsumerWidget {
             Text(stampRally.title),
             Text('チェックポイント数：${stampRally.spots.length}'),
             ElevatedButton(
-              onPressed: () async {
-                await ref
-                    .read(stampRallyServiceProvider)
-                    .completeStampRally(stampRallyId: stampRally.id);
-              },
+              onPressed: () => showDialog<void>(
+                context: context,
+                builder: (context) => ConfirmDialog(
+                  content: '参加を完了しますか？',
+                  onApproved: () async {
+                    Navigator.of(context).pop();
+                    await ref
+                        .read(stampRallyServiceProvider)
+                        .completeStampRally(stampRallyId: stampRally.id);
+                  },
+                ),
+              ),
               child: const Text('参加完了'),
             ),
             ElevatedButton(
-              onPressed: () async {
-                await ref
-                    .read(stampRallyServiceProvider)
-                    .withdrawStampRally(stampRallyId: stampRally.id);
-              },
+              onPressed: () => showDialog<void>(
+                context: context,
+                builder: (context) => ConfirmDialog(
+                  content: '本当に参加を中断しますか？',
+                  onApproved: () async {
+                    Navigator.of(context).pop();
+                    await ref
+                        .read(stampRallyServiceProvider)
+                        .withdrawStampRally(stampRallyId: stampRally.id);
+                  },
+                ),
+              ),
               child: const Text('参加中断'),
             ),
           ],
