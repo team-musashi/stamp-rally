@@ -42,5 +42,6 @@
     "readme.*": "authors, backers.md, changelog*, citation*, code_of_conduct.md, codeowners, contributing.md, contributors, copying, credits, governance.md, history.md, license*, maintainers, readme*, security.md, sponsors.md",
     "*.dart": "$(capture).g.dart, $(capture).freezed.dart"
   },
-  "cSpell.enabled": false
+  "cSpell.enabled": false,
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
