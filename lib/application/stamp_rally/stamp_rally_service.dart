@@ -20,7 +20,7 @@ class StampRallyService {
 
   /// スタンプラリーに参加する
   Future<void> enterStampRally({required String stampRallyId}) async {
-    final notifier = ref.read(entryStampRallyResultProvider.notifier);
+    final notifier = ref.read(enterStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
       await ref.read(commandRepositoryProvider).enterStampRally(
@@ -37,7 +37,7 @@ class StampRallyService {
 
   /// 参加中スタンプラリーを中断する
   Future<void> withdrawStampRally({required String stampRallyId}) async {
-    final notifier = ref.read(entryStampRallyResultProvider.notifier);
+    final notifier = ref.read(enterStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
       await ref
@@ -54,7 +54,7 @@ class StampRallyService {
 
   /// 参加中スタンプラリーを完了する
   Future<void> completeStampRally({required String stampRallyId}) async {
-    final notifier = ref.read(entryStampRallyResultProvider.notifier);
+    final notifier = ref.read(enterStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
       await ref

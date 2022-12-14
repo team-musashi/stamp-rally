@@ -19,7 +19,7 @@ class EntryView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // スタンプラリー完了・中断の結果を監視する
     ref.listenResult<StampRally?>(
-      entryStampRallyResultProvider,
+      enterStampRallyResultProvider,
       complete: (stampRally) {
         const HomeRoute().go(context);
       },

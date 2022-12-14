@@ -34,7 +34,7 @@ class _Body extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // スタンプラリー参加の結果を監視する
     ref.listenResult<StampRally?>(
-      entryStampRallyResultProvider,
+      enterStampRallyResultProvider,
       completeMessage: 'スタンプラリーに参加しました。',
       complete: (stampRally) {
         if (stampRally != null) {
