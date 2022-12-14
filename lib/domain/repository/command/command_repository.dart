@@ -13,6 +13,11 @@ abstract class CommandRepository {
     required String publicStampRallyId,
   });
 
+  /// スタンプラリーを中断する
+  Future<void> withdrawalStampRally({
+    required String entryStampRallyId,
+  });
+
   /// スタンプラリーを完了する
   Future<void> completeStampRally({
     required String entryStampRallyId,
