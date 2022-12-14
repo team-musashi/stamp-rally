@@ -14,7 +14,7 @@ abstract class CommandRepository {
   });
 
   /// スタンプラリーを中断する
-  Future<void> withdrawalStampRally({
+  Future<void> withdrawStampRally({
     required String entryStampRallyId,
   });
 

@@ -33,13 +33,13 @@ class CommandDocument with _$CommandDocument {
   }
 
   /// 参加キャンセルコマンド
-  factory CommandDocument.withdrawalStampRally({
+  factory CommandDocument.withdrawStampRally({
     required String? uid,
     required String stampRallyId,
   }) {
     return CommandDocument(
       uid: uid ?? '',
-      commandType: CommandType.withdrawalStampRally.name,
+      commandType: CommandType.withdrawStampRally.name,
       data: <String, dynamic>{'stampRallyId': stampRallyId},
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
@@ -67,7 +67,7 @@ enum CommandType {
   entryStampRally,
 
   /// スタンプラリーへの参加をキャンセルする
-  withdrawalStampRally,
+  withdrawStampRally,
 
   /// スタンプラリーへの参加を完了する
   completeStampRally,

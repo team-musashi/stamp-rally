@@ -51,7 +51,7 @@ class EntryView extends ConsumerWidget {
               onPressed: () async {
                 await ref
                     .read(stampRallyServiceProvider)
-                    .withdrawalStampRally(stampRallyId: stampRally.id);
+                    .withdrawStampRally(stampRallyId: stampRally.id);
               },
               child: const Text('参加中断'),
             ),

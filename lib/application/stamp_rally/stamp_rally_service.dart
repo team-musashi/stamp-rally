@@ -36,18 +36,18 @@ class StampRallyService {
   }
 
   /// 参加中スタンプラリーを中断する
-  Future<void> withdrawalStampRally({required String stampRallyId}) async {
+  Future<void> withdrawStampRally({required String stampRallyId}) async {
     final notifier = ref.read(entryStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
       await ref
           .read(commandRepositoryProvider)
-          .withdrawalStampRally(entryStampRallyId: stampRallyId);
+          .withdrawStampRally(entryStampRallyId: stampRallyId);
 
       // 参加中スタンプラリーが中断されるのを待つ
       final entryStampRally =
           await ref.refresh(entryStampRallyStreamProvider.future);
-      logger.i('withdrawal entryStampRally: id = ${entryStampRally?.id}');
+      logger.i('withdrawn entryStampRally: id = ${entryStampRally?.id}');
       return entryStampRally;
     });
   }
@@ -64,7 +64,7 @@ class StampRallyService {
       // 参加中スタンプラリーが更新されるのを待つ
       final entryStampRally =
           await ref.refresh(entryStampRallyStreamProvider.future);
-      logger.i('updated entryStampRally: id = ${entryStampRally?.id}');
+      logger.i('completed entryStampRally: id = ${entryStampRally?.id}');
       return entryStampRally;
     });
   }
