@@ -21,6 +21,7 @@ class EntryView extends ConsumerWidget {
     // スタンプラリー中断の結果を監視する
     ref.listenResult<StampRally?>(
       withdrawStampRallyResultProvider,
+      completeMessage: 'スタンプラリーを中断しました。',
       complete: (stampRally) {
         const HomeRoute().go(context);
       },
@@ -29,6 +30,7 @@ class EntryView extends ConsumerWidget {
     // スタンプラリー完了の結果を監視する
     ref.listenResult<StampRally?>(
       completeStampRallyResultProvider,
+      completeMessage: 'スタンプラリーを完了にしました。',
       complete: (stampRally) {
         const HomeRoute().go(context);
       },
