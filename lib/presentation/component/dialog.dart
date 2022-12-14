@@ -36,27 +36,28 @@ class ErrorDialog extends StatelessWidget {
 class ConfirmDialog extends ConsumerWidget {
   const ConfirmDialog({
     super.key,
-    required this.content,
+    required this.message,
     required this.onApproved,
   });
 
-  final String content;
+  final String message;
   final VoidCallback? onApproved;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       title: const Text('確認'),
-      content: Text(
-        content,
-      ),
+      content: Text(message),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('いいえ'),
         ),
         FilledButton(
-          onPressed: onApproved,
+          onPressed: () {
+            Navigator.of(context).pop();
+            onApproved?.call();
+          },
           child: const Text('はい'),
         ),
       ],

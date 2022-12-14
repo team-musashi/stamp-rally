@@ -55,9 +55,8 @@ class EntryView extends ConsumerWidget {
               onPressed: () => showDialog<void>(
                 context: context,
                 builder: (context) => ConfirmDialog(
-                  content: '参加を完了しますか？',
+                  message: '参加を完了しますか？',
                   onApproved: () async {
-                    Navigator.of(context).pop();
                     await ref
                         .read(stampRallyServiceProvider)
                         .completeStampRally(stampRallyId: stampRally.id);
@@ -70,9 +69,8 @@ class EntryView extends ConsumerWidget {
               onPressed: () => showDialog<void>(
                 context: context,
                 builder: (context) => ConfirmDialog(
-                  content: '本当に参加を中断しますか？',
+                  message: '本当に参加を中断しますか？',
                   onApproved: () async {
-                    Navigator.of(context).pop();
                     await ref
                         .read(stampRallyServiceProvider)
                         .withdrawStampRally(stampRallyId: stampRally.id);
