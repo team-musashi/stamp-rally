@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repository/command/command_repository.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../util/logger.dart';
-import 'state/entry_stamp_rally_result.dart';
+import 'state/enter_stamp_rally_result.dart';
 
 /// スタンプラリーサービスプロバイダー
 final stampRallyServiceProvider = Provider(

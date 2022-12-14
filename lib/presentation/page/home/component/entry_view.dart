@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
-import '../../../../application/stamp_rally/state/entry_stamp_rally_result.dart';
+import '../../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../component/dialog.dart';
