@@ -57,6 +57,24 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       // キャッシュを更新する
       _cacheEntryStampRally = latest;
     });
+
+    // 参加完了済のスタンプラリーリストの変更を監視する
+    _completeSubscription = _completeQuery?.snapshots().listen((snapshot) {
+      if (_completeChangesController.isClosed) {
+        return;
+      }
+
+      final latest = snapshot.toStampRallies();
+      if (listEquals(latest, _cacheCompleteStampRallies)) {
+        // キャッシュとまったく同じなら変更を通知しない
+        return;
+      }
+
+      _completeChangesController.add(latest);
+
+      // キャッシュを更新する
+      _cacheCompleteStampRallies = latest;
+    });
   }
 
   FirebaseFirestore? get firestore => userDocRef?.firestore;
@@ -64,14 +82,18 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
   final _entryChangesController = StreamController<StampRally?>.broadcast();
+  final _completeChangesController =
+      StreamController<List<StampRally>>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
+  StreamSubscription<QuerySnapshot<StampRallyDocument>>? _completeSubscription;
 
   /// キャッシュ
   List<StampRally>? _cachePublicStampRallies;
   StampRally? _cacheEntryStampRally;
+  List<StampRally>? _cacheCompleteStampRallies;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
   static const publicSpotCollectionName = 'publicSpot';
@@ -125,11 +147,35 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         },
       );
 
+  /// 参加完了済のスタンプラリーリストのクエリ
+  ///
+  /// ＜検索条件＞
+  /// WHERE status == complete
+  /// ORDER BY createdAt DESC
+  Query<StampRallyDocument>? get _completeQuery => userDocRef
+          ?.collection(entryStampRallyCollectionName)
+          .where(
+            StampRallyDocument.field.status,
+            isEqualTo: StampRallyEntryStatus.complete.name,
+          )
+          .orderBy(StampRallyDocument.field.createdAt, descending: true)
+          .withConverter<StampRallyDocument>(
+        fromFirestore: (snapshot, options) {
+          final json = snapshot.data();
+          return StampRallyDocument.fromJson(json!);
+        },
+        toFirestore: (_, __) {
+          return <String, dynamic>{};
+        },
+      );
+
   void dispose() {
     _publicSubscription?.cancel();
     _entrySubscription?.cancel();
+    _completeSubscription?.cancel();
     _publicChangesController.close();
     _entryChangesController.close();
+    _completeChangesController.close();
   }
 
   @override
@@ -168,6 +214,22 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       _entryChangesController.stream;
 
   @override
+  Stream<List<StampRally>> completeStampRallyChanges() =>
+      _completeChangesController.stream;
+
+  @override
+  Future<List<StampRally>> fetchcompleteStampRally() async {
+    // キャッシュがあればキャッシュを返す
+    final cache = _cacheCompleteStampRallies;
+    if (cache != null) {
+      return cache;
+    }
+    // キャッシュがなければ取得してくる
+    final snapshot = await _completeQuery?.get();
+    return snapshot?.toStampRallies() ?? [];
+  }
+
+  @override
   Future<List<Spot>> fetchPublicSpots({
     required String publicStampRallyId,
   }) async {
@@ -191,6 +253,23 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
     final snapshot = await userDocRef
         ?.collection(entryStampRallyCollectionName)
         .doc(entryStampRallyId)
+        .collection(entrySpotCollectionName)
+        .orderBy(SpotDocument.field.order, descending: false)
+        .get();
+    return snapshot?.docs.map((query) {
+          final json = query.data();
+          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+        }).toList() ??
+        [];
+  }
+
+  @override
+  Future<List<Spot>> fetchCompleteSpots({
+    required String completeStampRallyId,
+  }) async {
+    final snapshot = await userDocRef
+        ?.collection(entryStampRallyCollectionName)
+        .doc(completeStampRallyId)
         .collection(entrySpotCollectionName)
         .orderBy(SpotDocument.field.order, descending: false)
         .get();
