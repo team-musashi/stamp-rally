@@ -214,11 +214,11 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       _entryChangesController.stream;
 
   @override
-  Stream<List<StampRally>> completeStampRallyChanges() =>
+  Stream<List<StampRally>> completeStampRalliesChanges() =>
       _completeChangesController.stream;
 
   @override
-  Future<List<StampRally>> fetchcompleteStampRally() async {
+  Future<List<StampRally>> fetchCompleteStampRallies() async {
     // キャッシュがあればキャッシュを返す
     final cache = _cacheCompleteStampRallies;
     if (cache != null) {

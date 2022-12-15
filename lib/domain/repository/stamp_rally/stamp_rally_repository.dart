@@ -33,22 +33,23 @@ final entryStampRallyProvider = FutureProvider(
   name: 'entryStampRallyProvider',
 );
 
-/// 参加完了済のスタンプラリーを返すStreamプロバイダー
-final completeStampRallyStreamProvider = StreamProvider(
-  (ref) => ref.watch(stampRallyRepositoryProvider).completeStampRallyChanges(),
-  name: 'completeStampRallyStreamProvider',
+/// 参加完了済のスタンプラリーリストを返すStreamプロバイダー
+final completeStampRalliesStreamProvider = StreamProvider(
+  (ref) =>
+      ref.watch(stampRallyRepositoryProvider).completeStampRalliesChanges(),
+  name: 'completeStampRalliesStreamProvider',
 );
 
-/// 参加完了済のスタンプラリーを返すプロバイダー
+/// 参加完了済のスタンプラリーリストを返すプロバイダー
 final completeStampRalliesProvider = FutureProvider(
   (ref) async {
     final repository = ref.watch(stampRallyRepositoryProvider);
-    repository.completeStampRallyChanges().listen((latest) {
+    repository.completeStampRalliesChanges().listen((latest) {
       ref.state = AsyncValue.data(latest);
     });
-    return repository.fetchcompleteStampRally();
+    return repository.fetchCompleteStampRallies();
   },
-  name: 'completeStampRallyProvider',
+  name: 'completeStampRalliesProvider',
 );
 
 /// 公開中のスタンプラリーのスポットリストを返すプロバイダー
@@ -95,11 +96,11 @@ abstract class StampRallyRepository {
   /// 参加中のスタンプラリーを返す
   Stream<StampRally?> entryStampRallyChanges();
 
-  /// 参加完了済のスタンプラリーを返す
-  Future<List<StampRally>> fetchcompleteStampRally();
+  /// 参加完了済のスタンプラリーリストを返す
+  Future<List<StampRally>> fetchCompleteStampRallies();
 
-  /// 参加完了済のスタンプラリーを返す
-  Stream<List<StampRally>> completeStampRallyChanges();
+  /// 参加完了済のスタンプラリーリストを返す
+  Stream<List<StampRally>> completeStampRalliesChanges();
 
   /// 公開中のスタンプラリーに紐づくスポットリストを返す
   Future<List<Spot>> fetchPublicSpots({required String publicStampRallyId});

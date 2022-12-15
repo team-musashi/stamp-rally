@@ -73,7 +73,7 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Stream<List<StampRally>> completeStampRallyChanges() {
+  Stream<List<StampRally>> completeStampRalliesChanges() {
     // TODO(some): implement completeStampRallyChanges
     throw UnimplementedError();
   }
@@ -87,7 +87,7 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<List<StampRally>> fetchcompleteStampRally() {
+  Future<List<StampRally>> fetchCompleteStampRallies() {
     // TODO(some): implement fetchcompleteStampRally
     throw UnimplementedError();
   }
