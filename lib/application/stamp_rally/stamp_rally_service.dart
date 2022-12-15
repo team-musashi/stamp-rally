@@ -63,10 +63,10 @@ class StampRallyService {
           .read(commandRepositoryProvider)
           .completeStampRally(entryStampRallyId: stampRallyId);
 
-      // 参加中スタンプラリーが更新されるのを待つ
-      final entryStampRally =
-          await ref.refresh(entryStampRallyStreamProvider.future);
-      assert(entryStampRally == null);
+      // 参加完了済スタンプラリーが更新されるのを待つ
+      final completeStampRally =
+          await ref.refresh(completeStampRallyStreamProvider.future);
+      assert(completeStampRally.isNotEmpty);
       logger.i('completed entryStampRally: id = $stampRallyId');
     });
   }
