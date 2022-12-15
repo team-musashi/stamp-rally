@@ -35,14 +35,36 @@ class FirebaseCommandRepository implements CommandRepository {
   final String? uid;
 
   @override
-  Future<void> entryStampRally({
+  Future<void> enterStampRally({
     required String publicStampRallyId,
   }) async {
     assert(uid != null);
     await commandCollectionRef.add(
-      CommandDocument.entryStampRally(
+      CommandDocument.enterStampRally(
         uid: uid,
         stampRallyId: publicStampRallyId,
+      ),
+    );
+  }
+
+  @override
+  Future<void> withdrawStampRally({required String entryStampRallyId}) async {
+    assert(uid != null);
+    await commandCollectionRef.add(
+      CommandDocument.withdrawStampRally(
+        uid: uid,
+        stampRallyId: entryStampRallyId,
+      ),
+    );
+  }
+
+  @override
+  Future<void> completeStampRally({required String entryStampRallyId}) async {
+    assert(uid != null);
+    await commandCollectionRef.add(
+      CommandDocument.completeStampRally(
+        uid: uid,
+        stampRallyId: entryStampRallyId,
       ),
     );
   }
