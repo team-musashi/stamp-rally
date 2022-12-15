@@ -58,11 +58,14 @@ class _Body extends ConsumerWidget {
               Text('チェックポイント数：${stampRally.spots.length}'),
               Text('所要時間：${stampRally.requiredTime.toString()}時間'),
               DelimiterBlock(text: stampRally.summary),
-              ElevatedButton(
-                onPressed: () async {
-                  PublicSpotIndexRoute.fromStampRally(stampRally).go(context);
-                },
-                child: const Text('スポット一覧'),
+              Column(
+                children: stampRally.spots
+                    .map(
+                      (spot) => Image(
+                        image: NetworkImage(spot.imageUrl),
+                      ),
+                    )
+                    .toList(),
               ),
               ElevatedButton(
                 onPressed: stampRally.canEntry
