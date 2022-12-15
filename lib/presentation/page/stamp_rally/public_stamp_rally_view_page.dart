@@ -61,8 +61,14 @@ class _Body extends ConsumerWidget {
               Column(
                 children: stampRally.spots
                     .map(
-                      (spot) => Image(
-                        image: NetworkImage(spot.imageUrl),
+                      (spot) => InkWell(
+                        onTap: () async {
+                          PublicSpotViewRoute.fromSpot(stampRally, spot)
+                              .go(context);
+                        },
+                        child: Image(
+                          image: NetworkImage(spot.imageUrl),
+                        ),
                       ),
                     )
                     .toList(),
