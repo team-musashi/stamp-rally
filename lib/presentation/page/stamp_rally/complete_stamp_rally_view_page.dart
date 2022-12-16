@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/stamp_rally/state/current_complete_stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../home/component/stamp_rally.dart';
 
@@ -13,7 +14,10 @@ class CompleteStampRallyViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('詳細')),
+      appBar: AppBar(
+        title: const AppBarTitle(),
+        centerTitle: true,
+      ),
       body: const _Body(),
     );
   }
@@ -35,8 +39,8 @@ class _Body extends ConsumerWidget {
               ),
               GridView.builder(
                 shrinkWrap: true,
-                physics:
-                    const NeverScrollableScrollPhysics(), // GridView内でスクロールしないようにする
+                // GridView内でスクロールしないようにする
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(4),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
