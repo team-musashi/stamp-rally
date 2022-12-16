@@ -43,7 +43,7 @@ class EntryView extends ConsumerWidget {
           children: [
             InkWell(
               onTap: () {
-                EntrySpotIndexRoute.fromStampRally(stampRally).push(context);
+                EntrySpotIndexRoute.fromStampRally(stampRally).go(context);
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,

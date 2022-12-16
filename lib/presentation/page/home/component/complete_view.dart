@@ -27,7 +27,7 @@ class CompleteView extends ConsumerWidget {
             return InkWell(
               onTap: () {
                 CompleteStampRallyViewRoute.fromStampRally(stampRally)
-                    .push(context);
+                    .go(context);
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,

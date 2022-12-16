@@ -44,7 +44,7 @@ class HomePage extends ConsumerWidget {
               centerTitle: true,
               actions: [
                 IconButton(
-                  onPressed: () => const SettingRoute().push(context),
+                  onPressed: () => const SettingRoute().go(context),
                   icon: const Icon(Icons.settings),
                 )
               ],
