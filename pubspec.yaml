@@ -52,3 +52,20 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+  fonts:
+    - family: M_PLUS_1p
+      fonts:
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Thin.ttf
+         weight: 100 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Light.ttf
+         weight: 300 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Regular.ttf
+         weight: 400 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Medium.ttf
+         weight: 500 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Bold.ttf
+         weight: 700 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-ExtraBold.ttf
+         weight: 800 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Black.ttf
+         weight: 900 

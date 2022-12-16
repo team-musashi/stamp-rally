@@ -28,11 +28,9 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              children: [
-                Assets.images.iconStamp.image(height: 36),
-                Assets.images.logoStampRarry.image(height: 146),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Assets.images.logoBurarry.image(),
             ),
             Column(
               children: const [
