@@ -25,7 +25,10 @@ class _EntryMapViewState extends State<EntryMapView> {
     );
   }
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController? controller) {
+    if (controller == null) {
+      return;
+    }
     mapController = controller;
   }
 }
