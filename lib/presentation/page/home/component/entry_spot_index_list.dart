@@ -30,7 +30,7 @@ class EntrySpotIndexList extends ConsumerWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: cardSizeHeight * 0.7,
+                      height: cardSizeHeight * 0.65,
                       child: Stack(
                         children: [
                           // DecoratedBoxだとDecorationImageがうまく効かないので、
@@ -66,11 +66,11 @@ class EntrySpotIndexList extends ConsumerWidget {
                       ),
                     ),
                     SizedBox(
-                      height: cardSizeHeight * 0.25,
+                      height: cardSizeHeight * 0.3,
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 8, left: 10),
+                            padding: const EdgeInsets.only(top: 4, left: 10),
                             child: Row(
                               children: [
                                 Icon(
