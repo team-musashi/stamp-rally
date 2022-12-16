@@ -20,10 +20,6 @@ class $AssetsImagesGen {
   AssetGenImage get iconProd =>
       const AssetGenImage('assets/images/icon_prod.png');
 
-  /// File path: assets/images/icon_stamp.png
-  AssetGenImage get iconStamp =>
-      const AssetGenImage('assets/images/icon_stamp.png');
-
   /// File path: assets/images/logo_burarry.png
   AssetGenImage get logoBurarry =>
       const AssetGenImage('assets/images/logo_burarry.png');
@@ -32,19 +28,9 @@ class $AssetsImagesGen {
   AssetGenImage get logoHeaderBurarry =>
       const AssetGenImage('assets/images/logo_header_burarry.png');
 
-  /// File path: assets/images/logo_stamp_rarry.png
-  AssetGenImage get logoStampRarry =>
-      const AssetGenImage('assets/images/logo_stamp_rarry.png');
-
   /// List of all assets
-  List<AssetGenImage> get values => [
-        iconDev,
-        iconProd,
-        iconStamp,
-        logoBurarry,
-        logoHeaderBurarry,
-        logoStampRarry
-      ];
+  List<AssetGenImage> get values =>
+      [iconDev, iconProd, logoBurarry, logoHeaderBurarry];
 }
 
 class Assets {
