@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../util/assets/fonts.gen.dart';
+
 /// テーマプロバイダー
 final themeProvider = Provider(
   (ref) {
@@ -13,7 +15,7 @@ final themeProvider = Provider(
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
-      fontFamily: 'M_PLUS_1p',
+      fontFamily: FontFamily.mPLUS1p,
       bottomSheetTheme: const BottomSheetThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
