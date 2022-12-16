@@ -79,14 +79,6 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<List<Spot>> fetchCompleteSpots({
-    required String completeStampRallyId,
-  }) {
-    // TODO(some): implement fetchCompleteSpots
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<StampRally>> fetchCompleteStampRallies() {
     // TODO(some): implement fetchcompleteStampRally
     throw UnimplementedError();

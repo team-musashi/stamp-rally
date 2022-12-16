@@ -69,14 +69,6 @@ final entrySpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
   name: 'entrySpotsProviderFamily',
 );
 
-/// 参加完了済のスタンプラリーのスポットリストを返すプロバイダー
-final completeSpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
-  (ref, stampRallyId) => ref
-      .watch(stampRallyRepositoryProvider)
-      .fetchCompleteSpots(completeStampRallyId: stampRallyId),
-  name: 'completeSpotsProviderFamily',
-);
-
 /// スタンプラリーリポジトリプロバイダー
 final stampRallyRepositoryProvider = Provider<StampRallyRepository>(
   (_) => throw UnimplementedError('Provider was not initialized'),
@@ -107,7 +99,4 @@ abstract class StampRallyRepository {
 
   /// 参加中のスタンプラリーに紐づくスポットリストを返す
   Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId});
-
-  /// 参加完了済のスタンプラリーに紐づくスポットリストを返す
-  Future<List<Spot>> fetchCompleteSpots({required String completeStampRallyId});
 }

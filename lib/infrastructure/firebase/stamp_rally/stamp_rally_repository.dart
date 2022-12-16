@@ -262,23 +262,6 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         }).toList() ??
         [];
   }
-
-  @override
-  Future<List<Spot>> fetchCompleteSpots({
-    required String completeStampRallyId,
-  }) async {
-    final snapshot = await userDocRef
-        ?.collection(entryStampRallyCollectionName)
-        .doc(completeStampRallyId)
-        .collection(entrySpotCollectionName)
-        .orderBy(SpotDocument.field.order, descending: false)
-        .get();
-    return snapshot?.docs.map((query) {
-          final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
-        }).toList() ??
-        [];
-  }
 }
 
 extension _QuerySnapshotEx on QuerySnapshot<StampRallyDocument> {
