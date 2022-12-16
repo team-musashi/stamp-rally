@@ -30,6 +30,7 @@ class EntryMapView extends ConsumerWidget {
             children: [
               GoogleMap(
                 onMapCreated: _controller.complete,
+                myLocationButtonEnabled: false,
                 markers: createMarkersFromSpots(stampRally.spots),
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
