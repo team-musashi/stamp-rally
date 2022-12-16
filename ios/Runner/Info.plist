@@ -56,5 +56,9 @@
 	<string>スポットで撮影した写真を取得します</string>
 	<key>NSCameraUsageDescription</key>
 	<string>スポット到着時に写真を撮影します</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Required to post location information when posting photos and videos.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Required to post location information when posting photos and videos.</string>
 </dict>
 </plist>
