@@ -19,7 +19,6 @@ import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/entry_spot_index_page.dart';
-import 'page/stamp_rally/public_spot_index_page.dart';
 import 'page/stamp_rally/public_spot_view_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
@@ -128,13 +127,8 @@ class LoginRoute extends GoRouteData {
     TypedGoRoute<PublicStampRallyViewRoute>(
       path: 'public-stamp-rally/:publicStampRallyId',
       routes: [
-        TypedGoRoute<PublicSpotIndexRoute>(
-          path: 'spots',
-          routes: [
-            TypedGoRoute<PublicSpotViewRoute>(
-              path: ':publicSpotId',
-            ),
-          ],
+        TypedGoRoute<PublicSpotViewRoute>(
+          path: ':publicSpotId',
         ),
       ],
     ),
@@ -189,44 +183,6 @@ class PublicStampRallyViewRoute extends GoRouteData {
         ),
       ],
       child: const PublicStampRallyViewPage(),
-    );
-  }
-}
-
-/// 公開スポット一覧画面
-class PublicSpotIndexRoute extends GoRouteData {
-  PublicSpotIndexRoute({
-    required this.publicStampRallyId,
-    // this.$extra,
-  });
-
-  factory PublicSpotIndexRoute.fromStampRally(
-    StampRally stampRally,
-  ) =>
-      PublicSpotIndexRoute(
-        publicStampRallyId: stampRally.id,
-        // $extra: stampRally,
-      );
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリーID
-  final String publicStampRallyId;
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  // StampRally? $extra;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      overrides: [
-        // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
-        currentPublicStampRallyParamProvider.overrideWithValue(
-          StampRallyParam(
-            stampRallyId: publicStampRallyId,
-            // cache: $extra,
-          ),
-        ),
-      ],
-      child: const PublicSpotIndexPage(),
     );
   }
 }
