@@ -107,16 +107,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ORDER BY startDate ASC
   Query<StampRallyDocument>? get _publicQuery => firestore
       ?.collection(publicStampRallyCollectionName)
-      .withConverter<StampRallyDocument>(
-        fromFirestore: (snapshot, options) {
-          final json = snapshot.data();
-          return StampRallyDocument.fromJson(json!);
-        },
-        toFirestore: (_, __) {
-          // 更新することは無いため空実装
-          return <String, dynamic>{};
-        },
-      )
+      .withStampRallyDocumentConverter()
       .where(
         StampRallyDocument.field.startDate,
         isLessThanOrEqualTo: DateTime.now(),
@@ -130,22 +121,14 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ORDER BY createdAt DESC
   /// limit 1
   Query<StampRallyDocument>? get _entryQuery => userDocRef
-          ?.collection(entryStampRallyCollectionName)
-          .where(
-            StampRallyDocument.field.status,
-            isEqualTo: StampRallyEntryStatus.entry.name,
-          )
-          .orderBy(StampRallyDocument.field.createdAt, descending: true)
-          .limit(1)
-          .withConverter<StampRallyDocument>(
-        fromFirestore: (snapshot, options) {
-          final json = snapshot.data();
-          return StampRallyDocument.fromJson(json!);
-        },
-        toFirestore: (_, __) {
-          return <String, dynamic>{};
-        },
-      );
+      ?.collection(entryStampRallyCollectionName)
+      .withStampRallyDocumentConverter()
+      .where(
+        StampRallyDocument.field.status,
+        isEqualTo: StampRallyEntryStatus.entry.name,
+      )
+      .orderBy(StampRallyDocument.field.createdAt, descending: true)
+      .limit(1);
 
   /// 参加完了済のスタンプラリーリストのクエリ
   ///
@@ -153,21 +136,13 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// WHERE status == complete
   /// ORDER BY createdAt DESC
   Query<StampRallyDocument>? get _completeQuery => userDocRef
-          ?.collection(entryStampRallyCollectionName)
-          .where(
-            StampRallyDocument.field.status,
-            isEqualTo: StampRallyEntryStatus.complete.name,
-          )
-          .orderBy(StampRallyDocument.field.createdAt, descending: true)
-          .withConverter<StampRallyDocument>(
-        fromFirestore: (snapshot, options) {
-          final json = snapshot.data();
-          return StampRallyDocument.fromJson(json!);
-        },
-        toFirestore: (_, __) {
-          return <String, dynamic>{};
-        },
-      );
+      ?.collection(entryStampRallyCollectionName)
+      .withStampRallyDocumentConverter()
+      .where(
+        StampRallyDocument.field.status,
+        isEqualTo: StampRallyEntryStatus.complete.name,
+      )
+      .orderBy(StampRallyDocument.field.createdAt, descending: true);
 
   void dispose() {
     _publicSubscription?.cancel();
@@ -262,6 +237,21 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         }).toList() ??
         [];
   }
+}
+
+extension _CollectionRefferenceEx on CollectionReference<Map<String, dynamic>> {
+  /// StampRallyDocumentへ変換するWithConverter
+  CollectionReference<StampRallyDocument> withStampRallyDocumentConverter() =>
+      withConverter<StampRallyDocument>(
+        fromFirestore: (snapshot, options) {
+          final json = snapshot.data();
+          return StampRallyDocument.fromJson(json!);
+        },
+        toFirestore: (_, __) {
+          // 更新することは無いため空実装
+          return <String, dynamic>{};
+        },
+      );
 }
 
 extension _QuerySnapshotEx on QuerySnapshot<StampRallyDocument> {
