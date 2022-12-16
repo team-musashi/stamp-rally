@@ -58,20 +58,28 @@ class _Body extends ConsumerWidget {
               Text('チェックポイント数：${stampRally.spots.length}'),
               Text('所要時間：${stampRally.requiredTime.toString()}時間'),
               DelimiterBlock(text: stampRally.summary),
-              Column(
-                children: stampRally.spots
-                    .map(
-                      (spot) => InkWell(
-                        onTap: () async {
-                          PublicSpotViewRoute.fromSpot(stampRally, spot)
-                              .go(context);
-                        },
-                        child: Image(
-                          image: NetworkImage(spot.imageUrl),
-                        ),
-                      ),
-                    )
-                    .toList(),
+              SizedBox(
+                height: 2000,
+                child: AsyncValueHandler<StampRally>(
+                  value: ref.watch(currentPublicStampRallyProvider),
+                  builder: (stampRally) {
+                    return ListView.builder(
+                      itemCount: stampRally.spots.length,
+                      itemBuilder: (context, index) {
+                        final spot = stampRally.spots[index];
+                        return InkWell(
+                          onTap: () async {
+                            PublicSpotViewRoute.fromSpot(stampRally, spot)
+                                .go(context);
+                          },
+                          child: Image(
+                            image: NetworkImage(spot.imageUrl),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
               ElevatedButton(
                 onPressed: stampRally.canEntry
