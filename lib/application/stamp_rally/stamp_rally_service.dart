@@ -74,6 +74,8 @@ class StampRallyService {
         completeStampRallies.length == beforeCompleteStampRallies.length + 1,
       );
       logger.i('completed entryStampRally: id = $stampRallyId');
+      return completeStampRallies
+          .firstWhere((stampRally) => stampRally.id == stampRallyId);
     });
   }
 }
