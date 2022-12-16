@@ -59,6 +59,10 @@ class StampRallyService {
     final notifier = ref.read(completeStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
+      // あとで加算されるのを確認するために、現時点の完了済スタンプラリーのリストを取得する
+      final beforeCompleteStampRallies =
+          await ref.read(completeStampRalliesProvider.future);
+
       await ref
           .read(commandRepositoryProvider)
           .completeStampRally(entryStampRallyId: stampRallyId);
@@ -66,7 +70,9 @@ class StampRallyService {
       // 参加完了済スタンプラリーリストが更新されるのを待つ
       final completeStampRallies =
           await ref.refresh(completeStampRalliesStreamProvider.future);
-      assert(completeStampRallies.isNotEmpty);
+      assert(
+        completeStampRallies.length == beforeCompleteStampRallies.length + 1,
+      );
       logger.i('completed entryStampRally: id = $stampRallyId');
     });
   }
