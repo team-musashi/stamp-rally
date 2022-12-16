@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../component/async_value_handler.dart';
+import 'entry_spot_index_list.dart';
 
 /// 参加中スタンプラリーのスポットマップ表示用View
 class EntryMapView extends ConsumerWidget {
@@ -25,16 +26,27 @@ class EntryMapView extends ConsumerWidget {
       value: ref.watch(currentEntryStampRallyProvider),
       builder: (stampRally) {
         return Scaffold(
-          body: GoogleMap(
-            onMapCreated: _controller.complete,
-            markers: createMarkersFromSpots(stampRally.spots),
-            initialCameraPosition: CameraPosition(
-              target: LatLng(
-                stampRally.spots.first.location.latitude,
-                stampRally.spots.first.location.longitude,
+          body: Stack(
+            children: [
+              GoogleMap(
+                onMapCreated: _controller.complete,
+                markers: createMarkersFromSpots(stampRally.spots),
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    stampRally.spots.first.location.latitude,
+                    stampRally.spots.first.location.longitude,
+                  ),
+                  zoom: 14,
+                ),
               ),
-              zoom: 14,
-            ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: const EntrySpotIndexList(),
+                ),
+              ),
+            ],
           ),
         );
       },
