@@ -1,100 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../../../application/stamp_rally/stamp_rally_service.dart';
-import '../../../../application/stamp_rally/state/complete_stamp_rally_result.dart';
-import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
-import '../../../../application/stamp_rally/state/withdraw_stamp_rally_result.dart';
-import '../../../component/async_value_handler.dart';
-import '../../../component/dialog.dart';
-import '../../../component/widget_ref.dart';
-import '../../../router.dart';
-import 'stamp_rally.dart';
+import 'entry_toggle_switch.dart';
 
 /// 参加中画面
-class EntryView extends ConsumerWidget {
+class EntryView extends StatelessWidget {
   const EntryView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // スタンプラリー中断の結果を監視する
-    ref.listenResult<void>(
-      withdrawStampRallyResultProvider,
-      completeMessage: 'スタンプラリーを中断しました。',
-      complete: (_) {
-        const HomeRoute().go(context);
-      },
-    );
-
-    // スタンプラリー完了の結果を監視する
-    ref.listenResult<void>(
-      completeStampRallyResultProvider,
-      completeMessage: 'スタンプラリーを完了にしました。',
-      complete: (_) {
-        const HomeRoute().go(context);
-      },
-    );
-
-    return AsyncValueHandler(
-      value: ref.watch(currentEntryStampRallyProvider),
-      builder: (stampRally) {
-        // Todo Figmaにあわせてデザイン実装
-        return Column(
-          children: [
-            InkWell(
-              onTap: () {
-                EntrySpotIndexRoute.fromStampRally(stampRally).push(context);
-              },
-              child: StampRallyThumbnail(
-                stampRally: stampRally,
-              ),
-            ),
-            Text(stampRally.title),
-            Text('チェックポイント数：${stampRally.spots.length}'),
-            ElevatedButton(
-              onPressed: () => showDialog<void>(
-                context: context,
-                builder: (context) => ConfirmDialog(
-                  message: '参加を完了しますか？',
-                  onApproved: () async {
-                    await ref
-                        .read(stampRallyServiceProvider)
-                        .completeStampRally(stampRallyId: stampRally.id);
-                  },
-                ),
-              ),
-              child: const Text('参加完了'),
-            ),
-            ElevatedButton(
-              onPressed: () => showDialog<void>(
-                context: context,
-                builder: (context) => ConfirmDialog(
-                  message: '本当に参加を中断しますか？',
-                  onApproved: () async {
-                    await ref
-                        .read(stampRallyServiceProvider)
-                        .withdrawStampRally(stampRallyId: stampRally.id);
-                  },
-                ),
-              ),
-              child: const Text('参加中断'),
-            ),
-          ],
-        );
-      },
-      orNull: () => const _EmptyView(),
-    );
-  }
-}
-
-/// 参加中のスタンプラリーがない場合の表示
-class _EmptyView extends StatelessWidget {
-  const _EmptyView();
-
-  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('参加中のスタンプラリーはありません'),
+    final view = EntryToggleSwitch.map.view;
+    return Stack(
+      children: [
+        view,
+        Padding(
+          padding: const EdgeInsets.only(top: 15, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ToggleSwitch(
+                minWidth: 60,
+                cornerRadius: 10,
+                activeFgColor: Theme.of(context).colorScheme.primaryContainer,
+                inactiveBgColor: Colors.grey,
+                inactiveFgColor: Colors.white,
+                activeBgColor: const [Colors.white],
+                totalSwitches: 2,
+                icons: const [Icons.list, Icons.map_outlined],
+                iconSize: 20,
+                animate: true,
+                curve: Curves.linearToEaseOut,
+                onToggle: (index) {
+                  // if (index != null) {
+                  //   setState(() {
+                  //     view = EntryToggleSwitch.values[index].view;
+                  //   });
+                  // }
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
