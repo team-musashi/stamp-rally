@@ -54,8 +54,6 @@ class _Body extends ConsumerWidget {
               CachedNetworkImage(
                 imageUrl: stampRally.imageUrl,
                 cacheManager: ref.read(defaultCacheManager),
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
               ),
               Text(
                 stampRally.title,

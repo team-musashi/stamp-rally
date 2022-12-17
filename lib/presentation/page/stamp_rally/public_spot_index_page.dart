@@ -42,8 +42,6 @@ class _Body extends ConsumerWidget {
               child: CachedNetworkImage(
                 imageUrl: spot.imageUrl,
                 cacheManager: ref.read(defaultCacheManager),
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
               ),
             );
           },

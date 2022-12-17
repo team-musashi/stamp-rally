@@ -33,8 +33,6 @@ class StampRallyThumbnail extends StatelessWidget {
             imageUrl: stampRally.imageUrl,
             fit: BoxFit.cover,
             cacheManager: cacheManager,
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
           ),
         ),
       ),
