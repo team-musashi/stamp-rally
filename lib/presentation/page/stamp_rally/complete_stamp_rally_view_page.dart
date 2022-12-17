@@ -5,6 +5,7 @@ import '../../../application/stamp_rally/state/current_complete_stamp_rally.dart
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
+import '../../component/cached_manager.dart';
 import '../home/component/stamp_rally.dart';
 
 /// 完了済スタンプラリー詳細画面
@@ -36,6 +37,7 @@ class _Body extends ConsumerWidget {
             children: [
               StampRallyThumbnail(
                 stampRally: stampRally,
+                cacheManager: ref.read(defaultCacheManager),
               ),
               GridView.builder(
                 shrinkWrap: true,

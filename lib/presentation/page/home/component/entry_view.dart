@@ -7,6 +7,7 @@ import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart
 import '../../../../application/stamp_rally/state/withdraw_stamp_rally_result.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
+import '../../../component/cached_manager.dart';
 import '../../../component/dialog.dart';
 import '../../../component/widget_ref.dart';
 import '../../../router.dart';
@@ -51,6 +52,7 @@ class EntryView extends ConsumerWidget {
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,
+                cacheManager: ref.read(defaultCacheManager),
               ),
             ),
             Text(stampRally.title),
