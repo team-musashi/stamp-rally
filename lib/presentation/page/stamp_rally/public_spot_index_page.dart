@@ -41,7 +41,7 @@ class _Body extends ConsumerWidget {
               },
               child: CachedNetworkImage(
                 imageUrl: spot.imageUrl,
-                cacheManager: ref.read(defaultCacheManagerProvider),
+                cacheManager: ref.watch(defaultCacheManagerProvider),
               ),
             );
           },

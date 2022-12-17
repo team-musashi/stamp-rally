@@ -36,7 +36,7 @@ class _Body extends ConsumerWidget {
             final spot = stampRally.spots[index];
             return CachedNetworkImage(
               imageUrl: spot.imageUrl,
-              cacheManager: ref.read(defaultCacheManagerProvider),
+              cacheManager: ref.watch(defaultCacheManagerProvider),
             );
           },
         );

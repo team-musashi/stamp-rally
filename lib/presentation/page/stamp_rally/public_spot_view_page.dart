@@ -36,7 +36,7 @@ class _Body extends ConsumerWidget {
           children: [
             CachedNetworkImage(
               imageUrl: spot.imageUrl,
-              cacheManager: ref.read(defaultCacheManagerProvider),
+              cacheManager: ref.watch(defaultCacheManagerProvider),
             ),
             Text(spot.title),
             if (address != null) Text(address),

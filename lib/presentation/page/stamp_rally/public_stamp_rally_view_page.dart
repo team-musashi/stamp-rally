@@ -53,7 +53,7 @@ class _Body extends ConsumerWidget {
             children: [
               CachedNetworkImage(
                 imageUrl: stampRally.imageUrl,
-                cacheManager: ref.read(defaultCacheManagerProvider),
+                cacheManager: ref.watch(defaultCacheManagerProvider),
               ),
               Text(
                 stampRally.title,
