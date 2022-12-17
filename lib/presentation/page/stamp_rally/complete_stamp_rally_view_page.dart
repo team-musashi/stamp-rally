@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,8 +51,11 @@ class _Body extends ConsumerWidget {
                 itemCount: stampRally.spots.length,
                 itemBuilder: (context, index) {
                   final spot = stampRally.spots[index];
-                  return Image(
-                    image: NetworkImage(spot.imageUrl),
+                  return CachedNetworkImage(
+                    imageUrl: spot.imageUrl,
+                    cacheManager: ref.read(defaultCacheManager),
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
                   );
                 },
               ),

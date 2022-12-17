@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/stamp_rally/state/current_public_spot.dart';
 import '../../component/async_value_handler.dart';
+import '../../component/cached_manager.dart';
 import '../../component/delimiter_block.dart';
 
 /// スポット詳細画面
@@ -32,8 +34,9 @@ class _Body extends ConsumerWidget {
         final tel = spot.tel;
         return Column(
           children: [
-            Image(
-              image: NetworkImage(spot.imageUrl),
+            CachedNetworkImage(
+              imageUrl: spot.imageUrl,
+              cacheManager: ref.read(defaultCacheManager),
             ),
             Text(spot.title),
             if (address != null) Text(address),

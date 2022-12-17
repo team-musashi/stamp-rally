@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
+import '../../component/cached_manager.dart';
 import '../../router.dart';
 
 /// 公開スポット一覧画面
@@ -37,8 +39,11 @@ class _Body extends ConsumerWidget {
               onTap: () async {
                 PublicSpotViewRoute.fromSpot(stampRally, spot).go(context);
               },
-              child: Image(
-                image: NetworkImage(spot.imageUrl),
+              child: CachedNetworkImage(
+                imageUrl: spot.imageUrl,
+                cacheManager: ref.read(defaultCacheManager),
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
               ),
             );
           },

@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +9,7 @@ import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
+import '../../component/cached_manager.dart';
 import '../../component/delimiter_block.dart';
 import '../../component/widget_ref.dart';
 import '../../router.dart';
@@ -49,7 +51,12 @@ class _Body extends ConsumerWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              Image(image: NetworkImage(stampRally.imageUrl)),
+              CachedNetworkImage(
+                imageUrl: stampRally.imageUrl,
+                cacheManager: ref.read(defaultCacheManager),
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+              ),
               Text(
                 stampRally.title,
                 style: const TextStyle(fontWeight: FontWeight.bold),
