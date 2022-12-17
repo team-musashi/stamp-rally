@@ -5,6 +5,7 @@ version: 0.0.1+1
 environment:
   sdk: '>=2.18.2 <3.0.0'
 dependencies:
+  cached_network_image: ^3.2.3
   cloud_firestore: ^3.5.1
   # List 系の拡張されたメソッド (例 firstWhereOrNull) を使いたいため
   collection: ^1.16.0
