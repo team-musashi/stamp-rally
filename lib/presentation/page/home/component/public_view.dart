@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../../component/async_value_handler.dart';
-import '../../../component/cached_manager.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
 
@@ -32,7 +31,6 @@ class PublicView extends ConsumerWidget {
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,
-                cacheManager: ref.read(defaultCacheManager),
               ),
             );
           },

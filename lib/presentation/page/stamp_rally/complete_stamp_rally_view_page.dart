@@ -38,7 +38,6 @@ class _Body extends ConsumerWidget {
             children: [
               StampRallyThumbnail(
                 stampRally: stampRally,
-                cacheManager: ref.read(defaultCacheManager),
               ),
               GridView.builder(
                 shrinkWrap: true,
@@ -53,7 +52,7 @@ class _Body extends ConsumerWidget {
                   final spot = stampRally.spots[index];
                   return CachedNetworkImage(
                     imageUrl: spot.imageUrl,
-                    cacheManager: ref.read(defaultCacheManager),
+                    cacheManager: ref.watch(defaultCacheManagerProvider),
                   );
                 },
               ),
