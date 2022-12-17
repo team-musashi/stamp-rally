@@ -27,7 +27,7 @@ class PublicView extends ConsumerWidget {
             return InkWell(
               onTap: () {
                 PublicStampRallyViewRoute.fromStampRally(stampRally)
-                    .push(context);
+                    .go(context);
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,
