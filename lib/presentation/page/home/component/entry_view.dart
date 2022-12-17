@@ -5,6 +5,7 @@ import '../../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../../application/stamp_rally/state/complete_stamp_rally_result.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../application/stamp_rally/state/withdraw_stamp_rally_result.dart';
+import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../component/dialog.dart';
 import '../../../component/widget_ref.dart';
@@ -27,11 +28,14 @@ class EntryView extends ConsumerWidget {
     );
 
     // スタンプラリー完了の結果を監視する
-    ref.listenResult<void>(
+    ref.listenResult<StampRally?>(
       completeStampRallyResultProvider,
       completeMessage: 'スタンプラリーを完了にしました。',
-      complete: (_) {
-        const HomeRoute().go(context);
+      complete: (stampRally) {
+        if (stampRally != null) {
+          // 処理完了後、完了済スタンプラリー詳細画面に遷移する
+          CompleteStampRallyViewRoute.fromStampRally(stampRally).go(context);
+        }
       },
     );
 
@@ -43,7 +47,7 @@ class EntryView extends ConsumerWidget {
           children: [
             InkWell(
               onTap: () {
-                EntrySpotIndexRoute.fromStampRally(stampRally).push(context);
+                EntrySpotIndexRoute.fromStampRally(stampRally).go(context);
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,

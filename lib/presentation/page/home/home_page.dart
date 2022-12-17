@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/stamp_rally/state/exists_entry_stamp_rally.dart';
-import '../../../util/assets/assets.gen.dart';
+import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../../router.dart';
 import 'component/home_tab.dart';
@@ -22,7 +22,7 @@ class HomePage extends ConsumerWidget {
               existsEntry ? HomeTab.entry.index : HomeTab.public.index,
           child: Scaffold(
             appBar: AppBar(
-              title: const _AppBarTitle(),
+              title: const AppBarTitle(),
               bottom: TabBar(
                 tabs: HomeTab.values
                     .map(
@@ -44,7 +44,7 @@ class HomePage extends ConsumerWidget {
               centerTitle: true,
               actions: [
                 IconButton(
-                  onPressed: () => const SettingRoute().push(context),
+                  onPressed: () => const SettingRoute().go(context),
                   icon: const Icon(Icons.settings),
                 )
               ],
@@ -68,24 +68,12 @@ class _LoadingScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const _AppBarTitle(),
+        title: const AppBarTitle(),
         centerTitle: true,
       ),
       body: const Center(
         child: CircularProgressIndicator(),
       ),
-    );
-  }
-}
-
-/// AppBarのタイトル
-class _AppBarTitle extends StatelessWidget {
-  const _AppBarTitle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Assets.images.logoHeaderBurarry.image(
-      height: 18,
     );
   }
 }
