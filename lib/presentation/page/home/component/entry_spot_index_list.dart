@@ -18,10 +18,13 @@ class EntrySpotIndexList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueHandler<StampRally>(
       value: ref.watch(currentEntryStampRallyProvider),
-      builder: (stampRally) {
+      builder: (StampRally? stampRally) {
+        if (stampRally == null) {
+          return Container();
+        }
         final cardSizeHeight = MediaQuery.of(context).size.height * 0.3;
         return SizedBox(
-          height: cardSizeHeight,
+          height: cardSizeHeight + 8,
           child: Swiper(
             itemBuilder: (context, index) {
               final spot = stampRally.spots[index];
@@ -37,7 +40,7 @@ class EntrySpotIndexList extends ConsumerWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: cardSizeHeight * 0.65,
+                      height: cardSizeHeight * 0.7,
                       child: Stack(
                         children: [
                           // DecoratedBoxだとDecorationImageがうまく効かないので、
@@ -77,7 +80,7 @@ class EntrySpotIndexList extends ConsumerWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 4, left: 10),
+                            padding: const EdgeInsets.only(top: 6, left: 10),
                             child: Row(
                               children: [
                                 Icon(
