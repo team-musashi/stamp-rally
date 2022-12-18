@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/repository/stamp_rally/entity/upload_image.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import '../../infrastructure/firebase/firebase.dart';
+import '../../domain/repository/user/user_repository.dart';
 import '../../util/logger.dart';
 import 'state/current_entry_stamp_rally.dart';
 
@@ -20,18 +20,14 @@ class UploadImageService {
     required String spotId,
   }) async {
     /// 現在参加しているスタンプラリーを取得する
-    final stamprally = await ref.watch(currentEntryStampRallyProvider.future);
+    final stamprally = await ref.read(currentEntryStampRallyProvider.future);
     final stamprallyId = stamprally!.id;
     logger.i('stamprallyId: $stamprallyId');
 
     /// uid を取得する
-    /// なぜか動かない → 下記はuser情報を取得するプロバイダではない？
-    /// final user = await ref.watch(userProvider.future);
-    /// final uid = user.id;
-    /// logger.i('user: $user');
-    /// todo: 直接FirebaseAuthインスタンスを使ってしまっているので、アーキテクチャに則って動くようにする
-    final auth = ref.watch(firebaseAuthProvider);
-    final uid = auth.currentUser!.uid;
+    final user = await ref.read(userProvider.future);
+    assert(user != null);
+    final uid = user!.uid;
     logger.i('uid: $uid');
 
     /// アップロードパスを生成する
