@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,7 +5,7 @@ import '../../../application/stamp_rally/state/current_complete_stamp_rally.dart
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
-import '../../component/cached_manager.dart';
+import '../home/component/spot_thumbnail.dart';
 import '../home/component/stamp_rally.dart';
 
 /// 完了済スタンプラリー詳細画面
@@ -50,9 +49,10 @@ class _Body extends ConsumerWidget {
                 itemCount: stampRally.spots.length,
                 itemBuilder: (context, index) {
                   final spot = stampRally.spots[index];
-                  return CachedNetworkImage(
-                    imageUrl: spot.imageUrl,
-                    cacheManager: ref.watch(defaultCacheManagerProvider),
+                  return SpotThumbnail(
+                    spotImageUrl: spot.imageUrl,
+                    index: (index + 1).toString(),
+                    title: spot.title,
                   );
                 },
               ),
