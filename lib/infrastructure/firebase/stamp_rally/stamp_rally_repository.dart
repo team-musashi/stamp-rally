@@ -281,6 +281,8 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       status: StampRallyEntryStatus.nameOf(status),
       startDate: startDate,
       endDate: endDate,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 }
