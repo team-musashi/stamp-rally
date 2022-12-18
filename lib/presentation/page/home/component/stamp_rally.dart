@@ -77,6 +77,8 @@ class _Cover extends StatelessWidget {
               fontWeight: FontWeight.w500,
               color: Theme.of(context).colorScheme.surface,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
