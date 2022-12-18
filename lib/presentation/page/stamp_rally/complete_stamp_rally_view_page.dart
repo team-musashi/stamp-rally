@@ -35,8 +35,13 @@ class _Body extends ConsumerWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              StampRallyThumbnail(
-                stampRally: stampRally,
+              SizedBox(
+                width: double.infinity,
+                height: 232,
+                child: StampRallyThumbnail(
+                  stampRally: stampRally,
+                  title: stampRally.title,
+                ),
               ),
               GridView.builder(
                 shrinkWrap: true,
