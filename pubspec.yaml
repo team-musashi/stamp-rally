@@ -27,6 +27,7 @@ dependencies:
   # Color を #RGB 指定できるようにするため
   hexcolor: ^3.0.1
   image_picker: ^0.8.6
+  intl: ^0.17.0
   json_serializable: ^6.5.4
   # ロガーパッケージ
   package_info_plus: ^3.0.2
