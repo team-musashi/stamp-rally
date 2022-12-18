@@ -32,40 +32,12 @@ class CompleteView extends ConsumerWidget {
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,
-                labelWidget: _CompletedDateLabel(
-                  date: stampRally.updatedAt?.toFormatString() ?? '日付不明',
-                ),
+                title: stampRally.updatedAt?.toFormatString() ?? '日付不明',
               ),
             );
           },
         );
       },
-    );
-  }
-}
-
-class _CompletedDateLabel extends StatelessWidget {
-  const _CompletedDateLabel({
-    required this.date,
-  });
-
-  final String date;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 12),
-        child: Text(
-          date,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.surface,
-          ),
-        ),
-      ),
     );
   }
 }

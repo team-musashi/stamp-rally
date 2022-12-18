@@ -13,13 +13,13 @@ class StampRallyThumbnail extends ConsumerWidget {
     required this.stampRally,
     this.padding = const EdgeInsets.all(8),
     this.cacheManager,
-    this.labelWidget,
+    this.title,
   });
 
   final StampRally stampRally;
   final EdgeInsets padding;
   final CacheManager? cacheManager;
-  final Widget? labelWidget;
+  final String? title;
 
   static const radius = 16.0;
 
@@ -45,11 +45,39 @@ class StampRallyThumbnail extends ConsumerWidget {
                     image: imageProvider,
                     fit: BoxFit.cover,
                   ),
-                  if (labelWidget != null)
-                    Align(alignment: Alignment.bottomLeft, child: labelWidget)
+                  if (title != null) _Cover(title: title!),
                 ],
               );
             },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Cover extends StatelessWidget {
+  const _Cover({
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: Container(
+        width: double.infinity,
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.surface,
+            ),
           ),
         ),
       ),

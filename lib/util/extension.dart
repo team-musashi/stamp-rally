@@ -17,7 +17,7 @@ extension AsyncValueEx<T> on AsyncValue<T> {
   }
 }
 
-extension DateTimeExtension on DateTime {
+extension DateTimeEx on DateTime {
   String toFormatString({String format = 'yyyy/MM/dd'}) {
     final formatter = DateFormat(format, 'ja_JP');
     return formatter.format(this);
