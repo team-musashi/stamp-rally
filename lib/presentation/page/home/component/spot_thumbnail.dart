@@ -118,6 +118,7 @@ class _Cover extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
             ),
             maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
