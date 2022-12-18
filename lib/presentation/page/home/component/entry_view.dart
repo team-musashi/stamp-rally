@@ -15,14 +15,12 @@ class EntryView extends StatelessWidget {
       initialIndex: 1,
       child: Stack(
         children: [
-          const Expanded(
-            child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                EntryDetailsView(),
-                EntryMapView(),
-              ],
-            ),
+          const TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              EntryDetailsView(),
+              EntryMapView(),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
