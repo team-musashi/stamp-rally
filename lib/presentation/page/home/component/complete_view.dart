@@ -32,7 +32,7 @@ class CompleteView extends ConsumerWidget {
               },
               child: StampRallyThumbnail(
                 stampRally: stampRally,
-                labelWidget: CompletedDateLabel(
+                labelWidget: _CompletedDateLabel(
                   date: stampRally.updatedAt?.toFormatString() ?? '日付不明',
                 ),
               ),
@@ -44,8 +44,8 @@ class CompleteView extends ConsumerWidget {
   }
 }
 
-class CompletedDateLabel extends StatelessWidget {
-  const CompletedDateLabel({
+class _CompletedDateLabel extends StatelessWidget {
+  const _CompletedDateLabel({
     super.key,
     required this.date,
   });
