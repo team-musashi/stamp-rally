@@ -10,32 +10,34 @@ import '../../../component/async_value_handler.dart';
 import 'entry_spot_index_list.dart';
 
 /// 参加中スタンプラリーのスポットマップ表示用View
-class EntryMapView extends ConsumerWidget {
+class EntryMapView extends ConsumerStatefulWidget {
   const EntryMapView({super.key});
 
-//   @override
-//   _EntryMapViewState createState() => _EntryMapViewState();
-// }
+  @override
+  _EntryMapViewState createState() => _EntryMapViewState();
+}
 
-// class _EntryMapViewState extends ConsumerState<EntryMapView> {
-  static final Completer<GoogleMapController> _controller = Completer();
+class _EntryMapViewState extends ConsumerState<EntryMapView> {
+  final Completer<GoogleMapController> _controller = Completer();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return AsyncValueHandler(
       value: ref.watch(currentEntryStampRallyProvider),
       builder: (stampRally) {
+        final spots = stampRally.spots;
+
         return Scaffold(
           body: Stack(
             children: [
               GoogleMap(
                 onMapCreated: _controller.complete,
                 myLocationButtonEnabled: false,
-                markers: createMarkersFromSpots(stampRally.spots),
+                markers: createMarkersFromSpots(spots),
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
-                    stampRally.spots.first.location.latitude,
-                    stampRally.spots.first.location.longitude,
+                    spots.first.location.latitude,
+                    spots.first.location.longitude,
                   ),
                   zoom: 14,
                 ),
@@ -44,7 +46,9 @@ class EntryMapView extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: 15),
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  child: const EntrySpotIndexList(),
+                  child: EntrySpotIndexList(
+                    onIndexChanged: onIndexChanged,
+                  ),
                 ),
               ),
             ],
@@ -66,5 +70,16 @@ class EntryMapView extends ConsumerWidget {
       );
     }
     return markers;
+  }
+
+  /// スポットカード変更時処理
+  Future<void> onIndexChanged(Spot spot) async {
+    final controller = await _controller.future;
+    await controller.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(spot.location.latitude, spot.location.longitude),
+        17,
+      ),
+    );
   }
 }

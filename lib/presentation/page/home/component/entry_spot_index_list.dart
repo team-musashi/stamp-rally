@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 
 /// 参加スポット一覧リスト
 class EntrySpotIndexList extends ConsumerWidget {
-  const EntrySpotIndexList({this.scrollDirection = Axis.horizontal, super.key});
-  final Axis scrollDirection;
+  const EntrySpotIndexList({required this.onIndexChanged, super.key});
+  final Future<void> Function(Spot) onIndexChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -115,7 +116,8 @@ class EntrySpotIndexList extends ConsumerWidget {
             loop: false,
             itemCount: stampRally.spots.length,
             viewportFraction: 0.8,
-            onIndexChanged: print,
+            onIndexChanged: (value) async =>
+                onIndexChanged.call(stampRally.spots[value]),
           ),
         );
       },
