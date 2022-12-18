@@ -1,22 +1,28 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../component/cached_manager.dart';
 
 /// スタンプラリーのサムネイル画像
-class StampRallyThumbnail extends StatelessWidget {
+class StampRallyThumbnail extends ConsumerWidget {
   const StampRallyThumbnail({
     super.key,
     required this.stampRally,
     this.padding = const EdgeInsets.all(8),
+    this.cacheManager,
   });
 
   final StampRally stampRally;
   final EdgeInsets padding;
+  final CacheManager? cacheManager;
 
   static const radius = 16.0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: padding,
       child: DecoratedBox(
@@ -25,9 +31,11 @@ class StampRallyThumbnail extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
-          child: Image(
-            image: NetworkImage(stampRally.imageUrl),
+          child: CachedNetworkImage(
+            imageUrl: stampRally.imageUrl,
             fit: BoxFit.cover,
+            cacheManager:
+                cacheManager ?? ref.watch(defaultCacheManagerProvider),
           ),
         ),
       ),

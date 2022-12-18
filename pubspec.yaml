@@ -5,6 +5,7 @@ version: 0.0.1+1
 environment:
   sdk: '>=2.18.2 <3.0.0'
 dependencies:
+  cached_network_image: ^3.2.3
   cloud_firestore: ^3.5.1
   # List 系の拡張されたメソッド (例 firstWhereOrNull) を使いたいため
   collection: ^1.16.0
@@ -14,6 +15,7 @@ dependencies:
   firebase_storage: ^10.3.11
   flutter:
     sdk: flutter
+  flutter_cache_manager: ^3.3.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.0
