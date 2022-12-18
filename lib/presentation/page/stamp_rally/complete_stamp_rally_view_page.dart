@@ -5,8 +5,8 @@ import '../../../application/stamp_rally/state/current_complete_stamp_rally.dart
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
-import '../home/component/spot_thumbnail.dart';
-import '../home/component/stamp_rally.dart';
+import '../../component/thumbnail.dart';
+import 'component/spot_thumbnail.dart';
 
 /// 完了済スタンプラリー詳細画面
 class CompleteStampRallyViewPage extends StatelessWidget {
@@ -38,10 +38,12 @@ class _Body extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 height: 232,
-                child: StampRallyThumbnail(
+                child: ThumbnailImage(
                   imageUrl: stampRally.imageUrl,
                   title: stampRally.title,
-                  titleFontSize: 18,
+                  titleStyle: const TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
               ),
               GridView.builder(
@@ -56,9 +58,7 @@ class _Body extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final spot = stampRally.spots[index];
                   return SpotThumbnail(
-                    spotImageUrl: spot.imageUrl,
-                    index: spot.order.toString(),
-                    title: spot.title,
+                    spot: spot,
                   );
                 },
               ),

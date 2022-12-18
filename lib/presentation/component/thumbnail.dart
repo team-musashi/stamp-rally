@@ -3,24 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../component/cached_manager.dart';
+import 'cached_manager.dart';
 
-/// スポットのサムネイル画像
-class SpotThumbnail extends ConsumerWidget {
-  const SpotThumbnail({
+/// サムネイル画像
+class ThumbnailImage extends ConsumerWidget {
+  const ThumbnailImage({
     super.key,
-    required this.spotImageUrl,
+    required this.imageUrl,
     this.padding = const EdgeInsets.all(8),
     this.cacheManager,
-    required this.index,
     this.title,
+    this.titleStyle,
+    this.cover,
   });
 
-  final String spotImageUrl;
+  final String imageUrl;
   final EdgeInsets padding;
   final CacheManager? cacheManager;
-  final String index;
   final String? title;
+  final TextStyle? titleStyle;
+  final Widget? cover;
 
   static const radius = 16.0;
 
@@ -35,7 +37,7 @@ class SpotThumbnail extends ConsumerWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
           child: CachedNetworkImage(
-            imageUrl: spotImageUrl,
+            imageUrl: imageUrl,
             cacheManager:
                 cacheManager ?? ref.watch(defaultCacheManagerProvider),
             imageBuilder: (context, imageProvider) {
@@ -46,10 +48,12 @@ class SpotThumbnail extends ConsumerWidget {
                     image: imageProvider,
                     fit: BoxFit.cover,
                   ),
-                  if (title != null) _Cover(title: title!),
-                  _SpotIndex(
-                    index: index,
-                  ),
+                  if (title != null)
+                    ThumbnailCoverText(
+                      title: title!,
+                      style: titleStyle,
+                    ),
+                  if (cover != null) cover!,
                 ],
               );
             },
@@ -60,63 +64,36 @@ class SpotThumbnail extends ConsumerWidget {
   }
 }
 
-class _SpotIndex extends StatelessWidget {
-  const _SpotIndex({
-    required this.index,
-  });
-
-  final String index;
-  static const radius = 16.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        width: 34,
-        height: 34,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(radius),
-            bottomLeft: Radius.circular(radius),
-          ),
-          color: Theme.of(context).colorScheme.primaryContainer,
-        ),
-        child: Text(
-          index,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.surface,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Cover extends StatelessWidget {
-  const _Cover({
+/// サムネイル画像の上に表示するカバーテキスト
+class ThumbnailCoverText extends StatelessWidget {
+  const ThumbnailCoverText({
+    super.key,
     required this.title,
+    this.style,
+    this.contentPadding,
   });
 
   final String title;
+  final TextStyle? style;
+  final EdgeInsets? contentPadding;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveStyle = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: Theme.of(context).colorScheme.surface,
+    ).merge(style);
     return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
         width: double.infinity,
         color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 42, vertical: 4),
+          padding: contentPadding ??
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           child: Text(
             title,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).colorScheme.surface,
-            ),
+            style: effectiveStyle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

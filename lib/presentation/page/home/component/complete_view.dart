@@ -5,8 +5,8 @@ import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../../../util/extension.dart';
 import '../../../component/async_value_handler.dart';
+import '../../../component/thumbnail.dart';
 import '../../../router.dart';
-import 'stamp_rally.dart';
 
 /// 完了済画面
 class CompleteView extends ConsumerWidget {
@@ -30,7 +30,7 @@ class CompleteView extends ConsumerWidget {
                 CompleteStampRallyViewRoute.fromStampRally(stampRally)
                     .go(context);
               },
-              child: StampRallyThumbnail(
+              child: ThumbnailImage(
                 imageUrl: stampRally.imageUrl,
                 title: stampRally.updatedAt?.toFormatString() ?? '日付不明',
               ),

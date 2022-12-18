@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../../component/async_value_handler.dart';
+import '../../../component/thumbnail.dart';
 import '../../../router.dart';
-import 'stamp_rally.dart';
 
 /// 公開中画面
 class PublicView extends ConsumerWidget {
@@ -29,7 +29,7 @@ class PublicView extends ConsumerWidget {
                 PublicStampRallyViewRoute.fromStampRally(stampRally)
                     .go(context);
               },
-              child: StampRallyThumbnail(
+              child: ThumbnailImage(
                 imageUrl: stampRally.imageUrl,
               ),
             );
