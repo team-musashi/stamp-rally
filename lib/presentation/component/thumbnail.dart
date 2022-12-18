@@ -3,23 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
-import '../../../component/cached_manager.dart';
+import 'cached_manager.dart';
 
-/// スタンプラリーのサムネイル画像
-class StampRallyThumbnail extends ConsumerWidget {
-  const StampRallyThumbnail({
+/// サムネイル画像
+class ThumbnailImage extends ConsumerWidget {
+  const ThumbnailImage({
     super.key,
-    required this.stampRally,
+    required this.imageUrl,
     this.padding = const EdgeInsets.all(8),
     this.cacheManager,
     this.title,
+    this.titleStyle,
+    this.cover,
   });
 
-  final StampRally stampRally;
+  final String imageUrl;
   final EdgeInsets padding;
   final CacheManager? cacheManager;
   final String? title;
+  final TextStyle? titleStyle;
+  final Widget? cover;
 
   static const radius = 16.0;
 
@@ -34,7 +37,7 @@ class StampRallyThumbnail extends ConsumerWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
           child: CachedNetworkImage(
-            imageUrl: stampRally.imageUrl,
+            imageUrl: imageUrl,
             cacheManager:
                 cacheManager ?? ref.watch(defaultCacheManagerProvider),
             imageBuilder: (context, imageProvider) {
@@ -45,7 +48,12 @@ class StampRallyThumbnail extends ConsumerWidget {
                     image: imageProvider,
                     fit: BoxFit.cover,
                   ),
-                  if (title != null) _Cover(title: title!),
+                  if (title != null)
+                    ThumbnailCoverText(
+                      title: title!,
+                      style: titleStyle,
+                    ),
+                  if (cover != null) cover!,
                 ],
               );
             },
@@ -56,28 +64,38 @@ class StampRallyThumbnail extends ConsumerWidget {
   }
 }
 
-class _Cover extends StatelessWidget {
-  const _Cover({
+/// サムネイル画像の上に表示するカバーテキスト
+class ThumbnailCoverText extends StatelessWidget {
+  const ThumbnailCoverText({
+    super.key,
     required this.title,
+    this.style,
+    this.contentPadding,
   });
 
   final String title;
+  final TextStyle? style;
+  final EdgeInsets? contentPadding;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveStyle = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: Theme.of(context).colorScheme.surface,
+    ).merge(style);
     return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
         width: double.infinity,
         color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          padding: contentPadding ??
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           child: Text(
             title,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).colorScheme.surface,
-            ),
+            style: effectiveStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),

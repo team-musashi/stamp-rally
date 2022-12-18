@@ -8,9 +8,9 @@ import '../../../../application/stamp_rally/state/withdraw_stamp_rally_result.da
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../component/dialog.dart';
+import '../../../component/thumbnail.dart';
 import '../../../component/widget_ref.dart';
 import '../../../router.dart';
-import 'stamp_rally.dart';
 
 /// 参加中画面
 class EntryView extends ConsumerWidget {
@@ -49,8 +49,8 @@ class EntryView extends ConsumerWidget {
               onTap: () {
                 EntrySpotIndexRoute.fromStampRally(stampRally).go(context);
               },
-              child: StampRallyThumbnail(
-                stampRally: stampRally,
+              child: ThumbnailImage(
+                imageUrl: stampRally.imageUrl,
               ),
             ),
             Text(stampRally.title),
