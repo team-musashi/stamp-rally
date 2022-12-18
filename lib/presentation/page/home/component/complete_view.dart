@@ -46,7 +46,6 @@ class CompleteView extends ConsumerWidget {
 
 class _CompletedDateLabel extends StatelessWidget {
   const _CompletedDateLabel({
-    super.key,
     required this.date,
   });
 
