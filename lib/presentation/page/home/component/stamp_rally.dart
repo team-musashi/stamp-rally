@@ -39,7 +39,7 @@ class StampRallyThumbnail extends ConsumerWidget {
                 cacheManager ?? ref.watch(defaultCacheManagerProvider),
             imageBuilder: (context, imageProvider) {
               return Stack(
-                fit: StackFit.expand,
+                fit: StackFit.passthrough,
                 children: [
                   Image(
                     image: imageProvider,
