@@ -79,6 +79,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
     for (final spot in spots) {
       markers.add(
         Marker(
+          infoWindow: InfoWindow(title: spot.title),
           markerId: MarkerId(spot.id),
           icon: icon,
           position: LatLng(spot.location.latitude, spot.location.longitude),
@@ -91,6 +92,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
   /// スポットカード変更時処理
   Future<void> onIndexChanged(Spot spot) async {
     final controller = await _controller.future;
+    await controller.showMarkerInfoWindow(MarkerId(spot.id));
     await controller.animateCamera(
       CameraUpdate.newLatLngZoom(
         LatLng(spot.location.latitude, spot.location.longitude),
