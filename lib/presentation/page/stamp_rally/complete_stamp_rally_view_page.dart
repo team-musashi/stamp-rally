@@ -41,6 +41,7 @@ class _Body extends ConsumerWidget {
                 child: StampRallyThumbnail(
                   imageUrl: stampRally.imageUrl,
                   title: stampRally.title,
+                  titleFontSize: 18,
                 ),
               ),
               GridView.builder(

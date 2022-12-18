@@ -13,12 +13,14 @@ class StampRallyThumbnail extends ConsumerWidget {
     this.padding = const EdgeInsets.all(8),
     this.cacheManager,
     this.title,
+    this.titleFontSize,
   });
 
   final String imageUrl;
   final EdgeInsets padding;
   final CacheManager? cacheManager;
   final String? title;
+  final double? titleFontSize;
 
   static const radius = 16.0;
 
@@ -44,7 +46,11 @@ class StampRallyThumbnail extends ConsumerWidget {
                     image: imageProvider,
                     fit: BoxFit.cover,
                   ),
-                  if (title != null) _Cover(title: title!),
+                  if (title != null)
+                    _Cover(
+                      title: title!,
+                      titleFontSize: titleFontSize,
+                    ),
                 ],
               );
             },
@@ -56,11 +62,10 @@ class StampRallyThumbnail extends ConsumerWidget {
 }
 
 class _Cover extends StatelessWidget {
-  const _Cover({
-    required this.title,
-  });
+  const _Cover({required this.title, this.titleFontSize});
 
   final String title;
+  final double? titleFontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +79,7 @@ class _Cover extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
+              fontSize: titleFontSize,
               fontWeight: FontWeight.w500,
               color: Theme.of(context).colorScheme.surface,
             ),
