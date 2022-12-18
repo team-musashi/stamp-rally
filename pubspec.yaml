@@ -5,6 +5,7 @@ version: 0.0.1+1
 environment:
   sdk: '>=2.18.2 <3.0.0'
 dependencies:
+  cached_network_image: ^3.2.3
   card_swiper: ^2.0.4
   cloud_firestore: ^3.5.1
   # List 系の拡張されたメソッド (例 firstWhereOrNull) を使いたいため
@@ -15,6 +16,7 @@ dependencies:
   firebase_storage: ^10.3.11
   flutter:
     sdk: flutter
+  flutter_cache_manager: ^3.3.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.0
@@ -28,6 +30,7 @@ dependencies:
   google_maps_flutter: ^2.2.2
   hexcolor: ^3.0.1
   image_picker: ^0.8.6
+  intl: ^0.17.0
   json_serializable: ^6.5.4
   # ロガーパッケージ
   package_info_plus: ^3.0.2
