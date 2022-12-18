@@ -36,6 +36,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
                 value: ref.watch(pinIconProvider),
                 builder: (icon) {
                   return GoogleMap(
+                    myLocationEnabled: true,
                     zoomControlsEnabled: false,
                     onMapCreated: onMapCreated,
                     myLocationButtonEnabled: false,

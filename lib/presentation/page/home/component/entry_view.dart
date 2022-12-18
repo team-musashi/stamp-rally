@@ -31,7 +31,9 @@ class EntryView extends StatelessWidget {
                   backgroundColor: Colors.white,
                   // ignore: use_named_constants
                   buttonMargin: const EdgeInsets.symmetric(),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 17.5,
+                  ),
                   borderColor: Colors.white,
                   labelStyle: TextStyle(
                     color: Theme.of(context).colorScheme.primaryContainer,
