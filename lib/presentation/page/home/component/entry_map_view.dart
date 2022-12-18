@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../../../../application/stamp_rally/state/pin_icon_provider.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../component/async_value_handler.dart';
 import 'entry_spot_index_list.dart';
@@ -30,17 +31,22 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
         return Scaffold(
           body: Stack(
             children: [
-              GoogleMap(
-                onMapCreated: _controller.complete,
-                myLocationButtonEnabled: false,
-                markers: createMarkersFromSpots(spots),
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    spots.first.location.latitude,
-                    spots.first.location.longitude,
-                  ),
-                  zoom: 14,
-                ),
+              AsyncValueHandler(
+                value: ref.watch(pinIconProvider),
+                builder: (icon) {
+                  return GoogleMap(
+                    onMapCreated: _controller.complete,
+                    myLocationButtonEnabled: false,
+                    markers: createMarkersFromSpots(spots, icon),
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                        spots.first.location.latitude,
+                        spots.first.location.longitude,
+                      ),
+                      zoom: 14,
+                    ),
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -59,12 +65,13 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
   }
 
   /// 参加中スタンプラリーのスポットからマップに表示するマーカーを生成する
-  Set<Marker> createMarkersFromSpots(List<Spot> spots) {
+  Set<Marker> createMarkersFromSpots(List<Spot> spots, BitmapDescriptor icon) {
     final markers = <Marker>{};
     for (final spot in spots) {
       markers.add(
         Marker(
           markerId: MarkerId(spot.id),
+          icon: icon,
           position: LatLng(spot.location.latitude, spot.location.longitude),
         ),
       );
