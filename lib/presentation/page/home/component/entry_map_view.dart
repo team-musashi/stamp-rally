@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -35,7 +36,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
                 value: ref.watch(pinIconProvider),
                 builder: (icon) {
                   return GoogleMap(
-                    onMapCreated: _controller.complete,
+                    onMapCreated: onMapCreated,
                     myLocationButtonEnabled: false,
                     markers: createMarkersFromSpots(spots, icon),
                     initialCameraPosition: CameraPosition(
@@ -62,6 +63,14 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
         );
       },
     );
+  }
+
+  /// マップの初期構築
+  Future<void> onMapCreated(GoogleMapController controller) async {
+    _controller.complete(controller);
+    final value = await rootBundle.loadString('assets/json/map_style.json');
+    final futureController = await _controller.future;
+    await futureController.setMapStyle(value); // Controllerを使ってMapをSetする
   }
 
   /// 参加中スタンプラリーのスポットからマップに表示するマーカーを生成する
