@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/image_picker/image_picker_service.dart';
 import '../../../application/image_picker/state/image_picker_result.dart';
 import '../../../application/stamp_rally/state/current_entry_spot.dart';
+import '../../../application/stamp_rally/upload_image_service.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
 
@@ -47,7 +48,14 @@ class _Body extends ConsumerWidget {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await ref
+                              .read(uploadImageServiceProvider)
+                              .uploadImage(
+                                path: pickedImage.path,
+                                spotId: spot.id,
+                              );
+                        },
                         child: const Text('この画像をアップロードする'),
                       ),
                     ],

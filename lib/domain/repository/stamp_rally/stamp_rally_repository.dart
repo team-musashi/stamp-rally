@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'entity/spot.dart';
 import 'entity/stamp_rally.dart';
+import 'entity/upload_image.dart';
 
 /// 公開中のスタンプラリーリストを返すプロバイダー
 final publicStampRalliesProvider = FutureProvider(
@@ -50,6 +53,14 @@ final entrySpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
   name: 'entrySpotsProviderFamily',
 );
 
+/// ストレージに画像をアップロードするプロバイダー
+final uploadImageProviderFamily = FutureProvider.family<void, UploadImage>(
+  (ref, uploadImage) => ref
+      .watch(stampRallyRepositoryProvider)
+      .uploadImage(uploadImage: uploadImage),
+  name: 'uploadImageProvider',
+);
+
 /// スタンプラリーリポジトリプロバイダー
 final stampRallyRepositoryProvider = Provider<StampRallyRepository>(
   (_) => throw UnimplementedError('Provider was not initialized'),
@@ -74,4 +85,13 @@ abstract class StampRallyRepository {
 
   /// 参加中のスタンプラリーに紐づくスポットリストを返す
   Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId});
+
+  /// Storage に画像をアップロードする
+  Future<void> uploadImage({required UploadImage uploadImage});
+
+  /// 参加中のスタンプラリーに紐づく画像リストを返す
+  Future<List<File?>> fetchEntryImages();
+
+  /// 完了済みのスタンプラリーに紐づく画像リストを返す
+  // Future<List<File?>> fetchCompletedImages();
 }

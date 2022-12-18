@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
+import '../../../domain/repository/stamp_rally/entity/upload_image.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
+import '../../../util/logger.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
 
@@ -61,6 +65,8 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
   FirebaseFirestore? get firestore => userDocRef?.firestore;
   final DocumentReference<Map<String, dynamic>>? userDocRef;
+  final storageRef = FirebaseStorage.instance.ref();
+
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
   final _entryChangesController = StreamController<StampRally?>.broadcast();
@@ -199,6 +205,26 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
           return SpotDocument.fromJson(json).toSpot(docId: query.id);
         }).toList() ??
         [];
+  }
+
+  @override
+  Future<void> uploadImage({
+    required UploadImage uploadImage,
+  }) async {
+    final ref = storageRef.child(uploadImage.storagePath);
+    try {
+      await ref.putFile(File(uploadImage.path));
+    } on Exception catch (e) {
+      logger.e(e);
+    }
+    // todo: streamを使ったアップロードステータスの管理
+  }
+
+  @override
+  Future<List<File?>> fetchEntryImages() async {
+    return [
+      File(''),
+    ];
   }
 }
 
