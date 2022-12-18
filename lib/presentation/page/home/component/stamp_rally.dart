@@ -71,11 +71,11 @@ class _Cover extends StatelessWidget {
         width: double.infinity,
         color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
         child: Padding(
-          padding: const EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           child: Text(
             title,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               color: Theme.of(context).colorScheme.surface,
             ),
           ),
