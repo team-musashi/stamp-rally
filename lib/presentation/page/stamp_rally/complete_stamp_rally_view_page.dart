@@ -57,7 +57,7 @@ class _Body extends ConsumerWidget {
                   final spot = stampRally.spots[index];
                   return SpotThumbnail(
                     spotImageUrl: spot.imageUrl,
-                    index: (index + 1).toString(),
+                    index: (spot.order).toString(),
                     title: spot.title,
                   );
                 },
