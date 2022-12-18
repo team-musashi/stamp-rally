@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import '../../../../util/date_time_extension.dart';
+import '../../../../util/extension.dart';
 import '../../../component/async_value_handler.dart';
 import '../../../router.dart';
 import 'stamp_rally.dart';
