@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../application/geolocator/geolocator_service.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
@@ -24,6 +25,11 @@ class EntrySpotIndexList extends ConsumerWidget {
           child: Swiper(
             itemBuilder: (context, index) {
               final spot = stampRally.spots[index];
+              final distance =
+                  ref.read(geolocatorServiceProvider).distanceBetween(
+                        latitude: spot.location.latitude,
+                        longitude: spot.location.longitude,
+                      );
               return Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -100,8 +106,8 @@ class EntrySpotIndexList extends ConsumerWidget {
                                       .colorScheme
                                       .primaryContainer,
                                 ),
-                                const Text(
-                                  '現在地からの距離：xx.x km',
+                                Text(
+                                  '現在地からの距離：${distance ?? ''} km',
                                 ),
                               ],
                             ),
