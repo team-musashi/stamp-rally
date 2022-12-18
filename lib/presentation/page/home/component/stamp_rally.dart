@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/cached_manager.dart';
 
 /// スタンプラリーのサムネイル画像
 class StampRallyThumbnail extends ConsumerWidget {
   const StampRallyThumbnail({
     super.key,
-    required this.stampRally,
+    required this.imageUrl,
     this.padding = const EdgeInsets.all(8),
     this.cacheManager,
     this.title,
   });
 
-  final StampRally stampRally;
+  final String imageUrl;
   final EdgeInsets padding;
   final CacheManager? cacheManager;
   final String? title;
@@ -34,7 +33,7 @@ class StampRallyThumbnail extends ConsumerWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
           child: CachedNetworkImage(
-            imageUrl: stampRally.imageUrl,
+            imageUrl: imageUrl,
             cacheManager:
                 cacheManager ?? ref.watch(defaultCacheManagerProvider),
             imageBuilder: (context, imageProvider) {

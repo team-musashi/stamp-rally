@@ -39,7 +39,7 @@ class _Body extends ConsumerWidget {
                 width: double.infinity,
                 height: 232,
                 child: StampRallyThumbnail(
-                  stampRally: stampRally,
+                  imageUrl: stampRally.imageUrl,
                   title: stampRally.title,
                 ),
               ),

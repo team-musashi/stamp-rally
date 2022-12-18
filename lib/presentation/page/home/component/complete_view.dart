@@ -31,7 +31,7 @@ class CompleteView extends ConsumerWidget {
                     .go(context);
               },
               child: StampRallyThumbnail(
-                stampRally: stampRally,
+                imageUrl: stampRally.imageUrl,
                 title: stampRally.updatedAt?.toFormatString() ?? '日付不明',
               ),
             );

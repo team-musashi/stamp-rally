@@ -30,7 +30,7 @@ class PublicView extends ConsumerWidget {
                     .go(context);
               },
               child: StampRallyThumbnail(
-                stampRally: stampRally,
+                imageUrl: stampRally.imageUrl,
               ),
             );
           },

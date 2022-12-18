@@ -50,7 +50,7 @@ class EntryView extends ConsumerWidget {
                 EntrySpotIndexRoute.fromStampRally(stampRally).go(context);
               },
               child: StampRallyThumbnail(
-                stampRally: stampRally,
+                imageUrl: stampRally.imageUrl,
               ),
             ),
             Text(stampRally.title),
