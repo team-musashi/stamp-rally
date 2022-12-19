@@ -53,11 +53,11 @@ final entrySpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
 
 /// ストレージに画像をアップロードするプロバイダー
 final uploadImageFutureProviderFamily =
-    FutureProvider.family<String?, UploadImage>(
+    FutureProvider.autoDispose.family<String?, UploadImage>(
   (ref, uploadImage) => ref
       .watch(stampRallyRepositoryProvider)
       .uploadImage(uploadImage: uploadImage),
-  name: 'uploadImageProvider',
+  name: 'uploadImageFutureProviderFamily',
 );
 
 /// スタンプラリーリポジトリプロバイダー
