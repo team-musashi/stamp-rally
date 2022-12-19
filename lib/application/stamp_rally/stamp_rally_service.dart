@@ -74,7 +74,7 @@ class StampRallyService {
   }
 
   /// 画像をアップロードする
-  Future<String?> uploadImage({required UploadImage uploadImage}) async {
+  Future<void> uploadImage({required UploadImage uploadImage}) async {
     final url =
         await ref.read(uploadImageFutureProviderFamily(uploadImage).future);
     if (url != null) {
@@ -86,8 +86,6 @@ class StampRallyService {
       //   return null;
       // });
       ref.read(uploadImageResultProvider.notifier).state = url;
-      return url;
     }
-    return null;
   }
 }
