@@ -80,11 +80,7 @@ class StampRallyService {
     if (url != null) {
       logger.i(url);
       // todo: URL を entrySpot のフィールドに追加する、 gotDate を現在時刻で更新する
-      // final notifier = ref.read(uploadImageResultFutureProviderFamily.notifier);
-      // notifier.state = const AsyncValue.loading();
-      // notifier.state = await AsyncValue.guard(() async {
-      //   return null;
-      // });
+
       ref.read(uploadImageResultProvider.notifier).state = url;
     }
   }
