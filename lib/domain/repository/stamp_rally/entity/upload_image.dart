@@ -1,4 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'spot.dart';
+
+import 'stamp_rally.dart';
 
 part 'upload_image.freezed.dart';
 
@@ -8,7 +11,10 @@ class UploadImage with _$UploadImage {
     /// アップロードする画像のパス
     required String path,
 
-    /// アップロード先の Storage のパス
-    required String storagePath,
+    /// Stamprally
+    required StampRally stampRally,
+
+    /// Spot
+    required Spot spot,
   }) = _UploadImage;
 }

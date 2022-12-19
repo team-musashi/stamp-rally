@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'entity/spot.dart';
@@ -54,7 +52,8 @@ final entrySpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
 );
 
 /// ストレージに画像をアップロードするプロバイダー
-final uploadImageProviderFamily = FutureProvider.family<void, UploadImage>(
+final uploadImageFutureProviderFamily =
+    FutureProvider.family<String?, UploadImage>(
   (ref, uploadImage) => ref
       .watch(stampRallyRepositoryProvider)
       .uploadImage(uploadImage: uploadImage),
@@ -87,11 +86,5 @@ abstract class StampRallyRepository {
   Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId});
 
   /// Storage に画像をアップロードする
-  Future<void> uploadImage({required UploadImage uploadImage});
-
-  /// 参加中のスタンプラリーに紐づく画像リストを返す
-  Future<List<File?>> fetchEntryImages();
-
-  /// 完了済みのスタンプラリーに紐づく画像リストを返す
-  // Future<List<File?>> fetchCompletedImages();
+  Future<String?> uploadImage({required UploadImage uploadImage});
 }

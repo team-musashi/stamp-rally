@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/repository/command/command_repository.dart';
+import '../../domain/repository/stamp_rally/entity/upload_image.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../util/logger.dart';
 import 'state/complete_stamp_rally_result.dart';
 import 'state/enter_stamp_rally_result.dart';
+import 'state/uplode_image_result.dart';
 import 'state/withdraw_stamp_rally_result.dart';
 
 /// スタンプラリーサービスプロバイダー
@@ -69,5 +71,23 @@ class StampRallyService {
       assert(entryStampRally == null);
       logger.i('completed entryStampRally: id = $stampRallyId');
     });
+  }
+
+  /// 画像をアップロードする
+  Future<String?> uploadImage({required UploadImage uploadImage}) async {
+    final url =
+        await ref.read(uploadImageFutureProviderFamily(uploadImage).future);
+    if (url != null) {
+      logger.i(url);
+      // todo: URL を entrySpot のフィールドに追加する、 gotDate を現在時刻で更新する
+      // final notifier = ref.read(uploadImageResultFutureProviderFamily.notifier);
+      // notifier.state = const AsyncValue.loading();
+      // notifier.state = await AsyncValue.guard(() async {
+      //   return null;
+      // });
+      ref.read(uploadImageResultProvider.notifier).state = url;
+      return url;
+    }
+    return null;
   }
 }

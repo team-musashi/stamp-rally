@@ -208,23 +208,25 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<void> uploadImage({
+  Future<String?> uploadImage({
     required UploadImage uploadImage,
   }) async {
-    final ref = storageRef.child(uploadImage.storagePath);
+    final uid = userDocRef?.id;
+
+    /// アップロード先のストレージのパス
+    final path =
+        'user/$uid/stamprally/${uploadImage.stampRally.id}/spot/${uploadImage.spot.id}';
+    final ref = storageRef.child(
+      path,
+    );
     try {
       await ref.putFile(File(uploadImage.path));
+      final url = await ref.getDownloadURL();
+      return url;
     } on Exception catch (e) {
       logger.e(e);
+      return null;
     }
-    // todo: streamを使ったアップロードステータスの管理
-  }
-
-  @override
-  Future<List<File?>> fetchEntryImages() async {
-    return [
-      File(''),
-    ];
   }
 }
 

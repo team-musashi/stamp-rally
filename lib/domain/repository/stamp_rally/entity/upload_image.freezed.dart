@@ -19,8 +19,11 @@ mixin _$UploadImage {
   /// アップロードする画像のパス
   String get path => throw _privateConstructorUsedError;
 
-  /// アップロード先の Storage のパス
-  String get storagePath => throw _privateConstructorUsedError;
+  /// Stamprally
+  StampRally get stampRally => throw _privateConstructorUsedError;
+
+  /// Spot
+  Spot get spot => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UploadImageCopyWith<UploadImage> get copyWith =>
@@ -33,7 +36,10 @@ abstract class $UploadImageCopyWith<$Res> {
           UploadImage value, $Res Function(UploadImage) then) =
       _$UploadImageCopyWithImpl<$Res, UploadImage>;
   @useResult
-  $Res call({String path, String storagePath});
+  $Res call({String path, StampRally stampRally, Spot spot});
+
+  $StampRallyCopyWith<$Res> get stampRally;
+  $SpotCopyWith<$Res> get spot;
 }
 
 /// @nodoc
@@ -50,18 +56,39 @@ class _$UploadImageCopyWithImpl<$Res, $Val extends UploadImage>
   @override
   $Res call({
     Object? path = null,
-    Object? storagePath = null,
+    Object? stampRally = null,
+    Object? spot = null,
   }) {
     return _then(_value.copyWith(
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      storagePath: null == storagePath
-          ? _value.storagePath
-          : storagePath // ignore: cast_nullable_to_non_nullable
-              as String,
+      stampRally: null == stampRally
+          ? _value.stampRally
+          : stampRally // ignore: cast_nullable_to_non_nullable
+              as StampRally,
+      spot: null == spot
+          ? _value.spot
+          : spot // ignore: cast_nullable_to_non_nullable
+              as Spot,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $StampRallyCopyWith<$Res> get stampRally {
+    return $StampRallyCopyWith<$Res>(_value.stampRally, (value) {
+      return _then(_value.copyWith(stampRally: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SpotCopyWith<$Res> get spot {
+    return $SpotCopyWith<$Res>(_value.spot, (value) {
+      return _then(_value.copyWith(spot: value) as $Val);
+    });
   }
 }
 
@@ -73,7 +100,12 @@ abstract class _$$_UploadImageCopyWith<$Res>
       __$$_UploadImageCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String path, String storagePath});
+  $Res call({String path, StampRally stampRally, Spot spot});
+
+  @override
+  $StampRallyCopyWith<$Res> get stampRally;
+  @override
+  $SpotCopyWith<$Res> get spot;
 }
 
 /// @nodoc
@@ -88,17 +120,22 @@ class __$$_UploadImageCopyWithImpl<$Res>
   @override
   $Res call({
     Object? path = null,
-    Object? storagePath = null,
+    Object? stampRally = null,
+    Object? spot = null,
   }) {
     return _then(_$_UploadImage(
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      storagePath: null == storagePath
-          ? _value.storagePath
-          : storagePath // ignore: cast_nullable_to_non_nullable
-              as String,
+      stampRally: null == stampRally
+          ? _value.stampRally
+          : stampRally // ignore: cast_nullable_to_non_nullable
+              as StampRally,
+      spot: null == spot
+          ? _value.spot
+          : spot // ignore: cast_nullable_to_non_nullable
+              as Spot,
     ));
   }
 }
@@ -106,19 +143,24 @@ class __$$_UploadImageCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UploadImage implements _UploadImage {
-  const _$_UploadImage({required this.path, required this.storagePath});
+  const _$_UploadImage(
+      {required this.path, required this.stampRally, required this.spot});
 
   /// アップロードする画像のパス
   @override
   final String path;
 
-  /// アップロード先の Storage のパス
+  /// Stamprally
   @override
-  final String storagePath;
+  final StampRally stampRally;
+
+  /// Spot
+  @override
+  final Spot spot;
 
   @override
   String toString() {
-    return 'UploadImage(path: $path, storagePath: $storagePath)';
+    return 'UploadImage(path: $path, stampRally: $stampRally, spot: $spot)';
   }
 
   @override
@@ -127,12 +169,13 @@ class _$_UploadImage implements _UploadImage {
         (other.runtimeType == runtimeType &&
             other is _$_UploadImage &&
             (identical(other.path, path) || other.path == path) &&
-            (identical(other.storagePath, storagePath) ||
-                other.storagePath == storagePath));
+            (identical(other.stampRally, stampRally) ||
+                other.stampRally == stampRally) &&
+            (identical(other.spot, spot) || other.spot == spot));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, path, storagePath);
+  int get hashCode => Object.hash(runtimeType, path, stampRally, spot);
 
   @JsonKey(ignore: true)
   @override
@@ -144,7 +187,8 @@ class _$_UploadImage implements _UploadImage {
 abstract class _UploadImage implements UploadImage {
   const factory _UploadImage(
       {required final String path,
-      required final String storagePath}) = _$_UploadImage;
+      required final StampRally stampRally,
+      required final Spot spot}) = _$_UploadImage;
 
   @override
 
@@ -152,8 +196,12 @@ abstract class _UploadImage implements UploadImage {
   String get path;
   @override
 
-  /// アップロード先の Storage のパス
-  String get storagePath;
+  /// Stamprally
+  StampRally get stampRally;
+  @override
+
+  /// Spot
+  Spot get spot;
   @override
   @JsonKey(ignore: true)
   _$$_UploadImageCopyWith<_$_UploadImage> get copyWith =>
