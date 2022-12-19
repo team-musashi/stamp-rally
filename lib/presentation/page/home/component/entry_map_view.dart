@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../application/stamp_rally/state/pin_icon_provider.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
+import '../../../../secret_key.dart';
 import '../../../component/async_value_handler.dart';
 import 'entry_spot_index_list.dart';
 
@@ -28,14 +30,23 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
       value: ref.watch(currentEntryStampRallyProvider),
       builder: (stampRally) {
         final spots = stampRally.spots;
-
         return Scaffold(
           body: Stack(
             children: [
               AsyncValueHandler(
                 value: ref.watch(pinIconProvider),
                 builder: (icon) {
+                  getPolyPoints(spots);
+
                   return GoogleMap(
+                    polylines: {
+                      Polyline(
+                        polylineId: const PolylineId('route'),
+                        points: polylineCoordinates,
+                        width: 4,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      )
+                    },
                     myLocationEnabled: true,
                     zoomControlsEnabled: false,
                     onMapCreated: onMapCreated,
@@ -73,6 +84,46 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
     final value = await rootBundle.loadString('assets/json/map_style.json');
     final futureController = await _controller.future;
     await futureController.setMapStyle(value); // Controllerを使ってMapをSetする
+  }
+
+  List<LatLng> polylineCoordinates = [];
+
+  Future<void> getPolyPoints(List<Spot> spots) async {
+    if (spots.isEmpty || polylineCoordinates.isNotEmpty) {
+      return;
+    }
+
+    final polylinePoints = PolylinePoints();
+
+    for (var i = 0; i < spots.length - 1; i++) {
+      final pointFrom = PointLatLng(
+        spots[i].location.latitude,
+        spots[i].location.longitude,
+      );
+      final pointTo = PointLatLng(
+        spots[i + 1].location.latitude,
+        spots[i + 1].location.longitude,
+      );
+
+      final result = await polylinePoints.getRouteBetweenCoordinates(
+        googleMapAPIKey,
+        pointFrom,
+        pointTo,
+        travelMode: TravelMode.walking,
+        avoidHighways: true,
+        avoidTolls: true,
+      );
+
+      if (result.points.isNotEmpty) {
+        for (final point in result.points) {
+          polylineCoordinates.add(
+            LatLng(point.latitude, point.longitude),
+          );
+        }
+      }
+    }
+
+    setState(() {});
   }
 
   /// 参加中スタンプラリーのスポットからマップに表示するマーカーを生成する
