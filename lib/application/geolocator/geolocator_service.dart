@@ -78,4 +78,6 @@ class GeolocatorService {
     final result = d / 1000;
     return double.parse(result.toStringAsFixed(2));
   }
+
+  Position? get getCurrentPosition => currentPosition;
 }

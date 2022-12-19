@@ -6,6 +6,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../application/geolocator/geolocator_service.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../application/stamp_rally/state/pin_icon_provider.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
@@ -96,14 +97,31 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
     final polylinePoints = PolylinePoints();
 
     for (var i = 0; i < spots.length - 1; i++) {
-      final pointFrom = PointLatLng(
-        spots[i].location.latitude,
-        spots[i].location.longitude,
-      );
-      final pointTo = PointLatLng(
-        spots[i + 1].location.latitude,
-        spots[i + 1].location.longitude,
-      );
+      late PointLatLng pointFrom;
+      late PointLatLng pointTo;
+      final currentPosition =
+          ref.read(geolocatorServiceProvider).getCurrentPosition;
+      if (i == 0 && currentPosition != null) {
+        // 自分の位置〜1番最初のスポットまでの経路を求める
+        pointFrom = PointLatLng(
+          currentPosition.latitude,
+          currentPosition.longitude,
+        );
+        pointTo = PointLatLng(
+          spots[i].location.latitude,
+          spots[i].location.longitude,
+        );
+      } else {
+        // i番目〜その次のスポットまでの経路を求める
+        pointFrom = PointLatLng(
+          spots[i].location.latitude,
+          spots[i].location.longitude,
+        );
+        pointTo = PointLatLng(
+          spots[i + 1].location.latitude,
+          spots[i + 1].location.longitude,
+        );
+      }
 
       final result = await polylinePoints.getRouteBetweenCoordinates(
         googleMapAPIKey,
