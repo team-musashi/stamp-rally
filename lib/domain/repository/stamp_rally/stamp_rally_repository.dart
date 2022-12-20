@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'entity/spot.dart';
@@ -63,9 +65,15 @@ final publicSpotsProviderFamily =
 
 /// 参加中のスタンプラリーのスポットリストを返すプロバイダー
 final entrySpotsProviderFamily = FutureProvider.family<List<Spot>, String>(
-  (ref, stampRallyId) => ref
-      .watch(stampRallyRepositoryProvider)
-      .fetchEntrySpots(entryStampRallyId: stampRallyId),
+  (ref, stampRallyId) async {
+    final repository = ref.watch(stampRallyRepositoryProvider);
+    repository
+        .entrySpotsChanges(entryStampRallyId: stampRallyId)
+        ?.listen((latest) {
+      ref.state = AsyncValue.data(latest);
+    });
+    return repository.fetchEntrySpots(entryStampRallyId: stampRallyId);
+  },
   name: 'entrySpotsProviderFamily',
 );
 
@@ -99,4 +107,13 @@ abstract class StampRallyRepository {
 
   /// 参加中のスタンプラリーに紐づくスポットリストを返す
   Future<List<Spot>> fetchEntrySpots({required String entryStampRallyId});
+
+  /// 参加中のスタンプラリーに紐づくスポットリストを返す
+  Stream<List<Spot>>? entrySpotsChanges({required String entryStampRallyId});
+
+  /// 撮影したスポット画像をアップロードする
+  Future<void> uploadSpotImage({
+    required Spot spot,
+    required File image,
+  });
 }

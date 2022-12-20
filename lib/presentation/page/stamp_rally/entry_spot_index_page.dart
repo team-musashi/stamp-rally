@@ -6,6 +6,7 @@ import '../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
+import '../../router.dart';
 
 /// 参加スポット一覧画面
 class EntrySpotIndexPage extends StatelessWidget {
@@ -34,9 +35,14 @@ class _Body extends ConsumerWidget {
           itemCount: stampRally.spots.length,
           itemBuilder: (context, index) {
             final spot = stampRally.spots[index];
-            return CachedNetworkImage(
-              imageUrl: spot.imageUrl,
-              cacheManager: ref.watch(defaultCacheManagerProvider),
+            return InkWell(
+              onTap: () {
+                EntrySpotViewRoute.fromSpot(stampRally, spot).go(context);
+              },
+              child: CachedNetworkImage(
+                imageUrl: spot.imageUrl,
+                cacheManager: ref.watch(defaultCacheManagerProvider),
+              ),
             );
           },
         );
