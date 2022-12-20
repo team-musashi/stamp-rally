@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../application/stamp_rally/state/current_complete_stamp_rally.dart';
-import '../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../application/stamp_rally/state/current_entry_spot.dart';
 import '../application/stamp_rally/state/current_public_spot.dart';
 import '../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../application/stamp_rally/state/spot_param.dart';
@@ -20,8 +20,7 @@ import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/complete_stamp_rally_view_page.dart';
-import 'page/stamp_rally/entry_spot_index_page.dart';
-import 'page/stamp_rally/public_spot_index_page.dart';
+import 'page/stamp_rally/entry_spot_view_page.dart';
 import 'page/stamp_rally/public_spot_view_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
@@ -130,18 +129,13 @@ class LoginRoute extends GoRouteData {
     TypedGoRoute<PublicStampRallyViewRoute>(
       path: 'public-stamp-rally/:publicStampRallyId',
       routes: [
-        TypedGoRoute<PublicSpotIndexRoute>(
-          path: 'spots',
-          routes: [
-            TypedGoRoute<PublicSpotViewRoute>(
-              path: ':publicSpotId',
-            ),
-          ],
+        TypedGoRoute<PublicSpotViewRoute>(
+          path: ':publicSpotId',
         ),
       ],
     ),
-    TypedGoRoute<EntrySpotIndexRoute>(
-      path: 'entry-stamp-rally/spots',
+    TypedGoRoute<EntrySpotViewRoute>(
+      path: 'entry-stamp-rally/spots/:entrySpotId',
     ),
     TypedGoRoute<CompleteStampRallyViewRoute>(
       path: 'complete-stamp-rally/:completeStampRallyId',
@@ -198,44 +192,6 @@ class PublicStampRallyViewRoute extends GoRouteData {
   }
 }
 
-/// 公開スポット一覧画面
-class PublicSpotIndexRoute extends GoRouteData {
-  PublicSpotIndexRoute({
-    required this.publicStampRallyId,
-    // this.$extra,
-  });
-
-  factory PublicSpotIndexRoute.fromStampRally(
-    StampRally stampRally,
-  ) =>
-      PublicSpotIndexRoute(
-        publicStampRallyId: stampRally.id,
-        // $extra: stampRally,
-      );
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリーID
-  final String publicStampRallyId;
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  // StampRally? $extra;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      overrides: [
-        // 現在のスタンプラリーパラメータをスタンプラリー詳細画面のスタンプラリー情報で上書き
-        currentPublicStampRallyParamProvider.overrideWithValue(
-          StampRallyParam(
-            stampRallyId: publicStampRallyId,
-            // cache: $extra,
-          ),
-        ),
-      ],
-      child: const PublicSpotIndexPage(),
-    );
-  }
-}
-
 /// 公開中スポット詳細画面
 class PublicSpotViewRoute extends GoRouteData {
   PublicSpotViewRoute({
@@ -286,30 +242,40 @@ class PublicSpotViewRoute extends GoRouteData {
   }
 }
 
-/// 参加スポット一覧画面
-class EntrySpotIndexRoute extends GoRouteData {
-  EntrySpotIndexRoute({
+/// 参加中スポット詳細画面
+class EntrySpotViewRoute extends GoRouteData {
+  EntrySpotViewRoute({
+    required this.entrySpotId,
     this.$extra,
   });
 
-  factory EntrySpotIndexRoute.fromStampRally(
-    StampRally stampRally,
+  factory EntrySpotViewRoute.fromSpot(
+    Spot spot,
   ) =>
-      EntrySpotIndexRoute(
-        $extra: stampRally,
+      EntrySpotViewRoute(
+        entrySpotId: spot.id,
+        $extra: spot,
       );
 
-  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  StampRally? $extra;
+  /// スポット詳細画面に表示中のスポットID
+  final String entrySpotId;
+
+  /// スポット詳細画面に表示中のスポット情報
+  Spot? $extra;
 
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
       overrides: [
-        // 現在の参加中のスタンプラリーを上書きする
-        currentEntryStampRallyProvider.overrideWith((ref) => $extra),
+        // 現在のスポットパラメータをスポット詳細画面のスポット情報で上書き
+        currentEntrySpotParamProvider.overrideWithValue(
+          SpotParam(
+            spotId: entrySpotId,
+            cache: $extra,
+          ),
+        ),
       ],
-      child: const EntrySpotIndexPage(),
+      child: const EntrySpotViewPage(),
     );
   }
 }

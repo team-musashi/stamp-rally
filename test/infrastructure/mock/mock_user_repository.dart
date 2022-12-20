@@ -38,4 +38,10 @@ class MockUserRepository implements UserRepository {
     // TODO(cobo): implement userChanges
     throw UnimplementedError();
   }
+
+  @override
+  Future<User?> getUser() {
+    // TODO(cobo): implement getUser
+    throw UnimplementedError();
+  }
 }

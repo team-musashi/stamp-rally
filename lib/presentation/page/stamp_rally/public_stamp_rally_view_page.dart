@@ -64,12 +64,6 @@ class _Body extends ConsumerWidget {
               Text('所要時間：${stampRally.requiredTime.toString()}時間'),
               DelimiterBlock(text: stampRally.summary),
               ElevatedButton(
-                onPressed: () async {
-                  PublicSpotIndexRoute.fromStampRally(stampRally).go(context);
-                },
-                child: const Text('スポット一覧'),
-              ),
-              ElevatedButton(
                 onPressed: stampRally.canEntry
                     ? () async {
                         await ref
@@ -78,6 +72,16 @@ class _Body extends ConsumerWidget {
                       }
                     : null,
                 child: const Text('参加する'),
+              ),
+              ...stampRally.spots.map(
+                (spot) => InkWell(
+                  onTap: () async {
+                    PublicSpotViewRoute.fromSpot(stampRally, spot).go(context);
+                  },
+                  child: Image(
+                    image: NetworkImage(spot.imageUrl),
+                  ),
+                ),
               ),
             ],
           ),

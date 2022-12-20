@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
@@ -15,6 +17,7 @@ import 'document/stamp_rally_document.dart';
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
     required this.userDocRef,
+    required this.storage,
   }) {
     if (userDocRef == null) {
       // 未ログイン状態のときは監視しない
@@ -79,6 +82,8 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
   FirebaseFirestore? get firestore => userDocRef?.firestore;
   final DocumentReference<Map<String, dynamic>>? userDocRef;
+  final FirebaseStorage storage;
+
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
   final _entryChangesController = StreamController<StampRally?>.broadcast();
@@ -216,7 +221,10 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         .get();
     return snapshot?.docs.map((query) {
           final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+          return SpotDocument.fromJson(json).toSpot(
+            id: query.id,
+            stampRallyId: publicStampRallyId,
+          );
         }).toList() ??
         [];
   }
@@ -225,17 +233,100 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   Future<List<Spot>> fetchEntrySpots({
     required String entryStampRallyId,
   }) async {
-    final snapshot = await userDocRef
+    final snapshot = await _getEntrySpotsQuery(entryStampRallyId)?.get();
+    return _convertEntrySpots(entryStampRallyId, snapshot);
+  }
+
+  @override
+  Stream<List<Spot>>? entrySpotsChanges({
+    required String entryStampRallyId,
+  }) {
+    return _getEntrySpotsQuery(entryStampRallyId)?.snapshots().asyncMap(
+      (snapshot) async {
+        return _convertEntrySpots(entryStampRallyId, snapshot);
+      },
+    );
+  }
+
+  /// 参加中スポットリストのクエリを返す
+  Query<Map<String, dynamic>>? _getEntrySpotsQuery(String entryStampRallyId) {
+    return userDocRef
         ?.collection(entryStampRallyCollectionName)
         .doc(entryStampRallyId)
         .collection(entrySpotCollectionName)
-        .orderBy(SpotDocument.field.order, descending: false)
-        .get();
-    return snapshot?.docs.map((query) {
-          final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
-        }).toList() ??
-        [];
+        .orderBy(SpotDocument.field.order, descending: false);
+  }
+
+  /// 参加中スポットリストに変換する
+  Future<List<Spot>> _convertEntrySpots(
+    String entryStampRallyId,
+    QuerySnapshot<Map<String, dynamic>>? snapshot,
+  ) async {
+    return Future.wait<Spot>(
+      snapshot?.docs.map((query) async {
+            final json = query.data();
+            final spotDoc = SpotDocument.fromJson(json);
+            // パスをURLに変換する
+            final url = await _convertSpotImageUrl(spotDoc.uploadImagePath);
+            return spotDoc.toSpot(
+              id: query.id,
+              stampRallyId: entryStampRallyId,
+              uploadImageUrl: url,
+            );
+          }) ??
+          [],
+    );
+  }
+
+  /// アップロードしたスポット画像のURLに変換する
+  Future<String?> _convertSpotImageUrl(String? path) async {
+    if (path == null) {
+      return null;
+    }
+    return storage.ref(path).getDownloadURL();
+  }
+
+  @override
+  Future<void> uploadSpotImage({
+    required Spot spot,
+    required File image,
+  }) async {
+    // Storageにアップロードする
+    final path = _convertSpotImagePath(spot);
+    await storage.ref(path).putFile(image);
+
+    // 参加中スポットを更新する
+    await _updateEntrySpot(spot: spot, uploadImagePath: path);
+  }
+
+  /// アップロードするスポット画像のパスに変換する
+  String _convertSpotImagePath(Spot spot) {
+    final uid = userDocRef?.id;
+    assert(uid != null);
+
+    // 上書き保存しないように現在日時をファイル名に付加する
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    return 'user/$uid/entryStampRally/${spot.stampRallyId}/spot/${spot.id}_$timestamp';
+  }
+
+  /// 参加中スポットを更新する
+  Future<void> _updateEntrySpot({
+    required Spot spot,
+    required String uploadImagePath,
+  }) async {
+    final ref = userDocRef
+        ?.collection(entryStampRallyCollectionName)
+        .doc(spot.stampRallyId)
+        .collection(entrySpotCollectionName)
+        .doc(spot.id);
+
+    await ref?.set(
+      <String, dynamic>{
+        SpotDocument.field.uploadImagePath: uploadImagePath,
+        SpotDocument.field.gotDate: DateTime.now(),
+      },
+      SetOptions(merge: true),
+    );
   }
 }
 
