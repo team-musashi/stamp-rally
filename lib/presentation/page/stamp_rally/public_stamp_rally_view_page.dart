@@ -10,9 +10,9 @@ import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
-import '../../component/delimiter_block.dart';
 import '../../component/widget_ref.dart';
 import '../../router.dart';
+import 'component/spot_thumbnail.dart';
 
 /// 公開スタンプラリー詳細画面
 class PublicStampRallyViewPage extends StatelessWidget {
@@ -34,6 +34,8 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+
     // スタンプラリー参加の結果を監視する
     ref.listenResult<StampRally?>(
       enterStampRallyResultProvider,
@@ -48,43 +50,207 @@ class _Body extends ConsumerWidget {
     return AsyncValueHandler(
       value: ref.watch(currentPublicStampRallyProvider),
       builder: (stampRally) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              CachedNetworkImage(
-                imageUrl: stampRally.imageUrl,
-                cacheManager: ref.watch(defaultCacheManagerProvider),
+        return Stack(
+          children: [
+            // スタンプラリー画像
+            CachedNetworkImage(
+              imageUrl: stampRally.imageUrl,
+              cacheManager: ref.watch(defaultCacheManagerProvider),
+            ),
+
+            // スタンプラリー詳細
+            Container(
+              width: size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
               ),
-              Text(
-                stampRally.title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+              margin: const EdgeInsets.only(top: 245),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 120, top: 10),
+                    child: Text(
+                      stampRally.title,
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey[350],
+                    thickness: 2,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      'エリア',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Text(stampRally.area)
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.schedule,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      '所要時間',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Text('${stampRally.requiredTime.toString()}時間')
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.summarize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      '概要',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Text(
+                                  stampRally.summary,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                )
+                              ],
+                            ),
+                          ),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.all(4),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                            ),
+                            itemCount: stampRally.spots.length,
+                            itemBuilder: (context, index) {
+                              final spot = stampRally.spots[index];
+                              return InkWell(
+                                onTap: () async {
+                                  PublicSpotViewRoute.fromSpot(stampRally, spot)
+                                      .go(context);
+                                },
+                                child: SpotThumbnail(
+                                  spot: spot,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Text('エリア：${stampRally.area}'),
-              Text('チェックポイント数：${stampRally.spots.length}'),
-              Text('所要時間：${stampRally.requiredTime.toString()}時間'),
-              DelimiterBlock(text: stampRally.summary),
-              ElevatedButton(
-                onPressed: stampRally.canEntry
-                    ? () async {
-                        await ref
-                            .read(stampRallyServiceProvider)
-                            .enterStampRally(stampRallyId: stampRally.id);
-                      }
-                    : null,
-                child: const Text('参加する'),
-              ),
-              ...stampRally.spots.map(
-                (spot) => InkWell(
-                  onTap: () async {
-                    PublicSpotViewRoute.fromSpot(stampRally, spot).go(context);
-                  },
-                  child: Image(
-                    image: NetworkImage(spot.imageUrl),
+            ),
+
+            // JOIN BURARRYボタン
+            Container(
+              alignment: Alignment.topRight,
+              margin: const EdgeInsets.only(top: 210, right: 20),
+              child: SizedBox(
+                height: 77,
+                width: 77,
+                child: ElevatedButton(
+                  onPressed: stampRally.canEntry
+                      ? () async {
+                          await ref
+                              .read(stampRallyServiceProvider)
+                              .enterStampRally(stampRallyId: stampRally.id);
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.local_activity),
+                      SizedBox(height: 6),
+                      Text(
+                        'JOIN BURRARY',
+                        style: TextStyle(fontSize: 6),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
