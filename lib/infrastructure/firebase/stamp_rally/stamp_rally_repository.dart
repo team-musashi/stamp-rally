@@ -17,6 +17,7 @@ import 'document/stamp_rally_document.dart';
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
     required this.userDocRef,
+    required this.storage,
   }) {
     if (userDocRef == null) {
       // 未ログイン状態のときは監視しない
@@ -81,7 +82,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
 
   FirebaseFirestore? get firestore => userDocRef?.firestore;
   final DocumentReference<Map<String, dynamic>>? userDocRef;
-  final storageRef = FirebaseStorage.instance.ref();
+  final FirebaseStorage storage;
 
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
@@ -282,7 +283,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
     if (path == null) {
       return null;
     }
-    return storageRef.child(path).getDownloadURL();
+    return storage.ref(path).getDownloadURL();
   }
 
   @override
@@ -292,7 +293,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }) async {
     // Storageにアップロードする
     final path = _convertSpotImagePath(spot);
-    await storageRef.child(path).putFile(image);
+    await storage.ref(path).putFile(image);
 
     // 参加中スポットを更新する
     await _updateEntrySpot(spot: spot, uploadImagePath: path);
