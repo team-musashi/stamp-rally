@@ -121,6 +121,15 @@ class FirebaseUserRepository implements UserRepository {
   Stream<User?> userChanges() => userChangesController.stream;
 
   @override
+  Future<User?> getUser() async {
+    if (_cacheUser == null) {
+      final snapshot = await _docRef?.get();
+      _cacheUser = snapshot?.data()?.toUser(snapshot.id);
+    }
+    return _cacheUser;
+  }
+
+  @override
   Future<void> loginAnonymously() async {
     assert(_firebaseUser == null);
     try {

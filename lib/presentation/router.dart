@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../application/stamp_rally/state/current_entry_stamp_rally.dart';
+import '../application/stamp_rally/state/current_complete_stamp_rally.dart';
+import '../application/stamp_rally/state/current_entry_spot.dart';
 import '../application/stamp_rally/state/current_public_spot.dart';
 import '../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../application/stamp_rally/state/spot_param.dart';
@@ -18,7 +19,9 @@ import '../presentation/page/home/home_page.dart';
 import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
+import 'page/stamp_rally/complete_stamp_rally_view_page.dart';
 import 'page/stamp_rally/entry_spot_index_page.dart';
+import 'page/stamp_rally/entry_spot_view_page.dart';
 import 'page/stamp_rally/public_spot_view_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
 
@@ -133,8 +136,16 @@ class LoginRoute extends GoRouteData {
       ],
     ),
     TypedGoRoute<EntrySpotIndexRoute>(
-      path: 'entry-stamp-rally/spots',
+      path: 'entry-stamp-rally/:entryStampRallyId',
+      routes: [
+        TypedGoRoute<EntrySpotViewRoute>(
+          path: ':entrySpotId',
+        ),
+      ],
     ),
+    TypedGoRoute<CompleteStampRallyViewRoute>(
+      path: 'complete-stamp-rally/:completeStampRallyId',
+    )
   ],
 )
 
@@ -237,30 +248,111 @@ class PublicSpotViewRoute extends GoRouteData {
   }
 }
 
-/// 参加スポット一覧画面
+/// 参加中スポット一覧画面
 class EntrySpotIndexRoute extends GoRouteData {
   EntrySpotIndexRoute({
-    this.$extra,
+    required this.entryStampRallyId,
+    // this.$extra,
   });
 
   factory EntrySpotIndexRoute.fromStampRally(
     StampRally stampRally,
   ) =>
       EntrySpotIndexRoute(
-        $extra: stampRally,
+        entryStampRallyId: stampRally.id,
+        // $extra: stampRally,
       );
 
   /// スタンプラリー詳細画面に表示中のスタンプラリー情報
+  // StampRally? $extra;
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String entryStampRallyId;
+
+  @override
+  Widget build(BuildContext context) {
+    return const EntrySpotIndexPage();
+  }
+}
+
+/// 参加中スポット詳細画面
+class EntrySpotViewRoute extends GoRouteData {
+  EntrySpotViewRoute({
+    required this.entryStampRallyId,
+    required this.entrySpotId,
+    this.$extra,
+  });
+
+  factory EntrySpotViewRoute.fromSpot(
+    StampRally stampRally,
+    Spot spot,
+  ) =>
+      EntrySpotViewRoute(
+        entryStampRallyId: stampRally.id,
+        entrySpotId: spot.id,
+        $extra: spot,
+      );
+
+  /// スポット詳細画面に表示中のスポットID
+  final String entrySpotId;
+
+  /// スタンプラリー詳細画面に表示中のスタンプラリーID
+  final String entryStampRallyId;
+
+  /// スポット詳細画面に表示中のスポット情報
+  Spot? $extra;
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        // 現在のスポットパラメータをスポット詳細画面のスポット情報で上書き
+        currentEntrySpotParamProvider.overrideWithValue(
+          SpotParam(
+            spotId: entrySpotId,
+            cache: $extra,
+          ),
+        ),
+      ],
+      child: const EntrySpotViewPage(),
+    );
+  }
+}
+
+/// 参加完了済スタンプラリー詳細画面
+class CompleteStampRallyViewRoute extends GoRouteData {
+  CompleteStampRallyViewRoute({
+    required this.completeStampRallyId,
+    this.$extra,
+  });
+
+  factory CompleteStampRallyViewRoute.fromStampRally(
+    StampRally stampRally,
+  ) =>
+      CompleteStampRallyViewRoute(
+        completeStampRallyId: stampRally.id,
+        $extra: stampRally,
+      );
+
+  /// 参加完了済のスタンプラリーID
+  final String completeStampRallyId;
+
+  /// キャッシュ
   StampRally? $extra;
 
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
       overrides: [
-        // 現在の参加中のスタンプラリーを上書きする
-        currentEntryStampRallyProvider.overrideWith((ref) => $extra),
+        // 現在の参加完了済のスタンプラリーパラメータを上書きする
+        currentCompleteStampRallyParamProvider.overrideWithValue(
+          StampRallyParam(
+            stampRallyId: completeStampRallyId,
+            cache: $extra,
+          ),
+        )
       ],
-      child: const EntrySpotIndexPage(),
+      child: const CompleteStampRallyViewPage(),
     );
   }
 }

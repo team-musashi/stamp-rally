@@ -3,9 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'entity/user.dart';
 import 'entity/user_input_data.dart';
 
-/// ユーザープロバイダー
-final userProvider = StreamProvider(
+/// ユーザーStreamプロバイダー
+final userStreamProvider = StreamProvider(
   (ref) => ref.watch(userRepositoryProvider).userChanges(),
+  name: 'userStreamProvider',
+);
+
+/// ユーザープロバイダー
+final userProvider = FutureProvider(
+  (ref) {
+    ref.listen(userStreamProvider, (_, next) {
+      // 変更があれば反映する
+      ref.state = next;
+    });
+
+    // 最初は取得して返す
+    return ref.watch(userRepositoryProvider).getUser();
+  },
   name: 'userProvider',
 );
 
@@ -38,6 +52,9 @@ abstract class UserRepository {
 
   /// ユーザーを返す
   Stream<User?> userChanges();
+
+  /// ユーザーを返す
+  Future<User?> getUser();
 
   /// ユーザーを更新する
   Future<void> updateUser(UserInputData inputData);

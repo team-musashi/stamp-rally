@@ -11,6 +11,9 @@ class Spot with _$Spot {
     /// ID
     required String id,
 
+    /// スタンプラリーID
+    required String stampRallyId,
+
     /// スポットの順番
     required int order,
 
@@ -32,13 +35,16 @@ class Spot with _$Spot {
     /// 緯度経度
     required GeoLocation location,
 
-    /// スタンプ取得日
-    DateTime? gotDate,
-
     /// 作成日時
     DateTime? createdAt,
 
     /// 更新日時
     DateTime? updatedAt,
+
+    /// アップロードしたスポット画像のURL
+    String? uploadImageUrl,
+
+    /// スタンプ取得日
+    DateTime? gotDate,
   }) = _Spot;
 }

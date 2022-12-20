@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/repository/command/command_repository.dart';
+import '../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../util/logger.dart';
+import '../image_picker/state/current_picked_image.dart';
 import 'state/complete_stamp_rally_result.dart';
 import 'state/enter_stamp_rally_result.dart';
+import 'state/uplode_spot_image_result.dart';
 import 'state/withdraw_stamp_rally_result.dart';
 
 /// スタンプラリーサービスプロバイダー
@@ -59,15 +64,40 @@ class StampRallyService {
     final notifier = ref.read(completeStampRallyResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
+      // あとで加算されるのを確認するために、現時点の完了済スタンプラリーのリストを取得する
+      final beforeCompleteStampRallies =
+          await ref.read(completeStampRalliesProvider.future);
+
       await ref
           .read(commandRepositoryProvider)
           .completeStampRally(entryStampRallyId: stampRallyId);
 
-      // 参加中スタンプラリーが更新されるのを待つ
-      final entryStampRally =
-          await ref.refresh(entryStampRallyStreamProvider.future);
-      assert(entryStampRally == null);
+      // 参加完了済スタンプラリーリストが更新されるのを待つ
+      final completeStampRallies =
+          await ref.refresh(completeStampRalliesStreamProvider.future);
+      assert(
+        completeStampRallies.length == beforeCompleteStampRallies.length + 1,
+      );
       logger.i('completed entryStampRally: id = $stampRallyId');
+      return completeStampRallies
+          .firstWhere((stampRally) => stampRally.id == stampRallyId);
+    });
+  }
+
+  /// スポット画像をアップロードする
+  Future<void> uploadSpotImage({
+    required Spot spot,
+    required File image,
+  }) async {
+    final notifier = ref.read(uploadSpotImageResultProvider.notifier);
+    notifier.state = const AsyncValue.loading();
+    notifier.state = await AsyncValue.guard(() async {
+      await ref
+          .read(stampRallyRepositoryProvider)
+          .uploadSpotImage(spot: spot, image: image);
+
+      // アップロードが終わったら保持中の画像ファイルを破棄する
+      ref.invalidate(pickedImageProviderFamily(spot.id));
     });
   }
 }

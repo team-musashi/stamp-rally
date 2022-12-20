@@ -38,7 +38,7 @@ class UserService {
       // Functions がユーザードキュメントを追加するのを待つ
       // ref.read() だとユーザーを再作成（作成→削除→作成）したときに null が返ってきて
       // しまうので、一度 dispose （破棄）させるために ref.refresh() を使う
-      final user = await ref.refresh(userProvider.future);
+      final user = await ref.refresh(userStreamProvider.future);
       assert(user != null);
 
       // ユーザードキュメントが追加されたらユーザーを更新する

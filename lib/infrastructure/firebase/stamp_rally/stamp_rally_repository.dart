@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
@@ -15,6 +17,7 @@ import 'document/stamp_rally_document.dart';
 class FirebaseStampRallyRepository implements StampRallyRepository {
   FirebaseStampRallyRepository({
     required this.userDocRef,
+    required this.storage,
   }) {
     if (userDocRef == null) {
       // 未ログイン状態のときは監視しない
@@ -57,21 +60,45 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       // キャッシュを更新する
       _cacheEntryStampRally = latest;
     });
+
+    // 参加完了済のスタンプラリーリストの変更を監視する
+    _completeSubscription = _completeQuery?.snapshots().listen((snapshot) {
+      if (_completeChangesController.isClosed) {
+        return;
+      }
+
+      final latest = snapshot.toStampRallies();
+      if (listEquals(latest, _cacheCompleteStampRallies)) {
+        // キャッシュとまったく同じなら変更を通知しない
+        return;
+      }
+
+      _completeChangesController.add(latest);
+
+      // キャッシュを更新する
+      _cacheCompleteStampRallies = latest;
+    });
   }
 
   FirebaseFirestore? get firestore => userDocRef?.firestore;
   final DocumentReference<Map<String, dynamic>>? userDocRef;
+  final FirebaseStorage storage;
+
   final _publicChangesController =
       StreamController<List<StampRally>>.broadcast();
   final _entryChangesController = StreamController<StampRally?>.broadcast();
+  final _completeChangesController =
+      StreamController<List<StampRally>>.broadcast();
 
   /// コレクションの監視をキャンセルするために保持
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _publicSubscription;
   StreamSubscription<QuerySnapshot<StampRallyDocument>>? _entrySubscription;
+  StreamSubscription<QuerySnapshot<StampRallyDocument>>? _completeSubscription;
 
   /// キャッシュ
   List<StampRally>? _cachePublicStampRallies;
   StampRally? _cacheEntryStampRally;
+  List<StampRally>? _cacheCompleteStampRallies;
 
   static const publicStampRallyCollectionName = 'publicStampRally';
   static const publicSpotCollectionName = 'publicSpot';
@@ -85,16 +112,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ORDER BY startDate ASC
   Query<StampRallyDocument>? get _publicQuery => firestore
       ?.collection(publicStampRallyCollectionName)
-      .withConverter<StampRallyDocument>(
-        fromFirestore: (snapshot, options) {
-          final json = snapshot.data();
-          return StampRallyDocument.fromJson(json!);
-        },
-        toFirestore: (_, __) {
-          // 更新することは無いため空実装
-          return <String, dynamic>{};
-        },
-      )
+      .withStampRallyDocumentConverter()
       .where(
         StampRallyDocument.field.startDate,
         isLessThanOrEqualTo: DateTime.now(),
@@ -108,28 +126,36 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   /// ORDER BY createdAt DESC
   /// limit 1
   Query<StampRallyDocument>? get _entryQuery => userDocRef
-          ?.collection(entryStampRallyCollectionName)
-          .where(
-            StampRallyDocument.field.status,
-            isEqualTo: StampRallyEntryStatus.entry.name,
-          )
-          .orderBy(StampRallyDocument.field.createdAt, descending: true)
-          .limit(1)
-          .withConverter<StampRallyDocument>(
-        fromFirestore: (snapshot, options) {
-          final json = snapshot.data();
-          return StampRallyDocument.fromJson(json!);
-        },
-        toFirestore: (_, __) {
-          return <String, dynamic>{};
-        },
-      );
+      ?.collection(entryStampRallyCollectionName)
+      .withStampRallyDocumentConverter()
+      .where(
+        StampRallyDocument.field.status,
+        isEqualTo: StampRallyEntryStatus.entry.name,
+      )
+      .orderBy(StampRallyDocument.field.createdAt, descending: true)
+      .limit(1);
+
+  /// 参加完了済のスタンプラリーリストのクエリ
+  ///
+  /// ＜検索条件＞
+  /// WHERE status == complete
+  /// ORDER BY createdAt DESC
+  Query<StampRallyDocument>? get _completeQuery => userDocRef
+      ?.collection(entryStampRallyCollectionName)
+      .withStampRallyDocumentConverter()
+      .where(
+        StampRallyDocument.field.status,
+        isEqualTo: StampRallyEntryStatus.complete.name,
+      )
+      .orderBy(StampRallyDocument.field.createdAt, descending: true);
 
   void dispose() {
     _publicSubscription?.cancel();
     _entrySubscription?.cancel();
+    _completeSubscription?.cancel();
     _publicChangesController.close();
     _entryChangesController.close();
+    _completeChangesController.close();
   }
 
   @override
@@ -168,6 +194,22 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
       _entryChangesController.stream;
 
   @override
+  Stream<List<StampRally>> completeStampRalliesChanges() =>
+      _completeChangesController.stream;
+
+  @override
+  Future<List<StampRally>> fetchCompleteStampRallies() async {
+    // キャッシュがあればキャッシュを返す
+    final cache = _cacheCompleteStampRallies;
+    if (cache != null) {
+      return cache;
+    }
+    // キャッシュがなければ取得してくる
+    final snapshot = await _completeQuery?.get();
+    return snapshot?.toStampRallies() ?? [];
+  }
+
+  @override
   Future<List<Spot>> fetchPublicSpots({
     required String publicStampRallyId,
   }) async {
@@ -179,7 +221,10 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         .get();
     return snapshot?.docs.map((query) {
           final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+          return SpotDocument.fromJson(json).toSpot(
+            id: query.id,
+            stampRallyId: publicStampRallyId,
+          );
         }).toList() ??
         [];
   }
@@ -188,18 +233,116 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   Future<List<Spot>> fetchEntrySpots({
     required String entryStampRallyId,
   }) async {
-    final snapshot = await userDocRef
+    final snapshot = await _getEntrySpotsQuery(entryStampRallyId)?.get();
+    return _convertEntrySpots(entryStampRallyId, snapshot);
+  }
+
+  @override
+  Stream<List<Spot>>? entrySpotsChanges({
+    required String entryStampRallyId,
+  }) {
+    return _getEntrySpotsQuery(entryStampRallyId)?.snapshots().asyncMap(
+      (snapshot) async {
+        return _convertEntrySpots(entryStampRallyId, snapshot);
+      },
+    );
+  }
+
+  /// 参加中スポットリストのクエリを返す
+  Query<Map<String, dynamic>>? _getEntrySpotsQuery(String entryStampRallyId) {
+    return userDocRef
         ?.collection(entryStampRallyCollectionName)
         .doc(entryStampRallyId)
         .collection(entrySpotCollectionName)
-        .orderBy(SpotDocument.field.order, descending: false)
-        .get();
-    return snapshot?.docs.map((query) {
-          final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
-        }).toList() ??
-        [];
+        .orderBy(SpotDocument.field.order, descending: false);
   }
+
+  /// 参加中スポットリストに変換する
+  Future<List<Spot>> _convertEntrySpots(
+    String entryStampRallyId,
+    QuerySnapshot<Map<String, dynamic>>? snapshot,
+  ) async {
+    return Future.wait<Spot>(
+      snapshot?.docs.map((query) async {
+            final json = query.data();
+            final spotDoc = SpotDocument.fromJson(json);
+            // パスをURLに変換する
+            final url = await _convertSpotImageUrl(spotDoc.uploadImagePath);
+            return spotDoc.toSpot(
+              id: query.id,
+              stampRallyId: entryStampRallyId,
+              uploadImageUrl: url,
+            );
+          }) ??
+          [],
+    );
+  }
+
+  /// アップロードしたスポット画像のURLに変換する
+  Future<String?> _convertSpotImageUrl(String? path) async {
+    if (path == null) {
+      return null;
+    }
+    return storage.ref(path).getDownloadURL();
+  }
+
+  @override
+  Future<void> uploadSpotImage({
+    required Spot spot,
+    required File image,
+  }) async {
+    // Storageにアップロードする
+    final path = _convertSpotImagePath(spot);
+    await storage.ref(path).putFile(image);
+
+    // 参加中スポットを更新する
+    await _updateEntrySpot(spot: spot, uploadImagePath: path);
+  }
+
+  /// アップロードするスポット画像のパスに変換する
+  String _convertSpotImagePath(Spot spot) {
+    final uid = userDocRef?.id;
+    assert(uid != null);
+
+    // 上書き保存しないように現在日時をファイル名に付加する
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    return 'user/$uid/entryStampRally/${spot.stampRallyId}/spot/${spot.id}_$timestamp';
+  }
+
+  /// 参加中スポットを更新する
+  Future<void> _updateEntrySpot({
+    required Spot spot,
+    required String uploadImagePath,
+  }) async {
+    final ref = userDocRef
+        ?.collection(entryStampRallyCollectionName)
+        .doc(spot.stampRallyId)
+        .collection(entrySpotCollectionName)
+        .doc(spot.id);
+
+    await ref?.set(
+      <String, dynamic>{
+        SpotDocument.field.uploadImagePath: uploadImagePath,
+        SpotDocument.field.gotDate: DateTime.now(),
+      },
+      SetOptions(merge: true),
+    );
+  }
+}
+
+extension _CollectionRefferenceEx on CollectionReference<Map<String, dynamic>> {
+  /// StampRallyDocumentへ変換するWithConverter
+  CollectionReference<StampRallyDocument> withStampRallyDocumentConverter() =>
+      withConverter<StampRallyDocument>(
+        fromFirestore: (snapshot, options) {
+          final json = snapshot.data();
+          return StampRallyDocument.fromJson(json!);
+        },
+        toFirestore: (_, __) {
+          // 更新することは無いため空実装
+          return <String, dynamic>{};
+        },
+      );
 }
 
 extension _QuerySnapshotEx on QuerySnapshot<StampRallyDocument> {
@@ -229,6 +372,8 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       status: StampRallyEntryStatus.nameOf(status),
       startDate: startDate,
       endDate: endDate,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 }

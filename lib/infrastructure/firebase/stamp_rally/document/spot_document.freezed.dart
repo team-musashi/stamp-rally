@@ -29,11 +29,12 @@ mixin _$SpotDocument {
   @GeoPointConverter()
   GeoLocation? get location => throw _privateConstructorUsedError;
   @TimestampConverter()
-  DateTime? get gotDate => throw _privateConstructorUsedError;
-  @TimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get updatedAt => throw _privateConstructorUsedError;
+  String? get uploadImagePath => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get gotDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,9 +56,10 @@ abstract class $SpotDocumentCopyWith<$Res> {
       String? tel,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
-      @TimestampConverter() DateTime? gotDate,
       @TimestampConverter() DateTime? createdAt,
-      @TimestampConverter() DateTime? updatedAt});
+      @TimestampConverter() DateTime? updatedAt,
+      String? uploadImagePath,
+      @TimestampConverter() DateTime? gotDate});
 
   $GeoLocationCopyWith<$Res>? get location;
 }
@@ -82,9 +84,10 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
     Object? tel = freezed,
     Object? imageUrl = null,
     Object? location = freezed,
-    Object? gotDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? uploadImagePath = freezed,
+    Object? gotDate = freezed,
   }) {
     return _then(_value.copyWith(
       order: null == order
@@ -115,10 +118,6 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as GeoLocation?,
-      gotDate: freezed == gotDate
-          ? _value.gotDate
-          : gotDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -126,6 +125,14 @@ class _$SpotDocumentCopyWithImpl<$Res, $Val extends SpotDocument>
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      uploadImagePath: freezed == uploadImagePath
+          ? _value.uploadImagePath
+          : uploadImagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gotDate: freezed == gotDate
+          ? _value.gotDate
+          : gotDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
@@ -159,9 +166,10 @@ abstract class _$$_SpotDocumentCopyWith<$Res>
       String? tel,
       String imageUrl,
       @GeoPointConverter() GeoLocation? location,
-      @TimestampConverter() DateTime? gotDate,
       @TimestampConverter() DateTime? createdAt,
-      @TimestampConverter() DateTime? updatedAt});
+      @TimestampConverter() DateTime? updatedAt,
+      String? uploadImagePath,
+      @TimestampConverter() DateTime? gotDate});
 
   @override
   $GeoLocationCopyWith<$Res>? get location;
@@ -185,9 +193,10 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
     Object? tel = freezed,
     Object? imageUrl = null,
     Object? location = freezed,
-    Object? gotDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? uploadImagePath = freezed,
+    Object? gotDate = freezed,
   }) {
     return _then(_$_SpotDocument(
       order: null == order
@@ -218,10 +227,6 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as GeoLocation?,
-      gotDate: freezed == gotDate
-          ? _value.gotDate
-          : gotDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -229,6 +234,14 @@ class __$$_SpotDocumentCopyWithImpl<$Res>
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      uploadImagePath: freezed == uploadImagePath
+          ? _value.uploadImagePath
+          : uploadImagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gotDate: freezed == gotDate
+          ? _value.gotDate
+          : gotDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
@@ -245,9 +258,10 @@ class _$_SpotDocument extends _SpotDocument {
       this.tel,
       required this.imageUrl,
       @GeoPointConverter() this.location,
-      @TimestampConverter() this.gotDate,
       @TimestampConverter() this.createdAt,
-      @TimestampConverter() this.updatedAt})
+      @TimestampConverter() this.updatedAt,
+      this.uploadImagePath,
+      @TimestampConverter() this.gotDate})
       : super._();
 
   factory _$_SpotDocument.fromJson(Map<String, dynamic> json) =>
@@ -270,17 +284,19 @@ class _$_SpotDocument extends _SpotDocument {
   final GeoLocation? location;
   @override
   @TimestampConverter()
-  final DateTime? gotDate;
-  @override
-  @TimestampConverter()
   final DateTime? createdAt;
   @override
   @TimestampConverter()
   final DateTime? updatedAt;
+  @override
+  final String? uploadImagePath;
+  @override
+  @TimestampConverter()
+  final DateTime? gotDate;
 
   @override
   String toString() {
-    return 'SpotDocument(order: $order, title: $title, summary: $summary, address: $address, tel: $tel, imageUrl: $imageUrl, location: $location, gotDate: $gotDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'SpotDocument(order: $order, title: $title, summary: $summary, address: $address, tel: $tel, imageUrl: $imageUrl, location: $location, createdAt: $createdAt, updatedAt: $updatedAt, uploadImagePath: $uploadImagePath, gotDate: $gotDate)';
   }
 
   @override
@@ -297,17 +313,19 @@ class _$_SpotDocument extends _SpotDocument {
                 other.imageUrl == imageUrl) &&
             (identical(other.location, location) ||
                 other.location == location) &&
-            (identical(other.gotDate, gotDate) || other.gotDate == gotDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.uploadImagePath, uploadImagePath) ||
+                other.uploadImagePath == uploadImagePath) &&
+            (identical(other.gotDate, gotDate) || other.gotDate == gotDate));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, order, title, summary, address,
-      tel, imageUrl, location, gotDate, createdAt, updatedAt);
+      tel, imageUrl, location, createdAt, updatedAt, uploadImagePath, gotDate);
 
   @JsonKey(ignore: true)
   @override
@@ -332,9 +350,10 @@ abstract class _SpotDocument extends SpotDocument {
       final String? tel,
       required final String imageUrl,
       @GeoPointConverter() final GeoLocation? location,
-      @TimestampConverter() final DateTime? gotDate,
       @TimestampConverter() final DateTime? createdAt,
-      @TimestampConverter() final DateTime? updatedAt}) = _$_SpotDocument;
+      @TimestampConverter() final DateTime? updatedAt,
+      final String? uploadImagePath,
+      @TimestampConverter() final DateTime? gotDate}) = _$_SpotDocument;
   const _SpotDocument._() : super._();
 
   factory _SpotDocument.fromJson(Map<String, dynamic> json) =
@@ -357,13 +376,15 @@ abstract class _SpotDocument extends SpotDocument {
   GeoLocation? get location;
   @override
   @TimestampConverter()
-  DateTime? get gotDate;
-  @override
-  @TimestampConverter()
   DateTime? get createdAt;
   @override
   @TimestampConverter()
   DateTime? get updatedAt;
+  @override
+  String? get uploadImagePath;
+  @override
+  @TimestampConverter()
+  DateTime? get gotDate;
   @override
   @JsonKey(ignore: true)
   _$$_SpotDocumentCopyWith<_$_SpotDocument> get copyWith =>
