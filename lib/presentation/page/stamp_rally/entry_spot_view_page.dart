@@ -7,6 +7,7 @@ import '../../../application/image_picker/state/picked_image.dart';
 import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_entry_spot.dart';
 import '../../../application/stamp_rally/state/uplode_spot_image_result.dart';
+import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../util/extension.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
@@ -50,49 +51,9 @@ class _Body extends ConsumerWidget {
           final address = spot.address;
           final tel = spot.tel;
           final gotDate = spot.gotDate;
-          final pickedImage = ref.watch(pickedImageProvider);
-          final uploadImageUrl = spot.uploadImageUrl;
           return Column(
             children: [
-              // url が存在するならアップロードした画像を表示する
-              uploadImageUrl != null
-                  ? Column(
-                      children: [
-                        SizedBox(
-                          height: 300,
-                          child: Image.network(uploadImageUrl),
-                        ),
-                      ],
-                    )
-                  // 撮影された画像が存在する場合、アップロードボタンを表示する
-                  : pickedImage != null
-                      ? Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              height: 300,
-                              child: Image.file(
-                                pickedImage,
-                              ),
-                            ),
-                            // アップロードボタン
-                            ElevatedButton(
-                              onPressed: () async {
-                                await ref
-                                    .read(stampRallyServiceProvider)
-                                    .uploadSpotImage(
-                                      spot: spot,
-                                      image: pickedImage,
-                                    );
-                              },
-                              child: const Text('この画像をアップロードする'),
-                            ),
-                          ],
-                        )
-                      // 撮影された画像が存在しない場合、スポットの写真を表示する
-                      : Image(
-                          image: NetworkImage(spot.imageUrl),
-                        ),
+              _ImageView(spot: spot),
               Text(spot.title),
               if (address != null) Text(address),
               if (tel != null) Text(tel),
@@ -124,6 +85,63 @@ class _Body extends ConsumerWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// 画像View
+class _ImageView extends ConsumerWidget {
+  const _ImageView({
+    required this.spot,
+  });
+
+  final Spot spot;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pickedImage = ref.watch(pickedImageProvider);
+
+    // アップロード前の画像があれば表示する
+    if (pickedImage != null) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            height: 300,
+            child: Image.file(
+              pickedImage,
+            ),
+          ),
+          // アップロードボタン
+          ElevatedButton(
+            onPressed: () async {
+              await ref.read(stampRallyServiceProvider).uploadSpotImage(
+                    spot: spot,
+                    image: pickedImage,
+                  );
+            },
+            child: const Text('この画像をアップロードする'),
+          ),
+        ],
+      );
+    }
+
+    // アップロード済みの画像URLがあれば表示する
+    final uploadImageUrl = spot.uploadImageUrl;
+    if (uploadImageUrl != null) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 300,
+            child: Image.network(uploadImageUrl),
+          ),
+        ],
+      );
+    }
+
+    // 公開スポットの画像を表示する
+    return Image(
+      image: NetworkImage(spot.imageUrl),
     );
   }
 }
