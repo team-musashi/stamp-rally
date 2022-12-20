@@ -31,14 +31,16 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
       value: ref.watch(currentEntryStampRallyProvider),
       builder: (stampRally) {
         final spots = stampRally.spots;
+        if (spots.isEmpty) {
+          return Container();
+        }
         return Scaffold(
           body: Stack(
             children: [
               AsyncValueHandler(
                 value: ref.watch(pinIconProvider),
                 builder: (icon) {
-                  getPolyPoints(spots);
-
+                  createPolyPoints(spots);
                   return GoogleMap(
                     polylines: {
                       Polyline(
@@ -68,6 +70,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   child: EntrySpotIndexList(
+                    // 選択中スポットを受け取って本コンポーネント（参加中マップView）側で画面の更新を行う
                     onIndexChanged: onIndexChanged,
                   ),
                 ),
@@ -89,7 +92,8 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
 
   List<LatLng> polylineCoordinates = [];
 
-  Future<void> getPolyPoints(List<Spot> spots) async {
+  /// 経路表示用のLineを生成する
+  Future<void> createPolyPoints(List<Spot> spots) async {
     if (spots.isEmpty || polylineCoordinates.isNotEmpty) {
       return;
     }
@@ -123,6 +127,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
         );
       }
 
+      // Directions APIを用いて２点間の最適な経路を求める
       final result = await polylinePoints.getRouteBetweenCoordinates(
         googleMapAPIKey,
         pointFrom,
@@ -161,6 +166,8 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
   }
 
   /// スポットカード変更時処理
+  ///
+  /// 選択中スポットを元にしてマップ上のカメラを移動する
   Future<void> onIndexChanged(Spot spot) async {
     final controller = await _controller.future;
     await controller.showMarkerInfoWindow(MarkerId(spot.id));

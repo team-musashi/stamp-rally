@@ -125,8 +125,11 @@ class EntrySpotIndexList extends ConsumerWidget {
             loop: false,
             itemCount: stampRally.spots.length,
             viewportFraction: 0.8,
-            onIndexChanged: (value) async =>
-                onIndexChanged.call(stampRally.spots[value]),
+            onIndexChanged: (value) {
+              // 本コンポーネントを使用しているコンポーネントへ処理を委譲
+              // 選択中スポットを渡す
+              onIndexChanged.call(stampRally.spots[value]);
+            },
           ),
         );
       },

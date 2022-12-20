@@ -18,7 +18,9 @@ class EntryView extends StatelessWidget {
           const TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
+              // 参加中スタンプラリー詳細
               EntryDetailsView(),
+              // 参加中スタンプラリースポットマップ
               EntryMapView(),
             ],
           ),
