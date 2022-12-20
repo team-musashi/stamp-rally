@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../component/app_bar_title.dart';
 
 import '../../../application/stamp_rally/state/current_public_spot.dart';
 import '../../component/async_value_handler.dart';
@@ -14,7 +15,7 @@ class PublicSpotViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('スポット詳細'),
+        title: const AppBarTitle(),
       ),
       body: const _Body(),
     );

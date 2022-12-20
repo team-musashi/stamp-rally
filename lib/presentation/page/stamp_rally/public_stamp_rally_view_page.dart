@@ -8,6 +8,7 @@ import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
 import '../../component/widget_ref.dart';
@@ -22,7 +23,7 @@ class PublicStampRallyViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('スタンプラリー詳細'),
+        title: const AppBarTitle(),
       ),
       body: const _Body(),
     );
