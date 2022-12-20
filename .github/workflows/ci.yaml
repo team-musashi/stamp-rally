@@ -47,6 +47,10 @@ jobs:
           cache-key: flutter
           cache-path: ${{ runner.tool_cache }}/flutter
 
+      # アプリの環境変数を設定
+      - name: Setup App Env
+        run: bin/flutter_env -g dummy_google_map_api_key
+
       # flutter pub get を実行
       - name: Install Flutter dependencies
         run: flutter pub get
