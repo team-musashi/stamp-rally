@@ -41,7 +41,7 @@ class _Body extends ConsumerWidget {
     // スポット画像アップロード結果を監視する
     ref.listenResult<void>(
       uploadSpotImageResultProvider,
-      completeMessage: 'スポット画像のアップロードに成功しました。',
+      completeMessage: 'スポット画像をアップロードしました。',
     );
 
     return SingleChildScrollView(

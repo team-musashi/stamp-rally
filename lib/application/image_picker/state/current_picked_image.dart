@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../stamp_rally/state/current_entry_spot.dart';
 
-/// カメラやギャラリーから取得して保持中の画像ファイルプロバイダー
+/// カメラやギャラリーから取得して保持中の画像ファイルリストプロバイダー
 final pickedImageProviderFamily = StateProvider.family<File?, String>(
   (ref, spotId) => null,
   name: 'pickedImageProviderFamily',
