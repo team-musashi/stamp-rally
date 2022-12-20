@@ -303,7 +303,10 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   String _convertSpotImagePath(Spot spot) {
     final uid = userDocRef?.id;
     assert(uid != null);
-    return 'user/$uid/entryStampRally/${spot.stampRallyId}/spot/${spot.id}';
+
+    // 上書き保存しないように現在日時をファイル名に付加する
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    return 'user/$uid/entryStampRally/${spot.stampRallyId}/spot/${spot.id}_$timestamp';
   }
 
   /// 参加中スポットを更新する
