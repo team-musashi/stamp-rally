@@ -60,6 +60,7 @@ Future<void> main() async {
             termsOfServiceUrl: Uri.parse(
               'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
             ),
+            googleMapAPIKey: '',
           ),
         ),
 

@@ -50,6 +50,3 @@ app.*.map.json
 node_modules
 package.json
 package-lock.json
-
-# secret keys
-lib/secret_key.dart

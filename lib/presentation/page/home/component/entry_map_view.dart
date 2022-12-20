@@ -9,8 +9,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../application/geolocator/geolocator_service.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../application/stamp_rally/state/pin_icon_provider.dart';
+import '../../../../domain/entity/app_info.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
-import '../../../../secret_key.dart';
 import '../../../component/async_value_handler.dart';
 import 'entry_spot_index_list.dart';
 
@@ -129,7 +129,7 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
 
       // Directions APIを用いて２点間の最適な経路を求める
       final result = await polylinePoints.getRouteBetweenCoordinates(
-        googleMapAPIKey,
+        ref.read(appInfoProvider).googleMapAPIKey,
         pointFrom,
         pointTo,
         travelMode: TravelMode.walking,
