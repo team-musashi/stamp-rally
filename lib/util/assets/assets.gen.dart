@@ -20,17 +20,35 @@ class $AssetsImagesGen {
   AssetGenImage get iconProd =>
       const AssetGenImage('assets/images/icon_prod.png');
 
-  /// File path: assets/images/icon_stamp.png
-  AssetGenImage get iconStamp =>
-      const AssetGenImage('assets/images/icon_stamp.png');
+  /// File path: assets/images/logo_burarry.png
+  AssetGenImage get logoBurarry =>
+      const AssetGenImage('assets/images/logo_burarry.png');
 
-  /// File path: assets/images/logo_stamp_rarry.png
-  AssetGenImage get logoStampRarry =>
-      const AssetGenImage('assets/images/logo_stamp_rarry.png');
+  /// File path: assets/images/logo_header_burarry.png
+  AssetGenImage get logoHeaderBurarry =>
+      const AssetGenImage('assets/images/logo_header_burarry.png');
+
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// File path: assets/images/splash_android12.png
+  AssetGenImage get splashAndroid12 =>
+      const AssetGenImage('assets/images/splash_android12.png');
+
+  /// File path: assets/images/splash_background.png
+  AssetGenImage get splashBackground =>
+      const AssetGenImage('assets/images/splash_background.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [iconDev, iconProd, iconStamp, logoStampRarry];
+  List<AssetGenImage> get values => [
+        iconDev,
+        iconProd,
+        logoBurarry,
+        logoHeaderBurarry,
+        splash,
+        splashAndroid12,
+        splashBackground
+      ];
 }
 
 class Assets {

@@ -74,6 +74,18 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
+  Stream<List<StampRally>> completeStampRalliesChanges() {
+    // TODO(some): implement completeStampRallyChanges
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<StampRally>> fetchCompleteStampRallies() {
+    // TODO(some): implement fetchcompleteStampRally
+    throw UnimplementedError();
+  }
+
+  @override
   Future<String?> uploadImage({required UploadImage uploadImage}) {
     // TODO(some): implement uploadImage
     throw UnimplementedError();

@@ -5,6 +5,7 @@ version: 0.0.1+1
 environment:
   sdk: '>=2.18.2 <3.0.0'
 dependencies:
+  cached_network_image: ^3.2.3
   cloud_firestore: ^3.5.1
   # List 系の拡張されたメソッド (例 firstWhereOrNull) を使いたいため
   collection: ^1.16.0
@@ -14,6 +15,7 @@ dependencies:
   firebase_storage: ^10.3.11
   flutter:
     sdk: flutter
+  flutter_cache_manager: ^3.3.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.0
@@ -25,6 +27,7 @@ dependencies:
   # Color を #RGB 指定できるようにするため
   hexcolor: ^3.0.1
   image_picker: ^0.8.6
+  intl: ^0.17.0
   json_serializable: ^6.5.4
   # ロガーパッケージ
   package_info_plus: ^3.0.2
@@ -37,6 +40,7 @@ dependency_overrides:
 dev_dependencies:
   build_runner: ^2.3.2
   flutter_gen_runner: ^5.1.0+1
+  flutter_native_splash: ^2.2.16
   flutter_test:
     sdk: flutter
   go_router_builder: ^1.0.15
@@ -52,3 +56,20 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+  fonts:
+    - family: M_PLUS_1p
+      fonts:
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Thin.ttf
+         weight: 100 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Light.ttf
+         weight: 300 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Regular.ttf
+         weight: 400 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Medium.ttf
+         weight: 500 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Bold.ttf
+         weight: 700 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-ExtraBold.ttf
+         weight: 800 
+       - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Black.ttf
+         weight: 900 

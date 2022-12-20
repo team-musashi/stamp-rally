@@ -70,6 +70,10 @@ GoRoute get $homeRoute => GoRouteData.$route(
             ),
           ],
         ),
+        GoRouteData.$route(
+          path: 'complete-stamp-rally/:completeStampRallyId',
+          factory: $CompleteStampRallyViewRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -182,6 +186,22 @@ extension $EntrySpotViewRouteExtension on EntrySpotViewRoute {
 
   String get location => GoRouteData.$location(
         '/entry-stamp-rally/${Uri.encodeComponent(entryStampRallyId)}/${Uri.encodeComponent(entrySpotId)}',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $CompleteStampRallyViewRouteExtension on CompleteStampRallyViewRoute {
+  static CompleteStampRallyViewRoute _fromState(GoRouterState state) =>
+      CompleteStampRallyViewRoute(
+        completeStampRallyId: state.params['completeStampRallyId']!,
+        $extra: state.extra as StampRally?,
+      );
+
+  String get location => GoRouteData.$location(
+        '/complete-stamp-rally/${Uri.encodeComponent(completeStampRallyId)}',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);
