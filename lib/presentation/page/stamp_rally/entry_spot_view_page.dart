@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/image_picker/image_picker_service.dart';
+import '../../../application/image_picker/state/current_picked_image.dart';
 import '../../../application/image_picker/state/image_picker_result.dart';
-import '../../../application/image_picker/state/picked_image.dart';
 import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_entry_spot.dart';
 import '../../../application/stamp_rally/state/uplode_spot_image_result.dart';
@@ -67,7 +67,7 @@ class _Body extends ConsumerWidget {
                     onPressed: () async {
                       await ref
                           .read(imagePickerServiceProvider)
-                          .pickImageByCamera();
+                          .pickImageByCamera(spot: spot);
                     },
                     child: const Text('カメラを開く'),
                   ),
@@ -75,7 +75,7 @@ class _Body extends ConsumerWidget {
                     onPressed: () async {
                       await ref
                           .read(imagePickerServiceProvider)
-                          .pickImageByGallery();
+                          .pickImageByGallery(spot: spot);
                     },
                     child: const Text('ギャラリーを開く'),
                   ),
@@ -99,7 +99,7 @@ class _ImageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pickedImage = ref.watch(pickedImageProvider);
+    final pickedImage = ref.watch(currentPickedImageProvider);
 
     // アップロード前の画像があれば表示する
     if (pickedImage != null) {

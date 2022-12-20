@@ -6,7 +6,7 @@ import '../../domain/repository/command/command_repository.dart';
 import '../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../util/logger.dart';
-import '../image_picker/state/picked_image.dart';
+import '../image_picker/state/current_picked_image.dart';
 import 'state/complete_stamp_rally_result.dart';
 import 'state/enter_stamp_rally_result.dart';
 import 'state/uplode_spot_image_result.dart';
@@ -97,7 +97,7 @@ class StampRallyService {
           .uploadSpotImage(spot: spot, image: image);
 
       // アップロードが終わったら保持中の画像ファイルを破棄する
-      ref.invalidate(pickedImageProvider);
+      ref.invalidate(pickedImageProviderFamily(spot.id));
     });
   }
 }

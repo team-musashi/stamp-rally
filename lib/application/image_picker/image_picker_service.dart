@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../domain/repository/stamp_rally/entity/spot.dart';
 import 'exception/image_picker_exception.dart';
+import 'state/current_picked_image.dart';
 import 'state/image_picker_result.dart';
-import 'state/picked_image.dart';
 
 /// ImagePicker
 final imagePickerProvider = Provider(
@@ -24,7 +25,7 @@ class ImagePickerService {
   final Ref ref;
 
   /// カメラから画像を取得する
-  Future<void> pickImageByCamera() async {
+  Future<void> pickImageByCamera({required Spot spot}) async {
     final notifier = ref.read(imagePickerResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
@@ -34,12 +35,13 @@ class ImagePickerService {
         throw ImagePickerException.failedCamera();
       }
       // 取得した画像を更新する
-      ref.read(pickedImageProvider.notifier).state = File(pickedImage.path);
+      ref.read(pickedImageProviderFamily(spot.id).notifier).state =
+          File(pickedImage.path);
     });
   }
 
   /// ギャラリーから画像を取得する
-  Future<void> pickImageByGallery() async {
+  Future<void> pickImageByGallery({required Spot spot}) async {
     final notifier = ref.read(imagePickerResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {
@@ -49,7 +51,8 @@ class ImagePickerService {
         throw ImagePickerException.failedGallery();
       }
       // 取得した画像を更新する
-      ref.read(pickedImageProvider.notifier).state = File(pickedImage.path);
+      ref.read(pickedImageProviderFamily(spot.id).notifier).state =
+          File(pickedImage.path);
     });
   }
 }
