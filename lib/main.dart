@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -17,6 +18,7 @@ import 'infrastructure/firebase/user/user_repository.dart';
 import 'presentation/app.dart';
 import 'util/assets/assets.gen.dart';
 import 'util/constants.dart';
+import 'util/logger.dart';
 import 'util/provider_logger.dart';
 
 Future<void> main() async {
@@ -36,6 +38,15 @@ Future<void> main() async {
 
   // パッケージ情報
   final packageInfo = await PackageInfo.fromPlatform();
+
+  try {
+    // 環境変数の読み込み
+    await dotenv.load();
+    // ignore: avoid_catches_without_on_clauses
+  } catch (e) {
+    logger.e('.envが見つかりません。.env.defaultをコピーして作成してください。');
+    return;
+  }
 
   runApp(
     ProviderScope(
@@ -60,7 +71,7 @@ Future<void> main() async {
             termsOfServiceUrl: Uri.parse(
               'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
             ),
-            googleMapAPIKey: '',
+            googleMapAPIKey: dotenv.get('GOOGLE_MAP_API_KEY'),
           ),
         ),
 
