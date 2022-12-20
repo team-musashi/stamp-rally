@@ -20,7 +20,6 @@ import '../presentation/page/setting/setting_page.dart';
 import '../util/logger.dart';
 import 'page/debug/component_gallery/component_gallery_page.dart';
 import 'page/stamp_rally/complete_stamp_rally_view_page.dart';
-import 'page/stamp_rally/entry_spot_index_page.dart';
 import 'page/stamp_rally/entry_spot_view_page.dart';
 import 'page/stamp_rally/public_spot_view_page.dart';
 import 'page/stamp_rally/public_stamp_rally_view_page.dart';
@@ -135,13 +134,8 @@ class LoginRoute extends GoRouteData {
         ),
       ],
     ),
-    TypedGoRoute<EntrySpotIndexRoute>(
-      path: 'entry-stamp-rally/:entryStampRallyId',
-      routes: [
-        TypedGoRoute<EntrySpotViewRoute>(
-          path: ':entrySpotId',
-        ),
-      ],
+    TypedGoRoute<EntrySpotViewRoute>(
+      path: 'entry-stamp-rally/spots/:entrySpotId',
     ),
     TypedGoRoute<CompleteStampRallyViewRoute>(
       path: 'complete-stamp-rally/:completeStampRallyId',
@@ -248,56 +242,23 @@ class PublicSpotViewRoute extends GoRouteData {
   }
 }
 
-/// 参加中スポット一覧画面
-class EntrySpotIndexRoute extends GoRouteData {
-  EntrySpotIndexRoute({
-    required this.entryStampRallyId,
-    // this.$extra,
-  });
-
-  factory EntrySpotIndexRoute.fromStampRally(
-    StampRally stampRally,
-  ) =>
-      EntrySpotIndexRoute(
-        entryStampRallyId: stampRally.id,
-        // $extra: stampRally,
-      );
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリー情報
-  // StampRally? $extra;
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリーID
-  final String entryStampRallyId;
-
-  @override
-  Widget build(BuildContext context) {
-    return const EntrySpotIndexPage();
-  }
-}
-
 /// 参加中スポット詳細画面
 class EntrySpotViewRoute extends GoRouteData {
   EntrySpotViewRoute({
-    required this.entryStampRallyId,
     required this.entrySpotId,
     this.$extra,
   });
 
   factory EntrySpotViewRoute.fromSpot(
-    StampRally stampRally,
     Spot spot,
   ) =>
       EntrySpotViewRoute(
-        entryStampRallyId: stampRally.id,
         entrySpotId: spot.id,
         $extra: spot,
       );
 
   /// スポット詳細画面に表示中のスポットID
   final String entrySpotId;
-
-  /// スタンプラリー詳細画面に表示中のスタンプラリーID
-  final String entryStampRallyId;
 
   /// スポット詳細画面に表示中のスポット情報
   Spot? $extra;
