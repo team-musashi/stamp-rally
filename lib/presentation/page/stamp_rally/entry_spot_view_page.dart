@@ -7,6 +7,7 @@ import '../../../application/image_picker/state/picked_image.dart';
 import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_entry_spot.dart';
 import '../../../application/stamp_rally/state/uplode_spot_image_result.dart';
+import '../../../util/extension.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/delimiter_block.dart';
 import '../../component/widget_ref.dart';
@@ -48,18 +49,18 @@ class _Body extends ConsumerWidget {
         builder: (spot) {
           final address = spot.address;
           final tel = spot.tel;
+          final gotDate = spot.gotDate;
           final pickedImage = ref.watch(pickedImageProvider);
-          String? url;
+          final uploadImageUrl = spot.uploadImageUrl;
           return Column(
             children: [
               // url が存在するならアップロードした画像を表示する
-              url != null
+              uploadImageUrl != null
                   ? Column(
                       children: [
-                        const Text('アップロードに成功しました'),
                         SizedBox(
                           height: 300,
-                          child: Image.network(url),
+                          child: Image.network(uploadImageUrl),
                         ),
                       ],
                     )
@@ -95,6 +96,8 @@ class _Body extends ConsumerWidget {
               Text(spot.title),
               if (address != null) Text(address),
               if (tel != null) Text(tel),
+              if (gotDate != null)
+                Text(gotDate.toFormatString(format: 'yyyy/MM/dd HH:mm')),
               DelimiterBlock(text: spot.summary),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

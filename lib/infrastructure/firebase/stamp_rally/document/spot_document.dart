@@ -18,9 +18,10 @@ class SpotDocument with _$SpotDocument {
     String? tel,
     required String imageUrl,
     @GeoPointConverter() GeoLocation? location,
-    @TimestampConverter() DateTime? gotDate,
     @TimestampConverter() DateTime? createdAt,
     @TimestampConverter() DateTime? updatedAt,
+    String? uploadImagePath,
+    @TimestampConverter() DateTime? gotDate,
   }) = _SpotDocument;
 
   const SpotDocument._();
@@ -34,6 +35,7 @@ class SpotDocument with _$SpotDocument {
   Spot toSpot({
     required String id,
     required String stampRallyId,
+    String? uploadImageUrl,
   }) {
     return Spot(
       id: id,
@@ -46,10 +48,13 @@ class SpotDocument with _$SpotDocument {
       imageUrl: imageUrl,
       location: location ?? const GeoLocation(),
       gotDate: gotDate,
+      uploadImageUrl: uploadImageUrl,
     );
   }
 }
 
 class _SpotDocumentField {
   String get order => 'order';
+  String get uploadImagePath => 'uploadImagePath';
+  String get gotDate => 'gotDate';
 }

@@ -10,7 +10,6 @@ import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
-import '../../../util/logger.dart';
 import 'document/spot_document.dart';
 import 'document/stamp_rally_document.dart';
 
@@ -239,14 +238,28 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         .collection(entrySpotCollectionName)
         .orderBy(SpotDocument.field.order, descending: false)
         .get();
-    return snapshot?.docs.map((query) {
-          final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(
-            id: query.id,
-            stampRallyId: entryStampRallyId,
-          );
-        }).toList() ??
-        [];
+    return Future.wait<Spot>(
+      snapshot?.docs.map((query) async {
+            final json = query.data();
+            final spotDoc = SpotDocument.fromJson(json);
+            // パスをURLに変換する
+            final url = await _convertSpotImageUrl(spotDoc.uploadImagePath);
+            return spotDoc.toSpot(
+              id: query.id,
+              stampRallyId: entryStampRallyId,
+              uploadImageUrl: url,
+            );
+          }) ??
+          [],
+    );
+  }
+
+  /// アップロードしたスポット画像のURLに変換する
+  Future<String?> _convertSpotImageUrl(String? path) async {
+    if (path == null) {
+      return null;
+    }
+    return storageRef.child(path).getDownloadURL();
   }
 
   @override
@@ -256,15 +269,10 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   }) async {
     // Storageにアップロードする
     final path = _convertSpotImagePath(spot);
-    try {
-      await storageRef.child(path).putFile(image);
-    } catch (e) {
-      logger.i(e);
-      //TODO 画像のアップロードに失敗したエラーを投げる
-      return;
-    }
+    await storageRef.child(path).putFile(image);
 
-    // entrySpotを更新する
+    // 参加中スポットを更新する
+    await _updateEntrySpot(spot: spot, uploadImagePath: path);
   }
 
   /// アップロードするスポット画像のパスに変換する
@@ -272,6 +280,26 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
     final uid = userDocRef?.id;
     assert(uid != null);
     return 'user/$uid/entryStampRally/${spot.stampRallyId}/spot/${spot.id}';
+  }
+
+  /// 参加中スポットを更新する
+  Future<void> _updateEntrySpot({
+    required Spot spot,
+    required String uploadImagePath,
+  }) async {
+    final ref = userDocRef
+        ?.collection(entryStampRallyCollectionName)
+        .doc(spot.stampRallyId)
+        .collection(entrySpotCollectionName)
+        .doc(spot.id);
+
+    await ref?.set(
+      <String, dynamic>{
+        SpotDocument.field.uploadImagePath: uploadImagePath,
+        SpotDocument.field.gotDate: DateTime.now(),
+      },
+      SetOptions(merge: true),
+    );
   }
 }
 
