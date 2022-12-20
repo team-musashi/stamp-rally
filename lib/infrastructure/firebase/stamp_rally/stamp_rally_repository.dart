@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
-import '../../../domain/repository/stamp_rally/entity/upload_image.dart';
 import '../../../domain/repository/stamp_rally/stamp_rally_repository.dart';
 import '../../../util/logger.dart';
 import 'document/spot_document.dart';
@@ -222,7 +221,10 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         .get();
     return snapshot?.docs.map((query) {
           final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+          return SpotDocument.fromJson(json).toSpot(
+            id: query.id,
+            stampRallyId: publicStampRallyId,
+          );
         }).toList() ??
         [];
   }
@@ -239,31 +241,37 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
         .get();
     return snapshot?.docs.map((query) {
           final json = query.data();
-          return SpotDocument.fromJson(json).toSpot(docId: query.id);
+          return SpotDocument.fromJson(json).toSpot(
+            id: query.id,
+            stampRallyId: entryStampRallyId,
+          );
         }).toList() ??
         [];
   }
 
   @override
-  Future<String?> uploadImage({
-    required UploadImage uploadImage,
+  Future<void> uploadSpotImage({
+    required Spot spot,
+    required File image,
   }) async {
-    final uid = userDocRef?.id;
-
-    /// アップロード先のストレージのパス
-    final path =
-        'user/$uid/stamprally/${uploadImage.stampRally.id}/spot/${uploadImage.spot.id}';
-    final ref = storageRef.child(
-      path,
-    );
+    // Storageにアップロードする
+    final path = _convertSpotImagePath(spot);
     try {
-      await ref.putFile(File(uploadImage.path));
-      final url = await ref.getDownloadURL();
-      return url;
-    } on Exception catch (e) {
-      logger.e(e);
-      return null;
+      await storageRef.child(path).putFile(image);
+    } catch (e) {
+      logger.i(e);
+      //TODO 画像のアップロードに失敗したエラーを投げる
+      return;
     }
+
+    // entrySpotを更新する
+  }
+
+  /// アップロードするスポット画像のパスに変換する
+  String _convertSpotImagePath(Spot spot) {
+    final uid = userDocRef?.id;
+    assert(uid != null);
+    return 'user/$uid/entryStampRally/${spot.stampRallyId}/spot/${spot.id}';
   }
 }
 

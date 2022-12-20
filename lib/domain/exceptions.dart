@@ -1,3 +1,5 @@
+import '../application/image_picker/exception/image_picker_exception.dart';
+
 /// 基底ドメイン例外
 ///
 /// ドメイン層が定義する例外の基底クラス
@@ -382,6 +384,15 @@ extension ObjectHelper on Object {
           return '不正な認証情報です。端末の時刻情報が正しいかご確認ください。';
         case AuthExceptionCode.unknown:
           return 'エラーが発生しました。';
+      }
+    }
+    if (this is ImagePickerException) {
+      final error = this as ImagePickerException;
+      switch (error.code) {
+        case ImagePickerExceptionCode.failedCamera:
+          return '撮影した画像を取得できませんでした。';
+        case ImagePickerExceptionCode.failedGallery:
+          return 'ギャラリーの画像を取得できませんでした。';
       }
     }
     if (this is Exception &&

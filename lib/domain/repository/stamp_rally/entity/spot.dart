@@ -11,6 +11,9 @@ class Spot with _$Spot {
     /// ID
     required String id,
 
+    /// スタンプラリーID
+    required String stampRallyId,
+
     /// スポットの順番
     required int order,
 

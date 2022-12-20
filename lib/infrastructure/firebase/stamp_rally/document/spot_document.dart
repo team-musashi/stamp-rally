@@ -31,16 +31,20 @@ class SpotDocument with _$SpotDocument {
   static _SpotDocumentField get field => _SpotDocumentField();
 
   /// SpotDocument -> Spot
-  Spot toSpot({required String docId}) {
+  Spot toSpot({
+    required String id,
+    required String stampRallyId,
+  }) {
     return Spot(
-      id: docId,
+      id: id,
+      stampRallyId: stampRallyId,
       order: order,
       title: title,
       summary: summary,
       address: address,
       tel: tel,
       imageUrl: imageUrl,
-      location: location!,
+      location: location ?? const GeoLocation(),
       gotDate: gotDate,
     );
   }

@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:stamp_rally/domain/repository/stamp_rally/entity/spot.dart';
 import 'package:stamp_rally/domain/repository/stamp_rally/entity/stamp_rally.dart';
-import 'package:stamp_rally/domain/repository/stamp_rally/entity/upload_image.dart';
 import 'package:stamp_rally/domain/repository/stamp_rally/stamp_rally_repository.dart';
 
 /// テスト用スタンプラリーリポジトリ
@@ -86,8 +86,8 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<String?> uploadImage({required UploadImage uploadImage}) {
-    // TODO(some): implement uploadImage
+  Future<void> uploadSpotImage({required Spot spot, required File image}) {
+    // TODO(some): implement uploadSpotImage
     throw UnimplementedError();
   }
 }
