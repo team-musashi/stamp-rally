@@ -28,9 +28,27 @@ class $AssetsImagesGen {
   AssetGenImage get logoHeaderBurarry =>
       const AssetGenImage('assets/images/logo_header_burarry.png');
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// File path: assets/images/splash_android12.png
+  AssetGenImage get splashAndroid12 =>
+      const AssetGenImage('assets/images/splash_android12.png');
+
+  /// File path: assets/images/splash_background.png
+  AssetGenImage get splashBackground =>
+      const AssetGenImage('assets/images/splash_background.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [iconDev, iconProd, logoBurarry, logoHeaderBurarry];
+  List<AssetGenImage> get values => [
+        iconDev,
+        iconProd,
+        logoBurarry,
+        logoHeaderBurarry,
+        splash,
+        splashAndroid12,
+        splashBackground
+      ];
 }
 
 class Assets {
