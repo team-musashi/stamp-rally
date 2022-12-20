@@ -40,12 +40,20 @@ dependency_overrides:
 dev_dependencies:
   build_runner: ^2.3.2
   flutter_gen_runner: ^5.1.0+1
+  flutter_launcher_icons: ^0.11.0
   flutter_native_splash: ^2.2.16
   flutter_test:
     sdk: flutter
   go_router_builder: ^1.0.15
   # 厳しめの Linter
   pedantic_mono: ^1.20.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/icon.png'
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: 'assets/images/icon_adaptive_foreground.png'
 
 flutter_gen:
   output: lib/util/assets/
@@ -60,16 +68,16 @@ flutter:
     - family: M_PLUS_1p
       fonts:
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Thin.ttf
-         weight: 100 
+         weight: 100
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Light.ttf
-         weight: 300 
+         weight: 300
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Regular.ttf
-         weight: 400 
+         weight: 400
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Medium.ttf
-         weight: 500 
+         weight: 500
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Bold.ttf
-         weight: 700 
+         weight: 700
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-ExtraBold.ttf
-         weight: 800 
+         weight: 800
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Black.ttf
-         weight: 900 
+         weight: 900
