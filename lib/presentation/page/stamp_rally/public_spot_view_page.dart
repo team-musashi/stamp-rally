@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/stamp_rally/state/current_public_spot.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
-import '../../component/delimiter_block.dart';
 
 /// スポット詳細画面
 class PublicSpotViewPage extends StatelessWidget {
@@ -27,21 +26,162 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+
     return AsyncValueHandler(
       value: ref.watch(currentPublicSpotProvider),
       builder: (spot) {
-        final address = spot.address;
-        final tel = spot.tel;
-        return Column(
+        return Stack(
           children: [
+            // スポット画像
             CachedNetworkImage(
               imageUrl: spot.imageUrl,
               cacheManager: ref.watch(defaultCacheManagerProvider),
             ),
-            Text(spot.title),
-            if (address != null) Text(address),
-            if (tel != null) Text(tel),
-            DelimiterBlock(text: spot.summary),
+
+            // スポット詳細
+            Container(
+              width: size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              margin: const EdgeInsets.only(top: 245),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 120, top: 10),
+                    child: Text(
+                      spot.title,
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey[350],
+                    thickness: 2,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.summarize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      '概要',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Text(spot.summary)
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      '住所',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    SizedBox(
+                                      height: 27.5,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text('マップで開く'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Text(spot.address ?? '不明')
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.phone,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                    const SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      '電話番号',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Text(
+                                  spot.tel ?? '不明',
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         );
       },
