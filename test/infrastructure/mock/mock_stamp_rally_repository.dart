@@ -90,4 +90,10 @@ class MockStampRallyRepository implements StampRallyRepository {
     // TODO(some): implement uploadSpotImage
     throw UnimplementedError();
   }
+
+  @override
+  Stream<List<Spot>>? entrySpotsChanges({required String entryStampRallyId}) {
+    // TODO(some): implement entrySpotsChanges
+    throw UnimplementedError();
+  }
 }

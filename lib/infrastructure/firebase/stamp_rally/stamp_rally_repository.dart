@@ -232,12 +232,35 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
   Future<List<Spot>> fetchEntrySpots({
     required String entryStampRallyId,
   }) async {
-    final snapshot = await userDocRef
+    final snapshot = await _getEntrySpotsQuery(entryStampRallyId)?.get();
+    return _convertEntrySpots(entryStampRallyId, snapshot);
+  }
+
+  @override
+  Stream<List<Spot>>? entrySpotsChanges({
+    required String entryStampRallyId,
+  }) {
+    return _getEntrySpotsQuery(entryStampRallyId)?.snapshots().asyncMap(
+      (snapshot) async {
+        return _convertEntrySpots(entryStampRallyId, snapshot);
+      },
+    );
+  }
+
+  /// 参加中スポットリストのクエリを返す
+  Query<Map<String, dynamic>>? _getEntrySpotsQuery(String entryStampRallyId) {
+    return userDocRef
         ?.collection(entryStampRallyCollectionName)
         .doc(entryStampRallyId)
         .collection(entrySpotCollectionName)
-        .orderBy(SpotDocument.field.order, descending: false)
-        .get();
+        .orderBy(SpotDocument.field.order, descending: false);
+  }
+
+  /// 参加中スポットリストに変換する
+  Future<List<Spot>> _convertEntrySpots(
+    String entryStampRallyId,
+    QuerySnapshot<Map<String, dynamic>>? snapshot,
+  ) async {
     return Future.wait<Spot>(
       snapshot?.docs.map((query) async {
             final json = query.data();

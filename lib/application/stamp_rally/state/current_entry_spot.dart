@@ -16,14 +16,11 @@ final currentEntrySpotProvider = FutureProvider.autoDispose<Spot>(
     // 現在の参加中のスポットパラメータを取得する
     final param = ref.watch(currentEntrySpotParamProvider);
 
-    // キャッシュが無ければ取得し直す
-    var spot = param.cache;
-    if (spot == null) {
-      // 現在のスタンプラリーから取得し直す
-      final stampRally = await ref.watch(currentEntryStampRallyProvider.future);
-      spot = stampRally!.spots.firstWhere((s) => s.id == param.spotId);
-    }
-    return spot;
+    // キャッシュを返してしまうと currentEntryStampRallyProvider.future が実行されず、
+    // スポット画像をアップロードすると参加中スポットが更新されても発火しなくなるため
+    // キャッシュがあっても現在のスタンプラリーから取得し直す。
+    final stampRally = await ref.watch(currentEntryStampRallyProvider.future);
+    return stampRally!.spots.firstWhere((s) => s.id == param.spotId);
   },
   dependencies: [
     currentEntrySpotParamProvider,
