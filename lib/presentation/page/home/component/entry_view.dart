@@ -54,7 +54,6 @@ class _EntryViewState extends ConsumerState<EntryView>
       value: ref.watch(currentEntryStampRallyProvider),
       builder: (stampRally) {
         return StampRallyViewBuilder(
-          initialMode: StampRallyDisplayMode.map,
           builder: (mode) {
             switch (mode) {
               case StampRallyDisplayMode.list:
