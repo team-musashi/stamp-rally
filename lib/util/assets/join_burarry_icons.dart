@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/JoinBurarry.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -19,7 +19,6 @@ class JoinBurarry {
   JoinBurarry._();
 
   static const _kFontFam = 'JoinBurarry';
-  static const String? _kFontPkg = null;
 
-  static const IconData join_burarry = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData joinBurarry = IconData(0xe801, fontFamily: _kFontFam);
 }

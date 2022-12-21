@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/StopBurarry.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -19,7 +19,6 @@ class StopBurarry {
   StopBurarry._();
 
   static const _kFontFam = 'StopBurarry';
-  static const String? _kFontPkg = null;
 
-  static const IconData stop_burarry = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stopBurarry = IconData(0xe802, fontFamily: _kFontFam);
 }

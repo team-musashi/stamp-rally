@@ -242,7 +242,7 @@ class _Body extends ConsumerWidget {
                     ),
                   ),
                   child: const Icon(
-                    JoinBurarry.join_burarry,
+                    JoinBurarry.joinBurarry,
                     size: 45,
                   ),
                 ),
