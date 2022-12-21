@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../application/geolocator/geolocator_service.dart';
 import '../application/url_launcher/exception/url_launcher_exception.dart';
 import '../application/url_launcher/state/url_launch_data.dart';
 import '../application/url_launcher/state/url_launch_result.dart';
@@ -58,9 +57,6 @@ class App extends ConsumerWidget {
       deleteUserResultProvider,
       completeMessage: 'ユーザーを削除しました。',
     );
-
-    // 位置情報サービス利用確認
-    ref.read(geolocatorServiceProvider).determinePosition();
 
     final router = ref.watch(routerProvider);
     final themeData = ref.watch(themeProvider);

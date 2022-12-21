@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../../application/geolocator/geolocator_service.dart';
+import '../../../../application/geolocator/state/current_geolocator_position.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
 import '../../../../application/stamp_rally/state/pin_icon_provider.dart';
 import '../../../../domain/entity/app_info.dart';
@@ -40,28 +41,12 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
               AsyncValueHandler(
                 value: ref.watch(pinIconProvider),
                 builder: (icon) {
-                  createPolyPoints(spots);
-                  return GoogleMap(
-                    polylines: {
-                      Polyline(
-                        polylineId: const PolylineId('route'),
-                        points: polylineCoordinates,
-                        width: 4,
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                      )
-                    },
-                    myLocationEnabled: true,
-                    zoomControlsEnabled: false,
-                    onMapCreated: onMapCreated,
-                    myLocationButtonEnabled: false,
-                    markers: createMarkersFromSpots(spots, icon),
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                        spots.first.location.latitude,
-                        spots.first.location.longitude,
-                      ),
-                      zoom: 14,
-                    ),
+                  final asyncValue =
+                      ref.watch(currentGeolocatorPositionProvider);
+                  return asyncValue.maybeWhen(
+                    data: (currentPosition) =>
+                        buildMapView(spots, icon, currentPosition),
+                    orElse: () => buildMapView(spots, icon, null),
                   );
                 },
               ),
@@ -82,6 +67,36 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
     );
   }
 
+  Widget buildMapView(
+    List<Spot> spots,
+    BitmapDescriptor icon,
+    Position? currentPosition,
+  ) {
+    createPolyPoints(spots, currentPosition);
+    return GoogleMap(
+      polylines: {
+        Polyline(
+          polylineId: const PolylineId('route'),
+          points: polylineCoordinates,
+          width: 4,
+          color: Theme.of(context).colorScheme.primaryContainer,
+        )
+      },
+      myLocationEnabled: true,
+      zoomControlsEnabled: false,
+      onMapCreated: onMapCreated,
+      myLocationButtonEnabled: false,
+      markers: createMarkersFromSpots(spots, icon),
+      initialCameraPosition: CameraPosition(
+        target: LatLng(
+          spots.first.location.latitude,
+          spots.first.location.longitude,
+        ),
+        zoom: 14,
+      ),
+    );
+  }
+
   /// マップの初期構築
   Future<void> onMapCreated(GoogleMapController controller) async {
     _controller.complete(controller);
@@ -93,7 +108,10 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
   List<LatLng> polylineCoordinates = [];
 
   /// 経路表示用のLineを生成する
-  Future<void> createPolyPoints(List<Spot> spots) async {
+  Future<void> createPolyPoints(
+    List<Spot> spots,
+    Position? currentPosition,
+  ) async {
     if (spots.isEmpty || polylineCoordinates.isNotEmpty) {
       return;
     }
@@ -103,8 +121,6 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
     for (var i = 0; i < spots.length - 1; i++) {
       late PointLatLng pointFrom;
       late PointLatLng pointTo;
-      final currentPosition =
-          ref.read(geolocatorServiceProvider).getCurrentPosition;
       if (i == 0 && currentPosition != null) {
         // 自分の位置〜1番最初のスポットまでの経路を求める
         pointFrom = PointLatLng(

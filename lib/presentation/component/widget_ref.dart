@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/exceptions.dart';
 import 'dialog.dart';
+import 'error_message.dart';
 import 'loading.dart';
 import 'scaffold_messenger.dart';
 
