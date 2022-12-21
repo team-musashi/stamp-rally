@@ -12,7 +12,6 @@ import '../../../../domain/entity/value_object/geo_location.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../util/assets/assets.gen.dart';
-import '../../../component/async_value_handler.dart';
 import 'map_spot.dart';
 
 /// スタンプラリー詳細のマップ表示
@@ -33,8 +32,6 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView>
   @override
   bool get wantKeepAlive => true;
 
-  final Completer<GoogleMapController> mapController = Completer();
-
   /// スポットリスト
   List<Spot> get spots => widget.stampRally.spots;
 
@@ -42,34 +39,11 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView>
   Widget build(BuildContext context) {
     super.build(context);
 
-    // 選択中スポットインデックスを監視してマップ上のカメラを移動する
-    ref.listen(currentMapSpotIndexProvider, (previous, next) async {
-      final spot = spots[next];
-      final controller = await mapController.future;
-      await controller.showMarkerInfoWindow(MarkerId(spot.id));
-      await controller.animateCamera(
-        CameraUpdate.newLatLngZoom(
-          spot.location.toLatLng(),
-          17,
-        ),
-      );
-    });
-
     return Scaffold(
       body: Stack(
         children: [
-          AsyncValueHandler(
-            value: ref.watch(currentPolylinePointsProvider(widget.stampRally)),
-            builder: (polylinePoints) => _MapView(
-              spots: spots,
-              mapController: mapController,
-              polylinePoints: polylinePoints,
-            ),
-            loading: () => _MapView(
-              spots: spots,
-              mapController: mapController,
-              polylinePoints: const [],
-            ),
+          _MapView(
+            stampRally: widget.stampRally,
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
@@ -86,25 +60,45 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView>
   }
 }
 
-class _MapView extends ConsumerWidget {
+class _MapView extends ConsumerStatefulWidget {
   const _MapView({
-    required this.spots,
-    required this.mapController,
-    required this.polylinePoints,
+    required this.stampRally,
   });
 
-  final List<Spot> spots;
-  final Completer<GoogleMapController> mapController;
-  final List<LatLng> polylinePoints;
+  final StampRally stampRally;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _MapViewState createState() => _MapViewState();
+}
+
+class _MapViewState extends ConsumerState<_MapView> {
+  final Completer<GoogleMapController> mapController = Completer();
+
+  @override
+  Widget build(BuildContext context) {
     // ピンアイコン画像
     final icon = ref.watch(pinIconProvider);
 
     // 初期表示時のカメラ位置
     final spotIndex = ref.watch(currentMapSpotIndexProvider);
-    final location = spots[spotIndex].location.toLatLng();
+    final location = widget.stampRally.spots[spotIndex].location.toLatLng();
+
+    // 経路
+    final polylinePoints =
+        ref.watch(currentPolylinePointsProvider(widget.stampRally)).value ?? [];
+
+    // 選択中スポットインデックスを監視してマップ上のカメラを移動する
+    ref.listen(currentMapSpotIndexProvider, (_, next) async {
+      final spot = widget.stampRally.spots[next];
+      final controller = await mapController.future;
+      await controller.showMarkerInfoWindow(MarkerId(spot.id));
+      await controller.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          spot.location.toLatLng(),
+          17,
+        ),
+      );
+    });
 
     return GoogleMap(
       polylines: {
@@ -128,7 +122,7 @@ class _MapView extends ConsumerWidget {
       },
       myLocationButtonEnabled: false,
       // マップに表示するマーカーを生成する
-      markers: spots
+      markers: widget.stampRally.spots
           .map(
             (spot) => Marker(
               infoWindow: InfoWindow(title: spot.title),
