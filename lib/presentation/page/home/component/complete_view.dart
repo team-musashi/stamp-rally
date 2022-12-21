@@ -9,11 +9,22 @@ import '../../../component/thumbnail.dart';
 import '../../../router.dart';
 
 /// 完了済画面
-class CompleteView extends ConsumerWidget {
+class CompleteView extends ConsumerStatefulWidget {
   const CompleteView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CompleteView> createState() => _CompleteViewState();
+}
+
+class _CompleteViewState extends ConsumerState<CompleteView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
     return AsyncValueHandler<List<StampRally>>(
       value: ref.watch(completeStampRalliesProvider),
       builder: (stampRallies) {

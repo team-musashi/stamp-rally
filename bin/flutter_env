@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# デフォルトの環境変数ファイルへのパス
+ENV_DEFAULT_FILE_PATH=.env.default
+
+# 環境変数ファイルへのパス
+ENV_FILE_PATH=.env
+
+# 作業中の環境変数ファイルへのパス
+ENV_TMP_FILE_PATH=.env.tmp
+
+# Androidのプロパティファイルへのパス
+ANDROID_PROPERTIES_FILE_PATH=android/secret.properties
+
+# iOSの環境変数ファイルへのパス
+IOS_ENV_FILE_PATH=ios/Runner/Environment.swift
+
+# 後処理をする
+function cleanup() {
+  if [ -e ${ENV_TMP_FILE_PATH} ]; then
+    rm ${ENV_TMP_FILE_PATH}
+  fi
+  if [ -e "${ENV_TMP_FILE_PATH}-e" ]; then
+    rm "${ENV_TMP_FILE_PATH}-e"
+  fi
+}
+
+# コマンドの使用方法を出力して終了する
+function usage {
+  cat <<EOM
+Usage: $(basename "$0") [OPTION]...
+  -h          ヘルプを表示します
+  -g VALUE    Google Map APIキーを設定する
+EOM
+
+  # 後処理
+  cleanup
+
+  exit 2
+}
+
+# 処理する
+function perform() {
+  # GOOGLE_MAP_API_KEY が設定されていなければ処理終了
+  if [ -z ${GOOGLE_MAP_API_KEY} ]; then
+    usage
+  fi
+
+  echo "GOOGLE_MAP_API_KEY=${GOOGLE_MAP_API_KEY}"
+
+  # tmpファイルを作成する
+  cp ${ENV_DEFAULT_FILE_PATH} ${ENV_TMP_FILE_PATH}
+
+  # tmpファイルを加工する
+  sed -i -e "s/GOOGLE_MAP_API_KEY=/GOOGLE_MAP_API_KEY=${GOOGLE_MAP_API_KEY}/g" ${ENV_TMP_FILE_PATH}
+
+  # 環境変数ファイルを作成する（あれば上書きする）
+  cp ${ENV_TMP_FILE_PATH} ${ENV_FILE_PATH}
+  echo "Created ${ENV_FILE_PATH}"
+
+  # Androidのプロパティファイルを作成する（あれば上書きする）
+  echo "googleMap.apiKey=${GOOGLE_MAP_API_KEY}" > ${ANDROID_PROPERTIES_FILE_PATH}
+  echo "Created ${ANDROID_PROPERTIES_FILE_PATH}"
+
+  # iOSの環境変数ファイルを作成する（あれば上書きする）
+  echo "import Foundation
+
+struct Env {
+  static let googleMapApiKey = \"${GOOGLE_MAP_API_KEY}\"
+}" > ${IOS_ENV_FILE_PATH}
+  echo "Created ${IOS_ENV_FILE_PATH}"
+}
+
+# 各オプションに応じた実行内容を記述する
+while getopts "g:s:h" optKey; do
+  case "$optKey" in
+    g)
+      # GitHub Access Token を設定する
+      GOOGLE_MAP_API_KEY=${OPTARG}
+      ;;
+    '-h'|'--help'|* )
+      # -h、--helpの場合、もしくは定義したパラメータ以外の場合の実行内容
+      usage
+      ;;
+  esac
+done
+
+# 処理実行
+perform
+
+# 後処理
+cleanup
+
+exit 0

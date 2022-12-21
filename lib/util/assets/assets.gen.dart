@@ -28,6 +28,14 @@ class $AssetsImagesGen {
   AssetGenImage get logoHeaderBurarry =>
       const AssetGenImage('assets/images/logo_header_burarry.png');
 
+  /// File path: assets/images/marker_android.png
+  AssetGenImage get markerAndroid =>
+      const AssetGenImage('assets/images/marker_android.png');
+
+  /// File path: assets/images/marker_ios.png
+  AssetGenImage get markerIos =>
+      const AssetGenImage('assets/images/marker_ios.png');
+
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
@@ -45,16 +53,29 @@ class $AssetsImagesGen {
         iconProd,
         logoBurarry,
         logoHeaderBurarry,
+        markerAndroid,
+        markerIos,
         splash,
         splashAndroid12,
         splashBackground
       ];
 }
 
+class $AssetsJsonGen {
+  const $AssetsJsonGen();
+
+  /// File path: assets/json/map_style.json
+  String get mapStyle => 'assets/json/map_style.json';
+
+  /// List of all assets
+  List<String> get values => [mapStyle];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsJsonGen json = $AssetsJsonGen();
 }
 
 class AssetGenImage {
