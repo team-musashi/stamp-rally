@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../domain/entity/app_info.dart';
-import '../../../domain/entity/value_object/geo_location.dart';
+import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import 'user_geolocator_position.dart';
 
 /// 座標リストとユーザーの現在位置から算出した経路（座標リスト）
 final currentPolylinePointsProvider =
-    FutureProvider.family<List<LatLng>, List<GeoLocation>>(
-  (ref, locations) async {
+    FutureProvider.family<List<LatLng>, StampRally>(
+  (ref, stampRally) async {
+    final locations = stampRally.spots.map((spot) => spot.location).toList();
     if (locations.isEmpty) {
       return [];
     }

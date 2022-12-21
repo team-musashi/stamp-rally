@@ -7,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../application/geolocator/state/current_poly_points.dart';
 import '../../../../application/stamp_rally/state/pin_icon.dart';
-import '../../../../domain/entity/value_object/geo_location.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../util/assets/assets.gen.dart';
@@ -33,10 +32,6 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
   /// スポットリスト
   List<Spot> get spots => widget.stampRally.spots;
 
-  /// スポットの座標リスト
-  List<GeoLocation> get locations =>
-      spots.map((spot) => spot.location).toList();
-
   @override
   Widget build(BuildContext context) {
     // 選択中スポットインデックスを監視してマップ上のカメラを移動する
@@ -56,7 +51,7 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
       body: Stack(
         children: [
           AsyncValueHandler(
-            value: ref.watch(currentPolylinePointsProvider(locations)),
+            value: ref.watch(currentPolylinePointsProvider(widget.stampRally)),
             builder: (polylinePoints) => _MapView(
               spots: spots,
               mapController: mapController,
