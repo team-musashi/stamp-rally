@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../application/geolocator/geolocator_service.dart';
+import '../../../../application/geolocator/state/current_geolocator_position.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
+import '../../../component/async_value_handler.dart';
 
 /// マップ表示の現在選択中のスポットのインデックス
 final currentMapSpotIndexProvider = StateProvider(
@@ -31,13 +32,8 @@ class MapSpotSwiper extends ConsumerWidget {
       child: Swiper(
         itemBuilder: (context, index) {
           final spot = spots[index];
-          final distance = ref.read(geolocatorServiceProvider).distanceBetween(
-                latitude: spot.location.latitude,
-                longitude: spot.location.longitude,
-              );
           return MapSpotCard(
             spot: spot,
-            distance: distance,
           );
         },
         loop: false,
@@ -56,11 +52,9 @@ class MapSpotCard extends ConsumerWidget {
   const MapSpotCard({
     super.key,
     required this.spot,
-    required this.distance,
   });
 
   final Spot spot;
-  final double? distance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -104,17 +98,62 @@ class MapSpotCard extends ConsumerWidget {
           Column(
             children: [
               const Gap(8),
-              _ListTile(
-                icon: CupertinoIcons.tag_fill,
-                text: spot.address ?? '',
-              ),
-              _ListTile(
-                icon: CupertinoIcons.placemark_fill,
-                text: '現在地からの距離：${distance ?? ''} km',
-              ),
+              _SpotAddressListTile(spot: spot),
+              _SpotDistanceListTile(spot: spot),
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+/// スポットの住所
+class _SpotAddressListTile extends StatelessWidget {
+  const _SpotAddressListTile({
+    required this.spot,
+  });
+
+  final Spot spot;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ListTile(
+      icon: CupertinoIcons.tag_fill,
+      text: spot.address ?? '',
+    );
+  }
+}
+
+/// 現在地からの距離
+class _SpotDistanceListTile extends ConsumerWidget {
+  const _SpotDistanceListTile({
+    required this.spot,
+  });
+
+  final Spot spot;
+
+  static const icon = CupertinoIcons.placemark_fill;
+  static const label = '現在地からの距離：';
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AsyncValueHandler(
+      value: ref.watch(currentUserLocationProvider),
+      builder: (userLocation) {
+        final distance = userLocation.distance(spot.location);
+        return _ListTile(
+          icon: icon,
+          text: '$label${distance ?? ''} km',
+        );
+      },
+      loading: () => const _ListTile(
+        icon: icon,
+        text: '$label測定中...',
+      ),
+      orNull: () => const _ListTile(
+        icon: icon,
+        text: '$label-',
       ),
     );
   }

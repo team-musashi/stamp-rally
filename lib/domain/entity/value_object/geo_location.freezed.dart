@@ -105,8 +105,8 @@ class __$$_GeoLocationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GeoLocation implements _GeoLocation {
-  const _$_GeoLocation({this.latitude = 0, this.longitude = 0});
+class _$_GeoLocation extends _GeoLocation {
+  const _$_GeoLocation({this.latitude = 0, this.longitude = 0}) : super._();
 
   /// 緯度
   @override
@@ -144,9 +144,10 @@ class _$_GeoLocation implements _GeoLocation {
       __$$_GeoLocationCopyWithImpl<_$_GeoLocation>(this, _$identity);
 }
 
-abstract class _GeoLocation implements GeoLocation {
+abstract class _GeoLocation extends GeoLocation {
   const factory _GeoLocation({final double latitude, final double longitude}) =
       _$_GeoLocation;
+  const _GeoLocation._() : super._();
 
   @override
 

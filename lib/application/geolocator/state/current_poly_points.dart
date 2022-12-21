@@ -17,19 +17,18 @@ final currentPolylinePointsProvider =
     final polylineCoordinates = <LatLng>[];
 
     // ユーザーの現在位置を取得する
-    final currentPosition =
-        await ref.watch(currentGeolocatorPositionProvider.future);
+    final userLocation = await ref.watch(currentUserLocationProvider.future);
 
     final polylinePoints = PolylinePoints();
 
     for (var i = 0; i < locations.length - 1; i++) {
       late PointLatLng pointFrom;
       late PointLatLng pointTo;
-      if (i == 0 && currentPosition != null) {
+      if (i == 0 && userLocation != null) {
         // 自分の位置〜1番最初のスポットまでの経路を求める
         pointFrom = PointLatLng(
-          currentPosition.latitude,
-          currentPosition.longitude,
+          userLocation.latitude,
+          userLocation.longitude,
         );
         pointTo = PointLatLng(
           locations[i].latitude,
