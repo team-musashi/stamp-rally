@@ -8,6 +8,7 @@ import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
+import '../../../util/assets/join_burarry_icons.dart';
 import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
@@ -219,10 +220,10 @@ class _Body extends ConsumerWidget {
             // JOIN BURARRYボタン
             Container(
               alignment: Alignment.topRight,
-              margin: const EdgeInsets.only(top: 210, right: 20),
+              padding: const EdgeInsets.only(top: 210, right: 20),
               child: SizedBox(
-                height: 77,
-                width: 77,
+                height: 70,
+                width: 80,
                 child: ElevatedButton(
                   onPressed: stampRally.canEntry
                       ? () async {
@@ -232,21 +233,17 @@ class _Body extends ConsumerWidget {
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
-                    elevation: 5,
+                    elevation: 10,
+                    backgroundColor: Colors.white,
+                    foregroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.local_activity),
-                      SizedBox(height: 6),
-                      Text(
-                        'JOIN BURRARY',
-                        style: TextStyle(fontSize: 6),
-                      ),
-                    ],
+                  child: const Icon(
+                    JoinBurarry.join_burarry,
+                    size: 45,
                   ),
                 ),
               ),
