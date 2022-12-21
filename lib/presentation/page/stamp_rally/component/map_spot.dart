@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../application/geolocator/state/current_geolocator_position.dart';
+import '../../../../application/geolocator/state/user_geolocator_position.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../component/async_value_handler.dart';
 
@@ -139,7 +139,7 @@ class _SpotDistanceListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueHandler(
-      value: ref.watch(currentUserLocationProvider),
+      value: ref.watch(userLocationProvider),
       builder: (userLocation) {
         final distance = userLocation.distance(spot.location);
         return _ListTile(

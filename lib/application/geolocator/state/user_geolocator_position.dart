@@ -6,7 +6,7 @@ import '../../../util/logger.dart';
 
 /// 使用端末の現在の位置情報(緯度・経度)を返す
 /// 位置情報サービスが有効でない場合、または許可されていない場合エラーとなる
-final currentUserLocationProvider = FutureProvider(
+final userLocationProvider = FutureProvider(
   (ref) async {
     // 位置情報サービスが有効かどうか確認する
     final serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -35,7 +35,7 @@ final currentUserLocationProvider = FutureProvider(
         return position.toGeoLocation();
     }
   },
-  name: 'currentUserLocationProvider',
+  name: 'userLocationProvider',
 );
 
 extension _PositionEx on Position {

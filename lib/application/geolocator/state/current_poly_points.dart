@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../domain/entity/app_info.dart';
 import '../../../domain/entity/value_object/geo_location.dart';
-import 'current_geolocator_position.dart';
+import 'user_geolocator_position.dart';
 
 /// 座標リストとユーザーの現在位置から算出した経路（座標リスト）
 final currentPolylinePointsProvider =
@@ -17,7 +17,7 @@ final currentPolylinePointsProvider =
     final polylineCoordinates = <LatLng>[];
 
     // ユーザーの現在位置を取得する
-    final userLocation = await ref.watch(currentUserLocationProvider.future);
+    final userLocation = await ref.watch(userLocationProvider.future);
 
     final polylinePoints = PolylinePoints();
 
@@ -66,4 +66,5 @@ final currentPolylinePointsProvider =
     }
     return polylineCoordinates;
   },
+  name: 'currentPolylinePointsProvider',
 );
