@@ -65,6 +65,12 @@ flutter:
   assets:
     - assets/images/
   fonts:
+    - family: JoinBurarry
+      fonts: 
+       - asset: assets/fonts/JoinBurarry.ttf
+    - family: StopBurarry
+      fonts: 
+       - asset: assets/fonts/StopBurarry.ttf
     - family: M_PLUS_1p
       fonts:
        - asset: assets/fonts/M_PLUS_1p/MPLUS1p-Thin.ttf
