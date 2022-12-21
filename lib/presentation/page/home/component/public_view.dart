@@ -8,11 +8,22 @@ import '../../../component/thumbnail.dart';
 import '../../../router.dart';
 
 /// 公開中画面
-class PublicView extends ConsumerWidget {
+class PublicView extends ConsumerStatefulWidget {
   const PublicView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PublicView> createState() => _PublicViewState();
+}
+
+class _PublicViewState extends ConsumerState<PublicView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
     return AsyncValueHandler<List<StampRally>>(
       value: ref.watch(publicStampRalliesProvider),
       builder: (stampRallies) {

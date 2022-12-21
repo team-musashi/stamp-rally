@@ -13,11 +13,22 @@ import '../../stamp_rally/component/stamp_rally_list_view.dart';
 import '../../stamp_rally/component/stamp_rally_map_view.dart';
 
 /// 参加中画面
-class EntryView extends ConsumerWidget {
+class EntryView extends ConsumerStatefulWidget {
   const EntryView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<EntryView> createState() => _EntryViewState();
+}
+
+class _EntryViewState extends ConsumerState<EntryView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
     // スタンプラリー中断の結果を監視する
     ref.listenResult<void>(
       withdrawStampRallyResultProvider,

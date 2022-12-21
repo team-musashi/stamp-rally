@@ -28,7 +28,11 @@ class StampRallyMapView extends ConsumerStatefulWidget {
   _StampRallyMapViewState createState() => _StampRallyMapViewState();
 }
 
-class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
+class _StampRallyMapViewState extends ConsumerState<StampRallyMapView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final Completer<GoogleMapController> mapController = Completer();
 
   /// スポットリスト
@@ -36,6 +40,8 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     // 選択中スポットインデックスを監視してマップ上のカメラを移動する
     ref.listen(currentMapSpotIndexProvider, (previous, next) async {
       final spot = spots[next];

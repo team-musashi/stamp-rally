@@ -10,7 +10,7 @@ import '../../../component/thumbnail.dart';
 import '../../../router.dart';
 
 /// スタンプラリー詳細のリスト表示
-class StampRallyListView extends ConsumerWidget {
+class StampRallyListView extends ConsumerStatefulWidget {
   const StampRallyListView({
     super.key,
     required this.stampRally,
@@ -19,8 +19,20 @@ class StampRallyListView extends ConsumerWidget {
   final StampRally stampRally;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<StampRallyListView> createState() => _StampRallyListViewState();
+}
+
+class _StampRallyListViewState extends ConsumerState<StampRallyListView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
     // Todo Figmaにあわせてデザイン実装
+    final stampRally = widget.stampRally;
     return SingleChildScrollView(
       child: Column(
         children: [
