@@ -1,31 +1,60 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 
-import '../../home/component/entry_details_view.dart';
-import '../../home/component/entry_map_view.dart';
-
 /// スタンプラリー詳細の表示モード
 enum StampRallyDisplayMode {
   /// リスト表示
   list(
     icon: Icons.list,
-    view: EntryDetailsView(),
   ),
 
   /// マップ表示
   map(
     icon: Icons.map_outlined,
-    view: EntryMapView(),
   ),
   ;
 
   const StampRallyDisplayMode({
     required this.icon,
-    required this.view,
   });
 
   final IconData icon;
-  final Widget view;
+}
+
+/// スタンプラリー詳細用のビルダー
+class StampRallyViewBuilder extends StatelessWidget {
+  const StampRallyViewBuilder({
+    super.key,
+    this.initialMode = StampRallyDisplayMode.list,
+    required this.builder,
+  });
+
+  final StampRallyDisplayMode initialMode;
+  final Widget Function(StampRallyDisplayMode mode) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return StampRallyDefaultTabController(
+      initialMode: initialMode,
+      child: Stack(
+        children: [
+          TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            children: StampRallyDisplayMode.values.map(builder).toList(),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Padding(
+                padding: EdgeInsets.only(top: 16, right: 16),
+                child: StampRallyDisplayModeSwitchButton(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 /// スタンプラリー詳細用のDefaultTabController
@@ -76,20 +105,16 @@ class StampRallyDisplayModeSwitchButton extends StatelessWidget {
         color: colorScheme.surfaceVariant,
       ),
       unselectedBackgroundColor: colorScheme.onSurfaceVariant.withOpacity(0.5),
-      tabs: const [
-        Tab(
-          icon: Icon(
-            Icons.list,
-            size: iconSize,
-          ),
-        ),
-        Tab(
-          icon: Icon(
-            Icons.map_outlined,
-            size: iconSize,
-          ),
-        ),
-      ],
+      tabs: StampRallyDisplayMode.values
+          .map(
+            (mode) => Tab(
+              icon: Icon(
+                mode.icon,
+                size: iconSize,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }

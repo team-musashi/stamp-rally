@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../stamp_rally/component/stamp_rally_display_mode.dart';
+import 'entry_details_view.dart';
+import 'entry_map_view.dart';
 
 /// 参加中画面
 class EntryView extends StatelessWidget {
@@ -8,27 +10,16 @@ class EntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StampRallyDefaultTabController(
+    return StampRallyViewBuilder(
       initialMode: StampRallyDisplayMode.map,
-      child: Stack(
-        children: [
-          TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            children: StampRallyDisplayMode.values
-                .map((displayMode) => displayMode.view)
-                .toList(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(top: 16, right: 16),
-                child: StampRallyDisplayModeSwitchButton(),
-              ),
-            ],
-          ),
-        ],
-      ),
+      builder: (mode) {
+        switch (mode) {
+          case StampRallyDisplayMode.list:
+            return const EntryDetailsView();
+          case StampRallyDisplayMode.map:
+            return const EntryMapView();
+        }
+      },
     );
   }
 }
