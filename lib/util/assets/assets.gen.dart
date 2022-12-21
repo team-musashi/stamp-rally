@@ -12,6 +12,13 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/icon.png
+  AssetGenImage get icon => const AssetGenImage('assets/images/icon.png');
+
+  /// File path: assets/images/icon_adaptive_foreground.png
+  AssetGenImage get iconAdaptiveForeground =>
+      const AssetGenImage('assets/images/icon_adaptive_foreground.png');
+
   /// File path: assets/images/icon_dev.png
   AssetGenImage get iconDev =>
       const AssetGenImage('assets/images/icon_dev.png');
@@ -49,6 +56,8 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        icon,
+        iconAdaptiveForeground,
         iconDev,
         iconProd,
         logoBurarry,
