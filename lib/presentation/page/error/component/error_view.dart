@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../domain/exceptions.dart';
 import '../../../../util/logger.dart';
+import '../../../component/error_message.dart';
 
 /// エラーView
 ///
