@@ -18,6 +18,9 @@ import 'component/spot_thumbnail.dart';
 /// 縦方向のパディング
 const _verticalPadding = 8.0;
 
+/// 横方向のパディング
+const _horizontalPadding = 16.0;
+
 /// 公開スタンプラリー詳細画面
 class PublicStampRallyViewPage extends StatelessWidget {
   const PublicStampRallyViewPage({super.key});
@@ -38,8 +41,6 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
-
     // スタンプラリー参加の結果を監視する
     ref.listenResult<StampRally?>(
       enterStampRallyResultProvider,
@@ -62,78 +63,9 @@ class _Body extends ConsumerWidget {
               cacheManager: ref.watch(defaultCacheManagerProvider),
             ),
 
-            // スタンプラリー詳細
-            Container(
-              width: size.width,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              margin: const EdgeInsets.only(top: 245),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 120, top: 10),
-                    child: Text(
-                      stampRally.title,
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.grey[350],
-                    thickness: 2,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _Section(
-                            icon: Icons.location_on,
-                            title: 'エリア',
-                            body: stampRally.area,
-                          ),
-                          _Section(
-                            icon: Icons.schedule,
-                            title: '所要時間',
-                            body: '${stampRally.requiredTime.toString()} 時間',
-                          ),
-                          _Section(
-                            icon: Icons.summarize,
-                            title: '概要',
-                            body: stampRally.summary,
-                          ),
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            itemCount: stampRally.spots.length,
-                            itemBuilder: (context, index) {
-                              final spot = stampRally.spots[index];
-                              return InkWell(
-                                onTap: () async {
-                                  PublicSpotViewRoute.fromSpot(spot)
-                                      .go(context);
-                                },
-                                child: SpotThumbnail(
-                                  spot: spot,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            // スタンプラリーの説明
+            _StampRallyExplanation(
+              stampRally: stampRally,
             ),
 
             // JOIN BURARRYボタン
@@ -157,7 +89,7 @@ class _Body extends ConsumerWidget {
                     foregroundColor:
                         Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: const Icon(
@@ -170,6 +102,95 @@ class _Body extends ConsumerWidget {
           ],
         );
       },
+    );
+  }
+}
+
+/// スタンプラリーの説明
+class _StampRallyExplanation extends StatelessWidget {
+  const _StampRallyExplanation({
+    required this.stampRally,
+  });
+
+  final StampRally stampRally;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      margin: const EdgeInsets.only(top: 240),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: _horizontalPadding,
+              right: 120,
+              top: 16,
+              bottom: 4,
+            ),
+            child: Text(
+              stampRally.title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
+          const Divider(
+            thickness: 1.5,
+            indent: _horizontalPadding,
+            endIndent: _horizontalPadding,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: _horizontalPadding,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _Section(
+                    icon: Icons.location_on,
+                    title: 'エリア',
+                    body: stampRally.area,
+                  ),
+                  _Section(
+                    icon: Icons.schedule,
+                    title: '所要時間',
+                    body: '${stampRally.requiredTime.toString()} 時間',
+                  ),
+                  _Section(
+                    icon: Icons.summarize,
+                    title: '概要',
+                    body: stampRally.summary,
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: stampRally.spots.length,
+                    itemBuilder: (context, index) {
+                      final spot = stampRally.spots[index];
+                      return InkWell(
+                        onTap: () async {
+                          PublicSpotViewRoute.fromSpot(spot).go(context);
+                        },
+                        child: SpotThumbnail(
+                          spot: spot,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
