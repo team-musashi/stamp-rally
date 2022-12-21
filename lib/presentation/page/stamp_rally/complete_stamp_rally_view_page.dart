@@ -17,7 +17,6 @@ class CompleteStampRallyViewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(),
-        centerTitle: true,
       ),
       body: const _Body(),
     );

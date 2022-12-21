@@ -33,6 +33,9 @@ final themeProvider = Provider(
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateProperty.all<Color>(colorScheme.primary),
       ),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+      ),
     );
   },
 );

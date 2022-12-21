@@ -41,7 +41,6 @@ class HomePage extends ConsumerWidget {
                 labelColor: Theme.of(context).colorScheme.surface,
                 unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
               ),
-              centerTitle: true,
               actions: [
                 IconButton(
                   onPressed: () => const SettingRoute().go(context),
@@ -69,7 +68,6 @@ class _LoadingScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(),
-        centerTitle: true,
       ),
       body: const Center(
         child: CircularProgressIndicator(),
