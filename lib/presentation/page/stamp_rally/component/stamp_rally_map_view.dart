@@ -101,6 +101,9 @@ class _MapView extends ConsumerWidget {
           color: Theme.of(context).colorScheme.primaryContainer,
         )
       },
+      // hack ぬるぽで落ちる件のワークアラウンド
+      // https://github.com/flutter/flutter/issues/51064#issuecomment-588519913
+      minMaxZoomPreference: const MinMaxZoomPreference(0, 16),
       myLocationEnabled: true,
       zoomControlsEnabled: false,
       onMapCreated: (controller) async {
