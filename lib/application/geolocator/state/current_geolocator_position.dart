@@ -35,6 +35,7 @@ final currentUserLocationProvider = FutureProvider(
         return position.toGeoLocation();
     }
   },
+  name: 'currentUserLocationProvider',
 );
 
 extension _PositionEx on Position {

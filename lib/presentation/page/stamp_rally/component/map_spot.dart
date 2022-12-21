@@ -151,6 +151,10 @@ class _SpotDistanceListTile extends ConsumerWidget {
         icon: icon,
         text: '$label測定中...',
       ),
+      error: (_, __) => const _ListTile(
+        icon: icon,
+        text: '$labelエラー',
+      ),
       orNull: () => const _ListTile(
         icon: icon,
         text: '$label-',
