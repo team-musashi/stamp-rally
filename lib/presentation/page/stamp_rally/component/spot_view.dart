@@ -114,14 +114,9 @@ class SpotView extends ConsumerWidget {
                                   height: 27.5,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      final googleMapUrl = ref.read(
-                                        googleMapUrlProvider(
-                                          spot.location,
-                                        ),
-                                      );
                                       ref
                                           .read(urlLauncherServiceProvider)
-                                          .launch(googleMapUrl);
+                                          .launch(spot.location.googleMapUrl);
                                     },
                                     child: const Text('MAPアプリを開く'),
                                   ),
