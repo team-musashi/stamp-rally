@@ -73,6 +73,7 @@ class StampRallyDefaultTabController extends StatelessWidget {
     return DefaultTabController(
       initialIndex: initialMode.index,
       length: StampRallyDisplayMode.values.length,
+      animationDuration: Duration.zero,
       child: child,
     );
   }
