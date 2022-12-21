@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../domain/entity/value_object/geo_location.dart';
 import '../../util/logger.dart';
 import 'exception/url_launcher_exception.dart';
 import 'state/url_launch_data.dart';
@@ -10,6 +11,15 @@ import 'state/url_launch_result.dart';
 /// URL起動サービスプロバイダー
 final urlLauncherServiceProvider = Provider(
   UrlLauncherService.new,
+);
+
+/// GoogleMapUrl生成プロバイダー
+final googleMapUrlProvider = Provider.family<String, GeoLocation>(
+  (
+    ref,
+    location,
+  ) =>
+      'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}',
 );
 
 /// URL起動サービス

@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../component/app_bar_title.dart';
 
 import '../../../application/stamp_rally/state/current_public_spot.dart';
+import '../../../application/url_launcher/url_launcher_service.dart';
+import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
 
@@ -131,8 +132,17 @@ class _Body extends ConsumerWidget {
                                     SizedBox(
                                       height: 27.5,
                                       child: ElevatedButton(
-                                        onPressed: () {},
-                                        child: const Text('マップで開く'),
+                                        onPressed: () {
+                                          final googleMapUrl = ref.read(
+                                            googleMapUrlProvider(
+                                              spot.location,
+                                            ),
+                                          );
+                                          ref
+                                              .read(urlLauncherServiceProvider)
+                                              .launch(googleMapUrl);
+                                        },
+                                        child: const Text('MAPアプリを開く'),
                                       ),
                                     ),
                                   ],
