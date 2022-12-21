@@ -5,8 +5,10 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../application/geolocator/state/current_map_spot_index.dart';
 import '../../../../application/geolocator/state/current_poly_points.dart';
 import '../../../../application/stamp_rally/state/pin_icon.dart';
+import '../../../../domain/entity/value_object/geo_location.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../util/assets/assets.gen.dart';
@@ -41,7 +43,7 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
       await controller.showMarkerInfoWindow(MarkerId(spot.id));
       await controller.animateCamera(
         CameraUpdate.newLatLngZoom(
-          LatLng(spot.location.latitude, spot.location.longitude),
+          spot.location.toLatLng(),
           17,
         ),
       );
@@ -91,7 +93,13 @@ class _MapView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ピンアイコン画像
     final icon = ref.watch(pinIconProvider);
+
+    // 初期表示時のカメラ位置
+    final spotIndex = ref.watch(currentMapSpotIndexProvider);
+    final location = spots[spotIndex].location.toLatLng();
+
     return GoogleMap(
       polylines: {
         Polyline(
@@ -128,12 +136,17 @@ class _MapView extends ConsumerWidget {
           )
           .toSet(),
       initialCameraPosition: CameraPosition(
-        target: LatLng(
-          spots.first.location.latitude,
-          spots.first.location.longitude,
-        ),
+        target: location,
         zoom: 14,
       ),
     );
   }
+}
+
+extension _GeoLocationEx on GeoLocation {
+  /// GeoLocation => LatLng
+  LatLng toLatLng() => LatLng(
+        latitude,
+        longitude,
+      );
 }

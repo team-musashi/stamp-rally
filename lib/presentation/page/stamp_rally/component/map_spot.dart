@@ -5,14 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
+import '../../../../application/geolocator/state/current_map_spot_index.dart';
 import '../../../../application/geolocator/state/user_geolocator_position.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../component/async_value_handler.dart';
-
-/// マップ表示の現在選択中のスポットのインデックス
-final currentMapSpotIndexProvider = StateProvider(
-  (_) => 0,
-);
 
 /// マップで使うスポットのカードを含むSwiper
 class MapSpotSwiper extends ConsumerWidget {
@@ -30,6 +26,7 @@ class MapSpotSwiper extends ConsumerWidget {
     return SizedBox(
       height: height,
       child: Swiper(
+        index: ref.watch(currentMapSpotIndexProvider),
         itemBuilder: (context, index) {
           final spot = spots[index];
           return MapSpotCard(
