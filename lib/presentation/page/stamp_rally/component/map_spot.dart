@@ -179,10 +179,12 @@ class _ListTile extends StatelessWidget {
             color: Theme.of(context).colorScheme.primaryContainer,
           ),
           const Gap(8),
-          Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
+          Expanded(
+            child: Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
           ),
         ],
       ),
