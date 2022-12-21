@@ -12,7 +12,7 @@ import '../../../../application/stamp_rally/state/pin_icon.dart';
 import '../../../../domain/entity/app_info.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
-import '../../home/component/entry_spot_index_list.dart';
+import 'map_spot.dart';
 
 /// スタンプラリー詳細のマップ表示
 class StampRallyMapView extends ConsumerStatefulWidget {
@@ -28,13 +28,27 @@ class StampRallyMapView extends ConsumerStatefulWidget {
 }
 
 class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
-  final Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> mapController = Completer();
 
   @override
   Widget build(BuildContext context) {
     final spots = widget.stampRally.spots;
     final asyncValue = ref.watch(currentGeolocatorPositionProvider);
     final icon = ref.watch(pinIconProvider);
+
+    // 選択中スポットインデックスを監視してマップ上のカメラを移動する
+    ref.listen(currentMapSpotIndexProvider, (previous, next) async {
+      final spot = spots[next];
+      final controller = await mapController.future;
+      await controller.showMarkerInfoWindow(MarkerId(spot.id));
+      await controller.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          LatLng(spot.location.latitude, spot.location.longitude),
+          17,
+        ),
+      );
+    });
+
     return Scaffold(
       body: Stack(
         children: [
@@ -44,12 +58,11 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
             orElse: () => buildMapView(spots, icon, null),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Container(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Align(
               alignment: Alignment.bottomCenter,
-              child: EntrySpotIndexList(
-                // 選択中スポットを受け取って本コンポーネント（参加中マップView）側で画面の更新を行う
-                onIndexChanged: onIndexChanged,
+              child: MapSpotSwiper(
+                spots: spots,
               ),
             ),
           ),
@@ -90,9 +103,9 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
 
   /// マップの初期構築
   Future<void> onMapCreated(GoogleMapController controller) async {
-    _controller.complete(controller);
+    mapController.complete(controller);
     final value = await rootBundle.loadString('assets/json/map_style.json');
-    final futureController = await _controller.future;
+    final futureController = await mapController.future;
     await futureController.setMapStyle(value); // Controllerを使ってMapをSetする
   }
 
@@ -170,19 +183,5 @@ class _StampRallyMapViewState extends ConsumerState<StampRallyMapView> {
       );
     }
     return markers;
-  }
-
-  /// スポットカード変更時処理
-  ///
-  /// 選択中スポットを元にしてマップ上のカメラを移動する
-  Future<void> onIndexChanged(Spot spot) async {
-    final controller = await _controller.future;
-    await controller.showMarkerInfoWindow(MarkerId(spot.id));
-    await controller.animateCamera(
-      CameraUpdate.newLatLngZoom(
-        LatLng(spot.location.latitude, spot.location.longitude),
-        17,
-      ),
-    );
   }
 }

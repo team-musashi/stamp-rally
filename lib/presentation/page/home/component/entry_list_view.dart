@@ -37,16 +37,14 @@ class EntryListView extends ConsumerWidget {
       },
     );
 
-    return SingleChildScrollView(
-      child: AsyncValueHandler(
-        value: ref.watch(currentEntryStampRallyProvider),
-        builder: (stampRally) {
-          return StampRallyListView(
-            stampRally: stampRally,
-          );
-        },
-        orNull: () => const _EmptyView(),
-      ),
+    return AsyncValueHandler(
+      value: ref.watch(currentEntryStampRallyProvider),
+      builder: (stampRally) {
+        return StampRallyListView(
+          stampRally: stampRally,
+        );
+      },
+      orNull: () => const _EmptyView(),
     );
   }
 }

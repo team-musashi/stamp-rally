@@ -21,53 +21,55 @@ class StampRallyListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Todo Figmaにあわせてデザイン実装
-    return Column(
-      children: [
-        ThumbnailImage(
-          imageUrl: stampRally.imageUrl,
-        ),
-        Text(stampRally.title),
-        Text('チェックポイント数：${stampRally.spots.length}'),
-        ElevatedButton(
-          onPressed: () => showDialog<void>(
-            context: context,
-            builder: (context) => ConfirmDialog(
-              message: '参加を完了しますか？',
-              onApproved: () async {
-                await ref
-                    .read(stampRallyServiceProvider)
-                    .completeStampRally(stampRallyId: stampRally.id);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ThumbnailImage(
+            imageUrl: stampRally.imageUrl,
+          ),
+          Text(stampRally.title),
+          Text('チェックポイント数：${stampRally.spots.length}'),
+          ElevatedButton(
+            onPressed: () => showDialog<void>(
+              context: context,
+              builder: (context) => ConfirmDialog(
+                message: '参加を完了しますか？',
+                onApproved: () async {
+                  await ref
+                      .read(stampRallyServiceProvider)
+                      .completeStampRally(stampRallyId: stampRally.id);
+                },
+              ),
+            ),
+            child: const Text('参加完了'),
+          ),
+          ElevatedButton(
+            onPressed: () => showDialog<void>(
+              context: context,
+              builder: (context) => ConfirmDialog(
+                message: '本当に参加を中断しますか？',
+                onApproved: () async {
+                  await ref
+                      .read(stampRallyServiceProvider)
+                      .withdrawStampRally(stampRallyId: stampRally.id);
+                },
+              ),
+            ),
+            child: const Text('参加中断'),
+          ),
+          ...stampRally.spots.map(
+            (spot) => InkWell(
+              onTap: () async {
+                EntrySpotViewRoute.fromSpot(spot).go(context);
               },
+              child: CachedNetworkImage(
+                imageUrl: spot.imageUrl,
+                cacheManager: ref.watch(defaultCacheManagerProvider),
+              ),
             ),
           ),
-          child: const Text('参加完了'),
-        ),
-        ElevatedButton(
-          onPressed: () => showDialog<void>(
-            context: context,
-            builder: (context) => ConfirmDialog(
-              message: '本当に参加を中断しますか？',
-              onApproved: () async {
-                await ref
-                    .read(stampRallyServiceProvider)
-                    .withdrawStampRally(stampRallyId: stampRally.id);
-              },
-            ),
-          ),
-          child: const Text('参加中断'),
-        ),
-        ...stampRally.spots.map(
-          (spot) => InkWell(
-            onTap: () async {
-              EntrySpotViewRoute.fromSpot(spot).go(context);
-            },
-            child: CachedNetworkImage(
-              imageUrl: spot.imageUrl,
-              cacheManager: ref.watch(defaultCacheManagerProvider),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
