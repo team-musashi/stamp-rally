@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../application/geolocator/state/current_geolocator_position.dart';
 import '../../../../application/stamp_rally/state/current_entry_stamp_rally.dart';
-import '../../../../application/stamp_rally/state/pin_icon_provider.dart';
+import '../../../../application/stamp_rally/state/pin_icon.dart';
 import '../../../../domain/entity/app_info.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../component/async_value_handler.dart';
@@ -35,20 +35,16 @@ class _EntryMapViewState extends ConsumerState<EntryMapView> {
         if (spots.isEmpty) {
           return Container();
         }
+
+        final asyncValue = ref.watch(currentGeolocatorPositionProvider);
+        final icon = ref.watch(pinIconProvider);
         return Scaffold(
           body: Stack(
             children: [
-              AsyncValueHandler(
-                value: ref.watch(pinIconProvider),
-                builder: (icon) {
-                  final asyncValue =
-                      ref.watch(currentGeolocatorPositionProvider);
-                  return asyncValue.maybeWhen(
-                    data: (currentPosition) =>
-                        buildMapView(spots, icon, currentPosition),
-                    orElse: () => buildMapView(spots, icon, null),
-                  );
-                },
+              asyncValue.maybeWhen(
+                data: (currentPosition) =>
+                    buildMapView(spots, icon, currentPosition),
+                orElse: () => buildMapView(spots, icon, null),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
