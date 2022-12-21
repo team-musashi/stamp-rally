@@ -44,7 +44,7 @@ class _MapViewState extends ConsumerState<SpotMapView> {
     // ピンアイコン画像
     final icon = ref.watch(pinIconProvider);
 
-    // 初期表示時のカメラ位置
+    // 選択中スポットの位置情報
     final spotIndex = ref.watch(_currentMapSpotIndexProvider);
     final location = widget.stampRally.spots[spotIndex].location.toLatLng();
 
@@ -247,7 +247,7 @@ class _SpotDistanceListTile extends ConsumerWidget {
         final distance = userLocation.distance(spot.location);
         return _ListTile(
           icon: icon,
-          text: '$label${distance ?? ''} km',
+          text: '$label$distance km',
         );
       },
       loading: () => const _ListTile(

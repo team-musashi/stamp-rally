@@ -18,7 +18,7 @@ class GeoLocation with _$GeoLocation {
 
   /// 2点間の距離(km)を求める
   /// 少数３位を四捨五入して少数第２位まで表示
-  double? distance(GeoLocation other) {
+  double distance(GeoLocation other) {
     double toRadians(double degree) => degree * math.pi / 180;
     const r = 6378137; // 地球の半径
     final f1 = toRadians(latitude);
