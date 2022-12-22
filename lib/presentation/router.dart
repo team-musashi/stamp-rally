@@ -201,11 +201,10 @@ class PublicSpotViewRoute extends GoRouteData {
   });
 
   factory PublicSpotViewRoute.fromSpot(
-    StampRally stampRally,
     Spot spot,
   ) =>
       PublicSpotViewRoute(
-        publicStampRallyId: stampRally.id,
+        publicStampRallyId: spot.stampRallyId,
         publicSpotId: spot.id,
         $extra: spot,
       );

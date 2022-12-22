@@ -11,6 +11,9 @@ final themeProvider = Provider(
       primary: HexColor('FF73F1'),
       primaryContainer: HexColor('FFAFCC'),
       secondary: HexColor('FFA776'),
+      surfaceVariant: HexColor('EEDEE7'),
+      onSurfaceVariant: HexColor('4E444B'),
+      outline: HexColor('837377'),
     );
     return ThemeData(
       useMaterial3: true,
@@ -32,6 +35,9 @@ final themeProvider = Provider(
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateProperty.all<Color>(colorScheme.primary),
+      ),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
       ),
     );
   },

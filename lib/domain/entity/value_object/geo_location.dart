@@ -32,4 +32,8 @@ class GeoLocation with _$GeoLocation {
     final result = d / 1000;
     return double.parse(result.toStringAsFixed(2));
   }
+
+  /// GoogleMap連携用URLを返す
+  String get googleMapUrl =>
+      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 }
