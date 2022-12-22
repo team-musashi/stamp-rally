@@ -124,6 +124,7 @@ class _StampRallyExplanation extends StatelessWidget {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          childAspectRatio: 4 / 3,
                         ),
                         itemCount: stampRally.spots.length,
                         itemBuilder: (context, index) {

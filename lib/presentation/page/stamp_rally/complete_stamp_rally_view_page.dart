@@ -28,6 +28,7 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final displayWidth = MediaQuery.of(context).size.width;
     return AsyncValueHandler<StampRally>(
       value: ref.watch(currentPublicStampRallyProvider),
       builder: (stampRally) {
@@ -36,7 +37,7 @@ class _Body extends ConsumerWidget {
             children: [
               SizedBox(
                 width: double.infinity,
-                height: 232,
+                height: 2 / 3 * displayWidth,
                 child: ThumbnailImage(
                   imageUrl: stampRally.imageUrl,
                   title: stampRally.title,
@@ -52,6 +53,7 @@ class _Body extends ConsumerWidget {
                 padding: const EdgeInsets.all(4),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  childAspectRatio: 4 / 3,
                 ),
                 itemCount: stampRally.spots.length,
                 itemBuilder: (context, index) {
