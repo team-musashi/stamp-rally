@@ -41,6 +41,10 @@ class _MapViewState extends ConsumerState<SpotMapView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.stampRally.spots.isEmpty) {
+      return const SizedBox();
+    }
+
     // ピンアイコン画像
     final icon = ref.watch(pinIconProvider);
 

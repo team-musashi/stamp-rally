@@ -8,7 +8,9 @@ import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/widget_ref.dart';
 import '../../router.dart';
+import 'component/stamp_rally_display_mode.dart';
 import 'component/stamp_rally_list_view.dart';
+import 'component/stamp_rally_map_view.dart';
 
 /// 公開スタンプラリー詳細画面
 class PublicStampRallyViewPage extends StatelessWidget {
@@ -44,7 +46,20 @@ class _Body extends ConsumerWidget {
     return AsyncValueHandler(
       value: ref.watch(currentPublicStampRallyProvider),
       builder: (stampRally) {
-        return StampRallyListView(stampRally: stampRally);
+        return StampRallyViewBuilder(
+          builder: (mode) {
+            switch (mode) {
+              case StampRallyDisplayMode.list:
+                return StampRallyListView(
+                  stampRally: stampRally,
+                );
+              case StampRallyDisplayMode.map:
+                return StampRallyMapView(
+                  stampRally: stampRally,
+                );
+            }
+          },
+        );
       },
     );
   }
