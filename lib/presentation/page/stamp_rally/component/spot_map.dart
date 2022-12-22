@@ -17,6 +17,7 @@ import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../../util/assets/assets.gen.dart';
 import '../../../component/async_value_handler.dart';
+import '../../../router.dart';
 
 /// マップ表示の現在選択中のスポットのインデックス
 final _currentMapSpotIndexProvider = StateProvider(
@@ -163,6 +164,11 @@ class SpotMapCard extends ConsumerWidget {
 
   final Spot spot;
 
+  static const borderRadius = BorderRadius.only(
+    topLeft: Radius.circular(20),
+    topRight: Radius.circular(20),
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
@@ -170,46 +176,49 @@ class SpotMapCard extends ConsumerWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       elevation: 4,
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                image: DecorationImage(
-                  image: CachedNetworkImageProvider(
-                    spot.imageUrl,
+      child: InkWell(
+        onTap: () => spot.isEntry
+            ? EntrySpotViewRoute.fromSpot(spot).go(context)
+            : PublicSpotViewRoute.fromSpot(spot).go(context),
+        borderRadius: borderRadius,
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius,
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(
+                      spot.imageUrl,
+                    ),
+                    fit: BoxFit.cover,
                   ),
-                  fit: BoxFit.cover,
                 ),
-              ),
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 6, bottom: 2),
-                child: Text(
-                  spot.title,
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Theme.of(context).colorScheme.background,
-                    fontWeight: FontWeight.bold,
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 6, bottom: 2),
+                  child: Text(
+                    spot.title,
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Theme.of(context).colorScheme.background,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              const Gap(8),
-              _SpotAddressListTile(spot: spot),
-              _SpotDistanceListTile(spot: spot),
-            ],
-          )
-        ],
+            Column(
+              children: [
+                const Gap(8),
+                _SpotAddressListTile(spot: spot),
+                _SpotDistanceListTile(spot: spot),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
