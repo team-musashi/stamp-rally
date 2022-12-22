@@ -8,6 +8,8 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
@@ -26,6 +28,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/icon_prod.png
   AssetGenImage get iconProd =>
       const AssetGenImage('assets/images/icon_prod.png');
+
+  /// File path: assets/images/join_burally.svg
+  SvgGenImage get joinBurally =>
+      const SvgGenImage('assets/images/join_burally.svg');
 
   /// File path: assets/images/logo_burarry.png
   AssetGenImage get logoBurarry =>
@@ -54,19 +60,25 @@ class $AssetsImagesGen {
   AssetGenImage get splashBackground =>
       const AssetGenImage('assets/images/splash_background.png');
 
+  /// File path: assets/images/stop_burally.svg
+  SvgGenImage get stopBurally =>
+      const SvgGenImage('assets/images/stop_burally.svg');
+
   /// List of all assets
-  List<AssetGenImage> get values => [
+  List<dynamic> get values => [
         icon,
         iconAdaptiveForeground,
         iconDev,
         iconProd,
+        joinBurally,
         logoBurarry,
         logoHeaderBurarry,
         markerAndroid,
         markerIos,
         splash,
         splashAndroid12,
-        splashBackground
+        splashBackground,
+        stopBurally
       ];
 }
 
@@ -146,6 +158,57 @@ class AssetGenImage {
   }
 
   ImageProvider provider() => AssetImage(_assetName);
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
+}
+
+class SvgGenImage {
+  const SvgGenImage(this._assetName);
+
+  final String _assetName;
+
+  SvgPicture svg({
+    Key? key,
+    bool matchTextDirection = false,
+    AssetBundle? bundle,
+    String? package,
+    double? width,
+    double? height,
+    BoxFit fit = BoxFit.contain,
+    AlignmentGeometry alignment = Alignment.center,
+    bool allowDrawingOutsideViewBox = false,
+    WidgetBuilder? placeholderBuilder,
+    Color? color,
+    BlendMode colorBlendMode = BlendMode.srcIn,
+    String? semanticsLabel,
+    bool excludeFromSemantics = false,
+    Clip clipBehavior = Clip.hardEdge,
+    bool cacheColorFilter = false,
+    SvgTheme? theme,
+  }) {
+    return SvgPicture.asset(
+      _assetName,
+      key: key,
+      matchTextDirection: matchTextDirection,
+      bundle: bundle,
+      package: package,
+      width: width,
+      height: height,
+      fit: fit,
+      alignment: alignment,
+      allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
+      placeholderBuilder: placeholderBuilder,
+      color: color,
+      colorBlendMode: colorBlendMode,
+      semanticsLabel: semanticsLabel,
+      excludeFromSemantics: excludeFromSemantics,
+      clipBehavior: clipBehavior,
+      cacheColorFilter: cacheColorFilter,
+      theme: theme,
+    );
+  }
 
   String get path => _assetName;
 

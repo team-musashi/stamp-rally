@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import '../../../application/stamp_rally/stamp_rally_service.dart';
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
-import '../../../util/assets/join_burarry_icons.dart';
 import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import '../../component/cached_manager.dart';
 import '../../component/widget_ref.dart';
 import '../../router.dart';
 import 'component/spot_thumbnail.dart';
+import 'component/stamp_rally_button.dart';
 
 /// 縦方向のパディング
 const _verticalPadding = 8.0;
@@ -66,37 +65,15 @@ class _Body extends ConsumerWidget {
             // スタンプラリーの説明
             _StampRallyExplanation(
               stampRally: stampRally,
+              topMargin: 240,
             ),
 
-            // JOIN BURARRYボタン
+            // 参加ボタン
             Container(
               alignment: Alignment.topRight,
               padding: const EdgeInsets.only(top: 210, right: 20),
-              child: SizedBox(
-                height: 70,
-                width: 80,
-                child: ElevatedButton(
-                  onPressed: stampRally.canEntry
-                      ? () async {
-                          await ref
-                              .read(stampRallyServiceProvider)
-                              .enterStampRally(stampRallyId: stampRally.id);
-                        }
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 10,
-                    backgroundColor: Colors.white,
-                    foregroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Icon(
-                    JoinBurarry.joinBurarry,
-                    size: 45,
-                  ),
-                ),
+              child: EnterStampRallyButton(
+                stampRally: stampRally,
               ),
             ),
           ],
@@ -110,9 +87,11 @@ class _Body extends ConsumerWidget {
 class _StampRallyExplanation extends StatelessWidget {
   const _StampRallyExplanation({
     required this.stampRally,
+    required this.topMargin,
   });
 
   final StampRally stampRally;
+  final double topMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +100,7 @@ class _StampRallyExplanation extends StatelessWidget {
         color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.circular(16),
       ),
-      margin: const EdgeInsets.only(top: 240),
+      margin: EdgeInsets.only(top: topMargin),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
