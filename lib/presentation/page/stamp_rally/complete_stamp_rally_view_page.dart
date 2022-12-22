@@ -56,7 +56,7 @@ class _Body extends ConsumerWidget {
                 itemCount: stampRally.spots.length,
                 itemBuilder: (context, index) {
                   final spot = stampRally.spots[index];
-                  return SpotThumbnail(
+                  return EntrySpotThumbnail(
                     spot: spot,
                   );
                 },

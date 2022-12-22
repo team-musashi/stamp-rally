@@ -3,9 +3,55 @@ import 'package:flutter/material.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../component/thumbnail.dart';
 
-/// スポットのサムネイル画像
-class SpotThumbnail extends StatelessWidget {
-  const SpotThumbnail({
+/// 参加スポットのサムネイル画像
+class EntrySpotThumbnail extends StatelessWidget {
+  const EntrySpotThumbnail({
+    super.key,
+    required this.spot,
+  });
+
+  final Spot spot;
+
+  @override
+  Widget build(BuildContext context) {
+    final uploadImageUrl = spot.uploadImageUrl;
+    return ThumbnailImage(
+      imageUrl: uploadImageUrl ?? spot.imageUrl,
+      cover: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          ThumbnailCoverText(
+            title: spot.title,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 42, vertical: 4),
+          ),
+          _SpotOrder(
+            order: spot.order,
+          ),
+
+          // 未アップロードは NO IMAGE を表示する
+          if (uploadImageUrl == null) ...[
+            ColoredBox(
+              color: Colors.white.withOpacity(0.5),
+            ),
+            Center(
+              child: Text(
+                'NO IMAGE',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// 公開スポットのサムネイル画像
+class PublicSpotThumbnail extends StatelessWidget {
+  const PublicSpotThumbnail({
     super.key,
     required this.spot,
   });

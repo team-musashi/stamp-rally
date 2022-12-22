@@ -132,9 +132,13 @@ class _StampRallyExplanation extends StatelessWidget {
                             onTap: () async {
                               PublicSpotViewRoute.fromSpot(spot).go(context);
                             },
-                            child: SpotThumbnail(
-                              spot: spot,
-                            ),
+                            child: stampRally.isEntry
+                                ? EntrySpotThumbnail(
+                                    spot: spot,
+                                  )
+                                : PublicSpotThumbnail(
+                                    spot: spot,
+                                  ),
                           );
                         },
                       ),
