@@ -12,9 +12,13 @@ import 'stamp_rally_section.dart';
 /// 横方向のパディング
 const _horizontalPadding = 16.0;
 
-/// 公開中スポット／参加中スポットの詳細
-class SpotView extends ConsumerWidget {
-  const SpotView({required this.spot, super.key});
+/// スポット詳細
+class SpotListView extends ConsumerWidget {
+  const SpotListView({
+    super.key,
+    required this.spot,
+  });
+
   final Spot spot;
 
   @override
@@ -57,34 +61,32 @@ class _SpotExplanation extends ConsumerWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       margin: EdgeInsets.only(top: topMargin),
+      padding: const EdgeInsets.symmetric(
+        vertical: 16,
+        horizontal: _horizontalPadding,
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: _horizontalPadding,
-              right: StampRallyButton.buttonSize + 28,
-              top: 16,
-              bottom: 4,
-            ),
-            child: Text(
-              spot.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
-          const Divider(
-            thickness: 1.5,
-            indent: _horizontalPadding,
-            endIndent: _horizontalPadding,
-          ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: _horizontalPadding,
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: StampRallyButton.buttonSize + 8,
+                      bottom: 4,
+                    ),
+                    child: Text(
+                      spot.title,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 18,
+                          ),
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 1.5,
+                  ),
                   StampRallySection(
                     icon: Icons.summarize,
                     title: '概要',
