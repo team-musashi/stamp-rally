@@ -81,7 +81,7 @@ class _SpotImageView extends ConsumerWidget {
     // アップロード前の画像があれば表示する
     if (pickedImage != null) {
       return Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         children: [
           SizedBox(
             width: double.infinity,
@@ -91,14 +91,17 @@ class _SpotImageView extends ConsumerWidget {
             ),
           ),
           // アップロードボタン
-          ElevatedButton(
-            onPressed: () async {
-              await ref.read(stampRallyServiceProvider).uploadSpotImage(
-                    spot: spot,
-                    image: pickedImage,
-                  );
-            },
-            child: const Text('この画像をアップロードする'),
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: ElevatedButton(
+              onPressed: () async {
+                await ref.read(stampRallyServiceProvider).uploadSpotImage(
+                      spot: spot,
+                      image: pickedImage,
+                    );
+              },
+              child: const Text('この画像をアップロードする'),
+            ),
           ),
         ],
       );
