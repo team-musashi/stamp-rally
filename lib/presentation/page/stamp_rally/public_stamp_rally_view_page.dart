@@ -35,7 +35,7 @@ class _Body extends ConsumerWidget {
     // スタンプラリー参加の結果を監視する
     ref.listenResult<StampRally?>(
       enterStampRallyResultProvider,
-      completeMessage: 'スタンプラリーに参加しました。',
+      completeMessage: 'スタンプラリーに参加しました！',
       complete: (stampRally) {
         if (stampRally != null) {
           const HomeRoute().go(context);
