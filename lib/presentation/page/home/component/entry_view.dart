@@ -79,8 +79,13 @@ class _EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('参加中のスタンプラリーはありません'),
+    return Center(
+      child: Text(
+        'NO ACTIVE',
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.surfaceVariant,
+            ),
+      ),
     );
   }
 }
