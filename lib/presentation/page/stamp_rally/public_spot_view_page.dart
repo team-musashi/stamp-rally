@@ -6,7 +6,7 @@ import '../../component/app_bar_title.dart';
 import '../../component/async_value_handler.dart';
 import 'component/spot_list_view.dart';
 
-/// スポット詳細画面
+/// 公開スポット詳細画面
 class PublicSpotViewPage extends StatelessWidget {
   const PublicSpotViewPage({super.key});
 

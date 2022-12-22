@@ -14,6 +14,9 @@ class Spot with _$Spot {
     /// スタンプラリーID
     required String stampRallyId,
 
+    /// 参加スタンプラリーのスポットかどうか
+    required bool isEntry,
+
     /// スポットの順番
     required int order,
 
@@ -47,4 +50,8 @@ class Spot with _$Spot {
     /// スタンプ取得日
     DateTime? gotDate,
   }) = _Spot;
+  const Spot._();
+
+  /// スタンプ押下済みかどうか
+  bool get isStamped => gotDate != null;
 }

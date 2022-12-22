@@ -35,11 +35,13 @@ class SpotDocument with _$SpotDocument {
   Spot toSpot({
     required String id,
     required String stampRallyId,
+    required bool isEntry,
     String? uploadImageUrl,
   }) {
     return Spot(
       id: id,
       stampRallyId: stampRallyId,
+      isEntry: isEntry,
       order: order,
       title: title,
       summary: summary,

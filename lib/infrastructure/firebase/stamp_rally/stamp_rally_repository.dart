@@ -224,6 +224,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
           return SpotDocument.fromJson(json).toSpot(
             id: query.id,
             stampRallyId: publicStampRallyId,
+            isEntry: false,
           );
         }).toList() ??
         [];
@@ -271,6 +272,7 @@ class FirebaseStampRallyRepository implements StampRallyRepository {
             return spotDoc.toSpot(
               id: query.id,
               stampRallyId: entryStampRallyId,
+              isEntry: true,
               uploadImageUrl: url,
             );
           }) ??

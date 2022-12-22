@@ -129,7 +129,6 @@ class _StampRallyExplanation extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final spot = stampRally.spots[index];
                           return _SpotThumbnail(
-                            stampRally: stampRally,
                             spot: spot,
                           );
                         },
@@ -201,16 +200,14 @@ class _StampedCountText extends StatelessWidget {
 /// スポット画像
 class _SpotThumbnail extends ConsumerWidget {
   const _SpotThumbnail({
-    required this.stampRally,
     required this.spot,
   });
 
-  final StampRally stampRally;
   final Spot spot;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (stampRally.isEntry) {
+    if (spot.isEntry) {
       return InkWell(
         onTap: () async {
           EntrySpotViewRoute.fromSpot(spot).go(context);
