@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../component/cached_manager.dart';
 import '../../../router.dart';
@@ -128,17 +129,9 @@ class _StampRallyExplanation extends StatelessWidget {
                         itemCount: stampRally.spots.length,
                         itemBuilder: (context, index) {
                           final spot = stampRally.spots[index];
-                          return InkWell(
-                            onTap: () async {
-                              PublicSpotViewRoute.fromSpot(spot).go(context);
-                            },
-                            child: stampRally.isEntry
-                                ? EntrySpotThumbnail(
-                                    spot: spot,
-                                  )
-                                : PublicSpotThumbnail(
-                                    spot: spot,
-                                  ),
+                          return _SpotThumbnail(
+                            stampRally: stampRally,
+                            spot: spot,
                           );
                         },
                       ),
@@ -201,6 +194,40 @@ class _StampedCountText extends StatelessWidget {
             Text('${stampRally.spots.length}'),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// スポット画像
+class _SpotThumbnail extends ConsumerWidget {
+  const _SpotThumbnail({
+    required this.stampRally,
+    required this.spot,
+  });
+
+  final StampRally stampRally;
+  final Spot spot;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (stampRally.isEntry) {
+      return InkWell(
+        onTap: () async {
+          EntrySpotViewRoute.fromSpot(spot).go(context);
+        },
+        child: EntrySpotThumbnail(
+          spot: spot,
+        ),
+      );
+    }
+
+    return InkWell(
+      onTap: () async {
+        PublicSpotViewRoute.fromSpot(spot).go(context);
+      },
+      child: PublicSpotThumbnail(
+        spot: spot,
       ),
     );
   }
