@@ -67,15 +67,6 @@ class _Body extends ConsumerWidget {
               stampRally: stampRally,
               topMargin: 240,
             ),
-
-            // 参加ボタン
-            Container(
-              alignment: Alignment.topRight,
-              padding: const EdgeInsets.only(top: 210, right: 20),
-              child: EnterStampRallyButton(
-                stampRally: stampRally,
-              ),
-            ),
           ],
         );
       },
@@ -95,81 +86,97 @@ class _StampRallyExplanation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      margin: EdgeInsets.only(top: topMargin),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: _horizontalPadding,
-              right: 120,
-              top: 16,
-              bottom: 4,
-            ),
-            child: Text(
-              stampRally.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(16),
           ),
-          const Divider(
-            thickness: 1.5,
-            indent: _horizontalPadding,
-            endIndent: _horizontalPadding,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: _horizontalPadding,
+          margin: EdgeInsets.only(top: topMargin),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: _horizontalPadding,
+                  right: StampRallyButton.buttonSize + 28,
+                  top: 16,
+                  bottom: 4,
+                ),
+                child: Text(
+                  stampRally.title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _Section(
-                    icon: Icons.location_on,
-                    title: 'エリア',
-                    body: stampRally.area,
+              const Divider(
+                thickness: 1.5,
+                indent: _horizontalPadding,
+                endIndent: _horizontalPadding,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: _horizontalPadding,
                   ),
-                  _Section(
-                    icon: Icons.schedule,
-                    title: '所要時間',
-                    body: '${stampRally.requiredTime.toString()} 時間',
-                  ),
-                  _Section(
-                    icon: Icons.summarize,
-                    title: '概要',
-                    body: stampRally.summary,
-                  ),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: stampRally.spots.length,
-                    itemBuilder: (context, index) {
-                      final spot = stampRally.spots[index];
-                      return InkWell(
-                        onTap: () async {
-                          PublicSpotViewRoute.fromSpot(spot).go(context);
-                        },
-                        child: SpotThumbnail(
-                          spot: spot,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _Section(
+                        icon: Icons.location_on,
+                        title: 'エリア',
+                        body: stampRally.area,
+                      ),
+                      _Section(
+                        icon: Icons.schedule,
+                        title: '所要時間',
+                        body: '${stampRally.requiredTime.toString()} 時間',
+                      ),
+                      _Section(
+                        icon: Icons.summarize,
+                        title: '概要',
+                        body: stampRally.summary,
+                      ),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
                         ),
-                      );
-                    },
+                        itemCount: stampRally.spots.length,
+                        itemBuilder: (context, index) {
+                          final spot = stampRally.spots[index];
+                          return InkWell(
+                            onTap: () async {
+                              PublicSpotViewRoute.fromSpot(spot).go(context);
+                            },
+                            child: SpotThumbnail(
+                              spot: spot,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+                ),
+              )
+            ],
+          ),
+        ),
+
+        // 参加ボタン
+        Container(
+          alignment: Alignment.topRight,
+          margin: EdgeInsets.only(
+            top: topMargin - StampRallyButton.buttonSize / 2,
+            right: 20,
+          ),
+          child: EnterStampRallyButton(
+            stampRally: stampRally,
+          ),
+        ),
+      ],
     );
   }
 }

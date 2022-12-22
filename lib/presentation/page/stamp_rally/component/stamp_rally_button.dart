@@ -16,7 +16,7 @@ class EnterStampRallyButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return _StampRallyButton(
+    return StampRallyButton(
       onPressed: stampRally.canEntry
           ? () async {
               await ref
@@ -39,8 +39,9 @@ class WithdrawStampRallyButton extends ConsumerWidget {
   }
 }
 
-class _StampRallyButton extends StatelessWidget {
-  const _StampRallyButton({
+class StampRallyButton extends StatelessWidget {
+  const StampRallyButton({
+    super.key,
     required this.onPressed,
     required this.svgIcon,
   });
