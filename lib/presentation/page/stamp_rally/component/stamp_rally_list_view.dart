@@ -73,73 +73,67 @@ class _StampRallyExplanation extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           margin: EdgeInsets.only(top: topMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: _horizontalPadding,
-                  right: StampRallyButton.buttonSize + 28,
-                  top: 16,
-                  bottom: 4,
-                ),
-                child: Text(
-                  stampRally.title,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              const Divider(
-                thickness: 1.5,
-                indent: _horizontalPadding,
-                endIndent: _horizontalPadding,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: _horizontalPadding,
+          padding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: _horizontalPadding,
+          ),
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: StampRallyButton.buttonSize + 8,
+                      bottom: 4,
+                    ),
+                    child: Text(
+                      stampRally.title,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 18,
+                          ),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _StampedCountText(
+                  const Divider(
+                    thickness: 1.5,
+                  ),
+                  _StampedCountText(
+                    stampRally: stampRally,
+                  ),
+                  StampRallySection(
+                    icon: Icons.location_on,
+                    title: 'エリア',
+                    body: stampRally.area,
+                  ),
+                  StampRallySection(
+                    icon: Icons.schedule,
+                    title: '所要時間',
+                    body: '${stampRally.requiredTime.toString()} 時間',
+                  ),
+                  StampRallySection(
+                    icon: Icons.summarize,
+                    title: '概要',
+                    body: stampRally.summary,
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: stampRally.spots.length,
+                    itemBuilder: (context, index) {
+                      final spot = stampRally.spots[index];
+                      return _SpotThumbnail(
                         stampRally: stampRally,
-                      ),
-                      StampRallySection(
-                        icon: Icons.location_on,
-                        title: 'エリア',
-                        body: stampRally.area,
-                      ),
-                      StampRallySection(
-                        icon: Icons.schedule,
-                        title: '所要時間',
-                        body: '${stampRally.requiredTime.toString()} 時間',
-                      ),
-                      StampRallySection(
-                        icon: Icons.summarize,
-                        title: '概要',
-                        body: stampRally.summary,
-                      ),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemCount: stampRally.spots.length,
-                        itemBuilder: (context, index) {
-                          final spot = stampRally.spots[index];
-                          return _SpotThumbnail(
-                            stampRally: stampRally,
-                            spot: spot,
-                          );
-                        },
-                      ),
-                    ],
+                        spot: spot,
+                      );
+                    },
                   ),
-                ),
-              )
-            ],
+                ],
+              ),
+            ),
           ),
         ),
 
