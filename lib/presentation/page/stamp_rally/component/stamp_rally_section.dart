@@ -11,11 +11,13 @@ class StampRallySection extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.body,
+    this.actions = const [],
   });
 
   final IconData icon;
   final String title;
   final String body;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class StampRallySection extends StatelessWidget {
         StampRallyHeader(
           icon: icon,
           title: title,
+          actions: actions,
         ),
         const Gap(_verticalPadding),
         Text(
@@ -43,10 +46,12 @@ class StampRallyHeader extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
+    this.actions = const [],
   });
 
   final IconData icon;
   final String title;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +68,11 @@ class StampRallyHeader extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primaryContainer,
                 fontWeight: FontWeight.bold,
               ),
-        )
+        ),
+        if (actions.isNotEmpty) ...[
+          const Gap(8),
+          ...actions,
+        ],
       ],
     );
   }
