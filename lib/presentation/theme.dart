@@ -14,6 +14,7 @@ final themeProvider = Provider(
       surfaceVariant: HexColor('EEDEE7'),
       onSurfaceVariant: HexColor('4E444B'),
       outline: HexColor('837377'),
+      background: HexColor('FFFFFF'),
     );
     return ThemeData(
       useMaterial3: true,

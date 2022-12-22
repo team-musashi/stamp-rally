@@ -49,4 +49,10 @@ class StampRally with _$StampRally {
     @Default(<Spot>[]) List<Spot> spots,
   }) = _StampRally;
   const StampRally._();
+
+  /// 参加スタンプラリーかどうかを返す
+  bool get isEntry => status != null;
+
+  /// スタンプ数
+  int get stampedCount => spots.where((spot) => spot.gotDate != null).length;
 }

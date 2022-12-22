@@ -31,6 +31,7 @@ class _PublicViewState extends ConsumerState<PublicView>
           padding: const EdgeInsets.all(4),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
+            childAspectRatio: 4 / 3,
           ),
           itemCount: stampRallies.length,
           itemBuilder: (context, index) {

@@ -73,7 +73,6 @@ class StampRallyDefaultTabController extends StatelessWidget {
     return DefaultTabController(
       initialIndex: initialMode.index,
       length: StampRallyDisplayMode.values.length,
-      animationDuration: Duration.zero,
       child: child,
     );
   }
@@ -103,10 +102,10 @@ class StampRallyDisplayModeSwitchButton extends StatelessWidget {
         color: colorScheme.primaryContainer,
       ),
       unselectedLabelStyle: TextStyle(
-        color: colorScheme.primaryContainer,
+        color: colorScheme.onPrimaryContainer,
       ),
       unselectedBackgroundColor: colorScheme.onSurfaceVariant,
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: colorScheme.outline.withOpacity(0.2),
       unselectedBorderColor: colorScheme.outline.withOpacity(0.2),
       tabs: StampRallyDisplayMode.values

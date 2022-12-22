@@ -22,6 +22,9 @@ mixin _$Spot {
   /// スタンプラリーID
   String get stampRallyId => throw _privateConstructorUsedError;
 
+  /// 参加スタンプラリーのスポットかどうか
+  bool get isEntry => throw _privateConstructorUsedError;
+
   /// スポットの順番
   int get order => throw _privateConstructorUsedError;
 
@@ -67,6 +70,7 @@ abstract class $SpotCopyWith<$Res> {
   $Res call(
       {String id,
       String stampRallyId,
+      bool isEntry,
       int order,
       String title,
       String summary,
@@ -97,6 +101,7 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
   $Res call({
     Object? id = null,
     Object? stampRallyId = null,
+    Object? isEntry = null,
     Object? order = null,
     Object? title = null,
     Object? summary = null,
@@ -118,6 +123,10 @@ class _$SpotCopyWithImpl<$Res, $Val extends Spot>
           ? _value.stampRallyId
           : stampRallyId // ignore: cast_nullable_to_non_nullable
               as String,
+      isEntry: null == isEntry
+          ? _value.isEntry
+          : isEntry // ignore: cast_nullable_to_non_nullable
+              as bool,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -183,6 +192,7 @@ abstract class _$$_SpotCopyWith<$Res> implements $SpotCopyWith<$Res> {
   $Res call(
       {String id,
       String stampRallyId,
+      bool isEntry,
       int order,
       String title,
       String summary,
@@ -210,6 +220,7 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
   $Res call({
     Object? id = null,
     Object? stampRallyId = null,
+    Object? isEntry = null,
     Object? order = null,
     Object? title = null,
     Object? summary = null,
@@ -231,6 +242,10 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
           ? _value.stampRallyId
           : stampRallyId // ignore: cast_nullable_to_non_nullable
               as String,
+      isEntry: null == isEntry
+          ? _value.isEntry
+          : isEntry // ignore: cast_nullable_to_non_nullable
+              as bool,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -281,10 +296,11 @@ class __$$_SpotCopyWithImpl<$Res> extends _$SpotCopyWithImpl<$Res, _$_Spot>
 
 /// @nodoc
 
-class _$_Spot implements _Spot {
+class _$_Spot extends _Spot {
   const _$_Spot(
       {required this.id,
       required this.stampRallyId,
+      required this.isEntry,
       required this.order,
       required this.title,
       required this.summary,
@@ -295,7 +311,8 @@ class _$_Spot implements _Spot {
       this.createdAt,
       this.updatedAt,
       this.uploadImageUrl,
-      this.gotDate});
+      this.gotDate})
+      : super._();
 
   /// ID
   @override
@@ -304,6 +321,10 @@ class _$_Spot implements _Spot {
   /// スタンプラリーID
   @override
   final String stampRallyId;
+
+  /// 参加スタンプラリーのスポットかどうか
+  @override
+  final bool isEntry;
 
   /// スポットの順番
   @override
@@ -351,7 +372,7 @@ class _$_Spot implements _Spot {
 
   @override
   String toString() {
-    return 'Spot(id: $id, stampRallyId: $stampRallyId, order: $order, title: $title, summary: $summary, address: $address, tel: $tel, imageUrl: $imageUrl, location: $location, createdAt: $createdAt, updatedAt: $updatedAt, uploadImageUrl: $uploadImageUrl, gotDate: $gotDate)';
+    return 'Spot(id: $id, stampRallyId: $stampRallyId, isEntry: $isEntry, order: $order, title: $title, summary: $summary, address: $address, tel: $tel, imageUrl: $imageUrl, location: $location, createdAt: $createdAt, updatedAt: $updatedAt, uploadImageUrl: $uploadImageUrl, gotDate: $gotDate)';
   }
 
   @override
@@ -362,6 +383,7 @@ class _$_Spot implements _Spot {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.stampRallyId, stampRallyId) ||
                 other.stampRallyId == stampRallyId) &&
+            (identical(other.isEntry, isEntry) || other.isEntry == isEntry) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.summary, summary) || other.summary == summary) &&
@@ -385,6 +407,7 @@ class _$_Spot implements _Spot {
       runtimeType,
       id,
       stampRallyId,
+      isEntry,
       order,
       title,
       summary,
@@ -404,10 +427,11 @@ class _$_Spot implements _Spot {
       __$$_SpotCopyWithImpl<_$_Spot>(this, _$identity);
 }
 
-abstract class _Spot implements Spot {
+abstract class _Spot extends Spot {
   const factory _Spot(
       {required final String id,
       required final String stampRallyId,
+      required final bool isEntry,
       required final int order,
       required final String title,
       required final String summary,
@@ -419,6 +443,7 @@ abstract class _Spot implements Spot {
       final DateTime? updatedAt,
       final String? uploadImageUrl,
       final DateTime? gotDate}) = _$_Spot;
+  const _Spot._() : super._();
 
   @override
 
@@ -428,6 +453,10 @@ abstract class _Spot implements Spot {
 
   /// スタンプラリーID
   String get stampRallyId;
+  @override
+
+  /// 参加スタンプラリーのスポットかどうか
+  bool get isEntry;
   @override
 
   /// スポットの順番
