@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 
 import '../../../application/stamp_rally/state/current_public_stamp_rally.dart';
 import '../../../application/stamp_rally/state/enter_stamp_rally_result.dart';
@@ -13,9 +12,7 @@ import '../../component/widget_ref.dart';
 import '../../router.dart';
 import 'component/spot_thumbnail.dart';
 import 'component/stamp_rally_button.dart';
-
-/// 縦方向のパディング
-const _verticalPadding = 8.0;
+import 'component/stamp_rally_section.dart';
 
 /// 横方向のパディング
 const _horizontalPadding = 16.0;
@@ -122,17 +119,17 @@ class _StampRallyExplanation extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _Section(
+                      StampRallySection(
                         icon: Icons.location_on,
                         title: 'エリア',
                         body: stampRally.area,
                       ),
-                      _Section(
+                      StampRallySection(
                         icon: Icons.schedule,
                         title: '所要時間',
                         body: '${stampRally.requiredTime.toString()} 時間',
                       ),
-                      _Section(
+                      StampRallySection(
                         icon: Icons.summarize,
                         title: '概要',
                         body: stampRally.summary,
@@ -176,67 +173,6 @@ class _StampRallyExplanation extends StatelessWidget {
             stampRally: stampRally,
           ),
         ),
-      ],
-    );
-  }
-}
-
-class _Section extends StatelessWidget {
-  const _Section({
-    required this.icon,
-    required this.title,
-    required this.body,
-  });
-
-  final IconData icon;
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _Header(
-          icon: icon,
-          title: title,
-        ),
-        const Gap(_verticalPadding),
-        Text(
-          body,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        const Gap(_verticalPadding * 2),
-      ],
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({
-    required this.icon,
-    required this.title,
-  });
-
-  final IconData icon;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: Theme.of(context).colorScheme.primaryContainer,
-        ),
-        const Gap(8),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                fontWeight: FontWeight.bold,
-              ),
-        )
       ],
     );
   }
