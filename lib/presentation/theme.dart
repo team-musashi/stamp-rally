@@ -11,6 +11,9 @@ final themeProvider = Provider(
       primary: HexColor('FF73F1'),
       primaryContainer: HexColor('FFAFCC'),
       secondary: HexColor('FFA776'),
+      surfaceVariant: HexColor('EEDEE7'),
+      onSurfaceVariant: HexColor('4E444B'),
+      outline: HexColor('837377'),
     );
     return ThemeData(
       useMaterial3: true,

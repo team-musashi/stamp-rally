@@ -94,7 +94,7 @@ class StampRallyDisplayModeSwitchButton extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return ButtonsTabBar(
       controller: controller,
-      backgroundColor: colorScheme.surfaceVariant,
+      backgroundColor: colorScheme.background,
       buttonMargin: EdgeInsets.zero,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 17.5,
@@ -103,9 +103,12 @@ class StampRallyDisplayModeSwitchButton extends StatelessWidget {
         color: colorScheme.primaryContainer,
       ),
       unselectedLabelStyle: TextStyle(
-        color: colorScheme.surfaceVariant,
+        color: colorScheme.primaryContainer,
       ),
-      unselectedBackgroundColor: colorScheme.onSurfaceVariant.withOpacity(0.5),
+      unselectedBackgroundColor: colorScheme.onSurfaceVariant,
+      borderWidth: 2,
+      borderColor: colorScheme.outline.withOpacity(0.2),
+      unselectedBorderColor: colorScheme.outline.withOpacity(0.2),
       tabs: StampRallyDisplayMode.values
           .map(
             (mode) => Tab(
