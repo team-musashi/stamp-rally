@@ -18,7 +18,7 @@ class SnapShotSpotButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final effectiveIcon =
-        spot.isStamped ? Assets.images.stopBurally : Assets.images.joinBurally;
+        spot.isStamped ? Assets.images.done : Assets.images.snapShot;
     final effectiveBackgroundColor = spot.isStamped
         ? Theme.of(context).colorScheme.primaryContainer
         : Theme.of(context).colorScheme.background;

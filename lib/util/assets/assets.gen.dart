@@ -14,6 +14,9 @@ import 'package:flutter/services.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/done.svg
+  SvgGenImage get done => const SvgGenImage('assets/images/done.svg');
+
   /// File path: assets/images/icon.png
   AssetGenImage get icon => const AssetGenImage('assets/images/icon.png');
 
@@ -49,6 +52,9 @@ class $AssetsImagesGen {
   AssetGenImage get markerIos =>
       const AssetGenImage('assets/images/marker_ios.png');
 
+  /// File path: assets/images/snap_shot.svg
+  SvgGenImage get snapShot => const SvgGenImage('assets/images/snap_shot.svg');
+
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
@@ -66,6 +72,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
+        done,
         icon,
         iconAdaptiveForeground,
         iconDev,
@@ -75,6 +82,7 @@ class $AssetsImagesGen {
         logoHeaderBurarry,
         markerAndroid,
         markerIos,
+        snapShot,
         splash,
         splashAndroid12,
         splashBackground,
