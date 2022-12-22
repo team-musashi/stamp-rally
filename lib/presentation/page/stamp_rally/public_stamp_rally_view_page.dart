@@ -46,6 +46,13 @@ class _Body extends ConsumerWidget {
     return AsyncValueHandler(
       value: ref.watch(currentPublicStampRallyProvider),
       builder: (stampRally) {
+        if (stampRally.spots.isEmpty) {
+          // スポットが0件の場合はマップで表示するものがないのでリスト表示のみ
+          return StampRallyListView(
+            stampRally: stampRally,
+          );
+        }
+
         return StampRallyViewBuilder(
           builder: (mode) {
             switch (mode) {
