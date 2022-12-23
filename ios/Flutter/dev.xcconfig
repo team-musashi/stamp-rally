@@ -1,0 +1,4 @@
+FLUTTER_FLAVOR=dev
+PRODUCT_BUNDLE_IDENTIFIER=jp.keishimizu26629.stamp-rally.dev
+DISPLAY_NAME=(d)BURALLY
+FLUTTER_TARGET=lib/main.dart
