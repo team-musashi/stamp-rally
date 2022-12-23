@@ -74,9 +74,7 @@ Future<void> main() async {
             version: 'v${packageInfo.version}',
             buildNumber: packageInfo.buildNumber,
             copyRight: '(C)2022 team-musashi',
-            iconImagePath: isProd
-                ? Assets.images.iconProd.path
-                : Assets.images.iconDev.path,
+            iconImagePath: Assets.images.icon.path,
             privacyPolicyUrl: Uri.parse(
               'https://team-musashi.github.io/stamp-rally-doc/privacy-policy.html',
             ),

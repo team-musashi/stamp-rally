@@ -24,14 +24,6 @@ class $AssetsImagesGen {
   AssetGenImage get iconAdaptiveForeground =>
       const AssetGenImage('assets/images/icon_adaptive_foreground.png');
 
-  /// File path: assets/images/icon_dev.png
-  AssetGenImage get iconDev =>
-      const AssetGenImage('assets/images/icon_dev.png');
-
-  /// File path: assets/images/icon_prod.png
-  AssetGenImage get iconProd =>
-      const AssetGenImage('assets/images/icon_prod.png');
-
   /// File path: assets/images/join_burally.svg
   SvgGenImage get joinBurally =>
       const SvgGenImage('assets/images/join_burally.svg');
@@ -74,8 +66,6 @@ class $AssetsImagesGen {
         done,
         icon,
         iconAdaptiveForeground,
-        iconDev,
-        iconProd,
         joinBurally,
         logo,
         logoWhite,
