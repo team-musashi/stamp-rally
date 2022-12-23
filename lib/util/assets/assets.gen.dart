@@ -24,25 +24,16 @@ class $AssetsImagesGen {
   AssetGenImage get iconAdaptiveForeground =>
       const AssetGenImage('assets/images/icon_adaptive_foreground.png');
 
-  /// File path: assets/images/icon_dev.png
-  AssetGenImage get iconDev =>
-      const AssetGenImage('assets/images/icon_dev.png');
-
-  /// File path: assets/images/icon_prod.png
-  AssetGenImage get iconProd =>
-      const AssetGenImage('assets/images/icon_prod.png');
-
   /// File path: assets/images/join_burally.svg
   SvgGenImage get joinBurally =>
       const SvgGenImage('assets/images/join_burally.svg');
 
-  /// File path: assets/images/logo_burarry.png
-  AssetGenImage get logoBurarry =>
-      const AssetGenImage('assets/images/logo_burarry.png');
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
-  /// File path: assets/images/logo_header_burarry.png
-  AssetGenImage get logoHeaderBurarry =>
-      const AssetGenImage('assets/images/logo_header_burarry.png');
+  /// File path: assets/images/logo_white.png
+  AssetGenImage get logoWhite =>
+      const AssetGenImage('assets/images/logo_white.png');
 
   /// File path: assets/images/marker_android.png
   AssetGenImage get markerAndroid =>
@@ -75,11 +66,9 @@ class $AssetsImagesGen {
         done,
         icon,
         iconAdaptiveForeground,
-        iconDev,
-        iconProd,
         joinBurally,
-        logoBurarry,
-        logoHeaderBurarry,
+        logo,
+        logoWhite,
         markerAndroid,
         markerIos,
         snapShot,

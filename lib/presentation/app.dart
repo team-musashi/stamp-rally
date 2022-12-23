@@ -49,19 +49,19 @@ class App extends ConsumerWidget {
     // ユーザーの作成結果を監視する
     ref.listenResult<void>(
       createUserResultProvider,
-      completeMessage: 'ようこそ！',
+      completeMessage: 'ようこそ BURALLY へ！',
     );
 
     // ユーザーの削除結果を監視する
     ref.listenResult<void>(
       deleteUserResultProvider,
-      completeMessage: 'ユーザーを削除しました。',
+      completeMessage: 'すべてのデータを削除しました。ご利用ありがとうございました！',
     );
 
     final router = ref.watch(routerProvider);
     final themeData = ref.watch(themeProvider);
     return MaterialApp.router(
-      title: 'Stamp rally',
+      title: 'BURALLY',
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       debugShowCheckedModeBanner: false,
       theme: themeData,

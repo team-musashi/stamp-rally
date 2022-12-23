@@ -38,7 +38,7 @@ class SpotListView extends ConsumerWidget {
     // スポット画像アップロード結果を監視する
     ref.listenResult<void>(
       uploadSpotImageResultProvider,
-      completeMessage: 'スポット画像をアップロードしました。',
+      completeMessage: 'アップロードが完了しました。',
     );
 
     return Stack(

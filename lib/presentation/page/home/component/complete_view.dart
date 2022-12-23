@@ -28,6 +28,10 @@ class _CompleteViewState extends ConsumerState<CompleteView>
     return AsyncValueHandler<List<StampRally>>(
       value: ref.watch(completeStampRalliesProvider),
       builder: (stampRallies) {
+        if (stampRallies.isEmpty) {
+          return const _EmptyView();
+        }
+
         return GridView.builder(
           padding: const EdgeInsets.all(4),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -50,6 +54,23 @@ class _CompleteViewState extends ConsumerState<CompleteView>
           },
         );
       },
+    );
+  }
+}
+
+/// 完了済みのスタンプラリーがない場合の表示
+class _EmptyView extends StatelessWidget {
+  const _EmptyView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'NO ACTIVE',
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.surfaceVariant,
+            ),
+      ),
     );
   }
 }
