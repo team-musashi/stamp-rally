@@ -8,7 +8,7 @@ class AppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Assets.images.logoHeaderBurarry.image(
+    return Assets.images.logo.image(
       height: 18,
     );
   }

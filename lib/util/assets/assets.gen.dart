@@ -36,13 +36,12 @@ class $AssetsImagesGen {
   SvgGenImage get joinBurally =>
       const SvgGenImage('assets/images/join_burally.svg');
 
-  /// File path: assets/images/logo_burarry.png
-  AssetGenImage get logoBurarry =>
-      const AssetGenImage('assets/images/logo_burarry.png');
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
-  /// File path: assets/images/logo_header_burarry.png
-  AssetGenImage get logoHeaderBurarry =>
-      const AssetGenImage('assets/images/logo_header_burarry.png');
+  /// File path: assets/images/logo_white.png
+  AssetGenImage get logoWhite =>
+      const AssetGenImage('assets/images/logo_white.png');
 
   /// File path: assets/images/marker_android.png
   AssetGenImage get markerAndroid =>
@@ -78,8 +77,8 @@ class $AssetsImagesGen {
         iconDev,
         iconProd,
         joinBurally,
-        logoBurarry,
-        logoHeaderBurarry,
+        logo,
+        logoWhite,
         markerAndroid,
         markerIos,
         snapShot,
