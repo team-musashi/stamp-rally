@@ -35,9 +35,6 @@ class AppInfo with _$AppInfo {
 
     /// 利用規約のURL
     required Uri termsOfServiceUrl,
-
-    /// GoogleMapApiキー
-    required String googleMapAPIKey,
   }) = _AppInfo;
 
   const AppInfo._();

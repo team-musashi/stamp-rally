@@ -2,7 +2,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../domain/entity/app_info.dart';
+import '../../../domain/entity/env.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import 'user_geolocator_position.dart';
 
@@ -49,7 +49,7 @@ final currentPolylinePointsProvider =
 
       // Directions APIを用いて２点間の最適な経路を求める
       final result = await polylinePoints.getRouteBetweenCoordinates(
-        ref.read(appInfoProvider).googleMapAPIKey,
+        ref.read(envProvider).googleMapAPIKey,
         pointFrom,
         pointTo,
         travelMode: TravelMode.walking,

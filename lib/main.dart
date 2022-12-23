@@ -10,6 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import 'application/stamp_rally/state/pin_icon.dart';
 import 'domain/entity/app_info.dart';
+import 'domain/entity/env.dart';
 import 'domain/repository/command/command_repository.dart';
 import 'domain/repository/stamp_rally/stamp_rally_repository.dart';
 import 'domain/repository/user/user_repository.dart';
@@ -66,6 +67,13 @@ Future<void> main() async {
         ProviderLogger(),
       ],
       overrides: [
+        // 環境変数を上書き
+        envProvider.overrideWith(
+          (ref) => Env(
+            googleMapAPIKey: dotenv.get('GOOGLE_MAP_API_KEY'),
+          ),
+        ),
+
         // アプリ情報の上書き
         appInfoProvider.overrideWith(
           (ref) => AppInfo(
@@ -81,7 +89,6 @@ Future<void> main() async {
             termsOfServiceUrl: Uri.parse(
               'https://team-musashi.github.io/stamp-rally-doc/terms-of-service.html',
             ),
-            googleMapAPIKey: dotenv.get('GOOGLE_MAP_API_KEY'),
           ),
         ),
 
