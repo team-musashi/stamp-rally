@@ -68,9 +68,8 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<List<StampRally>> fetchPublicStampRallies() {
-    // TODO(some): implement fetchPublicStampRallies
-    throw UnimplementedError();
+  Future<List<StampRally>> fetchPublicStampRallies() async {
+    return publicStampRallies;
   }
 
   @override
@@ -80,7 +79,7 @@ class MockStampRallyRepository implements StampRallyRepository {
   }
 
   @override
-  Future<List<StampRally>> fetchCompleteStampRallies() {
+  Future<List<StampRally>> fetchCompleteStampRallies() async {
     // TODO(some): implement fetchcompleteStampRally
     throw UnimplementedError();
   }

@@ -35,4 +35,20 @@ void main() {
       });
     });
   });
+
+  group('publicStampRalliesProviderのテスト', () {
+    test('公開中スタンプラリーとして３件返ってくるはず', () async {
+      // 初回はローディング
+      expect(container.read(publicStampRalliesProvider) is AsyncLoading, true);
+
+      /// 非同期処理が終わるのを待つ
+      await container.read(publicStampRalliesProvider.future);
+
+      // 非同期処理の結果を取得してその中身をテスト
+      final values = container.read(publicStampRalliesProvider).value;
+      expect(values, isNotNull);
+      expect(values!.length, 3);
+      expect(values.last.id, 'c');
+    });
+  });
 }
