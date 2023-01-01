@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stamp_rally/application/stamp_rally/state/pin_icon.dart';
 import 'package:stamp_rally/domain/repository/stamp_rally/stamp_rally_repository.dart';
+import 'package:stamp_rally/domain/repository/user/user_repository.dart';
 import 'package:stamp_rally/presentation/page/home/component/entry_view.dart';
 
 import 'infrastructure/mock/mock_stamp_rally_repository.dart';
+import 'infrastructure/mock/mock_user_repository.dart';
 
 /// テストエージェント
 class TestAgent {
@@ -16,7 +18,8 @@ class TestAgent {
     container = ProviderContainer(
       overrides: [
         stampRallyRepositoryProvider
-            .overrideWithValue(MockStampRallyRepository())
+            .overrideWithValue(MockStampRallyRepository()),
+        userRepositoryProvider.overrideWithValue(MockUserRepository()),
       ],
     );
   }
