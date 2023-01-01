@@ -10,6 +10,16 @@ import 'infrastructure/mock/mock_stamp_rally_repository.dart';
 /// テストエージェント
 class TestAgent {
   TestAgent();
+  late ProviderContainer container;
+
+  Future<void> setUp() async {
+    container = ProviderContainer(
+      overrides: [
+        stampRallyRepositoryProvider
+            .overrideWithValue(MockStampRallyRepository())
+      ],
+    );
+  }
 
   /// EntryView用ProviderScope生成ヘルパーメソッド
   Widget createDefaultProviderScopeForEntryView() {
