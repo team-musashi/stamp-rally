@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'application/geolocator/state/current_poly_points.dart';
 import 'application/stamp_rally/state/pin_icon.dart';
 import 'domain/entity/app_info.dart';
 import 'domain/entity/env.dart';
@@ -95,9 +94,6 @@ Future<void> main() async {
 
         // ピンアイコン
         pinIconProvider.overrideWithValue(pinIcon),
-
-        // Directions APIを用いる経路表示機能は一旦オフ
-        currentPolylinePointsProvider.overrideWith((ref, arg) => <LatLng>[]),
 
         // 各 Repository の上書き
         userRepositoryProvider.overrideWith(
