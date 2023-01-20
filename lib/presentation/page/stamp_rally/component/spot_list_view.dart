@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../application/image_picker/state/current_picked_image.dart';
 import '../../../../application/image_picker/state/image_picker_result.dart';
 import '../../../../application/stamp_rally/stamp_rally_service.dart';
-import '../../../../application/stamp_rally/state/uplode_spot_image_result.dart';
+import '../../../../application/stamp_rally/state/upload_spot_image_result.dart';
 import '../../../../application/url_launcher/url_launcher_service.dart';
 import '../../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../../util/extension.dart';

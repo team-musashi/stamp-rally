@@ -9,7 +9,7 @@ import '../../util/logger.dart';
 import '../image_picker/state/current_picked_image.dart';
 import 'state/complete_stamp_rally_result.dart';
 import 'state/enter_stamp_rally_result.dart';
-import 'state/uplode_spot_image_result.dart';
+import 'state/upload_spot_image_result.dart';
 import 'state/withdraw_stamp_rally_result.dart';
 
 /// スタンプラリーサービスプロバイダー
