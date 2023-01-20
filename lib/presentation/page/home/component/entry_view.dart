@@ -41,7 +41,7 @@ class _EntryViewState extends ConsumerState<EntryView>
     // スタンプラリー完了の結果を監視する
     ref.listenResult<StampRally?>(
       completeStampRallyResultProvider,
-      completeMessage: 'スタンプラリーを完了にしました。',
+      completeMessage: 'スタンプラリーを完了しました。',
       complete: (stampRally) {
         if (stampRally != null) {
           // 処理完了後、完了済スタンプラリー詳細画面に遷移する
