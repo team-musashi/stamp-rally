@@ -95,7 +95,7 @@ class _SelectorDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       title: const Text('確認'),
-      content: const Text('完了か参加を選択してください。'),
+      content: const Text('完了か中断を選択してください。\n中断した場合、結果は保存されません。'),
       actions: [
         TextButton(
           onPressed: () async {
