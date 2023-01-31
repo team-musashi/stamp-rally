@@ -6,6 +6,7 @@ import '../../../application/url_launcher/url_launcher_service.dart';
 import '../../../domain/entity/app_info.dart';
 import '../../component/delete_user.dart';
 import '../../component/list_tile.dart';
+import '../../component/set_region.dart';
 import '../../router.dart';
 
 /// 設定画面
@@ -32,6 +33,7 @@ class _Body extends StatelessWidget {
       child: Column(
         children: const [
           SectionHeader(title: 'アカウント'),
+          _SetRegion(),
           _DeleteUserItem(),
 
           SectionHeader(title: 'サポート'),
@@ -46,6 +48,21 @@ class _Body extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+class _SetRegion extends ConsumerWidget {
+  const _SetRegion();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SectionItem(
+      onTap: () => showDialog<void>(
+        context: context,
+        builder: (_) => const SetRegionDialog(),
+      ),
+      title: const Text('あなたの地域を設定'),
     );
   }
 }
