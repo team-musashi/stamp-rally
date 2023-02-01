@@ -10,6 +10,7 @@ part 'user_input_data.freezed.dart';
 @freezed
 class UserInputData with _$UserInputData {
   const factory UserInputData({
+    String? region,
     AppPlatform? platform,
   }) = _UserInputData;
 }

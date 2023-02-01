@@ -5,6 +5,7 @@ import '../../domain/repository/user/entity/user_input_data.dart';
 import '../../domain/repository/user/user_repository.dart';
 import 'state/create_user_result.dart';
 import 'state/delete_user_result.dart';
+import 'state/update_user_result.dart';
 
 /// ユーザーサービスプロバイダー
 final userServiceProvider = Provider(
@@ -47,6 +48,17 @@ class UserService {
           platform: AppPlatform.currentPlatform,
         ),
       );
+    });
+  }
+
+  /// ユーザー情報(地域のみ)を更新する
+  Future<void> updateUser({required String region}) async {
+    final notifier = ref.read(updateUserResultProvider.notifier);
+    notifier.state = const AsyncValue.loading();
+    notifier.state = await AsyncValue.guard(() async {
+      await ref.read(userRepositoryProvider).updateUser(
+            UserInputData(region: region),
+          );
     });
   }
 

@@ -20,6 +20,7 @@ UserDocument _$UserDocumentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserDocument {
+  String? get region => throw _privateConstructorUsedError;
   String? get authProvider => throw _privateConstructorUsedError;
   String? get platform => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -40,7 +41,8 @@ abstract class $UserDocumentCopyWith<$Res> {
       _$UserDocumentCopyWithImpl<$Res, UserDocument>;
   @useResult
   $Res call(
-      {String? authProvider,
+      {String? region,
+      String? authProvider,
       String? platform,
       @TimestampConverter() DateTime? createdAt,
       @TimestampConverter() DateTime? updatedAt});
@@ -59,12 +61,17 @@ class _$UserDocumentCopyWithImpl<$Res, $Val extends UserDocument>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? region = freezed,
     Object? authProvider = freezed,
     Object? platform = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
+      region: freezed == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
       authProvider: freezed == authProvider
           ? _value.authProvider
           : authProvider // ignore: cast_nullable_to_non_nullable
@@ -94,7 +101,8 @@ abstract class _$$_UserDocumentCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? authProvider,
+      {String? region,
+      String? authProvider,
       String? platform,
       @TimestampConverter() DateTime? createdAt,
       @TimestampConverter() DateTime? updatedAt});
@@ -111,12 +119,17 @@ class __$$_UserDocumentCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? region = freezed,
     Object? authProvider = freezed,
     Object? platform = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$_UserDocument(
+      region: freezed == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
       authProvider: freezed == authProvider
           ? _value.authProvider
           : authProvider // ignore: cast_nullable_to_non_nullable
@@ -141,7 +154,8 @@ class __$$_UserDocumentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserDocument extends _UserDocument {
   const _$_UserDocument(
-      {this.authProvider,
+      {this.region,
+      this.authProvider,
       this.platform,
       @TimestampConverter() this.createdAt,
       @TimestampConverter() this.updatedAt})
@@ -150,6 +164,8 @@ class _$_UserDocument extends _UserDocument {
   factory _$_UserDocument.fromJson(Map<String, dynamic> json) =>
       _$$_UserDocumentFromJson(json);
 
+  @override
+  final String? region;
   @override
   final String? authProvider;
   @override
@@ -163,7 +179,7 @@ class _$_UserDocument extends _UserDocument {
 
   @override
   String toString() {
-    return 'UserDocument(authProvider: $authProvider, platform: $platform, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserDocument(region: $region, authProvider: $authProvider, platform: $platform, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -171,6 +187,7 @@ class _$_UserDocument extends _UserDocument {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserDocument &&
+            (identical(other.region, region) || other.region == region) &&
             (identical(other.authProvider, authProvider) ||
                 other.authProvider == authProvider) &&
             (identical(other.platform, platform) ||
@@ -183,8 +200,8 @@ class _$_UserDocument extends _UserDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, authProvider, platform, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, region, authProvider, platform, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -202,7 +219,8 @@ class _$_UserDocument extends _UserDocument {
 
 abstract class _UserDocument extends UserDocument {
   const factory _UserDocument(
-      {final String? authProvider,
+      {final String? region,
+      final String? authProvider,
       final String? platform,
       @TimestampConverter() final DateTime? createdAt,
       @TimestampConverter() final DateTime? updatedAt}) = _$_UserDocument;
@@ -211,6 +229,8 @@ abstract class _UserDocument extends UserDocument {
   factory _UserDocument.fromJson(Map<String, dynamic> json) =
       _$_UserDocument.fromJson;
 
+  @override
+  String? get region;
   @override
   String? get authProvider;
   @override

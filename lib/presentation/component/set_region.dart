@@ -35,6 +35,7 @@ class SetRegionDialog extends ConsumerWidget {
   }
 }
 
+// 地域を設定するドロップダウンボタン
 class RegionDropdownButton extends ConsumerStatefulWidget {
   const RegionDropdownButton({super.key});
 

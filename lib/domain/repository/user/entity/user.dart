@@ -12,6 +12,9 @@ class User with _$User {
     /// ユーザーID
     required String uid,
 
+    /// ユーザーの地域
+    String? region,
+
     /// 認証プロバイダー
     required AuthProvider authProvider,
 

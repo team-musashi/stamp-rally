@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserInputData {
+  String? get region => throw _privateConstructorUsedError;
   AppPlatform? get platform => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +30,7 @@ abstract class $UserInputDataCopyWith<$Res> {
           UserInputData value, $Res Function(UserInputData) then) =
       _$UserInputDataCopyWithImpl<$Res, UserInputData>;
   @useResult
-  $Res call({AppPlatform? platform});
+  $Res call({String? region, AppPlatform? platform});
 }
 
 /// @nodoc
@@ -45,9 +46,14 @@ class _$UserInputDataCopyWithImpl<$Res, $Val extends UserInputData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? region = freezed,
     Object? platform = freezed,
   }) {
     return _then(_value.copyWith(
+      region: freezed == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
       platform: freezed == platform
           ? _value.platform
           : platform // ignore: cast_nullable_to_non_nullable
@@ -64,7 +70,7 @@ abstract class _$$_UserInputDataCopyWith<$Res>
       __$$_UserInputDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AppPlatform? platform});
+  $Res call({String? region, AppPlatform? platform});
 }
 
 /// @nodoc
@@ -78,9 +84,14 @@ class __$$_UserInputDataCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? region = freezed,
     Object? platform = freezed,
   }) {
     return _then(_$_UserInputData(
+      region: freezed == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
       platform: freezed == platform
           ? _value.platform
           : platform // ignore: cast_nullable_to_non_nullable
@@ -92,14 +103,16 @@ class __$$_UserInputDataCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserInputData implements _UserInputData {
-  const _$_UserInputData({this.platform});
+  const _$_UserInputData({this.region, this.platform});
 
+  @override
+  final String? region;
   @override
   final AppPlatform? platform;
 
   @override
   String toString() {
-    return 'UserInputData(platform: $platform)';
+    return 'UserInputData(region: $region, platform: $platform)';
   }
 
   @override
@@ -107,12 +120,13 @@ class _$_UserInputData implements _UserInputData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserInputData &&
+            (identical(other.region, region) || other.region == region) &&
             (identical(other.platform, platform) ||
                 other.platform == platform));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, platform);
+  int get hashCode => Object.hash(runtimeType, region, platform);
 
   @JsonKey(ignore: true)
   @override
@@ -122,9 +136,11 @@ class _$_UserInputData implements _UserInputData {
 }
 
 abstract class _UserInputData implements UserInputData {
-  const factory _UserInputData({final AppPlatform? platform}) =
-      _$_UserInputData;
+  const factory _UserInputData(
+      {final String? region, final AppPlatform? platform}) = _$_UserInputData;
 
+  @override
+  String? get region;
   @override
   AppPlatform? get platform;
   @override

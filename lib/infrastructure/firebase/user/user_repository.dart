@@ -174,6 +174,7 @@ extension _UserDocumentEx on UserDocument {
   /// UserDocument => User
   User toUser(String id) => User(
         uid: id,
+        region: region,
         authProvider: AuthProvider.nameOf(authProvider),
         platform: AppPlatform.nameOf(platform),
         createdAt: createdAt,

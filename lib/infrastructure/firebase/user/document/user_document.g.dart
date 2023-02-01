@@ -10,6 +10,7 @@ part of 'user_document.dart';
 
 _$_UserDocument _$$_UserDocumentFromJson(Map<String, dynamic> json) =>
     _$_UserDocument(
+      region: json['region'] as String?,
       authProvider: json['authProvider'] as String?,
       platform: json['platform'] as String?,
       createdAt: _$JsonConverterFromJson<Object, DateTime>(
@@ -20,6 +21,7 @@ _$_UserDocument _$$_UserDocumentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_UserDocumentToJson(_$_UserDocument instance) =>
     <String, dynamic>{
+      'region': instance.region,
       'authProvider': instance.authProvider,
       'platform': instance.platform,
       'createdAt': _$JsonConverterToJson<Object, DateTime>(
