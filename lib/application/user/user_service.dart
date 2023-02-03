@@ -52,7 +52,7 @@ class UserService {
   }
 
   /// ユーザー情報(地域のみ)を更新する
-  Future<void> updateUser({required String region}) async {
+  Future<void> updateUser({required String? region}) async {
     final notifier = ref.read(updateUserResultProvider.notifier);
     notifier.state = const AsyncValue.loading();
     notifier.state = await AsyncValue.guard(() async {

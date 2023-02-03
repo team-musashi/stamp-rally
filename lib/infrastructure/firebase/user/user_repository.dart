@@ -162,6 +162,7 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> updateUser(UserInputData inputData) async {
     await _docRef?.set(
       UserDocument(
+        region: inputData.region,
         platform: inputData.platform?.name,
         updatedAt: DateTime.now(),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../application/user/user_service.dart';
 import 'm3/button.dart';
 
 /// 地域設定ダイアログ
@@ -26,31 +27,26 @@ class SetRegionDialog extends ConsumerWidget {
         FilledButton(
           onPressed: () async {
             Navigator.of(context).pop();
-            // todo: 地域をDBに追加する処理
+            final selectedRegion = ref.watch(_selectedRegionProvider);
+            await ref.read(userServiceProvider).updateUser(
+                  region: selectedRegion,
+                );
           },
           child: const Text('設定する'),
-        )
+        ),
       ],
     );
   }
 }
 
 // 地域を設定するドロップダウンボタン
-class RegionDropdownButton extends ConsumerStatefulWidget {
+class RegionDropdownButton extends ConsumerWidget {
   const RegionDropdownButton({super.key});
 
   @override
-  _RegionDropdownButtonState createState() => _RegionDropdownButtonState();
-}
-
-class _RegionDropdownButtonState extends ConsumerState<RegionDropdownButton> {
-  String? selectedValue;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DropdownButton<String>(
-      value: selectedValue,
-      // todo: 現在設定している地域を表示する
+      value: ref.watch(_selectedRegionProvider),
       hint: const Text('ヒント'),
       items: ['設定なし', '北海道', '東北', '関東', '中部', '近畿', '四国', '九州']
           .map<DropdownMenuItem<String>>((value) {
@@ -59,11 +55,15 @@ class _RegionDropdownButtonState extends ConsumerState<RegionDropdownButton> {
           child: Text(value),
         );
       }).toList(),
-      onChanged: (String? value) {
-        setState(() {
-          selectedValue = value;
-        });
-      },
+      onChanged: (String? value) =>
+          ref.read(_selectedRegionProvider.notifier).state = value,
     );
   }
 }
+
+/// ドロップダウンメニューで選択されている地域を保持する
+final _selectedRegionProvider = StateProvider.autoDispose<String?>(
+  (ref) {
+    return null;
+  },
+);
