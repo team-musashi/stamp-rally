@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entity/app_platform.dart';
@@ -57,5 +59,30 @@ class UserService {
     notifier.state = await AsyncValue.guard(() async {
       await ref.read(userRepositoryProvider).deleteUser();
     });
+  }
+
+  Future<bool> get signedIn async {
+    final storedAccessToken = await LineSDK.instance.currentAccessToken;
+    if (storedAccessToken == null) {
+      return false;
+    }
+    return storedAccessToken.value.isNotEmpty;
+  }
+
+  Future<LoginResult?> signIn() async {
+    LoginResult result;
+    try {
+      result = await LineSDK.instance.login(
+        option: LoginOption(false, 'agressive'),
+      );
+    } on PlatformException catch (e) {
+      var message = 'エラーが発生しました';
+      if (e.code == '3003') {
+        message = 'キャンセルしました';
+      }
+      throw PlatformException(code: e.code, message: message);
+    }
+    print(result);
+    return result;
   }
 }

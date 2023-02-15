@@ -62,5 +62,22 @@
 		<string>現在地表示に使用します</string>
 		<key>NSLocationAlwaysUsageDescription</key>
 		<string>現在地表示に使用します</string>
+		<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <!-- Specify URL scheme to use when returning from LINE to your app. -->
+      <string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    </array>
+  </dict>
+</array>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <!-- Specify URL scheme to use when launching LINE from your app. -->
+  <string>lineauth2</string>
+</array>
 	</dict>
 </plist>

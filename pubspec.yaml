@@ -24,6 +24,7 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   flutter_riverpod: ^2.1.0
   flutter_svg: ^1.1.6
+  flutter_line_sdk: ^2.3.1
   freezed: ^2.2.1
   freezed_annotation: ^2.2.0
   # Widget 間の余白の入力が楽になるため

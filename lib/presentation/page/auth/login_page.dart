@@ -39,6 +39,7 @@ class LoginPage extends StatelessWidget {
                     child: CreateUserButton(),
                   ),
                 ),
+                LineLoginButton(),
                 Gap(12),
                 Agreement()
               ],

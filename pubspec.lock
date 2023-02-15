@@ -398,6 +398,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.0"
+  flutter_line_sdk:
+    dependency: "direct main"
+    description:
+      name: flutter_line_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.1"
   flutter_lints:
     dependency: transitive
     description:

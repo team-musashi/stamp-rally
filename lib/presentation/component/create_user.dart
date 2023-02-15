@@ -22,3 +22,18 @@ class CreateUserButton extends ConsumerWidget {
     );
   }
 }
+
+class LineLoginButton extends ConsumerWidget {
+  const LineLoginButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ElevatedButton(
+      onPressed: () async {
+        final result = await ref.read(userServiceProvider).signIn();
+        if (result == null) {}
+      },
+      child: const Text('Lineログイン'),
+    );
+  }
+}
