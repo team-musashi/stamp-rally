@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../domain/entity/value_object/geo_location.dart';
 import '../../converter.dart';
 
 part 'stamp_rally_document.freezed.dart';
@@ -15,6 +16,7 @@ class StampRallyDocument with _$StampRallyDocument {
     required int requiredTime,
     required String imageUrl,
     String? status,
+    @GeoPointConverter() List<GeoLocation>? route,
     @TimestampConverter() required DateTime startDate,
     @TimestampConverter() DateTime? endDate,
     @TimestampConverter() DateTime? createdAt,

@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../../application/geolocator/state/current_poly_points.dart';
 import '../../../../application/geolocator/state/user_geolocator_position.dart';
 import '../../../../application/stamp_rally/state/pin_icon.dart';
 import '../../../../domain/entity/value_object/geo_location.dart';
@@ -53,10 +52,6 @@ class _MapViewState extends ConsumerState<SpotMapView> {
     final spotIndex = ref.watch(_currentMapSpotIndexProvider);
     final location = widget.stampRally.spots[spotIndex].location.toLatLng();
 
-    // 経路
-    final polylinePoints =
-        ref.watch(currentPolylinePointsProvider(widget.stampRally)).value ?? [];
-
     // 選択中スポットインデックスを監視してマップ上のカメラを移動する
     ref.listen(_currentMapSpotIndexProvider, (_, next) async {
       final spot = widget.stampRally.spots[next];
@@ -74,7 +69,7 @@ class _MapViewState extends ConsumerState<SpotMapView> {
       polylines: {
         Polyline(
           polylineId: const PolylineId('route'),
-          points: polylinePoints,
+          points: widget.stampRally.toLatLngFromRoute(),
           width: 4,
           color: Theme.of(context).colorScheme.primaryContainer,
         )
