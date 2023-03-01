@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../user/user_repository.dart';
 import 'entity/spot.dart';
 import 'entity/stamp_rally.dart';
 
@@ -9,8 +10,17 @@ import 'entity/stamp_rally.dart';
 final publicStampRalliesProvider = FutureProvider(
   (ref) async {
     final repository = ref.watch(stampRallyRepositoryProvider);
+    final user = await ref.watch(userProvider.future);
     repository.publicStampRalliesChanges().listen((latest) {
-      ref.state = AsyncValue.data(latest);
+      if (user?.region != null) {
+        ref.state = AsyncValue.data(
+          latest
+              .where((stamprally) => stamprally.area == user?.region)
+              .toList(),
+        );
+      } else {
+        ref.state = AsyncValue.data(latest);
+      }
     });
     return repository.fetchPublicStampRallies();
   },
