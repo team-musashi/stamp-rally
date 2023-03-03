@@ -17,6 +17,9 @@ _$_StampRallyDocument _$$_StampRallyDocumentFromJson(
       requiredTime: json['requiredTime'] as int,
       imageUrl: json['imageUrl'] as String,
       status: json['status'] as String?,
+      route: (json['route'] as List<dynamic>?)
+          ?.map((e) => const GeoPointConverter().fromJson(e as Object))
+          .toList(),
       startDate:
           const TimestampConverter().fromJson(json['startDate'] as Object),
       endDate: _$JsonConverterFromJson<Object, DateTime>(
@@ -36,6 +39,7 @@ Map<String, dynamic> _$$_StampRallyDocumentToJson(
       'requiredTime': instance.requiredTime,
       'imageUrl': instance.imageUrl,
       'status': instance.status,
+      'route': instance.route?.map(const GeoPointConverter().toJson).toList(),
       'startDate': const TimestampConverter().toJson(instance.startDate),
       'endDate': _$JsonConverterToJson<Object, DateTime>(
           instance.endDate, const TimestampConverter().toJson),

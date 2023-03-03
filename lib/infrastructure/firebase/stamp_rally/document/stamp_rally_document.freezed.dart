@@ -26,6 +26,8 @@ mixin _$StampRallyDocument {
   int get requiredTime => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @GeoPointConverter()
+  List<GeoLocation>? get route => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime get startDate => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -54,6 +56,7 @@ abstract class $StampRallyDocumentCopyWith<$Res> {
       int requiredTime,
       String imageUrl,
       String? status,
+      @GeoPointConverter() List<GeoLocation>? route,
       @TimestampConverter() DateTime startDate,
       @TimestampConverter() DateTime? endDate,
       @TimestampConverter() DateTime? createdAt,
@@ -79,6 +82,7 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
     Object? requiredTime = null,
     Object? imageUrl = null,
     Object? status = freezed,
+    Object? route = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
     Object? createdAt = freezed,
@@ -109,6 +113,10 @@ class _$StampRallyDocumentCopyWithImpl<$Res, $Val extends StampRallyDocument>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      route: freezed == route
+          ? _value.route
+          : route // ignore: cast_nullable_to_non_nullable
+              as List<GeoLocation>?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -144,6 +152,7 @@ abstract class _$$_StampRallyDocumentCopyWith<$Res>
       int requiredTime,
       String imageUrl,
       String? status,
+      @GeoPointConverter() List<GeoLocation>? route,
       @TimestampConverter() DateTime startDate,
       @TimestampConverter() DateTime? endDate,
       @TimestampConverter() DateTime? createdAt,
@@ -167,6 +176,7 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
     Object? requiredTime = null,
     Object? imageUrl = null,
     Object? status = freezed,
+    Object? route = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
     Object? createdAt = freezed,
@@ -197,6 +207,10 @@ class __$$_StampRallyDocumentCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      route: freezed == route
+          ? _value._route
+          : route // ignore: cast_nullable_to_non_nullable
+              as List<GeoLocation>?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -227,11 +241,13 @@ class _$_StampRallyDocument extends _StampRallyDocument {
       required this.requiredTime,
       required this.imageUrl,
       this.status,
+      @GeoPointConverter() final List<GeoLocation>? route,
       @TimestampConverter() required this.startDate,
       @TimestampConverter() this.endDate,
       @TimestampConverter() this.createdAt,
       @TimestampConverter() this.updatedAt})
-      : super._();
+      : _route = route,
+        super._();
 
   factory _$_StampRallyDocument.fromJson(Map<String, dynamic> json) =>
       _$$_StampRallyDocumentFromJson(json);
@@ -248,6 +264,16 @@ class _$_StampRallyDocument extends _StampRallyDocument {
   final String imageUrl;
   @override
   final String? status;
+  final List<GeoLocation>? _route;
+  @override
+  @GeoPointConverter()
+  List<GeoLocation>? get route {
+    final value = _route;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @TimestampConverter()
   final DateTime startDate;
@@ -263,7 +289,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
 
   @override
   String toString() {
-    return 'StampRallyDocument(title: $title, summary: $summary, area: $area, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'StampRallyDocument(title: $title, summary: $summary, area: $area, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, route: $route, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -279,6 +305,7 @@ class _$_StampRallyDocument extends _StampRallyDocument {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other._route, _route) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
@@ -290,8 +317,19 @@ class _$_StampRallyDocument extends _StampRallyDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, summary, area,
-      requiredTime, imageUrl, status, startDate, endDate, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      title,
+      summary,
+      area,
+      requiredTime,
+      imageUrl,
+      status,
+      const DeepCollectionEquality().hash(_route),
+      startDate,
+      endDate,
+      createdAt,
+      updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -316,6 +354,7 @@ abstract class _StampRallyDocument extends StampRallyDocument {
       required final int requiredTime,
       required final String imageUrl,
       final String? status,
+      @GeoPointConverter() final List<GeoLocation>? route,
       @TimestampConverter() required final DateTime startDate,
       @TimestampConverter() final DateTime? endDate,
       @TimestampConverter() final DateTime? createdAt,
@@ -337,6 +376,9 @@ abstract class _StampRallyDocument extends StampRallyDocument {
   String get imageUrl;
   @override
   String? get status;
+  @override
+  @GeoPointConverter()
+  List<GeoLocation>? get route;
   @override
   @TimestampConverter()
   DateTime get startDate;

@@ -43,6 +43,9 @@ mixin _$StampRally {
   /// 開催終了日
   DateTime? get endDate => throw _privateConstructorUsedError;
 
+  /// 経路
+  List<GeoLocation> get route => throw _privateConstructorUsedError;
+
   /// 参加可能かどうか
   bool get canEntry => throw _privateConstructorUsedError;
 
@@ -76,6 +79,7 @@ abstract class $StampRallyCopyWith<$Res> {
       StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
+      List<GeoLocation> route,
       bool canEntry,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -104,6 +108,7 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
     Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? route = null,
     Object? canEntry = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -146,6 +151,10 @@ class _$StampRallyCopyWithImpl<$Res, $Val extends StampRally>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      route: null == route
+          ? _value.route
+          : route // ignore: cast_nullable_to_non_nullable
+              as List<GeoLocation>,
       canEntry: null == canEntry
           ? _value.canEntry
           : canEntry // ignore: cast_nullable_to_non_nullable
@@ -184,6 +193,7 @@ abstract class _$$_StampRallyCopyWith<$Res>
       StampRallyEntryStatus? status,
       DateTime startDate,
       DateTime? endDate,
+      List<GeoLocation> route,
       bool canEntry,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -210,6 +220,7 @@ class __$$_StampRallyCopyWithImpl<$Res>
     Object? status = freezed,
     Object? startDate = null,
     Object? endDate = freezed,
+    Object? route = null,
     Object? canEntry = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -252,6 +263,10 @@ class __$$_StampRallyCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      route: null == route
+          ? _value._route
+          : route // ignore: cast_nullable_to_non_nullable
+              as List<GeoLocation>,
       canEntry: null == canEntry
           ? _value.canEntry
           : canEntry // ignore: cast_nullable_to_non_nullable
@@ -285,11 +300,13 @@ class _$_StampRally extends _StampRally {
       this.status,
       required this.startDate,
       this.endDate,
+      final List<GeoLocation> route = const <GeoLocation>[],
       this.canEntry = true,
       this.createdAt,
       this.updatedAt,
       final List<Spot> spots = const <Spot>[]})
-      : _spots = spots,
+      : _route = route,
+        _spots = spots,
         super._();
 
   /// ID
@@ -328,6 +345,17 @@ class _$_StampRally extends _StampRally {
   @override
   final DateTime? endDate;
 
+  /// 経路
+  final List<GeoLocation> _route;
+
+  /// 経路
+  @override
+  @JsonKey()
+  List<GeoLocation> get route {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_route);
+  }
+
   /// 参加可能かどうか
   @override
   @JsonKey()
@@ -354,7 +382,7 @@ class _$_StampRally extends _StampRally {
 
   @override
   String toString() {
-    return 'StampRally(id: $id, title: $title, summary: $summary, area: $area, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, canEntry: $canEntry, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
+    return 'StampRally(id: $id, title: $title, summary: $summary, area: $area, requiredTime: $requiredTime, imageUrl: $imageUrl, status: $status, startDate: $startDate, endDate: $endDate, route: $route, canEntry: $canEntry, createdAt: $createdAt, updatedAt: $updatedAt, spots: $spots)';
   }
 
   @override
@@ -374,6 +402,7 @@ class _$_StampRally extends _StampRally {
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            const DeepCollectionEquality().equals(other._route, _route) &&
             (identical(other.canEntry, canEntry) ||
                 other.canEntry == canEntry) &&
             (identical(other.createdAt, createdAt) ||
@@ -395,6 +424,7 @@ class _$_StampRally extends _StampRally {
       status,
       startDate,
       endDate,
+      const DeepCollectionEquality().hash(_route),
       canEntry,
       createdAt,
       updatedAt,
@@ -418,6 +448,7 @@ abstract class _StampRally extends StampRally {
       final StampRallyEntryStatus? status,
       required final DateTime startDate,
       final DateTime? endDate,
+      final List<GeoLocation> route,
       final bool canEntry,
       final DateTime? createdAt,
       final DateTime? updatedAt,
@@ -460,6 +491,10 @@ abstract class _StampRally extends StampRally {
 
   /// 開催終了日
   DateTime? get endDate;
+  @override
+
+  /// 経路
+  List<GeoLocation> get route;
   @override
 
   /// 参加可能かどうか

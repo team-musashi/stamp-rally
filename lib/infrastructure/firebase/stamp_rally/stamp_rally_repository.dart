@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../domain/entity/value_object/geo_location.dart';
 import '../../../domain/repository/stamp_rally/entity/spot.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally.dart';
 import '../../../domain/repository/stamp_rally/entity/stamp_rally_entry_status.dart';
@@ -374,6 +375,7 @@ extension _StampRallyDocumentEx on StampRallyDocument {
       status: StampRallyEntryStatus.nameOf(status),
       startDate: startDate,
       endDate: endDate,
+      route: route ?? <GeoLocation>[],
       createdAt: createdAt,
       updatedAt: updatedAt,
     );

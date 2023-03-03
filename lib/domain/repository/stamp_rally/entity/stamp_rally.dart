@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../entity/value_object/geo_location.dart';
 import 'spot.dart';
 import 'stamp_rally_entry_status.dart';
 
@@ -36,6 +38,9 @@ class StampRally with _$StampRally {
     /// 開催終了日
     DateTime? endDate,
 
+    /// 経路
+    @Default(<GeoLocation>[]) List<GeoLocation> route,
+
     /// 参加可能かどうか
     @Default(true) bool canEntry,
 
@@ -55,4 +60,12 @@ class StampRally with _$StampRally {
 
   /// スタンプ数
   int get stampedCount => spots.where((spot) => spot.gotDate != null).length;
+
+  /// GeoPoint型のrouteをLatLngに変換する
+  List<LatLng> toLatLngFromRoute() {
+    if (route.isEmpty) {
+      return <LatLng>[];
+    }
+    return route.map((e) => LatLng(e.latitude, e.longitude)).toList();
+  }
 }
