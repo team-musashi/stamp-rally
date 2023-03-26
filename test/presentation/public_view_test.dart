@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stamp_rally/domain/repository/stamp_rally/stamp_rally_repository.dart';
+import 'package:stamp_rally/domain/repository/user/entity/auth_provider.dart';
+import 'package:stamp_rally/domain/repository/user/entity/user.dart' as user;
+import 'package:stamp_rally/domain/repository/user/user_repository.dart';
 import 'package:stamp_rally/presentation/component/thumbnail.dart';
 import 'package:stamp_rally/presentation/page/home/component/public_view.dart';
 
@@ -23,7 +26,13 @@ void main() {
       ProviderScope(
         overrides: [
           stampRallyRepositoryProvider
-              .overrideWithValue(MockStampRallyRepository())
+              .overrideWithValue(MockStampRallyRepository()),
+          userProvider.overrideWith(
+            (ref) => const user.User(
+              uid: 'test',
+              authProvider: AuthProvider.anonymous,
+            ),
+          )
         ],
         child: const MaterialApp(home: Scaffold(body: PublicView())),
       ),
