@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/url_launcher/url_launcher_service.dart';
+import '../../../application/user/state/update_user_result.dart';
 import '../../../domain/entity/app_info.dart';
 import '../../component/delete_user.dart';
 import '../../component/list_tile.dart';
 import '../../component/set_region.dart';
+import '../../component/widget_ref.dart';
 import '../../router.dart';
 
 /// 設定画面
@@ -57,6 +59,12 @@ class _SetRegion extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 地域設定の結果を監視する
+    ref.listenResult<void>(
+      updateUserResultProvider,
+      completeMessage: '地域設定を完了しました。',
+    );
+
     return SectionItem(
       onTap: () => showDialog<void>(
         context: context,
