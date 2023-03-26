@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../user/user_repository.dart';
 import 'entity/spot.dart';
 import 'entity/stamp_rally.dart';
 
@@ -9,10 +10,27 @@ import 'entity/stamp_rally.dart';
 final publicStampRalliesProvider = FutureProvider(
   (ref) async {
     final repository = ref.watch(stampRallyRepositoryProvider);
+    final user = await ref.watch(userProvider.future);
+
+    bool shouldFilter() => user!.region != null && user.region != '設定なし';
+
+    // スタンプラリーをリッスンし、条件に一致する場合のみフィルタリング
     repository.publicStampRalliesChanges().listen((latest) {
-      ref.state = AsyncValue.data(latest);
+      final filtered = shouldFilter()
+          ? latest
+              .where((stampRally) => stampRally.area == user!.region)
+              .toList()
+          : latest;
+      ref.state = AsyncValue.data(filtered);
     });
-    return repository.fetchPublicStampRallies();
+
+    // 最初のデータ取得時にもフィルタリングを適用
+    final stampRallies = await repository.fetchPublicStampRallies();
+    return shouldFilter()
+        ? stampRallies
+            .where((stampRally) => stampRally.area == user!.region)
+            .toList()
+        : stampRallies;
   },
   name: 'publicStampRalliesProvider',
 );

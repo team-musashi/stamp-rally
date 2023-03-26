@@ -19,6 +19,9 @@ mixin _$User {
   /// ユーザーID
   String get uid => throw _privateConstructorUsedError;
 
+  /// ユーザーの地域
+  String? get region => throw _privateConstructorUsedError;
+
   /// 認証プロバイダー
   AuthProvider get authProvider => throw _privateConstructorUsedError;
 
@@ -42,6 +45,7 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String uid,
+      String? region,
       AuthProvider authProvider,
       AppPlatform? platform,
       DateTime? createdAt,
@@ -62,6 +66,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? uid = null,
+    Object? region = freezed,
     Object? authProvider = null,
     Object? platform = freezed,
     Object? createdAt = freezed,
@@ -72,6 +77,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      region: freezed == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
       authProvider: null == authProvider
           ? _value.authProvider
           : authProvider // ignore: cast_nullable_to_non_nullable
@@ -100,6 +109,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String uid,
+      String? region,
       AuthProvider authProvider,
       AppPlatform? platform,
       DateTime? createdAt,
@@ -116,6 +126,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @override
   $Res call({
     Object? uid = null,
+    Object? region = freezed,
     Object? authProvider = null,
     Object? platform = freezed,
     Object? createdAt = freezed,
@@ -126,6 +137,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      region: freezed == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
       authProvider: null == authProvider
           ? _value.authProvider
           : authProvider // ignore: cast_nullable_to_non_nullable
@@ -151,6 +166,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 class _$_User implements _User {
   const _$_User(
       {required this.uid,
+      this.region,
       required this.authProvider,
       this.platform,
       this.createdAt,
@@ -159,6 +175,10 @@ class _$_User implements _User {
   /// ユーザーID
   @override
   final String uid;
+
+  /// ユーザーの地域
+  @override
+  final String? region;
 
   /// 認証プロバイダー
   @override
@@ -178,7 +198,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(uid: $uid, authProvider: $authProvider, platform: $platform, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'User(uid: $uid, region: $region, authProvider: $authProvider, platform: $platform, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -187,6 +207,7 @@ class _$_User implements _User {
         (other.runtimeType == runtimeType &&
             other is _$_User &&
             (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.region, region) || other.region == region) &&
             (identical(other.authProvider, authProvider) ||
                 other.authProvider == authProvider) &&
             (identical(other.platform, platform) ||
@@ -199,7 +220,7 @@ class _$_User implements _User {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, uid, authProvider, platform, createdAt, updatedAt);
+      runtimeType, uid, region, authProvider, platform, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -211,6 +232,7 @@ class _$_User implements _User {
 abstract class _User implements User {
   const factory _User(
       {required final String uid,
+      final String? region,
       required final AuthProvider authProvider,
       final AppPlatform? platform,
       final DateTime? createdAt,
@@ -220,6 +242,10 @@ abstract class _User implements User {
 
   /// ユーザーID
   String get uid;
+  @override
+
+  /// ユーザーの地域
+  String? get region;
   @override
 
   /// 認証プロバイダー
