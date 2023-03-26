@@ -24,15 +24,21 @@ class SetRegionDialog extends ConsumerWidget {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('キャンセル'),
         ),
-        FilledButton(
-          onPressed: () async {
-            Navigator.of(context).pop();
+        Consumer(
+          builder: (context, ref, _) {
             final selectedRegion = ref.watch(_selectedRegionProvider);
-            await ref.read(userServiceProvider).updateUser(
-                  region: selectedRegion,
-                );
+            return FilledButton(
+              onPressed: selectedRegion != null
+                  ? () async {
+                      Navigator.of(context).pop();
+                      await ref.read(userServiceProvider).updateUser(
+                            region: selectedRegion,
+                          );
+                    }
+                  : null,
+              child: const Text('設定する'),
+            );
           },
-          child: const Text('設定する'),
         ),
       ],
     );
